@@ -1,0 +1,160 @@
+/* tag: Tom Lord Tue Dec  4 14:57:13 2001 (introduction.doc)
+ */
+/************************************************************************
+ *(h0 "-lhackerlab")
+ * 
+
+The Hackerlab C Library is a general purpose library for C programs
+running in Posix compatible environments.
+
+Development of the library is ongoing.  
+
+ */
+
+
+/*(h1 "Why a New C Library?")
+
+
+		Paradise is exactly like where you are right now, 
+		only much, 
+		much,
+		BETTER.
+
+			Laurie Anderson
+
+
+The standard C library was never designed.  It simply ``happened'',
+in several stages.
+
+As nearly as I can tell, it started off as a collection of routines
+needed to write the very first unix shell tools.  Some good coding
+habits developed around this time (keeping interfaces simple, for
+example).  There are little flashes of systematic design, but no
+sign of a sustained effort to think through what should be in a 
+clean and complete C library -- I guess they were too busy inventing
+`grep' and such.
+
+Then, as Unix spread, the C library grew.  BSD hackers added a bunch
+of functions, for example.  Still, nobody sat down to make it a nicely
+designed library.
+
+Standards came along, and they (mostly) tried to codify the C library
+that already existed.
+
+Nowadays, people take the C library for granted.  That's a shame,
+because if you have a nicer library, the programs that use that
+library are likely to be simpler, more powerful, and more correct.
+
+That's where `libhackerlab' comes in.  The goal is to completely
+replace all of libc, except for very system dependent parts, such
+as system call interfaces.  In replacing libc, we want to build 
+something much, much, BETTER.  We want a more complete selection
+of functions, with clearer names, and more consistent interfaces.
+Whenever possible, we want greater generality.
+
+ */
+
+/*(h1 "Status")
+
+Some parts of `libhackerlab' are reasonably complete, tested, and
+stable.  Others are less so.  We've tried to make clear in this
+manual which parts are which.
+
+
+ */
+
+/*(h1 "Contributing")
+
+Write to `hackerlab@regexps.com' if you have something to contribute.
+
+Here are some suggestions for what volunteers might do:
+
+
+	Help With Porting
+
+		Recently, we've only been testing the library
+		on one BSD-based platform.  It should be easy
+		to port to other varieties of unix.
+
+
+	Work on test cases.
+
+		We use lots and lots of unit tests
+		for this code.  Some subsystems are 
+		lacking unit tests.  That's very bad.
+
+
+	Work on data sheets.
+
+		We like to write a data sheet for every major
+		subsystem of the library.  Data sheets should describe
+		the subsystem: its recommended uses; situations in
+		which not to use it; the size of the code; the
+		performance of the code, etc.  You can see some
+		example data sheets at the end of this manual.  More
+		are needed.
+
+		We also need some tools that will keep the data
+		sheets up to date automatically -- currently
+		they are maintained by hand (including cutting
+		and pasting benchmark results, for example).
+
+	Use it in your programs -- tell us what works and what 
+	doesn't.
+
+		We think the design so far is quite nice, and
+		our experience using the library seems to 
+		confirm this, but your milage may vary.
+		Let us know.
+
+
+
+	Contribute New Subsystems to the Library
+
+		This is a tricky one.  In all probability,
+		we won't like your design prejudices or 
+		coding style.  But heck, give it a try.
+
+
+
+	Work on floating point I/O
+
+		We need fast and accurate functions for
+		converting between floating point values
+		and strings.  We need support for floating
+		point in printfmt.
+
+	Work on a scanf replacement.
+
+		We have printfmt, which replaces printf,
+		but we have no replacement yet for scanf.
+
+
+	Give us money.
+
+		Pay a download fee when you grab a copy of
+		libhackerlab -- helps us pay for much needed
+		electrons, rent, food, and other goodies.
+
+		Generally speaking, getting paid is a precondition
+		of doing more work on Hackerlab software at
+		a reasonable pace.
+
+		If you want to spend a whole bunch of 
+		money, Talk To Us About Our Business Plan.
+
+		
+	Work for the Hackerlab
+
+		If you are an excellent Hacker, and you
+		like libhackerlab, and you want to help
+		start a software R&D lab, and you feel
+		like pursuing a long shot -- send us a
+		resume or code samples or something.
+		It helps if you live in the Bay Area
+		of Northern California, USA.  (No, we have
+		no paid positions to offer just yet.)
+
+
+ */
+

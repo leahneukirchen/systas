@@ -1,0 +1,13 @@
+;; required	hackerlab-core		hackerlab --version 0.0
+;; 	What is the installation root of the 
+;; 	hackerlab core?
+;; 
+;; 
+;; required	x11			x11
+;; 	Where is X11 installed?
+;; 
+;; 	
+;; optional	tcltk			tcltk --version 8.0
+;; 	Where is Tcl/Tk?
+;; 
+;; 

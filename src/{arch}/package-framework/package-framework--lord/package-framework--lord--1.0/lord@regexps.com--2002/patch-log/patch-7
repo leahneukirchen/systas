@@ -1,0 +1,21 @@
+Revision: package-framework--lord--1.0--patch-7
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Jan 17 13:37:47 PST 2002
+Standard-date: 2002-01-17
+Summary: merge from `devo'
+Keywords: 
+New-files: {arch}/package-framework/package-framework--devo/package-framework--devo--1.0/lord@regexps.com--2002/patch-log/patch-3
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-7
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  build-tools/config-info/config-info.c
+  build-tools/scripts/configure-top
+New-patches: lord@regexps.com--2002/package-framework--devo--1.0--patch-3
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-7
+
+Patches applied:
+
+  * lord@regexps.com--2002/package-framework--devo--1.0--patch-3
+     minor bug fixes
+

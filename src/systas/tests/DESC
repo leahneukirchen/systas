@@ -1,0 +1,24 @@
+# tag: Tom Lord Tue Dec  4 15:06:47 2001 (systas-tests/DESC)
+#
+unit-alist.scm
+unit-boolean.scm
+unit-chars.scm
+unit-eq.scm
+unit-hash.scm
+unit-kw.scm
+unit-list.scm
+unit-pairs.scm
+unit-promise.scm
+unit-strings.scm
+unit-symbols.scm
+unit-vector.scm
+unit-weaks.scm
+	A handful of hand-written tests.
+
+	Many more tests would be needed before the interpreter
+	could be considered production, but in practice, it
+	has been stable enough for PIW.
+
+	(These tests have caught stupid mistake made while
+	making trivial modifications.)
+

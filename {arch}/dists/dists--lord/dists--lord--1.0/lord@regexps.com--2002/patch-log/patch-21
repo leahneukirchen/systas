@@ -1,0 +1,21 @@
+Revision: dists--lord--1.0--patch-21
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Feb 14 14:31:35 PST 2002
+Standard-date: 2002-02-14
+Summary: updated hackerlab documentation
+Keywords: 
+New-files: {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-21
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  docs.d/hackerlab/html/safe.html
+  docs.d/hackerlab/html/vu-sys.html
+  docs.d/hackerlab/html/vu.html
+  docs.d/hackerlab/ps/libhackerlab.ps
+  docs.d/hackerlab/texi/safe.texi
+  docs.d/hackerlab/texi/vu-sys.texi
+  docs.d/hackerlab/texi/vu.texi
+New-patches: lord@regexps.com--2002/dists--lord--1.0--patch-21
+
+Updated hackerlab C library documentation.
+

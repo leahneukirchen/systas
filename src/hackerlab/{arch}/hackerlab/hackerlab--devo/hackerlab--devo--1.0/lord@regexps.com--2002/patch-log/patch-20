@@ -1,0 +1,56 @@
+Revision: hackerlab--devo--1.0--patch-20
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sat May 18 12:02:45 PDT 2002
+Standard-date: 2002-05-18 19:02:45 GMT
+Summary: merge with `lord'
+Keywords: 
+New-files: tests/rx-posix-tests/=test.tcl
+  {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--2002/patch-log/patch-20
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-34
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-35
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-36
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-37
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-38
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-39
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-40
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-41
+  .arch-ids/=NEWS.id os/sys/mman.h =NEWS
+New-directories: .arch-ids
+Removed-files: =NEWS
+Modified-files: =TODO ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  Makefile.in os/sys/stat.h rx-posix/match-regexp.c
+  rx-posix/posix.c rx/super.c tests/rx-posix-tests/test-rx.scm
+  vu/safe-vfdbuf.c vu/safe-vfdbuf.h vu/vfdbuf.c vu/vfdbuf.h
+  vu/vu.c vu/vu.h
+New-patches: lord@regexps.com--2002/hackerlab--devo--1.0--patch-20
+  lord@regexps.com--2002/hackerlab--lord--1.0--patch-34
+  lord@regexps.com--2002/hackerlab--lord--1.0--patch-35
+  lord@regexps.com--2002/hackerlab--lord--1.0--patch-36
+  lord@regexps.com--2002/hackerlab--lord--1.0--patch-37
+  lord@regexps.com--2002/hackerlab--lord--1.0--patch-38
+  lord@regexps.com--2002/hackerlab--lord--1.0--patch-39
+  lord@regexps.com--2002/hackerlab--lord--1.0--patch-40
+  lord@regexps.com--2002/hackerlab--lord--1.0--patch-41
+
+Patches applied (highlights):
+
+  * lord@regexps.com--2002/hackerlab--lord--1.0--patch-41
+     updated =NEWS
+
+  * lord@regexps.com--2002/hackerlab--lord--1.0--patch-38
+     unbuffering support
+
+  * lord@regexps.com--2002/hackerlab--lord--1.0--patch-37
+     very minor tweaks
+
+  * lord@regexps.com--2002/hackerlab--lord--1.0--patch-36
+     an `unexec' hook
+
+  * lord@regexps.com--2002/hackerlab--lord--1.0--patch-35
+     fixed an rx bug
+
+  * lord@regexps.com--2002/hackerlab--lord--1.0--patch-34
+     various `rx' fixes
+

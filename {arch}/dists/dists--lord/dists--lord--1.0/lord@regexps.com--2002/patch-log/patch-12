@@ -1,0 +1,24 @@
+Revision: dists--lord--1.0--patch-12
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Tue Feb  5 16:33:36 PST 2002
+Standard-date: 2002-02-05
+Summary: added examples documentation for arch
+Keywords: 
+New-files: {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-12
+  docs.d/arch/examples/.arch-ids/=id
+  docs.d/arch/examples/README.000.first-steps
+  docs.d/arch/examples/README.010.first-archive
+  docs.d/arch/examples/README.020.branching-arch
+  docs.d/arch/examples/README.030.importing-arch-releases
+  docs.d/arch/examples/README.040.importing-other-releases
+New-directories: docs.d/arch/examples/.arch-ids docs.d/arch/examples
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/dists--lord--1.0--patch-12
+
+Some new help files for arch.  These walk through setting up a new
+archive with revision library, browser, and notifiers, and creating
+branches of arch from the regexps.com archive.
+
+

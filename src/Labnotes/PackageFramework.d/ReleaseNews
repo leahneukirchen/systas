@@ -1,0 +1,25 @@
+
+
+
+!		`package-framework' Release News
+
+* 2002-05-16 1.0pre1
+
+  This is the first official release of `package-framework' -- 
+  an alternative/replacement for `autoconf', `automake', and 
+  eventually `libtool'.
+
+  `package-framework' aims to be simpler, more maintainable, yet more
+  flexible and more powerful than the tools it proposes to replace.
+
+
+  `package-framework' is currently used by a number of projects
+  at `regexps.com'.
+
+<<<
+  -t
+  lord@regexps.com
+>>>
+
+%%% tag: Tom Lord Wed May 15 15:14:03 2002 (PackageFramework.d/ReleaseNews)
+%%%

@@ -1,0 +1,86 @@
+/****************************************************************
+ *(book "libhackerlab"
+ *	:subtitles ("The Hackerlab C Library"
+ *		    "for libhackerlab version 1.0"
+ *		    ""
+ *		    "visit the Hackerlab at www.regexps.com")
+ *	:authors ("Thomas Lord")
+ *	:one-line-summary ""
+ *	:keywords ("C"
+ *		   "library")
+ *	:copyright-years (1998 1999 2000 2001 2002)
+ *	:copyright "Thomas Lord"
+ *	:publisher #f
+ *	:home-page-link "<a href=\"http://www.regexps.com\">The Hackerlab at <code>regexps.com</code></a>"
+ *	:contains ("-lhackerlab"
+ *		   "A Bigger Picture"
+ *		   "Handling Bugs"
+ * 		   "Machine-Specific Definitions"
+ *		   "Low-level Memory Management"
+ *		   "Arrays"
+ *		   "Bitsets"
+ * 		   "Hashing"
+ * 		   "Eight-bit Characters and Strings"
+ *		   "Converting Between Numbers and Strings"
+ * 		   "Unicode"
+ *		   ; "XML Support"
+ *		   "Posix Regexps"
+ *		   "XML Regular Expressions"
+ *		   "Tuning Posix Regexp and XML Regular Expression Performance"
+ *		   "A Virtual Unix File-System Interface"
+ *		   "VU Native File System Access"
+ *		   "A VU Name Handler for Standard Input and Output"
+ *		   "A VU Handler for the URL File-Descriptor Scheme"
+ * 		   "A VU Handler for the URL Socket Scheme"
+ *		   "Buffered File Descriptors"
+ *		   "Reserved File Descriptors and Pseudo-Descriptors"
+ *		   "Virtual Null File Descriptors"
+ *		   "Formatted Printing With printfmt"
+ *		   "VU Utilities"
+ *		   "An Errorless Front-end to the VU File-system Interface"
+ * 		   "File-name Manipulation Functions"
+ *		   "Parsing Command-line Options"
+ * 		   ; "PIW -- Debugging With Program Instrumentation"
+ *		   ; "PIW Malloc Instrumentation"
+ *		   ; "Using PIW Malloc With Write Barriers"
+ *		   #f
+ *		   "An Absurdly Brief Introduction to Unicode"
+ *		   "An Introduction to Posix Regexps"
+ *		   "An Introduction to XML Regular Expressions"
+ *		   "Comments on the XML Schema Regular Expression Syntax"
+ *		   #f
+ * 		   "Naming Conventions in the Hackerlab C Library"
+ * 		   "Portability Assumptions in the Hackerlab C Library"
+ *		   "Data Sheet for the Hackerlab Rx Posix Regexp Functions"
+ *		   "Data Sheet for the Hackerlab Rx XML Regular Expression Matcher"
+ * 		   "Data Sheet for the Hackerlab Unicode Database"
+ *		   #f
+ *		   "The GNU Free Documentation License"
+ *		   "The GNU General Public License"
+ *		   #f
+ *	           "On Hacking"
+ *		   #f
+ *		   "Indexes")
+ *
+ *	:permissions ("Permission is granted to copy, distribute and/or modify this document"
+ *		      "under the terms of the GNU Free Documentation License, Version 1.1"
+ *		      "or any later version published by the Free Software Foundation;"
+ *		      "with the Invariant Sections being:"
+ *		      ""
+ * 		      "		On Hacking"
+ * 		      ""
+ * 		      "with the Front-Cover Texts being"
+ * 		      ""
+ * 		      "		\"visit www.regexps.com\","
+ * 		      ""
+ *  		      "and with the Back-Cover Texts being"
+ *		      ""
+ *		      "		(none)."
+ *		      ""
+ *		      "A copy of the license is included in the section entitled \"GNU"
+ *		      "Free Documentation License\"."))
+ *
+ */
+
+/* tag: Tom Lord Tue Dec  4 14:57:13 2001 (libhackerlab.doc)
+ */

@@ -1,0 +1,40 @@
+Revision: dists--devo--1.0--patch-18
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Feb 14 15:14:42 PST 2002
+Standard-date: 2002-02-14
+Summary: merge from `lord' and release id fix
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-18
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-20
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-21
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-22
+Modified-files: =INSTALL =RELEASE-ID.d/=RELEASE-ID.arch
+  =RELEASE-ID.d/=RELEASE-ID.ftp-utils
+  =RELEASE-ID.d/=RELEASE-ID.hackerlab ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  docs.d/hackerlab/html/safe.html
+  docs.d/hackerlab/html/vu-sys.html
+  docs.d/hackerlab/html/vu.html
+  docs.d/hackerlab/ps/libhackerlab.ps
+  docs.d/hackerlab/texi/safe.texi
+  docs.d/hackerlab/texi/vu-sys.texi
+  docs.d/hackerlab/texi/vu.texi
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-18
+  lord@regexps.com--2002/dists--lord--1.0--patch-20
+  lord@regexps.com--2002/dists--lord--1.0--patch-21
+  lord@regexps.com--2002/dists--lord--1.0--patch-22
+
+Merged from `lord' -- had to patch up the release ids.
+
+Patches applied:
+
+  * lord@regexps.com--2002/dists--lord--1.0--patch-22
+     updated release ids
+
+  * lord@regexps.com--2002/dists--lord--1.0--patch-21
+     updated hackerlab documentation
+
+  * lord@regexps.com--2002/dists--lord--1.0--patch-20
+     updated =INSTALL instructions
+

@@ -1,0 +1,11 @@
+
+This is FPS (functional postscript) from SCSH, with minor bug-fixes
+and tweaks to port it to Systas.
+
+The module to load to access fps is: (fps fps).
+
+Documentation for FPS is in two files in this directory: fps-ref.txt
+and fps-tutorial.txt.
+
+FPS is way fun.
+

@@ -1,0 +1,19 @@
+Revision: dists--lord--1.0--patch-1
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon Jan  7 02:54:37 PST 2002
+Standard-date: 2002-01-07
+Summary: modified config file arrangement
+Keywords: 
+New-files: {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-1
+  configs/lord@regexps.com--2002/lord
+  configs/lord@regexps.com--2002/lord.arch
+  configs/lord@regexps.com--2002/devo
+New-directories: configs/lord@regexps.com--2002
+Removed-files: configs/devo
+Renamed-files: configs/arch configs/lord@regexps.com--2002/devo.arch
+Modified-files: configs/lord@regexps.com--2002/devo.arch
+New-patches: lord@regexps.com--2002/dists--lord--1.0--patch-1
+
+Re-organized config files for multi-branch development.
+

@@ -1,0 +1,37 @@
+# tag: Tom Lord Tue Dec  4 15:05:24 2001 (bugs-tests/DESC)
+#
+
+We test the installed header files to make sure they compile.
+
+unit-panic:
+	--panic
+		test a call to `panic' checking the exit
+		status and standard error output.
+
+	--invariant
+		check a passed `invariant'
+
+	--botched
+		test a failed `invariant', checking the
+		exit status and standard error output
+
+	This indirectly tests panic-exit.
+
+
+unit-test-coverage:
+	[no options]
+		test full coverage for normal exit
+		status and no output
+
+	--skip-a
+		test skipping coverage point A for
+		exit status and message
+
+	--skip-b
+		test skipping coverage point B for
+		exit status and message
+
+
+	--skip-a --skip-b
+		test skipping both coverage points for
+		exit status and message

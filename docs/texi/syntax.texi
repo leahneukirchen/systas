@@ -1,0 +1,70 @@
+@need 3200
+
+@node Syntax Rules
+@chapter Syntax Rules
+
+Systas provides the standard procedures and syntax:
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{syntax-rules}@fuindex syntax-rules
+@*
+@example
+@group
+(syntax-rules)
+@end group
+@group
+@end group
+@end example
+
+Not documented yet (but standard).
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{define-syntax}@fuindex define-syntax
+@*
+@example
+@group
+(define-syntax)
+@end group
+@group
+@end group
+@end example
+
+Not documented yet (but standard).
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{let-syntax}@fuindex let-syntax
+@*
+@example
+@group
+(let-syntax)
+@end group
+@group
+@end group
+@end example
+
+Not documented yet (but standard).
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{letrec-syntax}@fuindex letrec-syntax
+@*
+@example
+@group
+(letrec-syntax)
+@end group
+@group
+@end group
+@end example
+
+Not documented yet (but standard).
+
+
+
+

@@ -1,0 +1,15 @@
+Revision: dists--devo--1.0--patch-12
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon Feb  4 03:29:12 PST 2002
+Standard-date: 2002-02-04
+Summary: updated release id
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-12
+Modified-files: =RELEASE-ID.d/=RELEASE-ID.arch ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-12
+
+
+Updated release id.  (This really needs to be automated!)
+

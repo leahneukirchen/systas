@@ -1,0 +1,30 @@
+#!/bin/sh
+# 
+# pickconfig - pick a system specific configuration file
+#
+################################################################
+# Copyright (C) 2002 Tom Lord
+# 
+# See the file "COPYING" for further information about
+# the copyright and warranty status of this work.
+# 
+
+if test "$#" != 1 ; then
+  printf "usage: pickconfig canonical-system-name\n" 1>&2
+  printf "\n" 1>&2
+  exit 2
+fi
+
+system="$1"
+
+case "$system" in
+
+  i386-*-freebsd*)	echo freebsd
+			;;
+
+  i686-*-linux-gnu)	echo gnu-linux
+			;;
+
+  *)			;;
+
+esac

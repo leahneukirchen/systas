@@ -1,0 +1,23 @@
+Revision: hackerlab--lord--1.0--patch-17
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri Feb  8 17:41:29 PST 2002
+Standard-date: 2002-02-08
+Summary: disabled the rx-xml unit tests
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-17
+  tests/rx-xml-tests/UNPLUGGED/REQ
+New-directories: tests/rx-xml-tests/UNPLUGGED
+  tests/rx-xml-tests/UNPLUGGED/.arch-ids
+Removed-files: tests/rx-xml-tests/PLUGIN/REQ
+Removed-directories: tests/rx-xml-tests/PLUGIN
+  tests/rx-xml-tests/PLUGIN/.arch-ids
+Renamed-files: tests/rx-xml-tests/PLUGIN/.arch-ids/=dont-care tests/rx-xml-tests/UNPLUGGED/.arch-ids/=dont-care
+Modified-files: =NEWS ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/hackerlab--lord--1.0--patch-17
+
+Rx-xml is broken on big-endian machines, and not critically
+important right now.  Disabling the unit tests allows "make test" 
+to work for "arch" users.
+

@@ -1,0 +1,20 @@
+Revision: package-framework--lord--1.0--patch-9
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri Jan 18 19:02:30 PST 2002
+Standard-date: 2002-01-18
+Summary: changed the rule for dependency tracking (eliminated GCC-ism)
+Keywords: 
+New-files: build-tools/Makefiles/cpp-to-includes.sed
+  {arch}/package-framework/package-framework--devo/package-framework--devo--1.0/lord@regexps.com--2002/patch-log/patch-4
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-9
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  build-tools/Makefiles/rules.mk
+New-patches: lord@regexps.com--2002/package-framework--devo--1.0--patch-4
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-9
+
+
+Don't use the `-MM' flag which is GCC specific.  Instead, pipe the
+output of `cc -E' through `sed' and `sort'.
+

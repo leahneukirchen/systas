@@ -1,0 +1,130 @@
+!>	Makefiles for Building a Library From C Source
+
+
+  Let's suppose that you have a directory containing `.c' files,
+  each of which should be compiled to produce a `.o' file.  All of
+  the `.o' files should be combined into a library (`.a' file).
+
+  A simple way to do that is to simply include `library.mk':
+
+<<<
+	include $(makefiles)/library.mk
+>>>
+
+  That will compile all the `.c' files, eventually producing a `.a'
+  file whose name is based on the name of the source directory (e.g.:
+  a directory named `hackerlab' will produce `libhackerlab.a').
+
+  You can change the name of the library by setting the variable
+  `thelib'.  You can limit which object files will be included in the
+  library by setting `libobj':
+
+<<<
+	thelib	:=	libfoo.a
+	libobjs	:=	a.o b.o c.o
+	include $(makefiles)/library.mk
+>>>
+
+  Note that this library is _not_ installed, by default.
+
+* Installing a Library
+
+  Simply include `install-library.mk' after `library.mk':
+
+<<<
+	include $(makefiles)/library.mk
+	include $(makefiles)/install-library.mk
+>>>
+
+  That will install the library in `$(prefix)/lib'.
+
+* A Library Spread Over Multiple Directories
+
+  A very large directory might be spread over multiple
+  directories.  For example, suppose we have the directory
+  `hackerlab', in which `libhackerlab.a' will be built.
+  But we also have `arrays' and `chars' which contain `.c' files
+  that should be included in the library.
+
+  In `arrays' and `chars' use `library-objects.mk' to build `.o'
+  files:
+
+<<<
+	include $(makefiles)/library-objects.mk
+>>>
+
+  and in the `PLUGIN/REQ' files:
+
+<<<
+	arrays/PLUGIN/REQ:
+
+		arrays		libhackerlab
+
+	chars/PLUGIN/REQ:
+
+		chars		libhackerlab
+>>>
+
+  In `hackerlab', set the variable `otherdirs' before including
+  `library.mk':
+
+<<<
+	hackerlab/Makefile.in:
+
+		otherdirs	:=	arrays chars
+		include $(makefiles)/library.mk
+		include $(makefiles)/install-library.mk
+>>>
+
+
+* Installing the Header Files
+
+  All three directories in the preceeding examples, `arrays', `chars',
+  and `hackerlab', may contain `.h' files that ought to be installed.
+  You can install all the `.h' files in a directory with the
+  `install-includes.mk' fragment:
+
+<<<
+	include $(makefiles)/install-includes.mk
+>>>
+
+  That installs headers in `$(prefix)/include/$(thisdir)'.  For 
+  example, if my source tree contains:
+
+<<<
+	src/
+	  src/hackerlab/
+	    src/hackerlab/arrays/
+	      src/hackerlab/arrays/ar.h
+>>>
+
+  that will install `$(prefix)/include/hackerlab/arrays/ar.h'.
+
+  In your source files, use multipart-paths for include files:
+
+<<<
+	#include "hackerlab/arrays/ar.h"
+>>>
+
+  The root of the source tree (and the object tree) are automatically
+  provided as `-I' arguments to the *C* compiler.
+
+
+* Rationales
+
+  *Why install header files in nested directories?*  There are a few
+  reasons.  First, it is convenient for developers to keep the header
+  files near the source to which they relate.  In the examples above,
+  presumably `ar.h' contains declarations for functions defined in
+  `ar.c' -- so those two files should reside in the same source
+  directory.  Second, the namespace of `include' directories is
+  _already_ overcrowded.  You might want, for example, your program to
+  have a header named `time.h', but on most systems, that name
+  conflicts not only with `<time.h>', but also `<sys/time.h>'.  So,
+  it's time to start making the norm to use subdirectories for header
+  files.
+
+
+
+%%% tag: Tom Lord Thu May  9 12:46:02 2002 (PackageFramework.d/BuildingLibraries)
+%%%

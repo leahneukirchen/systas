@@ -1,0 +1,35 @@
+Revision: dists--lord--1.0--patch-29
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Wed May  1 23:40:24 PDT 2002
+Standard-date: 2002-05-02 06:40:24 GMT
+Summary: merge with `devo'
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-26
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-27
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-28
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-29
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-29
+Modified-files: =RELEASE-ID.d/=RELEASE-ID.arch
+  =RELEASE-ID.d/=RELEASE-ID.hackerlab ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-26
+  lord@regexps.com--2002/dists--devo--1.0--patch-27
+  lord@regexps.com--2002/dists--devo--1.0--patch-28
+  lord@regexps.com--2002/dists--devo--1.0--patch-29
+  lord@regexps.com--2002/dists--lord--1.0--patch-29
+
+Patches applied:
+
+  * lord@regexps.com--2002/dists--devo--1.0--patch-29
+     updated the arch release ID
+
+  * lord@regexps.com--2002/dists--devo--1.0--patch-28
+     updated release ids for arch and hackerlab
+
+  * lord@regexps.com--2002/dists--devo--1.0--patch-27
+     updated the arch release id
+
+  * lord@regexps.com--2002/dists--devo--1.0--patch-26
+     merge from `lord'
+

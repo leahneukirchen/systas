@@ -1,0 +1,21 @@
+Revision: dists--lord--1.0--patch-6
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sun Jan 13 17:10:15 PST 2002
+Standard-date: 2002-01-13
+Summary: added =RELEASE-ID files
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-3
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-6
+  =RELEASE-ID.d/=RELEASE-ID.arch
+  =RELEASE-ID.d/=RELEASE-ID.ftp-utils
+  =RELEASE-ID.d/=RELEASE-ID.hackerlab
+  =RELEASE-ID.d/=RELEASE-ID.systas =RELEASE-ID
+New-directories: =RELEASE-ID.d
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-3
+  lord@regexps.com--2002/dists--lord--1.0--patch-6
+
+added =RELEASE-ID files
+

@@ -1,0 +1,14 @@
+@need 3200
+
+@node Continuations
+@chapter Continuations
+
+Systas Scheme provides the standard function
+@code{call-with-current-continuation}.
+
+
+The current implementation of that function is slow.  Avoid using it.
+
+
+
+

@@ -1,0 +1,26 @@
+/* tag: Tom Lord Tue Dec  4 14:57:14 2001 (character-and-string.doc)
+ */
+/************************************************************************
+ *(h0 "Eight-bit Characters and Strings")
+ * 
+ * \INTERFACES DESCRIBED IN THIS CHAPTER ARE QUITE UNSTABLE/
+ * 
+ * The functions in this section operate on 8-bit characters (values
+ * of type `char' or `t_uchar') and strings of such characters.
+ * 
+ * \NOTE:/ Internationalized character and string functions are not
+ * included with this release.  Future releases will include such
+ * functions in addition to those documented here.
+ */
+/*(menu)
+ */
+
+/*(include-documentation "char-class.c")
+ */
+
+/*(include-documentation "char-name.c")
+ */
+
+/*(include-documentation "str.c")
+ */
+

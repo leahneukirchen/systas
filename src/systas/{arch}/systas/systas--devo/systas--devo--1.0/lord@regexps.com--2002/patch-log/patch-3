@@ -1,0 +1,25 @@
+Revision: systas--devo--1.0--patch-3
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri Jan 18 01:38:07 PST 2002
+Standard-date: 2002-01-18
+Summary: merge from `lord'
+Keywords: 
+New-files: {arch}/systas/systas--devo/systas--devo--1.0/lord@regexps.com--2002/patch-log/patch-3
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-5
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-6
+Modified-files: =NEWS ChangeLog
+  ChangeLog.d/lord@regepx.com--2002/ChangeLog.lord--1.0
+  libsystas/stime.c libsystas/system.c
+New-patches: lord@regexps.com--2002/systas--devo--1.0--patch-3
+  lord@regexps.com--2002/systas--lord--1.0--patch-5
+  lord@regexps.com--2002/systas--lord--1.0--patch-6
+
+Patches applied:
+
+  * lord@regexps.com--2002/systas--lord--1.0--patch-6
+     tweaked =NEWS file
+
+  * lord@regexps.com--2002/systas--lord--1.0--patch-5
+     nit city and (trivial) merge from `devo'
+

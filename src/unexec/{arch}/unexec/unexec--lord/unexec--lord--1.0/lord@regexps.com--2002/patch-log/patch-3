@@ -1,0 +1,31 @@
+Revision: unexec--lord--1.0--patch-3
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon May 13 14:57:01 PDT 2002
+Standard-date: 2002-05-13 21:57:01 GMT
+Summary: working on linux port
+Keywords: 
+New-files: {arch}/unexec/unexec--lord/unexec--lord--1.0/lord@regexps.com--2002/patch-log/patch-3
+  libunexec/unexelf2.c
+Modified-files: libunexec/unexelf.c
+New-patches: lord@regexps.com--2002/unexec--lord--1.0--patch-3
+
+
+*** added files
+ 
+    ./libunexec/unexelf2.c
+ 
+	A less hacked-up version of the raw file from
+	emacs since it looks like I broke something
+	in unexelf.c
+
+
+*** patched regular files
+
+**** ./libunexec/unexelf.c
+
+	use MAP_PRIVATE for the output file -- that _might_ be 
+	what's broken about unexelf.c
+
+
+

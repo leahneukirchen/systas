@@ -1,0 +1,10 @@
+@need 3200
+
+@node Identifier Index
+@centerchap Identifier Index
+
+
+@printindex xa
+
+@sp 3
+

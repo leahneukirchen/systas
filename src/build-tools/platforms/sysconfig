@@ -1,0 +1,139 @@
+#!/bin/sh
+# 
+# sysconfig - Pick a config file, run it, emit config variables
+#
+################################################################
+# Copyright (C) 2002 Tom Lord
+# 
+# See the file "COPYING" for further information about
+# the copyright and warranty status of this work.
+# 
+
+if test "$#" != 1 ; then
+  printf "usage: sysconfig canonical-system-name\n" 1>&2
+  printf "\n" 1>&2
+  exit 2
+fi
+
+system="$1"
+
+################################################################
+# Pick a Config File
+# 
+################################################################
+
+config_file="`\"$config_shell\" $srcdir/build-tools/platforms/pickconfig \"$system\"`"
+
+if test -z "$config_file" ; then
+  exit 0
+fi
+
+################################################################
+# Establish Default Values
+# 
+################################################################
+
+string()
+{
+  var="$1"
+  default="$2"
+
+  eval "${var}=\"${default}\""
+}
+
+binary()
+{
+  var="$1"
+  default="$2"
+
+  eval "${var}=\"${default}\""
+}
+
+. "$srcdir/build-tools/platforms/vars"
+
+################################################################
+# Get the System Specific Values
+# 
+################################################################
+
+. "$srcdir/build-tools/platforms/configs/$config_file"
+
+
+################################################################
+# Output Lines for the Options File
+# 
+################################################################
+
+string()
+{
+  var="$1"
+  default="$2"
+
+  value_exp="printf %s \"\$$var\""
+  value="`eval \"$value_exp\"`"
+
+  opt_var="`printf %s \"$var\" | sed -e 's/_/-/g'`"
+
+  if test -z "$value" ; then
+    echo 1>&2
+    printf "WARNING: string config variable %s not set for %s\n" "$var" "$system" 1>&2
+    echo 1>&2
+  fi
+
+  if test "$value" = "%none%" ; then
+    value=
+  fi
+
+  printf "string %s=%s\\n" "$opt_var" "$value"
+}
+
+
+binary()
+{
+  var="$1"
+  default="$2"
+
+  value_exp="printf %s \"\$$var\""
+  value="`eval \"$value_exp\"`"
+
+  opt_var="`printf %s \"$var\" | sed -e 's/_/-/g'`"
+
+  if test -z "$value" ; then
+    echo 1>&2
+    printf "WARNING: binary config variable %s not set for %s\n" "$var" "$system" 1>&2
+    echo 1>&2
+  fi
+
+  case "$value" in
+    # default values
+    #
+    %y% | %yes% | %true% | %1%)		value=1
+    					;;
+
+    %n% | %no% | %false% | %0%)		value=0
+    					;;
+  
+
+    # explicit values
+    #
+    y | yes | true | 1)	value=1
+    			;;
+
+    n | no | false | 0)	value=0
+    			;;
+
+    *)			echo 1>&2
+			printf "ERROR: binary config variable %s has unrecognized value" "$var" 1>&2
+			printf "  system=%s\n" "$system" 1>&2
+			printf "  value=%s\n" "$value" 1>&2
+			echo 1>&2
+			exit 1
+			;;
+  esac
+
+  printf "binary %s=%s\\n" "$opt_var" "$value"
+}
+
+
+. "$srcdir/build-tools/platforms/vars"
+

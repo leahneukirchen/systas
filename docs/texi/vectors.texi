@@ -1,0 +1,360 @@
+@need 3200
+
+@node Vectors
+@chapter Vectors
+
+A vector is an array of objects, addressed by successive integers
+starting with @code{0}, in which elements can be referenced or set in a
+single, efficient operation.
+
+
+Vectors are written this way:
+
+@example
+@group
+     #(a b c)        ; a three element vector
+@end group
+@group
+@end group
+@end example
+
+Weak vectors and weak hash tables are special kind of vector
+which interact with the garbage collector in particular ways.
+See x-ref:@geindex 
+@dfn{}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{vector?}@fuindex vector?
+@*
+@example
+@group
+(vector? obj)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is a vector, @code{#f} otherwise.
+
+
+@code{#t} is returned if @code{obj} is a weak vector or weak hash table.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{vector-length}@fuindex vector-length
+@*
+@example
+@group
+(vector-length vec)
+@end group
+@group
+@end group
+@end example
+
+Return the number of elements in the vector @code{vec}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{vector-ref}@fuindex vector-ref
+@*
+@example
+@group
+(vector-ref vec n)
+@end group
+@group
+@end group
+@end example
+
+Return the @code{n}th element of vector @code{vec}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{vector-set!}@fuindex vector-set!
+@*
+@example
+@group
+(vector-set! vector n value)
+@end group
+@group
+@end group
+@end example
+
+Set the @code{n}th element of vector @code{vector} to @code{value}.
+
+
+Return @code{vector}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{vector=?}@fuindex vector=?
+@*
+@example
+@group
+(vector=? a b :optional =)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{a} and @code{b} are equal size vectors containing @code{equal?}
+elements.  If @code{=} is specified, it is used to compare elements:
+
+@example
+@group
+     (= vector-a-elt vector-b-elt)
+@end group
+@group
+@end group
+@end example
+@need 3200
+
+@section Making Vectors
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{make-vector}@fuindex make-vector
+@*
+@example
+@group
+(make-vector n fill multiple?)
+@end group
+@group
+@end group
+@end example
+
+Create a new vector with @code{n} elements, initialized with @code{fill}
+or () if @code{fill} is not supplied.
+
+
+If @code{multiple?} is supplied and not @code{#f}, then @code{fill} is interpreted
+as a list of initializers.  If there are too few elements in that
+list, the remaining elements of the vector are initialized to @code{()}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{vector-copy}@fuindex vector-copy
+@*
+@example
+@group
+(vector-copy v)
+@end group
+@group
+@end group
+@end example
+
+Return a copy of vector @code{v}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{vector}@fuindex vector
+@*
+@example
+@group
+(vector . elts)
+@end group
+@group
+@end group
+@end example
+
+Construct a new vector containing @code{elts}.
+
+
+
+
+@need 3200
+
+@section Modifying Vectors
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{vector-fill!}@fuindex vector-fill!
+@*
+@example
+@group
+(vector-fill! vector fill)
+@end group
+@group
+@end group
+@end example
+
+Replace all elements of @code{vector} with @code{fill}.
+
+
+Return @code{vector}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{vector-move-left!}@fuindex vector-move-left!
+@*
+@example
+@group
+(vector-move-left! from-vector start end to-vector destination)
+@end group
+@group
+@end group
+@end example
+
+Copy elements from the @code{from-vector} to the @code{to-vector}.  Return
+@code{to-vector}.
+
+
+The @code{start} element through the @code{(- end 1)} element replace
+elements of the @code{to-vector} beginning at position @code{destination}.
+The @code{start} element is copied first and elements are copied in
+order.
+
+
+It is an error if any of the subscripts are out of range.
+
+
+@code{from-vector} and @code{to-vector} may be the same.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{vector-move-right!}@fuindex vector-move-right!
+@*
+@example
+@group
+(vector-move-right! from-vector start end to-vector destination)
+@end group
+@group
+@end group
+@end example
+
+Copy elements from the @code{from-vector} to the @code{to-vector}.  Return
+@code{to-vector}.
+
+
+The @code{start} element through the @code{(- end 1)} element replace
+elements of the @code{to-vector} beginning at position @code{destination}.
+The @code{(- end 1)} element is copied first and elements are copied
+in reverse order.
+
+
+@code{from-vector} and @code{to-vector} may be the same.
+
+
+
+
+@need 3200
+
+@section Vector <-> List Conversions
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{vector->list}@fuindex vector->list
+@*
+@example
+@group
+(vector->list vector)
+@end group
+@group
+@end group
+@end example
+
+Return a list containing the elements of @code{vector}, in order.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{list->vector}@fuindex list->vector
+@*
+@example
+@group
+(list->vector elts)
+@end group
+@group
+@end group
+@end example
+
+Construct a new vector containing the members of the list @code{elts}.
+
+
+
+
+@need 3200
+
+@section Vector Iterators
+
+These procedures iterate over vector elements.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{vector-map}@fuindex vector-map
+@*
+@example
+@group
+(vector-map proc vec)
+@end group
+@group
+@end group
+@end example
+
+Return a new vector with as many elements as @code{vec}, with each
+element at index @code{n} being the value of:
+
+@example
+@group
+     (proc (vector-ref vec n))
+@end group
+@group
+@end group
+@end example
+
+Iteration is guaranteed to be in-order beginning at element @code{0}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{vector-for-each}@fuindex vector-for-each
+@*
+@example
+@group
+(vector-for-each proc vec)
+@end group
+@group
+@end group
+@end example
+
+For each element at index @code{n} of @code{vec}, call:
+
+@example
+@group
+     (proc (vector-ref vec n))
+@end group
+@group
+@end group
+@end example
+
+@noindent
+discarding its return value.
+
+
+Iteration is guaranteed to be in-order beginning at element @code{0}.
+
+
+
+
+@need 3200
+
+@section Rationale -- Vectors
+
+Systas simply follows standard Scheme here.
+
+
+
+
+
+
+

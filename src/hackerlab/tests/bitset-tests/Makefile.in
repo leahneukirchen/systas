@@ -1,0 +1,17 @@
+# tag: Tom Lord Tue Dec  4 14:52:15 2001 (bitset-tests/Makefile.in)
+#
+
+tested-headers		:=	  bits.h \
+				  bits-print.h \
+				  bitset-tree.h \
+				  bitset-tree-print.h \
+				  bitset.h \
+				  bitset-print.h \
+				  uni-bits.h
+
+test-headers		:=	$(addprefix hackerlab/bitsets/, $(tested-headers))
+
+libs			:=	$(objroot)/hackerlab/libhackerlab/libhackerlab.a -lm
+
+include $(makefiles)/unit-tests.mk
+

@@ -1,0 +1,38 @@
+# tag: Tom Lord Tue Dec  4 14:52:21 2001 (os-tests/Makefile.in)
+#
+
+tested-headers	:=	  	  arpa/inet.h \
+				  char-class-locale.h \
+				  char-cmp-locale.h \
+				  dirent.h \
+				  errno.h \
+				  errno-to-string.h \
+				  exit-status.h \
+				  exit.h \
+				  fcntl.h \
+				  limits.h \
+				  malloc.h \
+				  math.h \
+				  netdb.h \
+				  netinet/in.h \
+				  pwd.h \
+				  setjmp.h \
+				  signal.h \
+				  stdarg.h \
+				  stddef.h \
+				  stdlib.h \
+				  sys/socket.h \
+				  sys/stat.h \
+				  sys/time.h \
+				  sys/types.h \
+				  sys/un.h \
+				  sys/wait.h \
+				  unistd.h \
+				  utime.h
+
+test-headers		:=	$(addprefix hackerlab/os/, $(tested-headers))
+
+libs			:=	$(objroot)/hackerlab/libhackerlab/libhackerlab.a -lm
+
+include $(makefiles)/unit-tests.mk
+

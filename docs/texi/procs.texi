@@ -1,0 +1,237 @@
+@need 3200
+
+@node Procedures
+@chapter Procedures
+
+Procedures are those objects which the evaluator knows how to apply to
+arguments.  Built-in functions are procedures as are any functions
+defined by programs.
+
+
+A procedure is distinct from the name it is given in any particular context.  
+Thus the symbol `'+' and the primitive procedure bound to the variable called
+@code{+} are distinct objects.
+
+
+Every procedure has an associated property list (association list).  
+The property @geindex procedure-print-name
+@dfn{procedure-print-name}, if it is not @code{#f}, is used when 
+displaying or writing a procedure.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{procedure?}@fuindex procedure?
+@*
+@example
+@group
+(procedure? obj)
+SCM scm_procedure_p (SCM obj);
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is a procedure, @code{#f} otherwise.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{procedure-properties}@fuindex procedure-properties
+@*
+@example
+@group
+(procedure-properties procedure)
+SCM scm_procedure_properties (SCM proc);
+@end group
+@group
+@end group
+@end example
+
+Return the property list associated with @code{procedure}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{set-procedure-properties!}@fuindex set-procedure-properties!
+@*
+@example
+@group
+(set-procedure-properties! procedure list)
+SCM scm_set_procedure_property_x (SCM proc, SCM new_val);
+@end group
+@group
+@end group
+@end example
+
+Set the property list associated with @code{procedure}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{procedure-property}@fuindex procedure-property
+@*
+@example
+@group
+(procedure-property procedure property-name)
+SCM scm_procedure_property (SCM proc, SCM property);
+@end group
+@group
+@end group
+@end example
+
+Return the named property (or @code{#f}) of @code{procedure}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{set-procedure-property!}@fuindex set-procedure-property!
+@*
+@example
+@group
+(set-procedure-property! procedure property-name value)
+SCM scm_set_procedure_properties_x (SCM proc,
+                                    SCM key,
+                                    SCM value);
+@end group
+@group
+@end group
+@end example
+
+Set the named property of @code{procedure}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{closure?}@fuindex closure?
+@*
+@example
+@group
+(closure? obj)
+@end group
+@group
+@end group
+@end example
+
+You probably don't want to use this function.  Use @code{procedure?}
+instead.  This function is for internal use.
+
+
+Return @code{#t} of @code{obj} is a closure, @code{#f} otherwise.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{closure-code}@fuindex closure-code
+@*
+@example
+@group
+(closure-code obj)
+@end group
+@group
+@end group
+@end example
+
+This function is for internal use.  It returns the code
+of a closure.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{closure-environment}@fuindex closure-environment
+@*
+@example
+@group
+(closure-environment obj)
+@end group
+@group
+@end group
+@end example
+
+This function is for internal use.  It returns the environment
+of a closure.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{scm_noop}@fuindex scm_noop
+@*
+@example
+@group
+(noop . args)
+@end group
+@group
+@end group
+@end example
+
+Do nothing.  Return the first argument or @code{#f}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{noop2}@fuindex noop2
+@*
+@example
+@group
+(noop2 . args)
+@end group
+@group
+@end group
+@end example
+
+Do nothing.  Return the second argument or @code{#f}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{noop3}@fuindex noop3
+@*
+@example
+@group
+(noop3 . args)
+@end group
+@group
+@end group
+@end example
+
+Do nothing.  Return the third argument or @code{#f}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{noop4}@fuindex noop4
+@*
+@example
+@group
+(noop4 . args)
+@end group
+@group
+@end group
+@end example
+
+Do nothing.  Return the fourth argument or @code{#f}.
+
+@need 3200
+
+@section Rationale -- Procedures
+
+@code{procedure?} comes from standard Scheme.
+
+
+@code{procedure-properties} and related procedures have no particular
+rationale -- they might be removed in a future release.
+
+
+@code{closure?}, @code{closure-code}, and @code{closure-environment} are principally
+debugging aids.  They may or may not have other uses in the future.
+
+
+The @code{noop} family of procedures are surprisingly handy when programming
+in a functional style.
+
+
+
+
+
+
+

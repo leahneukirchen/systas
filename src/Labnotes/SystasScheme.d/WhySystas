@@ -1,0 +1,66 @@
+
+!		Why Choose systas Scheme?
+
+
+Below is a list of some strong points of this implementation.  A
+companion list considers the question WhyNotSystas.
+
+
++ posix system calls	:::	the entire Posix system call interface
+				is provided.  (Pedants will accurately note
+				that there is no such thing as "the
+				Posix system call interface" -- what I 
+				mean is that all of the Posix C
+				binding that we usually think of as
+				system calls (e.g. `sync')  or
+				near-system-calls (e.g. `opendir') are
+				available as procedures in systas
+				Scheme.)
+
+
++ shared substrings	:::	systas does less string copying
+				than many implementations because
+				it has ``shared substrings'' -- strings
+				which share data with other strings.
+				This makes it good at heavy-duty
+				text processing.
+
+
++ regexps galore	:::	systas has a very fancy interface to
+				the Posix functions `regcomp' and
+				`regexec' as well as a number of 
+				handy-but-nonstandard regexp-related
+				functions.
+
+
++ unexec		:::	there is an `unexec' feature for
+				creating fast-starting executables
+				from already-initialized systas 
+				processes
+
++ shell programming	:::	systas has an interpreter for SCSH-style
+				process forms and support for 
+				job-controlled sub-processes.  It also
+				has libraries for filename manipulation
+				and other common unix-ish tasks.
+
++ interesting plans	:::	future developments might make systas 
+				even more interesting (TodoList).
+
++ nice details		:::	the libraries and built-in functions
+				to systas have lots of little details
+				that make it a pleasure to program
+				in the systas dialect as compared to
+				raw """RnRS.
+
++ space efficient data	:::	cons pairs and many other types occupy
+				two machine words (8 bytes on most
+				machines).  Small integers,
+				characters, and most atomic values
+				(e.g. `#t' and `#f') occupy one
+				machine word.
+				
+
+---
+%%% tag: Tom Lord Thu May 16 01:36:52 2002 (SystasScheme.d/WhySystas)
+%%%

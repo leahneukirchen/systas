@@ -1,0 +1,380 @@
+<html>
+<head>
+<title>Weak Vectors and Weak Hash Tables</title>
+</head>
+<body>
+
+<a name="Weak_Vectors_and_Weak_Hash_Tables"></a>
+
+
+
+<h2 align=center>Weak Vectors and Weak Hash Tables</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="struct.html#Structures">Structures</a></br>
+
+<b>prev: </b><a href="hashtab.html#Hash_Tables">Hash Tables</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>Normally, if object A references object B, then object B is
+guaranteed to exist for as long as A does.  <em>
+<a name="index-pt:0"></a>
+
+Weak references
+</em>
+ are
+the exception to that rule.
+</p><p>An object A may weakly reference an object B, in which case B might
+cease to exist before A does.  If that happens, A's reference to B
+is removed.  The rule is that when all the references to an object
+are weak references, the system is free (but not obligated) to
+destroy the object and remove the references at any time.  If any
+reference to an object is not a weak reference (including the
+implicit reference of using the object as an anonymous intermediate
+value of a complex expression), then the object is protected and
+all references to the object, including weak references, will
+continue to exist.
+</p><p>There are several types in Systas that hold weak references to
+other objects.  These types are all vector-like objects - <code>vector?</code>
+
+returns true if passed one of these objects.
+</p><p>A <em>
+<a name="index-pt:1"></a>
+
+weak-vector
+</em>
+ is like a vector, except that the elements of the
+vector are weakly referenced.  When a reference is removed from a
+weak vector, that element is replaced by <code>()</code>
+.
+</p><p>A <em>
+<a name="index-pt:2"></a>
+
+weak-key-hash-table
+</em>
+ is like a vector, except that if any elements
+of the vector are assoc lists, then the <em>keys</em> (cars of key-value
+cells) of those lists are weakly referenced.  When a key is removed
+from such an assoc list because the object it refers to has been
+destroyed, the key-value cell for that key is deleted from the
+assoc list.
+</p><p>A <em>
+<a name="index-pt:3"></a>
+
+weak-value-hash-table
+</em>
+ is like a vector, except that if any
+elements of the vector are assoc lists, then the <em>values</em> (cdrs of
+key-value cells) of those lists are weakly referenced.  When a value is
+removed from such an assoc list because the object it refers to has
+been destroyed, the key-value cell for that value is deleted
+from the assoc list.
+</p><p>A <em>
+<a name="index-pt:4"></a>
+
+doubly-weak-hash-table
+</em>
+ is like a vector, except that if any
+elements of the vector are assoc lists, then both the <em>keys</em> and
+<em>values</em> (cars and cdrs of key-value cells) of those lists are
+weakly referenced.  When a key or value is removed from such an assoc
+list because the object it refers to has been destroyed, the 
+key-value cell for that value is deleted from the assoc list.
+</p><p>The printed representations of these objects are:
+</p><pre>
+     #w( elts... )           ; a weak hash table.
+     #wv( elts... )          ; a weak value hash table.
+     #wk( elts... )          ; a weak key hash table.
+     #wkv( elts... )         ; a doubly weak hash table.
+
+</pre>
+<p><b><u>Function</u> <code><a name="weak-vector?"></a><a name="index-pt:5"></a>
+weak-vector?
+</code></b><br>
+<pre>
+(weak-vector? obj)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is a weak vector, <code>#f</code>
+ otherwise.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="weak-key-hash-table?"></a><a name="index-pt:6"></a>
+weak-key-hash-table?
+</code></b><br>
+<pre>
+(weak-key-hash-table? obj)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is a weak key hash table, <code>#f</code>
+ otherwise.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="weak-value-hash-table?"></a><a name="index-pt:7"></a>
+weak-value-hash-table?
+</code></b><br>
+<pre>
+(weak-value-hash-table? obj)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is a weak value hash table, <code>#f</code>
+ otherwise.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="doubly-weak-hash-table?"></a><a name="index-pt:8"></a>
+doubly-weak-hash-table?
+</code></b><br>
+<pre>
+(doubly-weak-hash-table? obj)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is a doubly weak hash table, <code>#f</code>
+ otherwise.
+</p>
+<br>
+<br>
+<a name="Constructing_Weak_Vectors"></a>
+
+
+
+<h3 align=center>Constructing Weak Vectors</h3>
+
+
+
+
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="make-weak-vector"></a><a name="index-pt:9"></a>
+make-weak-vector
+</code></b><br>
+<pre>
+(make-weak-vector n :optional fill multiple?)
+
+</pre>
+<p>Create a new weak vector of <code>n</code>
+ elements, initialized to <code>fill</code>
+ or
+<code>()</code>
+ if <code>fill</code>
+ is not specified.
+</p><p>If <code>multiple?</code>
+ is supplied and not <code>#f</code>
+, then <code>fill</code>
+ is interpreted
+as a list of initializers.  If there are too few elements in that
+list, the remaining elements are initialized to <code>()</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="weak-vector"></a><a name="index-pt:10"></a>
+weak-vector
+</code></b><br>
+<pre>
+(weak-vector . elts)
+
+</pre>
+<p>Construct a new weak vector containing <code>elts</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="list->weak-vector"></a><a name="index-pt:11"></a>
+list->weak-vector
+</code></b><br>
+<pre>
+(list->weak-vector elts)
+
+</pre>
+<p>Construct a new weak vector containing the members of the list
+<code>elts</code>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<a name="Constructing_Weak_Hash_Tables"></a>
+
+
+
+<h3 align=center>Constructing Weak Hash Tables</h3>
+
+
+
+
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="make-weak-key-hash-table"></a><a name="index-pt:12"></a>
+make-weak-key-hash-table
+</code></b><br>
+<pre>
+(make-weak-key-hash-table n)
+
+</pre>
+<p>Create a weak key hash table with <code>n</code>
+ buckets.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="make-weak-value-hash-table"></a><a name="index-pt:13"></a>
+make-weak-value-hash-table
+</code></b><br>
+<pre>
+(make-weak-value-hash-table n)
+
+</pre>
+<p>Create a weak value hash table with <code>n</code>
+ buckets.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="make-doubly-weak-hash-table"></a><a name="index-pt:14"></a>
+make-doubly-weak-hash-table
+</code></b><br>
+<pre>
+(make-doubly-weak-hash-table n)
+
+</pre>
+<p>Create a doubly weak hash table with <code>n</code>
+ buckets.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<a name="Rationale_--_Weak_References"></a>
+
+
+
+<h3 align=center>Rationale -- Weak References</h3>
+
+
+
+
+
+
+
+
+
+
+<p>Weak references were included to support a style of programming
+with memoization that is not possible without them.
+</p><p>Memoization, weak-references, and garbage collection interact
+nicely: a function can be memoized in a weak hash table without
+leaking storage.  The memo retains only live values.  If only a few
+values would otherwise live, programmers can augment a weak hash
+table with a bounded-size queue of recently memoized values to
+extend the lifetime of a limited number of memoized values.
+</p><p>Without weak refrences, or something equivalent, a memo must either
+grow without bound, or fail to promise <code>eq?</code>
+ results for <code>eq?</code>
+
+arguments.  Consider whether it is possible to implement the
+following without weak references of some kind and without leaking
+storage:
+</p><pre>
+             (define memo (make-doubly-weak-hash-table 509))
+
+</pre>
+<pre>
+             ;; This version of cons always returns 
+             ;; an eq? pair for eq? objects except that
+             ;; the pairs it creates may be garbage
+             ;; collected if they are not otherwise 
+             ;; referenced.
+             ;;
+             (define (cached-cons a b)
+                (let ((prototype (cons a b)))
+                   (or (hash-ref memo prototype)
+                       (hash-set! memo prototype))))
+
+</pre>
+<p>Other systems provide <em>
+<a name="index-pt:15"></a>
+
+weak pointers
+</em>
+ which is conceptually a more
+general facility (though there is no actual difference in
+capability).
+</p><p>Weak vectors and hash tables were provided in Systas to <em>
+<a name="index-pt:16"></a>
+
+optimize
+the common case
+</em>
+ (our most favored uses for weak references) and
+because they happened to be easy to implement.  Had we implemented
+weak pointers and tried to build hash tables from those, the result
+would probably have been much less efficient and less convenient.
+</p><p>Weak pointers may be provided later, if a need for them is
+demonstrated.
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

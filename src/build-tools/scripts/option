@@ -1,0 +1,62 @@
+#!/bin/sh
+# tag: Tom Lord Tue Dec  4 15:08:00 2001 (scripts/option)
+#
+
+# set on entry:
+# 
+# 	$objroot	Where to find the file Options
+# 
+# option option-name
+# 
+# Print the value of the indicated option.  If it is a binary option,
+# print "yes" or "no".  Otherwise, print the literal text of the 
+# option value.
+# 
+
+if test x$objroot = x; then
+  echo "ERROR: objroot not set in `pwd`" 1>&2
+  exit 1
+fi
+
+if test $# -ne 1 ; then
+  echo "ERROR: wrong number of arguments" 1>&2
+  echo "usage: option option-name" 1>&2
+  exit 1
+fi
+
+optname="$1"
+
+asbinary=`grep "binary[ 	][ 	]*$optname=" "$objroot/Options"`
+
+if test ! -z "$asbinary" ; then
+
+  value="`printf '%s\n' \"$asbinary\" | sed -e 's/^[^=]*=//'`"
+
+  case "$value" in 
+    1)		value=yes
+		;;
+    0)		value=no
+		;;
+    *)		echo "ERROR: unrecognized binary option value for $optname: $value" 1>&2
+		exit 1
+  esac
+  echo $value
+  exit 0
+
+fi
+
+
+asstring=`grep "string[ 	][ 	]*$optname=*" "$objroot/Options"`
+
+if test ! -z "$asstring" ; then
+
+  value="`printf '%s\n' \"$asstring\" | sed -e 's/^[^=]*=;//'`"
+  echo $value
+  exit 0
+
+fi
+
+
+echo "ERROR: no such option ($optname)!" 1>&2
+exit 1
+

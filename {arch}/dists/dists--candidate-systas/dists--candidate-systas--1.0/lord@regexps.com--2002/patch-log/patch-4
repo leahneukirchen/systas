@@ -1,0 +1,17 @@
+Revision: dists--candidate-systas--1.0--patch-4
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Tue Jan 15 16:08:20 PST 2002
+Standard-date: 2002-01-15
+Summary: snapped a release configuration 
+Keywords: 
+New-files: {arch}/dists/dists--candidate-systas/dists--candidate-systas--1.0/lord@regexps.com--2002/patch-log/patch-4
+  configs/regexps.com/.arch-ids/release.systas.id
+  configs/regexps.com/release.systas
+New-directories: configs/regexps.com/.arch-ids
+Removed-files: configs/regexps.com/release.systas
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/dists--candidate-systas--1.0--patch-4
+
+Snapped a release configuration.

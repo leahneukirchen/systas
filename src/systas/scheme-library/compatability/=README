@@ -1,0 +1,19 @@
+# tag: Tom Lord Tue Dec  4 15:06:42 2001 (compatability/=README)
+#
+
+These modules are for compatability with other Scheme dialects.
+
+There is nothing systematic about this -- these are just tools I've 
+needed while porting other people's code.
+
+I would not recommend relying on this code -- it might be removed
+in a future release.  If you *really* need something here, consider
+writing a clean implementation just for Systas.
+
+
+	conditionals	-- syntax for conditionals from FPS
+	defrec		-- Olin's `define-record' syntax
+	fluid		-- `let-fluid' and friends
+	format		-- `format', as in Scheme48
+	general-table	-- generalized hash tables, as in Scheme48
+

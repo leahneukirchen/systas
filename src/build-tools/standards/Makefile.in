@@ -1,0 +1,8 @@
+the-pdml-index		:=	standards.pdml-index
+texi-main		:=	standards.texi
+
+include $(makefiles)/library-ps.mk
+include $(makefiles)/library-html.mk
+
+# tag: Tom Lord Sun Mar 10 05:11:21 2002 (standards/Makefile.in)
+#

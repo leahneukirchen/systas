@@ -1,0 +1,50 @@
+# library-test - test for a possible library
+#
+################################################################
+# Copyright (C) 2002 Tom Lord
+# 
+# See the file "COPYING" for further information about
+# the copyright and warranty status of this work.
+# 
+
+
+
+# library-test variable libspec
+#
+# If you can build a (trivial) program with:
+# 
+# 	${CC} -o ,test-proc ,test-proc.c "$libspec"
+# 
+# then output:
+# 
+# 	string VARIABLE=LIBSPEC
+# 
+# otherwise:
+# 
+# 	string VARIABLE=
+# 
+
+
+
+if test $# -ne 2 ; then
+  printf "usage: library-test variable-name library-spec\n" 1>&2
+  exit 1
+fi
+
+variable_name="$1"
+library_spec="$2"
+
+
+rm -f ,test-prog.c
+rm -f ,test-prog
+
+printf "int main (int argc, char * argv[]) { return 0; }" > ,test-prog.c
+
+if ${CC} -o ,test-prog ,test-prog.c "$library_spec" 2> /dev/null > /dev/null ; then
+  printf "string %s=%s\n" "$variable_name" "$library_spec"
+else
+  printf "string %s=\n" "$variable_name"
+fi
+
+# tag: Tom Lord Fri Feb 22 03:22:02 2002 (auto-conf-lib/library-test)
+#

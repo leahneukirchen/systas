@@ -1,0 +1,17 @@
+Revision: dists--devo--1.0--patch-32
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sat May 18 13:20:47 PDT 2002
+Standard-date: 2002-05-18 20:20:47 GMT
+Summary: updated configs for `labnotes'
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-32
+  configs/regexps.com/devo.labnotes
+  configs/regexps.com/release-template.labnotes
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  configs/regexps.com/devo configs/regexps.com/lord
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-32
+
+Updated configs for `labnotes'.
+

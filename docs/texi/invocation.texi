@@ -1,0 +1,45 @@
+@need 3200
+
+@node Invoking Systas
+@chapter Invoking Systas
+
+@code{systas [--eval expression]* [file [other arguments]*]}
+
+
+With no argument, systas enters an interactive read-eval-print
+loop which you can exit by calling @code{(quit)}:
+
+@example
+@group
+     % systas
+     systas> (+ 1 2)
+     3
+     ...
+     systas> (quit)
+     % 
+@end group
+@group
+@end group
+@end example
+
+With arguments, systas interprets each argument in order and then
+invokes the procedure bound to @code{main}.  By default, that procedure
+exits the process with status @code{0}.
+
+
+An argument of the form @code{--eval expression} simply evaluates
+@code{expression}.
+
+
+An argument of the form @code{file} attempts to load that file.  
+
+
+In either case, if an error occurs, systas exits with non-0 status.
+
+
+If @code{main} is invoked, it is passed a list of strings containing
+the @code{other arguments}.
+
+
+
+

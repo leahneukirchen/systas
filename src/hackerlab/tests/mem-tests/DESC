@@ -1,0 +1,49 @@
+# tag: Tom Lord Tue Dec  4 15:05:26 2001 (mem-tests/DESC)
+#
+
+We test the installed header files to make sure they compile.
+
+unit-mem
+	mem_set
+	mem_set0
+		test for a variety of boundary conditions
+
+	mem_move
+		test for a variety of boundary and overlap
+		conditions
+
+	mem_cmp
+		test for a variety of boundary conditions.
+		missing tests for the case when mem_cmp returns 0.
+
+	mem_occurrences
+		test for counting a variety of values
+		and boundary conditions.
+
+
+unit-must-malloc
+	Perform a malloc stress test which consists of a 
+	series of random allocations, reallocations, and frees.
+
+	For historic reasons, this also tests some functions
+	from "flux/char/str.h": str_alloc_cat, str_save_n, 
+	and str_save.
+
+	This doesn't test the underlying malloc very effectively.
+	For example, the contents of allocated regions are not
+	checked for overwrites.
+
+
+unit-alloc-limits
+	Perform a malloc stress test using the `lim_' functions.
+
+	Keep track of the total amount of memory currently allocated.
+	Make sure that if an allocation limit is reached, allocation
+	fails or forces GC, as appropriate.
+
+	Forces the condition of exceeding allocation limits to occur.
+
+	Uses `flux/bugs/test-coverage.h' to ensure that all
+	interesting cases are reached during the random sequence of
+	allocation operations.
+

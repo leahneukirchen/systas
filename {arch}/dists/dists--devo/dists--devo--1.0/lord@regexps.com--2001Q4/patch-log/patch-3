@@ -1,0 +1,14 @@
+Revision: dists--devo--1.0--patch-3
+Archive: lord@regexps.com--2001Q4
+Creator: Tom Lord <lord@regexps.com>
+Date: Wed Jan  2 14:44:57 PST 2002
+Standard-date: 2002-01-02
+Summary: added `piw' to `devo' config
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2001Q4/patch-log/patch-3
+Modified-files: configs/devo
+New-patches: lord@regexps.com--2001Q4/dists--devo--1.0--patch-3
+
+added `piw' to `devo' config (since `piw' is no longer in 
+`libhackerlab').
+

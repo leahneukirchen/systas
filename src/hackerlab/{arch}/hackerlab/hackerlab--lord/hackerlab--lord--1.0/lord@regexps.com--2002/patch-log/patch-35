@@ -1,0 +1,17 @@
+Revision: hackerlab--lord--1.0--patch-35
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu May  2 01:18:00 PDT 2002
+Standard-date: 2002-05-02 08:18:00 GMT
+Summary: fixed an rx bug
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-35
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  rx-posix/re8-parse.c
+New-patches: lord@regexps.com--2002/hackerlab--lord--1.0--patch-35
+
+(rx-posix/re8-parse.c) Oops .. the last aesthetically-based code
+rearrangement actually caused a storage leak -- fixed.
+
+

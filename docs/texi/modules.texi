@@ -1,0 +1,454 @@
+@need 3200
+
+@node An Introduction to Systas Modules
+@chapter An Introduction to Systas Modules
+
+This chapter provides a brief introduction to the Systas module system.
+It is possible to use Systas without worrying about modules, but
+the scheme library distributed with Systas uses this module system.
+
+@need 3200
+
+@section What is a Module?
+
+Modules provide a mechanism for organizing large libraries 
+of Scheme code.
+
+
+A module, in Systas Scheme, is a top level namespace in which
+programs may be evaluated.   Some definitions in a module are
+@code{private} -- meaning that they are only visible within that module.
+Other definitions are @code{public} -- meaning that they may be made
+visible as top-level definitions in other modules.
+
+
+When your program defines a new module, it specifies a list of
+other modules from which to import public definitions.  Here
+is a simple example:
+
+@example
+@group
+     In file "module-a.scm":
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     (define-module (first-module))
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     (define a 1)
+     (define-public b 2)
+@end group
+@group
+@end group
+@end example
+
+@code{first-module} contains two definitions: a private definition for
+@code{a} and a public definition for @code{b}.
+
+@example
+@group
+     In file "second-module.scm":
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     (define-module (second-module))
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     (define-public a 100)
+     (define b 200)
+@end group
+@group
+@end group
+@end example
+
+@code{second-module} does just the opposite: a public definition for
+@code{a}, and a private definition for @code{b}.
+
+
+We can import those definitions in a third module:
+
+@example
+@group
+     In file "test.scm"
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     (define-module (third-module)
+       :use-module (first-module)
+       :use-module (second-module))
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     (display* "the sum of a and b is " 
+               (+ a b)
+               ".\n")
+@end group
+@group
+@end group
+@end example
+
+Now we can run:
+
+@example
+@group
+     % systas test.scm
+     The sum of a and b is 102.
+@end group
+@group
+@end group
+@end example
+
+
+
+@need 3200
+
+@section Module Names
+
+Module names are lists of symbols.  Some example module names are:
+
+@example
+@group
+     (standard list-lib)
+     (standard char-set-lib)
+     (unix filenames)
+@end group
+@group
+@end group
+@end example
+
+By convention, modules are stored under one of the directories
+in the @code{load-path}, at a relative location corresponding to the
+module name.  For example:
+
+@example
+@group
+     module name                     relative file name
+     --------------------------------------------------
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     (standard list-lib)             "standard/list-lib.scm"
+     (standard char-set-lib)         "standard/char-set-lib.scm"
+     (unix filenames)                "unix/filenames.scm"
+@end group
+@group
+@end group
+@end example
+
+
+
+@need 3200
+
+@section The Module Autoloader
+
+The first time a module is mentioned in a program, systas
+searches for a corresponding source file along the @code{load-path}.
+If such a file is found, it is loaded on the presumption that
+it defines the indicated module.
+
+
+If the file doesn't define the indicated module (for example,
+it doesn't begin with @code{define-module}) a warning is printed.
+
+
+The module autoloader makes this attempt at most once per
+module name.  For example, if the autoloader tries to load
+a module, finds the file, starts loading it, but encounters an
+error halfway through, it won't automatically re-load the module
+later.  Instead, you should use a procedure such as @code{load} to 
+re-load the corrected source file.
+
+
+It is usually a mistake to pass the filename of a module file
+as a command line argument to systas, if that module's filename
+corresponds to the module name.  To continue the example above,
+suppose we had defined
+
+@example
+@group
+     In file "fourth-module.scm"
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     (define-module (fourth-module)
+       :use-module (first-module)
+       :use-module (second-module))
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     (display* "the sum of a and b is " 
+               (+ a b)
+               ".\n")
+@end group
+@group
+@end group
+@end example
+
+@noindent
+and then ran @code{% systas fourth-module.scm}.  What would happen?
+Systas would start to read expressions from @code{fourth-module.scm}.
+The first expression is @code{define-module} for module name
+@code{(fourth-module)}.  Evaluating that expression causes the module
+autoloader to be invoked -- so the autoloader searches for, and
+finds, @code{fourth-module.scm}.  The autoloader recursively loads that
+file, causing @code{the sum of a and b...} to be printed.  Finally, the
+command line interpreter continues reading @code{fourth-module.scm},
+causing @code{the sum of a and b...} to be printed a second time.
+
+
+One way to fix this, if you're defining a program to be invoked
+from the command line, is to choose a module name for which there
+is no corresponding filename.  That's why the earlier example used:
+
+@example
+@group
+     In file "test.scm"
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     (define-module (third-module)
+     ...
+@end group
+@group
+@end group
+@end example
+
+Another way to fix this in program scripts is to not use
+@code{define-module} at all, but to use the procedure @code{use} (below)
+instead to import other modules.
+
+
+
+
+@need 3200
+
+@section Defining a Module
+@sp 1
+@need 1750
+@noindent
+@b{* Macro} @code{define-module}@maindex define-module
+@*
+@example
+@group
+(define-module module-name . use-list)
+@end group
+@group
+@end group
+@end example
+
+Create a new module or find an existing module, try to autoload its
+source (if a new module), and make it the current module.
+
+
+@code{module-name} should be a list of symbols.
+
+
+The @code{use-list} is a keyword argument list with any number of
+keyword-value pairs:
+
+@example
+@group
+     :use-module module-name
+@end group
+@group
+@end group
+@end example
+
+The public definitions in each indicated module are made available
+in the module being defined.
+
+
+
+
+@need 3200
+
+@section Definitions Within a Module
+
+When you reference a top-level variable from within a module, but
+your module contains no definition for that variable, the variable
+is inherited from the public definitions of modules in the
+use-list, or from the default built-in variables.
+
+
+When you define a top-level variable in your module, a new variable 
+is created for your module specifically.
+
+
+Continuing the earlier example:
+
+@example
+@group
+     (define-module (third-module)
+       :use-module (first-module)
+       :use-module (second-module))
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     ;; At this point, neither `a' nor `b' are defined
+     ;; in `third-module', so we inherit variables from
+     ;; `first-module' and `second-module'.
+     ;; 
+     ;; The variable `+' is inherited from the built-in 
+@end group
+@group
+     ;; variables.
+     ;; 
+     (display* "the sum of a and b is " 
+               (+ a b)
+               ".\n")
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     ;; We still haven't defined `a' locally, so this 
+     ;; `set!' modifies the public variable in `second-module'.
+     ;; 
+     (set! a 9999)
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     ;; But now we define `b' locally.  After this, `b' in 
+     ;; `first-module' and `b' in `third-module' are two 
+     ;; separate variables.  In `first-module', `b' is still 2.
+     ;; In `third-module', it is 8888:
+     ;; 
+     (define b 8888)
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     ;; Now this expression will print:
+     ;; 
+     ;;      the sum of a and b is 18887.
+     ;; 
+     (display* "the sum of a and b is " 
+               (+ a b)
+               ".\n")
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{define-public}@fuindex define-public
+@*
+@example
+@group
+(define-public name value)
+(define-public (name formals) value)
+(define-public ((name formals) formals) value)
+...
+@end group
+@group
+@end group
+@end example
+
+Create a public definition in the current module.
+
+
+
+
+@need 3200
+
+@section Procedural Module Facilities
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{in}@fuindex in
+@*
+@example
+@group
+(in module-name)
+@end group
+@group
+@end group
+@end example
+
+Find or create (autoloading if possible) the indicated module.
+Make that the current module.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{use}@fuindex use
+@*
+@example
+@group
+(use module-name)
+@end group
+@group
+@end group
+@end example
+
+Find or create (autoloading if possible) the indicated module.
+Add that module to the use-list of the current module.
+
+
+
+
+@need 3200
+
+@section Rationale -- Modules
+
+Other implementations provide much more advanced module systems,
+providing facilities such as variable renaming, selective
+importing, and multi-module mixin-style instantiation.
+
+
+The current implementation provides ample low-level facilities
+to implement any of those facilities.
+
+
+The minimal facilities described here have proven to be comfortable
+and effective for organizing the Systas Scheme Library and for 
+interactive programming, especially with emacs.
+
+
+
+
+
+
+

@@ -1,0 +1,40 @@
+Revision: package-framework--devo--1.0--patch-14
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri Mar 22 05:52:31 PST 2002
+Standard-date: 2002-03-22 13:52:31 GMT
+Summary: merge from `lord'
+Keywords: 
+New-files: {arch}/package-framework/package-framework--devo/package-framework--devo--1.0/lord@regexps.com--2002/patch-log/patch-14
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-23
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-24
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-25
+  build-tools/standards/PLUGIN/.arch-ids/REQ.id
+  build-tools/standards/intro.doc
+  build-tools/standards/index.doc
+  build-tools/standards/standards.doc
+  build-tools/standards/Makefile.in
+  build-tools/standards/document-license.doc
+  build-tools/standards/PLUGIN/REQ
+New-directories: build-tools/standards build-tools/standards/PLUGIN
+  build-tools/standards/PLUGIN/.arch-ids
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  PLUGIN/options build-tools/=TODO
+  build-tools/config-info/config-info.c
+New-patches: lord@regexps.com--2002/package-framework--devo--1.0--patch-14
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-23
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-24
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-25
+
+Patches applied:
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-25
+     removed arch-utils
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-24
+     make the config-info bug address a configuration parameter
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-23
+     merge with `devo'
+

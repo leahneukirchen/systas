@@ -1,0 +1,84 @@
+
+!	    Tools for Building Programs That Call `unexec'
+
+	  
+		   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+						+++
+						bg: #d5ffff
+
+
+		   *the `unexec' library*
+
+ 		   *project home page*: http://www.regexps.com/unexec.html
+
+		   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Background
+
+  [`libunexec'] is an unexec implementation snarfed from [GNU Emacs],
+  then "cooked" a little bit.
+
+  Briefly, `unexec' takes a running program and turns it into an
+  executable.  When you run that executable, it's state is (more or
+  less) the same as when the original program called `unexec'.  You
+  can use this trick to speed up start-up times for programs that do a
+  lot of initialization, for example.
+
+  `unexec' is one of those things that shouldn't work, but can be made
+  to work anyway.  Have you ever cleaned out an undermaintained
+  basement in a house where people have lived for decades?  It's ugly,
+  and messy, and contains lots of odds and ends that nobody can
+  remember the origin of or reliably assess the value of.  What should
+  you keep?  What can you throw out?  What are you afraid to touch
+  :-)?  The `unexec' implementations are part of Emacs' basement.
+
+  `unexec' implementations depend on the gross (highly non-portable)
+  details of how system libraries are arranged.  They also depend on
+  the details of executable-file formats (and good luck finding
+  convenient and lucid documentation for those).
+
+  This package is an attempt to turn `unexec' into something
+  reasonably clean and portable (or rather -- widely ported) so that
+  more programs than just Emacs can use it.  The basic strategy is to
+  grab an implementation from Emacs, clean it up, and add it to this
+  library.
+
+
+v================================
+				+++
+				width: 100
+				bg: #d5ffff
+				headers: no
+
+
+			 + __project info__ +
+
++ [`libunexec']	:::	the project home page
+
++ [downloading] :::	the FTP area where `unexec' lives
+
++ ReleaseNews	:::	what's new?
+
+
+			+ __documentation__ +
+
++ UsingUnexec	:::	a quick guide to using `unexec' in your
+			programs
+
++ PortingUnexec	:::	adding support for new platforms
+
+^================================
+
+
+*references*
+
+[GNU Emacs]:: http://www.gnu.org/software/emacs
+
+[downloading]:: ftp://www.regexps.com/pub/src/unexec/
+
+[`libunexec']:: http://www.regexps.com/unexec.html
+
+---
+
+%%% tag: Tom Lord Tue May 14 10:29:32 2002 (LibUnexec.d/IntroTopic)
+%%%

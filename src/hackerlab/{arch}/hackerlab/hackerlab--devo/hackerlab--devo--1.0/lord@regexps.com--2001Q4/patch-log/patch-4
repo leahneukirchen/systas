@@ -1,0 +1,14 @@
+Revision: hackerlab--devo--1.0--patch-4
+Archive: lord@regexps.com--2001Q4
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Jan  3 17:54:44 PST 2002
+Standard-date: 2002-01-03
+Summary: sin_len
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--2001Q4/patch-log/patch-4
+Modified-files: ChangeLog vu-network/url-socket.c
+New-patches: lord@regexps.com--2001Q4/hackerlab--devo--1.0--patch-4
+
+It appears to be acceptable to ignore `sin_len' in `url-socket.c' and,
+since `sin_len' isn't portable, that's what I've done.
+

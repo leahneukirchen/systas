@@ -1,0 +1,14 @@
+Revision: unexec--lord--1.0--patch-6
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri May 17 16:12:35 PDT 2002
+Standard-date: 2002-05-17 23:12:35 GMT
+Summary: updated =NEWS
+Keywords: 
+New-files: {arch}/unexec/unexec--lord/unexec--lord--1.0/lord@regexps.com--2002/patch-log/patch-6
+  .arch-ids/=NEWS.id =NEWS
+New-directories: .arch-ids
+New-patches: lord@regexps.com--2002/unexec--lord--1.0--patch-6
+
+Updated =NEWS.
+

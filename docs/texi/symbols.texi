@@ -1,0 +1,460 @@
+@need 3200
+
+@node Symbols
+@chapter Symbols
+
+Symbols are a kind of read-only string.  Symbols are used as
+variable names and for other purposes.
+
+
+Normally symbol names are made from only these characters:
+
+@example
+@group
+     a-z
+     A-Z,
+     0-9
+     -_!@@$%^~&*=+|:/?><,.
+@end group
+@group
+@end group
+@end example
+
+For example:
+
+@example
+@group
+     abc
+     2much
+     set!
+     +
+@end group
+@group
+@end group
+@end example
+
+A symbol name must not begin with the character @code{:} (unless the
+@code{#s} syntax describe below is used).  If you write what appears to
+be a symbol name but it begins with a @code{:}, you'll get a keyword,
+not a symbol (see @ref{Keywords}).
+
+@example
+@group
+     (symbol? 'this-is-a-symbol)     => #t
+     (symbol? ':this-is-not)         => ()
+@end group
+@group
+@end group
+@end example
+
+Except in obscure cases, the same name always names the same
+symbol (see @ref{Symbol Hash-tables}).
+
+@example
+@group
+     (eq? 'abc
+          'abc
+          (string->symbol "abc")
+          (symbol-append "a" 'bc))
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     => #t
+@end group
+@group
+@end group
+@end example
+
+Symbols are read in a case sensitive manner:
+
+@example
+@group
+     (eq? 'ABC 'abc) => ()
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{symbol?}@fuindex symbol?
+@*
+@example
+@group
+(symbol? obj)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is a symbol, @code{#f} otherwise.
+
+@menu
+* Converting Between Strings and Symbols::
+* Symbol Constructors::
+* Syntax for Unusual Symbol Names::
+* Symbol Hash-tables::
+* Rationale -- Symbols::
+@end menu
+
+@need 3200
+
+@node Converting Between Strings and Symbols
+@section Converting Between Strings and Symbols
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{symbol->string}@fuindex symbol->string
+@*
+@example
+@group
+(symbol->string symbol)
+@end group
+@group
+@end group
+@end example
+
+Return a new string which is @code{string=?} to @code{symbol}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{string->symbol}@fuindex string->symbol
+@*
+@example
+@group
+(string->symbol string)
+@end group
+@group
+@end group
+@end example
+
+Return a symbol which is @code{string=?} to @code{string}.
+
+
+
+
+@need 3200
+
+@node Symbol Constructors
+@section Symbol Constructors
+
+These procedures construct symbols.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{symbol}@fuindex symbol
+@*
+@example
+@group
+(symbol . args)
+@end group
+@group
+@end group
+@end example
+
+Simply:
+
+@example
+@group
+     (string->symbol (apply string args))
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{symbol-append}@fuindex symbol-append
+@*
+@example
+@group
+(symbol-append . args)
+@end group
+@group
+@end group
+@end example
+
+Simply:
+
+@example
+@group
+     (string->symbol (apply string-append args))
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{list->symbol}@fuindex list->symbol
+@*
+@example
+@group
+(list->symbol . args)
+@end group
+@group
+@end group
+@end example
+
+Simply:
+
+@example
+@group
+     (string->symbol (apply list->string args))
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{gensym}@fuindex gensym
+@*
+@example
+@group
+(gensym . name-parts)
+@end group
+@group
+@end group
+@end example
+
+Construct a new, ordinary symbol.
+
+
+If any @code{name-parts} are specified, concatenate them 
+using @code{string-append} to form the root of the name of
+the new symbol, adding additional characters as necessary
+to generate a new symbol name.
+
+
+
+
+@need 3200
+
+@node Syntax for Unusual Symbol Names
+@section Syntax for Unusual Symbol Names
+
+Symbol names containing unusual characters can be written as @geindex #s
+@dfn{#s},
+followed by a quoted string.
+
+@example
+@group
+     '#s"this is one
+         really unusual
+         symbol name."
+     => #s"this is one\n    really unusual\n    symbol name."
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     (symbol->string '#s"strange symbol") 
+     => "strange symbol"
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     (string->symbol "strange symbol")
+     => #s"strange symbol"
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     (symbol? '#s":not-a-keyword")
+     => #t
+@end group
+@group
+@end group
+@end example
+
+
+
+@need 3200
+
+@node Symbol Hash-tables
+@section Symbol Hash-tables
+
+At the time they are created, symbols are ordinarily recorded in a
+built-in hash-table that is used to hold top-level definitions.
+This process is called @geindex interning
+@dfn{interning} the symbol and the built-in
+hash-table is called the @geindex symhash
+@dfn{symhash} table.  If the same name s
+interned in the symhash table more than once, the same symbol is
+returned each time.
+
+
+Using the procedures in this section, it is possible to create
+symbols that are interned in an aribtrary hash-table.  By using a
+hash table which is not the symhash table, distinct symbols can be
+created which have the same name.  No two symbols interned in the
+same hash-table have the same name, but different symbols, in
+different hash-tables, can have the same name.
+
+
+It is also possible to create symbols which are not interned in any
+hash table.  This is another way in which distinct but same-named
+symbols can arise.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{string->hash-table-symbol}@fuindex string->hash-table-symbol
+@*
+@example
+@group
+(string->hash-table-symbol hash-table string :optional soft?)
+@end group
+@group
+@end group
+@end example
+
+Return a symbol which is @code{string=?} to @code{string} and is interned in
+@code{hash-table}.  By default, create such a symbol if none already
+exists.
+
+
+If @code{soft?} is true, then do not create a new symbol -- instead,
+return @code{#f} if the symbol does not already exist.
+
+
+If @code{hash-table} is @code{#t}, create an uninterned symbol regardless of
+the value of @code{soft?}.
+
+
+If @code{hash-table} is @code{#f}, use the built-in hash-table.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{hash-table-symbol-append}@fuindex hash-table-symbol-append
+@*
+@example
+@group
+(hash-table-symbol-append hash-table . args)
+@end group
+@group
+@end group
+@end example
+
+Simply:
+
+@example
+@group
+    (define (hash-table-symbol-append ob . args)
+      (string->hash-table-symbol ob (apply string-append args)))
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{hash-table-gensym}@fuindex hash-table-gensym
+@*
+@example
+@group
+(hash-table-gensym hash-table . name-parts)
+@end group
+@group
+@end group
+@end example
+
+Construct a new symbol in the specified @code{hash-table}.
+
+
+If any @code{name-parts} are specified, concatenate them 
+using @code{string-append} to form the root of the name of
+the new symbol.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{intern-symbol}@fuindex intern-symbol
+@*
+@example
+@group
+(intern-symbol hash-table symbol)
+@end group
+@group
+@end group
+@end example
+
+Add @code{symbol} to the symbols in @code{hash-table}, if it is not already
+among them.
+
+
+Using this procedure, it is possible to create a single symbol
+which is interned in multiple hash tables.
+
+
+If @code{hash-table} is @code{#f}, use the system's default hash-table.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{unintern-symbol}@fuindex unintern-symbol
+@*
+@example
+@group
+(unintern-symbol hash-table symbol)
+@end group
+@group
+@end group
+@end example
+
+Remove @code{symbol} from @code{hash-table}.
+
+
+If @code{hash-table} is @code{#f}, use the built-in top-level hash-table.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{symbol-interned?}@fuindex symbol-interned?
+@*
+@example
+@group
+(symbol-interned? hash-table symbol)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{symbol} occurs in @code{hash-table}.
+
+
+If @code{hash-table} is @code{#f}, the built-in hash table is searched.
+
+
+
+
+@need 3200
+
+@node Rationale -- Symbols
+@section Rationale -- Symbols
+
+Standard Scheme does not provide same-named symbols which are not
+@code{eq?}.  We provide them because they are a natural (and useful)
+generalization
+
+
+We regard symbols as immutable strings.  See @ref{Strings}.
+
+
+
+
+
+
+

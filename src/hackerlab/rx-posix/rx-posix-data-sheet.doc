@@ -1,0 +1,478 @@
+/* tag: Tom Lord Tue Dec  4 14:57:15 2001 (rx-posix-data-sheet.doc)
+ */
+/************************************************************************
+ *(h0 "Data Sheet for the Hackerlab Rx Posix Regexp Functions"
+ *    :appendix)
+ * 
+ insert*/
+
+Package:
+        Hackerlab Rx (a Posix regexp matcher)
+
+Supplier:
+	regexps.com
+
+Function:        
+
+        Hackerlab Rx provides the Posix regexp functions (regcomp,
+        regexec, regfree, and regerror).
+
+	In addition, closely related non-standard functions provide
+	extended functionality.
+
+
+Key Features:
+                
+        Rx is fast and accurate.
+
+	Non-standard extensions include support for searching
+        strings not terminated by 0 (regnexec), support for
+        asynchronously interrupting long-running searches (rx_poll),
+        non-capturing parentheses in regexps,
+	the regexp operator `cut' for efficient lexical analysis,
+	and support for tuning memory usage by search functions (a
+        time/space trade-off).
+
+        Extensive unit tests and validation tests are included.
+
+        Postscript and HTML documentation is included.
+
+
+Licensing:
+
+	Hackerlab Rx is part of the Hackerlab C Library, which is
+	distributed under the terms of the GNU General Public
+	License, Version 2, as published by the Free Software
+	Foundation.
+	
+	Alternative licenses (such as licenses permitting
+	binary-only re-distribution) can be purchased from
+	regexps.com.  
+
+
+Prerequisites:
+
+        standard C compiler
+        Posix libc.a (standard C library)
+        GNU Make
+
+
+Recommended and Disrecommended Applications:
+
+        Rx is for applications needing the standard Posix functions
+        such as `regcomp' and `regexec'.  Versions of these
+        functions found in several implementations of the standard C
+        library are buggy, slow, or both slow and buggy.  Rx
+        provides a correct, extended, high-performance alternative.
+
+        Rx is recommended for applications requiring good performance
+        over the widest possible range of regexps.  Many other
+        implementations optimize some simple cases, but perform either
+        poorly or incorrectly in difficult cases.
+
+        Rx is recommended for applications which benefit by being
+        scalable from low-memory environments to large-memory
+        environments.  Rx permits programmers to tune its memory use
+        over a wide range, trading space for time.
+
+        Rx is recommended for applications which accept as input
+        either regexps or strings to search but which must not be
+        subject to denial of service attacks.  The reason is that
+        the standard function `regexec' is intractable for some
+        conceivable inputs: In any correct implementation, if
+        regexec is called with certain inputs, it will not return in
+        any reasonable amount of time.  Rx supports returning from
+        `regexec' after a time-out has expired, to protect
+        applications from malicious regexp parameters.
+
+        Rx is recommended for applications which use regexps for
+        lexical analysis.  Rx supports a non-standard regexp
+        operator for lexical analysis (the "cut" operator).
+
+        Rx is NOT recommended for applications running with severely
+        limited amounts of memory (see the sections "Contribution to
+        Executable Size" and "Run-time Allocation Requirements"
+        below.)
+
+	Rx is NOT recommended for applications in which the amount
+	of regexp compilation dominates the amount of regexp search.
+	The Rx regexp compiler is not the fastest available.  On the
+	other hand, this recommendation is subordinate to
+	correctness: if regexp accuracy is more important than
+	regexp speed, Rx is recommended even in cases where regexp
+	compilation dominates regexp search.
+
+	Finally, Rx is recommended for programs that can benefit by
+	using regexps, but that might otherwise be precluded from
+        using regexps by the performance limitations of older regexps
+        matchers.  Rx can efficiently handle regexps which are
+        significantly larger and more complex than can be handled by
+        most other matchers.
+
+
+Limitations:
+
+        Multi-character collating sequences are not supported.
+
+	Character equivalence class expressions are not supported.
+
+        The trivial function `regerror', which translates regexp
+        error codes to strings, has not been internationalized.
+
+        Test coverage is extensive, but not (yet) 100%.
+
+        Rx has large executable size and run-time allocation
+        requirements when compared to some implementations.
+	(However, substantially smaller implementations are 
+	often buggy and are, in general, slower.)
+
+        Rx is single threaded.  In multi-threaded applications,
+	programs must ensure that Rx is active in only one thread at a
+	time.  (This is likely to be fixed in future releases.)
+
+
+Contribution to Executable Size:
+
+        On a Pentium based machine, running gcc (egcs version
+        2.91.66) we compiled this simple (nonsense) program and 
+	linked it against the Hackerlab C Library:
+
+          void regexec(void);
+          void regcomp(void);
+          void regerror(void);
+     
+          int main () 
+            { regexec(); regcomp(); regerror(); return 0; }
+
+
+        Both the library and the program were compiled with the "-g"
+        option.
+
+        Total executable size:
+
+	   text	   data	
+	   104992  20112
+
+        The following list of object files from the Hackerlab
+	C library were linked into the executable:
+
+		alloc-limits.o bits-tree-rules.o bits.o
+		bitset-tree.o bitset.o char-class-locale.o
+		char-class.o char-cmp-locale.o coding.o cvt.o
+		dfa-cache.o dfa.o errnorx.o escape.o hashtree.o
+		match-regexp.o mem.o must-malloc.o nfa-cache.o nfa.o
+		panic-exit.o panic.o posix.o re8-parse.o str.o
+		super.o tree.o uni-bits.o
+        
+        The contribution of those files to the executable size is:
+
+           text    data
+           103387  19888
+
+        Sizes may differ slightly from the latest release
+        of Rx.  Sizes will obviously vary with platform
+        compiler, and compiler options.
+
+
+External Linkage Dependencies:
+
+	When compiled under FreeBSD 3.0, the simple program used to
+        test executable sizes depends on the following symbols
+        defined in "libc":
+
+
+	   _CurrentRuneLocale
+	   _DefaultRuneLocale
+	   ___runetype
+	   _exit
+	   free
+	   longjmp
+	   malloc
+	   realloc
+	   setjmp
+	   strcoll
+	   write
+
+        The exact dependencies may, of course, differ from
+        system to system.  The symbols `_CurrentRuneLocale',
+	`_DefaultRuneLocale', and `__runetype' are used in FreeBSD
+	to implement macros in the `ctype(3)' family.
+
+
+Accuracy (Comparisons):
+
+	Rx is distributed with a test suite.  The tests consist of
+	385 distinct regexps.  Of those expressions, 23 are invalid
+	expressions, 362 are valid expressions.  For valid
+	expressions, the tests include a string to compare to the
+	compiled expression, and the expected results from
+	`regexec'.  Rx passes all of those tests.
+
+	A subset of those tests, consisting of 371 regexps, is based
+	on the Posix.2 standard.  Those tests do not use any of Rx's
+	extensions to Posix.  The tests were designed by hand to
+	systematically exercise all features of the Posix regexp
+	language.
+
+	We tested two alternative implementations using only the
+	Posix.2 tests.  These were the libc implementation distributed
+	with FreeBSD 3.0, and GNU regex 0.12.  (There are many
+	versions of GNU regex in distribution, all numbered "0.12".
+	We used one found in libc, the GNU C Library, version 2.1, as
+	distributed with a popular and recent version of Linux.)
+
+	The FreeBSD implementation failed 14 of 371 tests.
+	These failures were:
+	
+		1 invalid regexp successfully compiled	
+	
+		6 valid regexps failed to compile (all 6
+		  appear to be caused by a single bug)
+
+		2 calls to `regexec' failed to return the
+		  longest possible match
+
+		5 calls to `regexec' returned incorrect
+		  positions for matching subexpressions
+
+	GNU regex failed 22 of 371 tests.  These failures were:
+
+	        8 invalid expressions compiled successfully
+	          (apparently due to 3 or 4 bugs)
+
+	       10 valid expressions failed to match matching
+	          strings or matched incorrect strings
+		  (apparently due to 2 or 3 bugs)
+	
+		4 calls to `regexec' returned incorrect 
+		  positions for matching subexpressions
+
+
+
+Execution Speed:
+
+        The performance characteristics of Posix regexp matchers are
+        complex and difficult to summarize.  Performance varies
+        wildly depending on the types of regexps being used, the
+        details of the strings being searched for matches, and the
+        pattern of calls made to regexp functions.  
+
+	Because of the complexity of the subject, we are wary of
+        publishing benchmark comparisons of regexp matchers.  There
+	is no industry-wide agreement on a realistic set of
+	benchmarks.  There are not even any proposed realistic
+	benchmarks.  We are perfectly capable of constructing
+	benchmarks that would purport to show "Rx always wins big",
+	"Rx always looses big", and benchmarks that would give mixed
+	results.  None of those would legitimately inform anyone of
+	what to expect from Rx or any other regexp matcher.
+
+	Nevertheless, it is our belief, based on our internal
+	measurements, on our experience with Rx, and on our
+	understanding of the implementation issues involved, that Rx
+	is the best performing matcher available.  Moreover, the
+	performance advantages of Rx are so great, in some cases, as
+	to extend the usefulness of regexp pattern matching well
+	beyond its traditional applications.  Below, we have
+	provided qualitative and quantitative information to back up
+	this assertion.
+
+	
+	*Correctness Before Speed*
+
+        In general, the implementation of Rx emphasizes correctness
+        first, and performance second.  Subject to that constraint,
+        considerable effort has gone into achieving the best
+        possible performance over the widest range of expressions.
+
+	Emphasizing correctness has important implications for 
+	performance.  Some popular regexp matchers contain 
+	some interesting bugs:  the bugs cause those matchers to
+	give incorrect results for some patterns, but also speed
+	up some cases when the matchers give correct results.
+	That implies that when comparing implementations,
+	correctness and performance can not be regarded as separate
+	issues: fixing the bugs in an implementation can drastically
+	alter its performance characteristics.
+
+	
+	*Deterministic Finite Automata*	
+
+        Rx is a "DFA based" implementation.  That means that, whenever
+        possible, Rx tests for a matching pattern or sub-pattern using
+        a single pass scan of the target string rather than an
+        exhaustive, backtracking search.  In some cases, correctness
+        demands an exhaustive backtracking search.  
+
+        Rx excels when DFA optimizations apply.  When compiled with
+        optimization, the DFA routines scan a target string at a cost 
+        of approximately 12 instructions per character (provided the
+        DFA cache is sufficiently large).  As a result, for an
+	interesting and useful subset of regexps in general, namely
+	true regular expressions, regexp comparison is not
+	significantly more expensive than `strcmp', and regexp
+	searching is not significantly more expensive than `strstr'
+	(excluding implementations of `strstr' which use sub-linear
+	search techniques).  The reference manual describes the
+	conditions under which DFA optimizations apply.
+
+        When a pattern demands a backtracking search, but some of 
+        its sub-patterns permit DFA optimizations, Rx uses DFAs for
+        those sub-patterns.
+
+        In a number of cases, Rx is able to apply inexpensive
+        heuristics to "short-cut" an exhaustive backtracking search
+        without sacrificing correctness.  
+	
+	
+	*Timing Demonstrations*
+
+	Here are some examples that illustrate some of the
+	performance advantages of Rx.  These are not benchmarks,
+	for reasons outlined above.  These examples were specifically
+	designed to show off some of Rx's strengths.
+
+	To generate these results, we used a simple program
+	called `pseudo-grep'.  `pseudo-grep' accepts a regexp
+	as a command line argument and compiles that regexp once.
+	It reads lines of input from its standard input using
+	`fgets'.  It compares each line to the expression using
+	`regexec'.  If a line matches, that line is printed 
+	on standard output, with brackets surrounding the matching
+	text.
+
+	We compiled `pseudo-grep' three times: once using Rx,
+	once using libc under FreeBSD 3.0, and once using 
+	`GNU regex 0.12' (as obtained from "ftp.gnu.org").
+
+	We ran the three programs on two examples.  
+
+	In the first example, we searched `/usr/dict/words' (a
+	dictionary containing one word per line) for words that can
+	be spelled using hexadecimal digits, substituting `0' for
+	`O', `1' for `I' and `L, 5 for `S', and `6' for `G'.  The
+	regexp used for this example was:
+
+	    "^[a-fA-FoOiIlLsSgG]+$"
+
+	In the second example, we searched a large file of
+	C source code for C keywords.  The regexp used for
+	this example was:
+
+	    "(if|else|while|for|case|switch|default|char|\
+	     int|long|float|double|struct|enum|union|goto\
+	     |break|continue)"
+
+
+		    Hexadecimal		C Keywords
+		    words
+		    ----------------------------------
+	Rx	    0.05/0.04/0.02	0.29/0.20/0.09
+	FreeBSD     0.17/0.16/0.02	2.06/2.06/0.00
+	GNU regex   0.18/0.12/0.06	2.18/2.13/0.04
+		    ----------------------------------
+			   real/user/system time
+				(seconds)
+
+
+
+Run-time Allocation Requirements:
+
+        The amount of memory allocated by Rx at run-time is
+        dominated by the size of two caches: the "nfa cache" and
+        the "dfa cache".  Roughly speaking, the "nfa cache"
+        limits the quantity of compiled regexps that are re-used
+        across calls to "regcomp"; the size of the "dfa cache"
+        limits the number of DFA transition tables dynamically
+        constructed by "regexec".
+
+        The sizes of these caches are independent and under
+        application control.  They may be varied, trading space
+        for time.
+
+        By default, both cache sizes are set to an advisory
+        limit of 1MB.  (This is an "advisory limit" because it
+        may be exceeded when necessary for correct operation.
+        Except in rare circumstances, actual cache sizes closely
+        approximate the advisory limit.)
+
+	The Rx test suite for Posix regexps tests successfully with
+	with advisory cache limits as small as 10K for each cache,
+	and as large as 8MB for each cache, and exhibits the
+	expected space-for-time trade-off.
+
+        Because of the complex nature of regexp performance,
+        there is no simple, fixed relation between cache sizes
+        and run-time.  The exact trade-off will depend on the
+        regexp usage patterns of your application and is best
+        determined by experimentation.
+
+        The following table illustrates the space/time trade-off in
+        action.  The program `test-rx' uses 385 distinct regexps.
+	Of those expressions, 23 are invalid expressions, 362 are
+	valid expressions.  For valid expressions, the tests include
+	a string to compare to the compiled expression, and the
+	expected results from `regexec'.  It should be noted that
+	the test suite includes highly artificial tests which are
+	specifically designed to be very expensive to match.  Thus,
+	the time-per-regexp exhibited by `test-rx' is not typical of
+	regexp usage in general.
+
+        To generate the data in the table, the test program was run
+        3 times, varying the size of the NFA and DFA caches.  Within
+        each run, each test case was repeated 3 times.  These
+        repetitions create opportunities for the caches to impact
+        performance dramatically.
+
+	Six numbers are reported for each run: the advisory limit on
+	the size of both the NFA and DFA caches; the actual amount of
+	memory used by each of the caches; and the real, user, and
+	system times consumed.
+
+
+        advisory        NFA/DFA cache size	real/user/system
+        limits          high water mark   	times (seconds)
+        (both caches)   (bytes)                                       
+        --------------------------------------------------------------
+
+
+	32K		32863 / 56764		201.0 / 188.0 / 12.4
+        
+        64K		65632 / 65580		41.0 / 37.8 / 2.6
+        
+	1MB (default)	237170 / 1048600	4.3 / 4.1 / 0.0
+
+	8MB		241085 / 3183432	4.2 / 4.0 / 0.1
+
+
+	INTERPRETATION
+
+	For this test program:
+
+	A DFA cache size of 32K is too small.  In order to complete
+	the tests successfully, Rx transiently allocated 55.4K
+	to the DFA cache.
+
+	Effective time/space trade-offs are evident between 32K,
+	64K, and 1MB caches.
+
+	A cache size of 8MB is too large.  Rx used more memory than
+	with 1MB caches, but there was no significant speed up.
+
+
+
+Support:
+
+	To purchase an alternative license, request additional
+	features, or for any kind of support assistance, you can
+	contact us at "hackerlab@regexps.com" or via our web site
+	"www.regexps.com".  We can also be reached at (412) 401-5204.
+	We are currently in the midst of relocating from Pennsylvania
+	to California, so at this time, we have no reliable postal
+	address.
+
+
+/*end-insert
+ */
+
+

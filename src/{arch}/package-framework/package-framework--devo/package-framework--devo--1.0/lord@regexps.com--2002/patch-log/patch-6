@@ -1,0 +1,21 @@
+Revision: package-framework--devo--1.0--patch-6
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon Feb  4 02:32:08 PST 2002
+Standard-date: 2002-02-04
+Summary: portability tweaks
+Keywords: 
+New-files: {arch}/package-framework/package-framework--devo/package-framework--devo--1.0/lord@regexps.com--2002/patch-log/patch-6
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  build-tools/Makefiles/library.mk
+  build-tools/scripts/configure-top build-tools/scripts/option
+New-patches: lord@regexps.com--2002/package-framework--devo--1.0--patch-6
+
+
+Put `-' before options to `ar' in `library.mk'.
+
+Use `sed', rather than perfectly good Posix `sh' features,
+because some reports indicate that solaris `sh' doesn't 
+have those features.  Shocking and appalling, if true.
+

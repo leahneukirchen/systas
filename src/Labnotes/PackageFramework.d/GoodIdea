@@ -1,0 +1,139 @@
+
+
+! 	Replacing *GNU* `auto*' is a Good Idea
+
+
+  You might say:
+
+```
+	__If it ain't broke, don't fix it.__
+'''
+
+*But it __is__ broke, so let's fix it.*
+
+Replacing `autoconf', `automake', and `libtool' is certainly
+a good idea.  In fact, it's critical that we do so.
+There are a few reasons:
+
+** Nobody Understands Them
+
+  That's an exaggeration, but with an element of truth.  Even
+  the maintainers of those programs will tell you that they
+  are hairy past the point of fun and more than a little bit
+  mysterious (i.e., tricky yet poorly commented).
+
+  We really want the opposite extreme: a simple
+  configure/build system that is _easy_ to understand and
+  that can be easily extended.  __Even before
+  `package-framework' was documented and formally released 
+  I was getting mail from users who had found it in other
+  packages, figured it out and extended it!__  So, I think
+  `package-framework' is on the right track.
+
+** Using m4 is Lame
+
+  `autoconf' uses m4 for two reasons (at least as far as I can
+  tell).  First, it let's people write what look (sort-of)
+  like "function calls" in their `configure.in' files.
+  Second, it helps the autoconf maintainers to solve the
+  supposedly nearly-intractable problem of writing portable
+  shell scripts.  Well, I don't buy either of those reasons.
+  A C-style function call syntax just isn't that important to
+  anything.  Writing portable shell code isn't that hard (and
+  is certainly easier today than it was when `autoconf' was
+  first written).  Against those non-benefits, you've got some
+  penalties associated with m4: the injection of *GNU* `m4'
+  (specifically, other implementations won't do) into the
+  bootstrapping tower; the hair of writing and reading `m4'
+  syntax with its own set of quoting and commentary quirks;
+  the need for maintainers to *compile* their `configure.in'
+  files and ship the compiled versions.
+
+  That last problem (having to "compile" `configure.in')
+  is particularly significant.  It means that programs that
+  use `autoconf' aren't self-contained.  To work on those
+  programs, you also need to install the appropriate version
+  of `autoconf'.  Which brings us to:
+
+** Versioning Problems
+
+  `autoconf' and `automake' have gotten hairy enough over the
+  years that upwards compatability problems have arisen.  A
+  programmer who deals with lots of `autoconf'ed programs has
+  to keep around multiple versions of `autoconf' and figure
+  out which one, for each program, should be used to compile
+  `configure.in'.
+
+** Portability is (no longer) That Hard
+
+  `autoconf', especially, comes from an era when it was 
+  important to the *GNU* project to be able to compile
+  all the fancy new *GNU* utilities on just about any platform 
+  with even the vaguest claim to be *unix*, and on a few 
+  that didn't have anything to do with *unix* at all.
+
+  Since that time, things have changed in two ways.  First,
+  standards like the *POSIX* series have made all the unixes
+  in the world a lot more regular -- portability between unix
+  platforms is a much simpler problem today than it once was.
+  Second, even on non-unix platforms, support for compiling
+  programs that make conservative use of *POSIX* features has
+  improved and is likely to continue to improve.
+
+  The upshot is that the `auto*' tools, especially `autoconf',
+  are largely solving a portability problem that no longer
+  exists.
+
+
+** Hey, Man, GNU Make Works Now
+
+  Before there was *GNU* `make', GNU programs had the problem
+  of working with the native `make' on every system.  Worse,
+  every `make' was different.
+
+  Early `autoconf'-based programs addressed that problem by
+  using `make' features very conservatively.  Later,
+  `automake' continued the tradition (it produces "portable"
+  makefiles).
+
+  But this is silly and regressive.  *GNU* make has a ton of
+  nice features that largely eliminate the need for anything
+  like `automake'.  It's really a very nice `make'.  Moreover,
+  it's a very *portable* make, and a very *stable*
+  implementation.  So it's pretty reasonable to ask users to
+  make sure that *GNU* make is installed (perhaps not as the
+  default `make', but least as an available `make') and
+  therefore, we don't need `automake' or `libtool' -- we need
+  a good library of *GNU* `make' include files (for which the
+  `package-framework' attempts to provide the first few
+  examples).
+
+
+** That's the Wrong Approach to Portability
+
+  In it's day, `autoconf' was a radically cool approach
+  to portability.  There were a few common problems (such as
+  missing functions or header files with non-standard names) 
+  that `autoconf' solved handily with `HAVE_<foo>' macros.
+
+  Once again, times have changed -- most of those problems
+  are pretty much gone.
+
+  Aside from that, another approach to portability started
+  with some early *GNU* programs, but didn't quite take 
+  off at that time.  Namely: a portability library.  Many
+  older GNU programs include a `utils' subdirectory with
+  snippets of code that could, eventually, have been collected
+  into a single portability library.  Instead of using
+  non-portable `libc' features with lots of `autoconf' macros,
+  people would use *GNU* `libutils' instead.
+
+  A portability library is a nice approach.  It avoids having
+  to litter every program in the world with lots of `#ifdef's;
+  it creates an opportunity to improve on some old `libc'
+  APIs.  (One candidate for a new portability library is
+  [libhackerlab].)
+
+
+%%% tag: Tom Lord Thu May 16 01:37:52 2002 (PackageFramework.d/GoodIdea)
+%%%

@@ -1,0 +1,12 @@
+# tag: Tom Lord Tue Dec  4 15:04:36 2001 (machine-tests/DESC)
+#
+
+There are no functions to test in this directory.
+
+We test to make sure each of the header files compiles correctly.
+
+We don't directly test the definitions in these header files.
+For completeness, such tests should be added.  As a practical 
+matter, the definitions are very simple and if they break,
+tests of other directories are likely to fail.
+

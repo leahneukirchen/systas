@@ -1,0 +1,53 @@
+
+!		Why Not to Choose systas Scheme
+
+  Below is a list of weak points and details that some people
+  will find controversial or even undesirable.  There are plans
+  to fix the weak points in the TodoList.
+
+
++ `(eq? #f ()) => #t'	:::	systas isn't strictly """R5RS for that
+				reason.  I think the standard
+				got this point flat out wrong: the
+				equating of those two values is 
+				convenient and sensible and should
+				be at least permitted and quite 
+				possibly required.  
+
+
++ big code		:::	The internal representation of 
+				loaded scheme code is
+				space-inefficient.  systas uses
+				a graph interpreter so, for example, 
+				an `if' expression is stored as a list 
+				with a "word-code" in the `car', a
+				pointer to the test expression in
+				the `cadr', the `then' expression
+				in `caddr' and the `else' expression
+				in 'cadddr'.  That's four cons pairs
+				just to represent an `if' expression:
+				a whopping 32 bytes on most machines.
+				With a word-code interpreter, that 
+				could be brought down to 8 bytes; 
+				with a byte-code interpreter, 
+				somwhere between 2 and 5.
+
+
++ slow eval		:::	That's an exaggeration.  `eval' is
+				pretty fast, but not compared to what 
+				some other implementations have
+				demonstrated is possible.
+
++ no debugger		:::	when an error occurs, you're thrown
+				back to the top level, not into a
+				interactive debugger.  You don't even
+				get a back-trace.
+
++ conservative GC	:::	GC is conservative rather than
+				precise.
+
++ 8-bit characters	:::	No support for unicode yet.
+
+---
+%%% tag: Tom Lord Thu May 16 01:36:45 2002 (SystasScheme.d/WhyNotSystas)
+%%%

@@ -1,0 +1,17 @@
+Revision: package-framework--lord--1.0--patch-13
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Wed Jan 23 20:15:32 PST 2002
+Standard-date: 2002-01-23
+Summary: fixed some typose in *.mk
+Keywords: 
+New-files: {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-13
+Modified-files: =TODO ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  build-tools/Makefiles/shell-scripts.mk
+  build-tools/Makefiles/shell-subcommands.mk
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-13
+
+There were some syntax errors in `shell-{scripts,subcommands}.mk'.
+
+

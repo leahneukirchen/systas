@@ -1,0 +1,18 @@
+# 
+# Check out an ftp-utils distribution from the lord branches.  
+# Latest revisions.
+#
+
+./src                   lord@regexps.com--2002/package-framework--lord
+./src/ftp-utils         lord@regexps.com--2002/ftp-utils--lord
+./src/hackerlab         lord@regexps.com--2002/hackerlab--lord
+
+./src/labnotes/=authdata		lord@regexps.com--2002/AuthData--labnotes
+./src/labnotes/AboutThisLibrary.d	lord@regexps.com--2002/AboutThisLibrary--labnotes
+./src/labnotes/ArchRevCtl.d	lord@regexps.com--2002/ArchRevCtl--labnotes
+./src/labnotes/LabNotes.d	lord@regexps.com--2002/LabNotes--labnotes
+./src/labnotes/LabNotesSystem.d	lord@regexps.com--2002/LabNotesSystem--labnotes
+./src/labnotes/LibHackerlab.d	lord@regexps.com--2002/LibHackerlab--labnotes
+
+# tag: Tom Lord Sat Jan 12 13:57:35 2002 (regexps.com/lord.ftp-utils)
+#

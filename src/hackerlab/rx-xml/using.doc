@@ -1,0 +1,30 @@
+/* tag: Tom Lord Tue Dec  4 14:57:16 2001 (using.doc)
+ */
+/************************************************************************
+ *(h1 "Using Rx in XML Processors")
+ * 
+|XML processors (using Rx in)|
+|XML Schema|
+
+XML Schema datatype definitions can use regular expressions in
+`pattern' facets to define the syntax of a value space.  For
+information on this topic, see the *W3C* document *XML Schema: Part
+2*, url:"http://www.w3.org/TR/xmlschema-2".
+
+The functions xref:"rx_xml_recomp", xref:"rx_xml_recomp_branch", and
+xref:"rx_xml_is_match" were designed specifically for `pattern'
+schema.
+
+`rx_xml_recomp' compiles the regular expression syntax of `pattern'
+facets.  (See xref:"Comments on the XML Schema Regular Expression
+Syntax".)
+
+If a `pattern' facet contains more than one regular expression, they
+are supposed to be combined as alternative branches (see section *5.2.4* of *XML Schema: Part 2*).  The function `rx_xml_recomp_branch'
+provides an easy implementation of this functionality.
+
+Finally, `rx_xml_is_match' compares an entire string to a regular
+expression -- the test required to validate a `pattern' constraint.
+
+ * 
+ */

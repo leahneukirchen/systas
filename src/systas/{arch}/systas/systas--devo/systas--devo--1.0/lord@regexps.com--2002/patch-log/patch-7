@@ -1,0 +1,15 @@
+Revision: systas--devo--1.0--patch-7
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sat May 18 14:20:01 PDT 2002
+Standard-date: 2002-05-18 21:20:01 GMT
+Summary: don't print Rx memory statistic on exit
+Keywords: 
+New-files: {arch}/systas/systas--devo/systas--devo--1.0/lord@regexps.com--2002/patch-log/patch-7
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regepx.com--2002/ChangeLog.lord--1.0
+  libsystas/eval.c libsystas/init.c systas/systas-raw.c
+New-patches: lord@regexps.com--2002/systas--devo--1.0--patch-7
+
+Don't print Rx memory statistic on exit.
+

@@ -1,0 +1,23 @@
+# tag: Tom Lord Tue Dec  4 14:52:09 2001 (machine/Makefile.in)
+#
+
+generated-includes	:=	endian.h alignment.h
+
+include $(makefiles)/library-objects.mk
+include $(makefiles)/install-includes.mk
+
+endian.h: endian.sh
+	$(cfg__posix_shell) $(srcdir)/endian.sh $(CC)
+
+alignment.h: gen-alignment.to-c
+	-rm -f gen-alignment
+	-rm -f gen-alignment.c
+	cp $(srcdir)/gen-alignment.to-c gen-alignment.c
+	$(CC) -o gen-alignment gen-alignment.c
+	./gen-alignment > alignment.h
+
+clean: clean-generators
+
+clean-generators:
+	-rm -f endian-test endian-test.c gen-alignment gen-alignment.c endian.h alignment.h
+

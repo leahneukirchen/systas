@@ -1,0 +1,204 @@
+# tag: Tom Lord Tue Dec  4 15:06:36 2001 (libsystas/=documentation-notes)
+#
+Procedures from ../scheme-library/ice-9/basic.scm
+
+
+	Documented in This Directory		Not Documented
+	------------------------------------------------------
+
+
+	apply-to-args
+	apply
+
+	call-with-current-continuation
+
+	catch
+
+	peek
+	pk
+						warn
+
+	symmetric-wind
+
+	builtin-read
+	read
+
+	display*
+	display*-port
+
+	<number procedures>
+
+	make-hash-table 
+
+	and=> 
+
+	vector-copy
+	vector-map
+	vector-for-each
+
+	call-with-input-string
+	call-with-output-string
+	open-input-file
+	open-output-file
+	open-io-file
+	close-input-port
+	close-output-port
+	close-io-port
+	call-with-input-file
+	call-with-output-file
+	with-input-from-port
+	with-output-to-port
+	with-error-to-port
+	with-input-from-file
+	with-output-to-file
+	with-error-to-file
+	with-input-from-string
+	with-output-to-string
+	with-error-to-string
+	->string
+	display->string
+	the-eof-object
+
+	symbol-append
+	list->symbol
+	symbol
+	hash-table-symbol-append
+	hash-table-gensym
+	gensym
+
+	string-copy
+	has-any-suffix?
+	string-for-each
+
+	make-list
+	range
+	reverse-range
+
+	filter
+	list-elt-indexq
+	list-elt-indexv
+	list-elt-index
+
+
+						sync-q!
+						make-q
+						q?
+						q-empty?
+						q-empty-check
+						q-front
+						q-rear
+						q-remove!
+						q-contains?
+						q-push!
+						enq!
+						q-pop!
+						deq!
+						clear-q!
+						q-length
+						q-members
+						q-rotate
+
+	regexec
+
+	and-map
+	or-map
+						map-in-order
+
+
+	file-exists?
+	file-is-directory?
+
+	without-interrupts
+	with-interrupts
+
+	fatal
+	error
+						bad-throw
+						default-exception-handler-table
+						default-exception-handler
+						set-default-exception-handler
+						default-error-handler
+						handle-parameter-error
+						handle-eval-error
+						handle-signal
+						sigchld
+						sighup
+						siggc
+						gc-hooks
+						run-gc-hooks
+						add-gc-hook
+						remove-gc-hook
+						brief-gc-message
+						verbose-gc-message
+
+	%e
+	%signal-errors
+	%i
+	%retry-interrupted-calls
+	%%
+	%high-level-system-call
+	errno-exceptions-return
+
+	parse-path
+
+	load-path
+	try-load
+	try-load-with-path
+	load-verbosely
+	load
+	load-indent
+	scheme-suffixes
+	load-with-path
+
+						read-sharp
+						default-read-sharp
+
+						macro-table
+						known-macro?
+						assert-macro!
+						macro-transformer
+						procedure->expandable-memoizing-macro
+						make-memoizing-macro
+						define-memoizing-macro
+
+						macroexpand-1
+						macroexpand
+						macroexpand-recursive
+
+
+	syntax-rules
+						false*
+						transform-clauses
+						transform-clause
+						transform-pattern
+						pattern-variable
+						transform-pattern
+						template-free-variables
+						expand
+
+	define-syntax
+	let-syntax
+	letrec-syntax
+
+						while
+
+	make-record-type
+	record-type?
+	record-type-name
+	record-type-fields
+	record-type-printer
+	record-constructor
+	record?
+	record-predicate
+	record-type-descriptor
+	record-accessor
+	record-modifier
+
+
+						%print-values
+						values-type
+						make-values
+						values-list
+						values?
+	values
+	call-with-values

@@ -1,0 +1,635 @@
+    
+!	  How to Match the Regexps
+	  `(wee|week)(night|knights)(s+)'
+	  and
+	  `(xxxxx|xxx)*'
+	  _Tom Lord_
+	  _lord@regexps.com_
+
+$[NOTE This essay is still being revised, though the conclusions
+it reaches still stand. 2002-05-16, -t]$
+
+
+* Introduction
+
+  The semantics of Posix regexps mystify many people who come
+  across them.  Worse, there is disagreement even among 
+  implementors of the posix function `regexec' concerning
+  how regexps are supposed to behave.
+
+  This paper attempts to give a clear explanation of how regexps
+  are supposed to work and to show how that explanation is
+  related to {Posix regexp spec}.  The major disagreements between
+  implementors are pointed out, and a particular resolution of
+  those disagreements is advocated.
+
+
+* Overall Matches and Substring Matches
+
+  Readers should understand that the posix regexp function `regexec'
+  searches a string for a substring that matches a given pattern.  It
+  returns no only the position of the matching substring, but also, if
+  the regexp contains parenthesized subexpressions, the positions of
+  substrings matching just those parenthesized parts of the pattern.
+
+
+
+* The Overall Leftmost and Longest Rules
+
+  The Posix spec states very clearly that `regexec' must find an
+  earliest-starting match for a pattern (a ``leftmost'' match).
+
+  It also states very clearly that `regexec' must return the longest
+  of the leftmost matches (the ``leftmost longest'' match).
+
+  These points are sometimes confusing to Posix regexp newbies, but
+  are never controversial.
+
+
+
+* The Perplexing Substring Rule
+
+  What's confusing is how to find the positions of substring matched
+  by parenthesized subexpressions.  The spec offers only this fairly 
+  cryptic rule:
+
+	Consistent with the whole match being the longest of the
+	leftmost matches, each subpattern, from left to right, shall
+	match the longest possible string.
+
+  And in the rationale document, provides some almost equally cryptic
+  guidance:
+
+	It is possible to determine what strings correspond to
+	subexpressions by recursively applying the leftmost-longest
+	rule to each subexpression, but only with the provisio that
+	the overall match is lefmost longest.  [...] In principle, the
+	implementation must examine very possible match and among
+	those that yield the leftmost-longest total matches, pick the
+	one that does the longest match for the leftmost
+	subexpression, and so on.  Note that this means that matching
+	by subexpressions is context dependent: a subexpression within
+	a larger RE may match a different string from the one it would
+	match as an independent RE, and two instances of the same
+	expression with the same larger RE may match different lengths
+	even in similar sequences of characters.  For example in the
+	ERE `(a.*b)(a.*b)', the two identical subexpressions would
+	match four and six characters, respectively, of `accbaccccb'.
+	Thus, it is not possible to decompose hierarchically the
+	matching problem into smaller, independent, matching problems.
+
+
+** The Question of _What's a Subpattern?_
+
+  Understanding the spec seems to come down to trying to figure out
+  what is meant by the word "subpattern".  That word is not used
+  anywhere else in the document.  I'll return to this question several
+  times in this paper.
+
+
+** Aside From That, The Rule is Clear
+
+  Leaving aside, for the moment, the question of exactly what is a
+  "subpattern", the matching rule is easy to understand
+
+  Input to the matching rule is a pattern.  Output from the matching
+  rule is a list of constraints, each of which is assumed to be
+  subordinate to the earlier constraints in the list.  In their
+  totality, the constraints completely determine what `regexec' is
+  supposed to return.
+
+  Here, in pseudo-awk, is an algorithm for generating the list of
+  constraints: 
+
+
+<<<
+        function constraints_for_pattern(pattern)
+        {
+           print "c1: the overall match must be leftmost";
+           print "c2: the overall match must be longest possible";
+           print_recursive_constrains(pattern, 2);
+        }
+
+        function print_recursive_constraints(pattern, n)
+        {
+
+          # "each subpattern, from left to right"
+          #
+          #
+	  for (x = 0; x < numb_subpatterns(pattern); ++x)
+	    {
+	      # "shall match the longest possible string"
+	      # 
+	      print "c" n ": the match of " nth_subpattern(pattern,x) \
+			     "must be as long as possible".
+              ++n;
+  
+	      # "recursively applying the leftmost-longest
+	      #  rule to each subexpression"
+	      #
+	      n = print_recursive_constraints (pattern, n);
+	    }
+          return n;
+        }
+>>>
+
+  I've left out definitions for the controversial functions
+  `numb_subpatterns' and `nth_subpattern' and will explain them
+  later.  But to illustrate how the program works, assuming the
+  definitions for those functions that I'll eventually give,
+  here is what it might print for the pattern `(b*)c', using
+  indentation to show lines generated by recursive calls
+  to `print_recursive_constraints':
+
+<<<
+	c1: the overall match must be leftmost
+	c2: the overall match must be longest possible
+	c3: the match of /(b*)/ must be as long as possible
+	  c4: the match of /b*/ must be as long as possible
+	    c5: the match of /b/ must be as long as possible
+	c6: the match of /c/ must be as long as possible
+>>>
+
+  The "proviso" mentioned in the appendix is reflected in the 
+  ordering of constraints.  For example, constraint `c3' has lower
+  priority than constraint `c2', but higher than `c4'.
+
+  In their totality, the constraints determine what `regexec'
+  must return.  For some patterns, the constraints interact in
+  possibly surprising ways -- which the appendix describes by 
+  saying "matching by subexpressions is context dependent".
+
+  With various definitions for `numb_subpatterns' and `nth_subpattern'
+  the constraint list will come out differently.  For some patterns,
+  as we'll see, the differences are significant.
+
+
+** Problem 1: Subpatterns of `(xxxxx|xxx)*'
+
+   Suppose we compare the pattern `(xxxxx|xxx)*' to the string
+  `xxxxxxxx'.
+
+   Some implementors argue that for `A*', there is only one
+   subpattern: `A'.  The substring matched by that subpattern
+   must be as long as possible.
+
+   Other implementors argue that `A*' is equivalent to 0, or more
+   occurences of the pattern `A'.  If it takes `N' "iterations" to
+   match `A*', then `A*' has `N' subpatterns.
+
+   In our example, it clearly takes two iterations to match the
+   string.  If `(xxxxx|xxx)*' has two subpatterns, since we know
+   that `regexec' should report the position for the last match 
+   of a given set of parentheses, the substring reported will be
+   the last three characters of the string (the earlier five
+   characters were matched by a ghostly subpattern that represents
+   the first iteration).
+
+   If `(xxxxx|xxx)*' has just one subpattern, namely `xxxxx|xxx',
+   then the length of the substring reported for that pattern 
+   must be maximized: `regexec' will tell us that the parenthesized
+   part of the pattern matched the last _five_ characters of
+   the string (the earlier there were matched by `(xxxxx|xxx)*' but
+   in a way that allowed the last "iteration" to be as long as 
+   possible).
+
+
+** Subpatterns of `(wee|week)(night|knights)(s+)'
+
+   Suppose we compare `(wee|week)(night|knights)(s+)' to
+   the string 'weeknightssss'.
+
+   Some implementors think that that pattern has three subpatterns 
+   (each a parenthesized subexpression).  They want to maximize 
+   the lengths of what these match, starting with the leftmost
+   subpattern, and proceeding to the right.  So they conclude
+   that `regexec' should return:
+
+<<<
+
+	\1 == week
+	\2 == night
+	\3 == ssss
+
+>>>
+
+   Other implementors think that regexp concatenation is a 
+   left-associative binary operator.  Therefore, the pattern
+   has two subpatterns, namely: `(wee|week)(night|knights)'
+   and `(s+)'.  They again maximize, left to right, and 
+   come up with:
+
+<<<
+	\1 == wee
+	\2 == knights
+	\3 == sss
+>>>
+
+   Note that in this case, `\1' is a shorter-than-possible
+   match for `(wee|week)', but the result is the longest 
+   possible match for what these implementors think is 
+   the leftmost subpattern: `(wee|week)(night|knights)'.
+
+
+
+** What the Standard Says About Subpatterns?
+
+  Opinions vary.  Personally, I am convinced that the standard
+  unambiguously says one thing;  others are convinced that it
+  ambiguously says another.
+
+  The most politic view, I think, is to stipulate that the 
+  standard is ambiguous -- it supports all of the views 
+  represented above.
+
+
+** What Existing Practice Says
+
+  Existing practice is inconsistent and largely shoddy.
+  Many implementations are such that pretty much everyone
+  agrees they are wrong.  A very small number of (mostly obscure)
+  implementations have their defenders, but those implementations
+  take differing views on these questions.
+
+
+** What the Historical Record Says
+
+  The historical record of past interpretations and meeting notes
+  says nothing conclusive about any of these issues.
+
+** What the Principles Say
+
+  People who were involved in the original specification have 
+  some opinions about what the right answers are, or what they
+  intended at the time.
+
+  Unfortunately, it seems clear from the spec and from the record
+  that even if they had a specific intention at the time, it was
+  an intention that didn't consider subtleties such as the examples
+  above or the consequences of deciding the question one way or the
+  other.  For myself, I speculate that they considered only 
+  simpler examples and that these questions didn't come up.
+
+
+* Answering the _What's a Subpattern?_ Questions
+
+  How can we answer these questions, then?  
+
+  Let's stipulate that:
+
+	*) There is no reliable record of informed intent
+	   regarding these questions.
+
+	*) The language of the standard doesn't conclusively
+	   decide these questions.
+
+	*) Having a definitive answer to these questions is
+	   highly desirable.
+
+  With those stipulations, there is only one course of action
+  left:
+
+		   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		Choose the answers to these questions
+	      that make Posix regexps maximally useful!
+		   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  _If_ we can do that, it's obviously the right thing to do.
+   
+
+** `(xxxxx|xxx)*' has Just One Subpattern
+
+  The "subpatterns of iterations" question is fairly easy because
+  one answer has a significant performance advantage over the others.
+
+  For many patterns, `X', to decide if a string matches `X*' at all is
+  far less expensive than deciding how many matches of `X' it takes to
+  match that string.  Along those same lines, it is (in general) less
+  expensive to see if `ABC...' matches a string at all than to find
+  the specific match that maximizes the length matched by `A', then
+  the length matched by `B', etc.  This is the nature of "DFA
+  optimizations".
+
+  If `(X)*' has only one subpattern, then `regexec' can do its work
+  by looking for a way to split the string into the shortest prefix
+  that (somehow) matches `(X)*', followed by the longest suffix that
+  matches `(X)'.  It then reports that longest suffix as the substring
+  matching `(X)'.
+
+  If `(X)*' has `N' subpatterns, then `regexec' has find first the
+  longest prefix that matches `(X)', then, if there's any string left
+  over, see if the rest of that string matches `(X)*'.  If the rest of
+  the string doesn't match, then `regexec' has to try the
+  second-most-longest prefix that matches `(X)', then the third-most,
+  and so on.  At each step, this procedure repeats recursively.  When
+  `regexec' finally finds a way to divide the string up into `N'
+  matches of `(X)', it can report the position of the `Nth' match as
+  the substring matched by `(X)'.  (It's worth noting that you can
+  make a space-for-time trade-off, so that `regexec' doesn't have to
+  actually backtrack -- but the potential space usage is impractical
+  if `X' is a complicated regexp and the string is quite long.)
+
+  So in general, if `(X)*' has only one subpattern, `regexec' can be
+  much more efficient.  (I apologize that that's a bit hand-wavy, but
+  this isn't a paper about how to implement `regexec'.)
+  
+  So for purely practical reasons, `(X)*' has just one subpattern.
+  When compared to `xxxxxxxx', the parenthesized part of the pattern
+  that is the title of this section matches the last five characters
+  of the string.
+
+
+** Concatenation is Left Associative
+
+  This is the tricky bit -- the most controversial.
+
+** The Right Associative Camp
+
+  Looking at a pattern like `(A)(B)(C)(D)', some people say "It's
+  completely obvious that that pattern has four subpatterns.  The
+  right answer gives highest priority to finding the longest match for
+  `(A)'."
+
+  
+** The Left Associative Camp
+
+  Other people say, "I know you may be surprised by this, but
+  concatenation is left-associative.  That pattern has two
+  subpatterns.  Highest priority is given to finding the longest match
+  for the first subpattern, namely `(A)(B)(C)'.
+
+** Is this Really About Associativy?
+
+  My names for these two positions might seem unfair.  People in the
+  first camp didn't say anything at all about associativity.  They
+  just said, in effect, "concatenation is a variable arity operation:
+  that example shows a concatenation of four subpatterns".
+
+  But let's suppose, for the moment, that we can add "non-capturing
+  parentheses" to patterns.  Such parentheses have the effect of 
+  (unambiguously) marking off a subpattern, but the position of 
+  substrings matched by parts of patterns in non-capturing parens
+  aren't reported by `regexec'.  This is, in fact, a common extension
+  to Posix regexps, and we can use Henry Spencer's syntax for it.
+  Non-capturing parens are written `(?: ... )'.
+
+  If the first camp is right, then a pattern like `(A)(B)(C)(D)'
+  is exactly equivalent to `(A)(?:(B)(?:(C)(D)))'.  In other words,
+  concatenation has the property of being right associative.
+
+  If the second camp is right, then a pattern like `(A)(B)(C)(D)'
+  is eactly equivalent to `(?:(?:(A)(B))(C))(D)'.  In other words,
+  concatenation is left associative.
+
+  So for the moment, please indulge me about my names for these two
+  camps -- the reason for focusing on associativity will become
+  clearer in a moment.
+
+** Regexp Algebra
+
+  Speaking of associativity, let's look at some regexp algebra.
+
+  Suppose I have a pattern `<A>' and a pattern `<B>' and a string `S'.
+
+  Suppose there is a prefix of `S', call it `Sa', that is the longest 
+  prefix matching `<A>'.  The rest of the string, the suffix, we can 
+  call `Sb' and suppose that it matches `<B>'.
+
+  We can name the substring positions in these matches.  When `<A>'
+  matches `Sa', we get substring positions `pmatch_A_Sa'.  When `<B>'
+  matches `Sb', we get substring positions `pmatch_B_Sb'.
+
+  Suppose that `<A>' has `Na' parenthesized subexpressions, and that `<B>'
+  has `Nb' parenthesized subexpressions.
+
+  Now think of the pattern `(<A>)(<B>)'.  In both left and right
+  associative worlds, we know that pattern matches `S'.  That will give
+  us `pmatch_AB_S'.
+
+  In fact, we know that:
+
+<<<
+	pmatch_AB_S[0].rm_so == 0
+	pmatch_AB_S[0].rm_eo == length(S)
+
+	for X in 1 .. Na+1
+
+		pmatch_AB_S[X] == pmatch_A_Sa[X-1]
+
+	for X in Na+2 .. Na+2+Nb
+
+		if pmatch_B_Sb[X-(Na+2)] != -1 
+
+		  pmatch_AB_S[X] == pmatch_B_Sb[X-(Na+2)] - length(Sa)
+
+		otherwise
+
+		  pmatch_AB_S[X] == {-1, -1}
+>>>
+
+  That's very handy and is equally true in left and right associative
+  worlds. 
+
+  However, parentheses are an expensive operator and they interfere with
+  the usefulness of backreferences.  Optimizations that can eliminate
+  parentheses are worth knowing about.  Some special cases can be used
+  to eliminate parentheses!
+
+*** Special Case #1 in the Left Associative World
+
+  Suppose that the lowest precendence operator in `<A>' is _not_ `|'.
+
+  Then an invariant like the one above (but with slightly different
+  pmatch index offsets) applies to the pattern `<A>(<B>)'.
+
+  Note that the pattern produced by this special case, `<A>(<B>)' is
+  itself a pattern in which the lowest precendence operator is not
+  `|',  so we can apply this special case rule to that pattern again,
+  giving us `<A>(<B>)(<C>)', then `<A>(<B>)(<C>)(<D>)', etc.  Very nice.
+
+
+*** Special Case #1 in the Right Associative World
+
+  But, aha!  That's nothing special.  Suppose that this time the 
+  lowest precendence operator in `<B>' is not `|'.  Then in the
+  right associative world, the similar invariant applies to
+  `(<A>)<B>'.  
+
+  Note that in _this_ special case, we didn't require anything special
+  of pattern `<A>'.  If we have `<C>', `<D>', etc. in which the
+  lowest precendence operator is not `|', then we can again use this
+  rule repeatedly to build up `((<A>)<B>)<C>', then
+  `(((<A>)<B>)<C>)<D>', etc.
+
+  Isn't that just as nice?  It's a little odd that the reason we can 
+  repeat this rule came out differently -- but let's gloss over that
+  for the moment.
+
+
+*** So aren't Left and Right Associativity Simply Symmetric?
+
+  So far, it looks like symmetry will kill off any advantage of
+  left-associativity.  But wait -- I'll soon fix that.  Let's look at
+  some special cases of the special cases.
+
+
+*** Special case #2 in the Left Associative World
+
+  As before, the lowest precendence operator in `<A>' is _not_ `|'.
+
+  In addition, this time, assume that `<B>' is either a parenthesized
+  expression, an expression matching a single character, or a 
+  pattern followed by a duplication or option operator (`?, {n,m}, *, +').
+
+  Now this time, invariants like the ones given above (again, changing
+  the `pmatch' offsets slightly) hold for the pattern: `<A><B>'.
+
+  Huzzah!  No new parens at all.  The resulting pattern is ready to be 
+  fed back into this special-special case as the new `<A>', and we
+  can keep adding simple expressions to build up `<A><B><C>',
+  `<A><B><C><D>' etc.
+
+
+*** Special case #2 in the Right Associative World.
+
+  As before, the lowest precendence operator in `<B>' is _not_ `|'.
+
+  In addition, this time, assume that `<A>' is either a parenthesized
+  expression, an expression matching a single character, or a 
+  pattern followed by a duplication or option operator (`?, {n,m}, *, +').
+
+  Now this time, invariants like the ones given above (again, changing
+  the `pmatch' offsets slightly) hold for the pattern: `<A><B>'.
+
+  Hrumph!  No new parens at all.  The resulting pattern is ready to be 
+  fed back into this special-special case as the new `<B>', and we
+  can keep adding simple expressions to build up `<C><A><B>',
+  `<D><C><A><B>' etc.
+
+
+*** Not Quite Symmetric
+
+  Opps!  The symmetry has clearly broken.  Special case #2 gives the
+  left associative world a simple way to build up parentheses-less
+  patterns from left to right.  In the right associative world, special
+  case #2 gives us a simple way to build up parentheses-less patterns
+  from right to left.  Really, this same bug was already present in the 
+  special case #1 for the right associative world -- that's what we
+  "glossed over" -- but special case #2 is what makes the consequences
+  of the bug starkly apparent.
+
+  I claim that it is self evident that when we build up complex patterns
+  from simple ones, we are more likely to be trying to extend a match to
+  the right than to start it earlier in the string.  The left-or-right
+  associativity question isn't an egg-cracking question at all: it
+  relates in a signifcant way to the fact that the left part of a
+  pattern matches the left part of a string, the right part of a pattern
+  the right part of a string.  While the pattern algebras may be
+  symmetric, the two ends of the string are "beginning" and "end" which
+  are opposite things, not equivalent things.
+
+
+*** Your Left-Leaning Friends are Right
+
+  So, left associativity is the better choice in a world where the
+  beginning of a string is at the left, and the end of a string at the
+  right.  It makes it easier for us to build up efficient regexps
+  by extending existing regexps to the right.
+
+
+
+* Summary 
+
+  For efficiency reasons, `(xxxxx|xxx)*' has just one subpattern.
+  For the string `xxxxxxxx', `\1' is the last five characters of
+  the string.
+
+  In order to provide a more useful regexp algebra, concatenation
+  is left associative.  If we compare `(wee|week)(night|knights)(s+)' 
+  to `weeknightssss', `\1' is `wee' and `\3' is `sss'.
+
+  (And in case you aren't convinced yet that regexp algebra is handy
+  in the real world, I have a real-world example which I'll write up
+  separately.)
+
+
+* Concusions: Defining the Controversial Functions
+
+  Earlier, I gave some pseudo-code that explains the matching rule,
+  but I left out two functions: `numb_subpatterns', that tells us
+  how many subpatterns a pattern has, and `nth_subpattern', that
+  returns the `nth' subpattern of a pattern.
+
+  Here is how they _can_ be defined (there are many equivalent
+  variations, though):
+
+
+<<<
+
+	function numb_subpatterns (pattern)
+	{
+	  if pattern is a single character or character class
+		return 0
+
+	  if pattern is a parenthesized subexpression
+		return 1
+
+	  if the lowest precedence operator in pattern is *,+,{}, or ?
+		return 1
+
+	  if the lowest precedence operator in pattern is |
+  		return 2
+
+	  if the lowest precedence operator in pattern is concatenation
+	        return 2
+	}
+
+
+	functin nth_subpattern (pattern, n)
+	{
+	  if pattern is a parenthesized subexpression
+		return the pattern that is enclosed in parens
+
+	  if the lowest precedence operator in pattern is *,+,{}, or ?
+  		return the pattern with that operator removed
+
+	  if the lowest precedence operator in pattern is |
+		treat | as left associative
+		if n = 0, return the left branch
+		otherwise, return the right branch
+
+	  if the lowest precedence operator in pattern is concatenation
+		treat concatenation as left associative
+		if n = 0, return the left part
+		otherwise, return the right part
+	}
+
+>>>
+
+
+
+* References
+
+[Posix regexp spec]::
+
+  The text I use is designated __ISO/IEC 9945-2__ and __ANSI/IEEE Std
+  1003.2__.  Two sections are relevant: *2.8 _(Regular Expression
+  Notation)_* and *E.2.8* (the corresponding rationale document).
+
+  Particularly central to the discussion are the sections
+  *2.8.2 _(RE General Requirements)_*, which describes the matching
+  rule in both the primary text and the rationale document, and *2.8.5
+  _(RE Grammar)_* which describes the syntax of regular expressions.
+
+-t
+
+<<<
+	Tom Lord
+	lord@regexps.com, lord@emf.net
+---
+	Share your feedback at Affero:
+	http://svcs.affero.net/rm.php?r=tomlord
+>>>
+
+%%% tag: Tom Lord Wed May  1 23:20:28 2002 (LibHackerlab.d/PosixRegexps)
+%%%

@@ -1,0 +1,29 @@
+Revision: dists--lord--1.0--patch-26
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Tue Feb 26 17:51:10 PST 2002
+Standard-date: 2002-02-27 01:51:10 GMT
+Summary: updated arch and hackerlab manuals
+Keywords: 
+New-files: {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-26
+  docs.d/arch/html/.arch-ids/sync.html.id
+  docs.d/arch/texi/.arch-ids/sync.texi.id
+  docs.d/arch/html/sync.html docs.d/arch/texi/sync.texi
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  docs.d/arch/html/arch.html docs.d/arch/html/indexes.html
+  docs.d/arch/html/inventory.html
+  docs.d/arch/html/reconciling.html
+  docs.d/arch/html/system-requirements.html
+  docs.d/arch/ps/arch.ps docs.d/arch/texi/arch.texi
+  docs.d/arch/texi/inventory.texi
+  docs.d/arch/texi/system-requirements.texi
+  docs.d/hackerlab/html/file-names.html
+  docs.d/hackerlab/html/opt.html
+  docs.d/hackerlab/ps/libhackerlab.ps
+  docs.d/hackerlab/texi/file-names.texi
+  docs.d/hackerlab/texi/opt.texi
+New-patches: lord@regexps.com--2002/dists--lord--1.0--patch-26
+
+Updated the arch and hackerlab manuals.
+

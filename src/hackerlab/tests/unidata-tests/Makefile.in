@@ -1,0 +1,11 @@
+# tag: Tom Lord Tue Dec  4 14:52:10 2001 (unidata-tests/Makefile.in)
+#
+tested-headers		:=	unidata.h 
+
+test-headers		:=	$(addprefix hackerlab/unidata/, $(tested-headers))
+
+libs			:=	$(objroot)/hackerlab/libhackerlab/libhackerlab.a -lm
+
+include $(makefiles)/unit-tests.mk
+
+export srcroot

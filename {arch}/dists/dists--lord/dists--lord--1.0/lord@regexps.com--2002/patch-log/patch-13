@@ -1,0 +1,26 @@
+Revision: dists--lord--1.0--patch-13
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Tue Feb  5 16:45:28 PST 2002
+Standard-date: 2002-02-05
+Summary: added some missing files
+Keywords: 
+New-files: {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-13
+  docs.d/arch/examples/browser/.arch-ids/=id
+  docs.d/arch/examples/notifier/.arch-ids/=id
+  docs.d/arch/examples/browser/=browser
+  docs.d/arch/examples/browser/=configs
+  docs.d/arch/examples/browser/=dists
+  docs.d/arch/examples/notifier/=browser-opts
+  docs.d/arch/examples/notifier/=rules.archives
+New-directories: docs.d/arch/examples/browser/.arch-ids
+  docs.d/arch/examples/notifier/.arch-ids
+  docs.d/arch/examples/browser docs.d/arch/examples/notifier
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  docs.d/arch/examples/README.010.first-archive
+New-patches: lord@regexps.com--2002/dists--lord--1.0--patch-13
+
+Left some files out in the last commit because they didn't follow
+the naming conventions.
+

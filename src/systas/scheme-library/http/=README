@@ -1,0 +1,23 @@
+For the purposes of rapid prototyping, the interfaces of these modules
+(and in some cases, the implementations) are lifted straight out of
+the SCSH sunet package.
+
+Both the interfaces and the implementation needs a number of peaceful
+mornings thought with a full pipe and a decent beer, in order to
+"really crush" this functionality with a "100%" solution.  (But
+remember, "Quitting smoking now greatly reduces risks to your
+health.")
+
+On the other hand, working with the sunet code is entirely worth it
+for trivial reasons (like saving many many hours reading RFCs) and
+important reasons, like reading Olin's commentary:
+
+	;; [....]  Like so much of the Web, the protocols are
+	;; redundant, underconstrained, and ill-specified.
+
+Yee haw.
+
+
+# tag: Tom Lord Tue Dec  4 15:06:46 2001 (net/=README)
+#
+

@@ -1,0 +1,685 @@
+<html>
+<head>
+<title>Cons Pairs</title>
+</head>
+<body>
+
+<a name="Cons_Pairs"></a>
+
+
+
+<h2 align=center>Cons Pairs</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="list.html#Lists">Lists</a></br>
+
+<b>prev: </b><a href="vectors.html#Vectors">Vectors</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>A <em>
+<a name="index-pt:0"></a>
+
+cons pair
+</em>
+ is storage for two Scheme values called the <em>
+<a name="index-pt:1"></a>
+
+car
+</em>
+ and
+<em>
+<a name="index-pt:2"></a>
+
+cdr
+</em>
+ of the pair.  Cons pairs are written this way:
+</p><pre>
+     (a . b)
+
+</pre>
+<p>where <code>a</code>
+ is stored in the car of the pair, and <code>b</code>
+ is stored in the
+the cdr.
+</p><p>As a special cases, if <code>b</code>
+ is nil, the pair is normally written:
+</p><pre>
+     (a)
+
+</pre>
+<p>and if b is itself a pair, instead of:
+</p><pre>
+     (a . (c . (d . (e))))
+
+</pre>
+<p>it is customary to write:
+</p><pre>
+     (a c d e)
+
+</pre>
+<p>The notations may be mixed, so:
+</p><pre>
+     (a . (b . c))
+
+</pre>
+<p>is normally written:
+</p><pre>
+     (a b . c)
+
+</pre>
+<p><b><u>Function</u> <code><a name="pair?"></a><a name="index-pt:3"></a>
+pair?
+</code></b><br>
+<pre>
+(pair? obj)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is a cons pair, <code>#f</code>
+ otherwise.
+</p><ul>
+<li><a href="pairs.html#Constructing_Cons_Pairs">Constructing Cons Pairs</a></li>
+<li><a href="pairs.html#Modifying_Cons_Pairs">Modifying Cons Pairs</a></li>
+<li><a href="pairs.html#CxR_Procedures">CxR Procedures</a></li>
+<li><a href="pairs.html#Rationale_--_cons_pairs">Rationale -- cons pairs</a></li>
+</ul>
+
+
+<br>
+<br><hr>
+
+<a name="Constructing_Cons_Pairs"></a>
+
+
+
+<h3 align=center>Constructing Cons Pairs</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="pairs.html#Cons_Pairs">Cons Pairs</a></br>
+<b>next: </b><a href="pairs.html#Modifying_Cons_Pairs">Modifying Cons Pairs</a></br>
+
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="cons"></a><a name="index-pt:4"></a>
+cons
+</code></b><br>
+<pre>
+(cons a b)
+
+</pre>
+<p>Return a new cons pair with <code>a</code>
+ in the car, and <code>b</code>
+ in the cdr.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="cons*"></a><a name="index-pt:5"></a>
+cons*
+</code></b><br>
+<pre>
+(cons* elt1 elt2 ... eltn)
+
+</pre>
+<p>With on arguments, return <code>()</code>
+:
+</p><pre>
+     (cons*) => ()
+
+</pre>
+<p>With one argument, return that argument:
+</p><pre>
+     (cons* OBJ) => OBJ
+
+</pre>
+<p>With two or more arguments:
+</p><pre>
+     (cons* A B ... Z)
+     => (cons A (cons* B ... Z))
+
+</pre>
+
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Modifying_Cons_Pairs"></a>
+
+
+
+<h3 align=center>Modifying Cons Pairs</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="pairs.html#Cons_Pairs">Cons Pairs</a></br>
+<b>next: </b><a href="pairs.html#CxR_Procedures">CxR Procedures</a></br>
+
+<b>prev: </b><a href="pairs.html#Constructing_Cons_Pairs">Constructing Cons Pairs</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="set-car!"></a><a name="index-pt:6"></a>
+set-car!
+</code></b><br>
+<pre>
+(set-car! obj value)
+
+</pre>
+<p>Set the car of cons-pair <code>obj</code>
+ to <code>value</code>
+.
+</p><p>Return <code>obj</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="set-cdr!"></a><a name="index-pt:7"></a>
+set-cdr!
+</code></b><br>
+<pre>
+(set-cdr! obj value)
+
+</pre>
+<p>Set the cdr of cons-pair <code>obj</code>
+ to <code>value</code>
+.
+</p><p>Return <code>obj</code>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="CxR_Procedures"></a>
+
+
+
+<h3 align=center>CxR Procedures</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="pairs.html#Cons_Pairs">Cons Pairs</a></br>
+<b>next: </b><a href="pairs.html#Rationale_--_cons_pairs">Rationale -- cons pairs</a></br>
+
+<b>prev: </b><a href="pairs.html#Modifying_Cons_Pairs">Modifying Cons Pairs</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>The procedures in this sectoin are all compositions of <code>car</code>
+ and
+<code>cdr</code>
+.  The name of each of these functions is a description of
+what it does.  For example, <code>(cadr x)</code>
+ is the same as
+</p><pre>
+     (car (cdr x))
+
+</pre>
+<p>In C, these procedures are provided as macros.  For example, <code>cadr</code>
+
+is the macro <code>SCM_CADR</code>
+.  The macros may be used as l-values, for
+example:
+</p><pre>
+     SCM_CAR (x) = value;
+
+</pre>
+<p><b><u>Function</u> <code><a name="car"></a><a name="index-pt:8"></a>
+car
+</code></b><br>
+<pre>
+(car obj)
+
+</pre>
+<p>Return the car of cons-pair <code>obj</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="cdr"></a><a name="index-pt:9"></a>
+cdr
+</code></b><br>
+<pre>
+(cdr obj)
+
+</pre>
+<p>Return the cdr of cons-pair <code>obj</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="caar"></a><a name="index-pt:10"></a>
+caar
+</code></b><br>
+<pre>
+(caar obj)
+
+</pre>
+<p>Return the car of <code>(car obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="cadr"></a><a name="index-pt:11"></a>
+cadr
+</code></b><br>
+<pre>
+(cadr obj)
+
+</pre>
+<p>Return the car of <code>(cdr obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="cdar"></a><a name="index-pt:12"></a>
+cdar
+</code></b><br>
+<pre>
+(cdar obj)
+
+</pre>
+<p>Return the cdr of <code>(car obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="cddr"></a><a name="index-pt:13"></a>
+cddr
+</code></b><br>
+<pre>
+(cddr obj)
+
+</pre>
+<p>Return the cdr of <code>(cdr obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="caaar"></a><a name="index-pt:14"></a>
+caaar
+</code></b><br>
+<pre>
+(caaar obj)
+
+</pre>
+<p>Return the car of <code>(caar obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="caadr"></a><a name="index-pt:15"></a>
+caadr
+</code></b><br>
+<pre>
+(caadr obj)
+
+</pre>
+<p>Return the car of <code>(cadr obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="cadar"></a><a name="index-pt:16"></a>
+cadar
+</code></b><br>
+<pre>
+(cadar obj)
+
+</pre>
+<p>Return the car of <code>(cdar obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="caddr"></a><a name="index-pt:17"></a>
+caddr
+</code></b><br>
+<pre>
+(caddr obj)
+
+</pre>
+<p>Return the car of <code>(cddr obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="cdaar"></a><a name="index-pt:18"></a>
+cdaar
+</code></b><br>
+<pre>
+(cdaar obj)
+
+</pre>
+<p>Return the cdr of <code>(caar obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="cdadr"></a><a name="index-pt:19"></a>
+cdadr
+</code></b><br>
+<pre>
+(cdadr obj)
+
+</pre>
+<p>Return the cdr of <code>(cadr obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="cddar"></a><a name="index-pt:20"></a>
+cddar
+</code></b><br>
+<pre>
+(cddar obj)
+
+</pre>
+<p>Return the cdr of <code>(cdar obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="cdddr"></a><a name="index-pt:21"></a>
+cdddr
+</code></b><br>
+<pre>
+(cdddr obj)
+
+</pre>
+<p>Return the cdr of <code>(cddr obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="caaaar"></a><a name="index-pt:22"></a>
+caaaar
+</code></b><br>
+<pre>
+(caaaar obj)
+
+</pre>
+<p>Return the car of <code>(caaar obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="caaadr"></a><a name="index-pt:23"></a>
+caaadr
+</code></b><br>
+<pre>
+(caaadr obj)
+
+</pre>
+<p>Return the car of <code>(caadr obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="caadar"></a><a name="index-pt:24"></a>
+caadar
+</code></b><br>
+<pre>
+(caadar obj)
+
+</pre>
+<p>Return the car of <code>(cadar obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="caaddr"></a><a name="index-pt:25"></a>
+caaddr
+</code></b><br>
+<pre>
+(caaddr obj)
+
+</pre>
+<p>Return the car of <code>(caddr obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="cadaar"></a><a name="index-pt:26"></a>
+cadaar
+</code></b><br>
+<pre>
+(cadaar obj)
+
+</pre>
+<p>Return the car of <code>(cdaar obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="cadadr"></a><a name="index-pt:27"></a>
+cadadr
+</code></b><br>
+<pre>
+(cadadr obj)
+
+</pre>
+<p>Return the car of <code>(cdadr obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="caddar"></a><a name="index-pt:28"></a>
+caddar
+</code></b><br>
+<pre>
+(caddar obj)
+
+</pre>
+<p>Return the car of <code>(cddar obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="cadddr"></a><a name="index-pt:29"></a>
+cadddr
+</code></b><br>
+<pre>
+(cadddr obj)
+
+</pre>
+<p>Return the car of <code>(cdddr obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="cdaaar"></a><a name="index-pt:30"></a>
+cdaaar
+</code></b><br>
+<pre>
+(cdaaar obj)
+
+</pre>
+<p>Return the cdr of <code>(caaar obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="cdaadr"></a><a name="index-pt:31"></a>
+cdaadr
+</code></b><br>
+<pre>
+(cdaadr obj)
+
+</pre>
+<p>Return the cdr of <code>(caadr obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="cdadar"></a><a name="index-pt:32"></a>
+cdadar
+</code></b><br>
+<pre>
+(cdadar obj)
+
+</pre>
+<p>Return the cdr of <code>(cadar obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="cdaddr"></a><a name="index-pt:33"></a>
+cdaddr
+</code></b><br>
+<pre>
+(cdaddr obj)
+
+</pre>
+<p>Return the cdr of <code>(caddr obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="cddaar"></a><a name="index-pt:34"></a>
+cddaar
+</code></b><br>
+<pre>
+(cddaar obj)
+
+</pre>
+<p>Return the cdr of <code>(cdaar obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="cddadr"></a><a name="index-pt:35"></a>
+cddadr
+</code></b><br>
+<pre>
+(cddadr obj)
+
+</pre>
+<p>Return the cdr of <code>(cdadr obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="cdddar"></a><a name="index-pt:36"></a>
+cdddar
+</code></b><br>
+<pre>
+(cdddar obj)
+
+</pre>
+<p>Return the cdr of <code>(cddar obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="cddddr"></a><a name="index-pt:37"></a>
+cddddr
+</code></b><br>
+<pre>
+(cddddr obj)
+
+</pre>
+<p>Return the cdr of <code>(cdddr obj)</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="scm_cons2"></a><a name="index-pt:38"></a>
+scm_cons2
+</code></b><br>
+<pre>
+SCM scm_cons2 (SCM w, SCM x, SCM y);
+
+</pre>
+<p>Return <code>(cons w (cons x y))</code>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Rationale_--_cons_pairs"></a>
+
+
+
+<h3 align=center>Rationale -- cons pairs</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="pairs.html#Cons_Pairs">Cons Pairs</a></br>
+
+<b>prev: </b><a href="pairs.html#CxR_Procedures">CxR Procedures</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>Systas Scheme simply follows standard Scheme here.
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

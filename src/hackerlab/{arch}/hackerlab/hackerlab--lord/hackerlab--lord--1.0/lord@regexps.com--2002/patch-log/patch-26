@@ -1,0 +1,13 @@
+Revision: hackerlab--lord--1.0--patch-26
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Tue Feb 19 17:24:48 PST 2002
+Standard-date: 2002-02-20 01:24:48 GMT
+Summary: updated =NEWS
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-26
+Modified-files: =NEWS =THANKS ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/hackerlab--lord--1.0--patch-26
+
+Updated "=NEWS".

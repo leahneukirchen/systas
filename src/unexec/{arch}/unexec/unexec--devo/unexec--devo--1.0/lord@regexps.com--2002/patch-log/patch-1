@@ -1,0 +1,89 @@
+Revision: unexec--devo--1.0--patch-1
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sat May 18 13:10:27 PDT 2002
+Standard-date: 2002-05-18 20:10:27 GMT
+Summary: merge with `lord'
+Keywords: 
+New-files: {arch}/unexec/unexec--devo/unexec--devo--1.0/lord@regexps.com--2002/patch-log/patch-1
+  {arch}/unexec/unexec--lord/unexec--lord--1.0/lord@regexps.com--2002/patch-log/base-0
+  {arch}/unexec/unexec--lord/unexec--lord--1.0/lord@regexps.com--2002/patch-log/patch-1
+  {arch}/unexec/unexec--lord/unexec--lord--1.0/lord@regexps.com--2002/patch-log/patch-2
+  {arch}/unexec/unexec--lord/unexec--lord--1.0/lord@regexps.com--2002/patch-log/patch-3
+  {arch}/unexec/unexec--lord/unexec--lord--1.0/lord@regexps.com--2002/patch-log/patch-4
+  {arch}/unexec/unexec--lord/unexec--lord--1.0/lord@regexps.com--2002/patch-log/patch-5
+  {arch}/unexec/unexec--lord/unexec--lord--1.0/lord@regexps.com--2002/patch-log/patch-6
+  .arch-ids/=NEWS.id libunexec/malloc.c libunexec/unexelf.c
+  libunexec/malloc.h =NEWS
+New-directories: {arch}/unexec/unexec--lord
+  {arch}/unexec/unexec--lord/unexec--lord--1.0
+  {arch}/unexec/unexec--lord/unexec--lord--1.0/lord@regexps.com--2002
+  {arch}/unexec/unexec--lord/unexec--lord--1.0/lord@regexps.com--2002/patch-log
+  .arch-ids
+Removed-files: libunexec/=unexec-impls-raw/.arch-ids/unexaix.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexalpha.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexapollo.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexconvex.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexec.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexelf.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexencap.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexmips.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexnext.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexenix.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexfx2800.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexhp9k800.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexsgi.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexsni.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexsunos4.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexw32.c.id
+  libunexec/unexelf.c libunexec/=unexec-impls-raw/unexaix.c
+  libunexec/=unexec-impls-raw/unexalpha.c
+  libunexec/=unexec-impls-raw/unexapollo.c
+  libunexec/=unexec-impls-raw/unexconvex.c
+  libunexec/=unexec-impls-raw/unexec.c
+  libunexec/=unexec-impls-raw/unexelf.c
+  libunexec/=unexec-impls-raw/unexencap.c
+  libunexec/=unexec-impls-raw/unexmips.c
+  libunexec/=unexec-impls-raw/unexnext.c
+  libunexec/=unexec-impls-raw/unexenix.c
+  libunexec/=unexec-impls-raw/unexfx2800.c
+  libunexec/=unexec-impls-raw/unexhp9k800.c
+  libunexec/=unexec-impls-raw/unexsgi.c
+  libunexec/=unexec-impls-raw/unexsni.c
+  libunexec/=unexec-impls-raw/unexsunos4.c
+  libunexec/=unexec-impls-raw/unexw32.c
+Removed-directories: libunexec/=unexec-impls-raw
+  libunexec/=unexec-impls-raw/.arch-ids
+Modified-files: =README libunexec/Makefile.in
+New-patches: lord@regexps.com--2002/unexec--devo--1.0--patch-1
+  lord@regexps.com--2002/unexec--lord--1.0--base-0
+  lord@regexps.com--2002/unexec--lord--1.0--patch-1
+  lord@regexps.com--2002/unexec--lord--1.0--patch-2
+  lord@regexps.com--2002/unexec--lord--1.0--patch-3
+  lord@regexps.com--2002/unexec--lord--1.0--patch-4
+  lord@regexps.com--2002/unexec--lord--1.0--patch-5
+  lord@regexps.com--2002/unexec--lord--1.0--patch-6
+
+Patches applied:
+
+  * lord@regexps.com--2002/unexec--lord--1.0--patch-6
+     updated =NEWS
+
+  * lord@regexps.com--2002/unexec--lord--1.0--patch-5
+     unexelf.c and =README cleanups
+
+  * lord@regexps.com--2002/unexec--lord--1.0--patch-4
+     linux unexec support
+
+  * lord@regexps.com--2002/unexec--lord--1.0--patch-3
+     working on linux port
+
+  * lord@regexps.com--2002/unexec--lord--1.0--patch-2
+     be careful with exported symbols in malloc.c
+
+  * lord@regexps.com--2002/unexec--lord--1.0--patch-1
+     malloc and first-cut GNU/Linux support
+
+  * lord@regexps.com--2002/unexec--lord--1.0--base-0
+     tag of lord@regexps.com--2002/unexec--devo--1.0--base-0
+

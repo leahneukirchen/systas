@@ -1,0 +1,122 @@
+<html>
+<head>
+<title>Hash Values</title>
+</head>
+<body>
+
+<a name="Hash_Values"></a>
+
+
+
+<h2 align=center>Hash Values</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="hashtab.html#Hash_Tables">Hash Tables</a></br>
+
+<b>prev: </b><a href="dictionaries.html#Rationale_--_Dictionaries_in_General">Rationale -- Dictionaries in General</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>Systas scheme has built-in rules for computing hash values.  There
+are three hash functions, corresponding to the three types of
+equality (<code>eq?</code>
+, <code>eqv?</code>
+, and <code>equal?</code>
+).
+</p><p><b><u>Function</u> <code><a name="hashq"></a><a name="index-pt:0"></a>
+hashq
+</code></b><br>
+<pre>
+(hashq obj n)
+
+</pre>
+<p>Compute a hash value modulo <code>n</code>
+ for <code>obj</code>
+.  <code>eq?</code>
+ objects return
+equal hash values.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="hashv"></a><a name="index-pt:1"></a>
+hashv
+</code></b><br>
+<pre>
+(hashv obj n)
+
+</pre>
+<p>Compute a hash value modulo <code>n</code>
+ for <code>obj</code>
+.  <code>eqv?</code>
+ objects return
+equal hash values.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="hash"></a><a name="index-pt:2"></a>
+hash
+</code></b><br>
+<pre>
+(hash obj n)
+
+</pre>
+<p>Compute a hash value modulo <code>n</code>
+ for <code>obj</code>
+.  <code>equal?</code>
+ objects return
+equal hash values.
+</p>
+<br>
+<br>
+<a name="Rationale_--_Hash_Values"></a>
+
+
+
+<h3 align=center>Rationale -- Hash Values</h3>
+
+
+
+
+
+
+
+
+
+
+<p>For obvious reasons, the hash value functions mirror the equality
+functions (see <a href="eq.html#Equality">Equality</a>).
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

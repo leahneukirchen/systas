@@ -1,0 +1,42 @@
+Revision: systas--lord--1.0--patch-13
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Wed May  1 23:48:28 PDT 2002
+Standard-date: 2002-05-02 06:48:28 GMT
+Summary: various wiki tweaks and libsystas cleanups
+Keywords: 
+New-files: wiki-cgi/=later/fast-cgi.scm wiki-cgi/time.sh
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-13
+  wiki-cgi/meta-x.ss scheme-library/wiki/=bitrot/accounts.scm
+  scheme-library/cgi/=README scheme-library/wiki/=README
+New-directories: wiki-cgi/=bitrot wiki-cgi/=later
+Removed-files: wiki-cgi/test.ss
+Renamed-files: wiki-cgi/edit-topic.ss wiki-cgi/=bitrot/edit-topic.ss
+  wiki-cgi/login.ss wiki-cgi/=bitrot/login.ss
+  wiki-cgi/view-topic.ss wiki-cgi/=bitrot/view-topic.ss
+  wiki-cgi/logout.ss wiki-cgi/=bitrot/logout.ss
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regepx.com--2002/ChangeLog.lord--1.0
+  libsystas/eval.c libsystas/init.c libsystas/introduction.doc
+  libsystas/stime.c libsystas/system.c
+  scheme-library/cgi/commands.scm
+  scheme-library/cgi/session.scm scheme-library/cgi/users.scm
+  scheme-library/cogen/=README
+  scheme-library/data-structures/=README
+  scheme-library/doc/=README scheme-library/formatting/=README
+  scheme-library/http/=README scheme-library/ice-9/=README
+  scheme-library/ps-fonts/=README scheme-library/raw/=README
+  scheme-library/regexps/=README scheme-library/slib/=README
+  scheme-library/standard/=README scheme-library/unix/=README
+  scheme-library/unix/shell.scm scheme-library/wiki/auth.scm
+  scheme-library/wiki/cgi.scm scheme-library/wiki/config.scm
+  scheme-library/wiki/edit.scm scheme-library/wiki/library.scm
+  scheme-library/wiki/transactions.scm
+  scheme-library/wiki/view.scm wiki-cgi/Makefile.in
+New-patches: lord@regexps.com--2002/systas--lord--1.0--patch-13
+
+
+General progress on wiki.  Some tweaks to libsystas
+to get a clean compile after having removed the 
+(never finished) debugger support.
+

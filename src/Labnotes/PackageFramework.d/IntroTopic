@@ -1,0 +1,124 @@
+
+!>	    The Hackerlab `package-framework'
+
+
+	  
+		   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+						+++
+						bg: #d5ffff
+
+
+		   *the `package-framework' source packaging system*
+
+ 		   *project home page*: http://www.regexps.com/package-framework.html
+
+		   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  So, let's replace `autoconf', `automake', and `libtool'.  Of course,
+  it goes without saying that is probably a BadIdea, but let's
+  assume for the moment that we all agree it's a GoodIdea.
+
+  The [`package-framework'] software provides the skeleton of a source
+  code distribution:  just add source code for your program, write
+  some program-specific configuration files, and _voila_, you've got a
+  ready-to-ship source package.
+
+  More specficlly, the framework provides the following functionality:
+
+
+  + generic makefiles		:::	The framework includes generic
+					makefiles that should be
+					sufficient to build many
+					programs -- you won't have to
+					do any significant `make'
+					scripting yourself.  (In 
+					future releases, we hope to
+					handle _most_ or _nearly all_
+					programs instead of just
+                                        _many_.)
+
+
+  + configuration scripts       :::     The framework includes a
+                                        replacement for *GNU*
+                                        `autoconf' -- a set of scripts
+                                        you can use to determine
+                                        platform-specific compile-time
+                                        parameters, and which users
+                                        can use to set compile-time
+                                        options.
+
+
+  + a dependency manager        :::     Finally, the framework
+                                        contains tools to help you
+                                        manage dependencies between
+                                        packages. 
+
+
+
+
+  
+  Using the `package-framework' is pretty easy.  The documentation is
+  divided into (mostly independent) basic topics, plus some
+  additional advanced topics:
+
+
+v================================
+				+++
+				width: 100
+				bg: #d5d5ff
+				headers: no
+				
+  
+			 + __project info__ +
+
+  + [`package-framework'] ::: the project home page
+
+  + [downloading]	::: the FTP area
+
+  + ReleaseNews		::: what's new?
+
+
+		      + __basic documentation__ +
+
+  + UserView		::: What end-user's experience with
+			    distributions that use the
+			    `package-framework'.
+
+  + TreeLayout		::: How to organize your `package-framework'
+			    source trees.
+
+  + ConfigVariables	::: How to add compile-time parameters
+			    to your build process.
+
+  + WritingMakefiles	::: How to create `package-framework'
+			    Makefiles.
+
+  + ManagingDependencies ::: How to manage dependencies of
+			     `package-framework'-based distributions
+			     on other distributions.
+
+		       + __advanced topics__ +
+
+  + TodoList		::: Want to help replace `autoconf',
+			    `automake', and `libtoo'?  Start
+			    here.
+
+  + PkgDependencies	::: What other software does the
+			    `package-framework' depend on?
+
+  + FrameworkPorting	::: How to port the `package-framework'
+			    to a new target environment.
+
+^================================
+
+
+* references
+
+[downloading]:: ftp://ftp.regexps.com/pub/src/package-framework/
+
+[`package-framework']:: http://www.regexps.com/package-framework.html
+
+---
+
+%%% tag: Tom Lord Thu May  9 12:46:31 2002 (PackageFramework.d/IntroTopic)
+%%%

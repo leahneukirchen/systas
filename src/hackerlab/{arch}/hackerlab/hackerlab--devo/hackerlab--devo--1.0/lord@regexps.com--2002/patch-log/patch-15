@@ -1,0 +1,13 @@
+Revision: hackerlab--devo--1.0--patch-15
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sun Mar  3 17:00:12 PST 2002
+Standard-date: 2002-03-04 01:00:12 GMT
+Summary: updated =TODO
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--2002/patch-log/patch-15
+Modified-files: =TODO ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/hackerlab--devo--1.0--patch-15
+
+Updated "=TODO".

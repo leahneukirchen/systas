@@ -1,0 +1,224 @@
+@need 3200
+
+@node Reading and Writing Data Structures
+@chapter Reading and Writing Data Structures
+
+These functions are used to read or write Scheme data structures.
+Every data structure has a printed representation, but not every data
+structure can be read back in.  For example, an structure might be
+printed as:
+
+@example
+@group
+     #<structure 80ddf20>
+@end group
+@group
+@end group
+@end example
+
+@noindent
+but trying to read that syntax will cause an error.
+
+
+Lists, numbers, strings, and vectors are examples of data types that
+can be both read and written.  Documentation for each type explains the
+read syntax of that type, if it has one.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{read}@fuindex read
+@*
+@example
+@group
+(read :optional port case? sharp :rest kws)
+@end group
+@group
+@end group
+@end example
+
+Read an object from @code{port} or @code{(current-input-port)}.
+If @code{port} is a string or read-only string, read from that string.
+
+
+If @code{case?} is specified and not @code{#f}, symbols are read in a case
+insensative manner (symbol names are converted to lower case).
+
+
+@code{sharp_reader_proc} is @code{#f} or a procedure to use to read values that
+begin with @geindex #
+@dfn{#} if the character following the @geindex #
+@dfn{#} has no built-in
+meaning. Examples of @geindex #
+@dfn{#} syntax that is built-in are:
+
+@example
+@group
+     #(a b c)        ;; a vector
+     #t              ;; true
+     #f              ;; false
+     #b11010         ;; a binary number
+     #o777           ;; an octal number
+@end group
+@group
+     #d1313          ;; a decimal number
+@end group
+@group
+     #xceded         ;; a hexadecimal number
+     #i3.1           ;; an inexact number
+     #e69            ;; an exact number
+     #s"odd symbol"  ;; a symbol with an odd name
+     #\space         ;; a character
+@end group
+@group
+@end group
+@end example
+
+If @code{sharp} is needed, it is called:
+
+@example
+@group
+     (sharp port case-insensitive? first-character)
+@end group
+@group
+@end group
+@end example
+
+@code{case-insensitive?} and @code{port} are as passed to @code{read};
+@code{first-character} is the character that followed the @code{#}.
+
+
+Supported keyword arguments are:
+
+@example
+@group
+     :cycles         -- permit circular structures
+                        to be read.
+@end group
+@group
+@end group
+@end example
+
+@strong{WARNING:} Support for @code{:cycles} seems to be broken
+in this release.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{write}@fuindex write
+@*
+@example
+@group
+(write obj :optional port :rest kw-arguments)
+@end group
+@group
+@end group
+@end example
+@example
+@group
+ Write a printed representation of `obj' on `port' or
+ `(current-output-port)'.
+@end group
+@group
+@end group
+@end example
+@example
+@group
+ For all objects that can be read, `write' prints using that
+ syntax.
+@end group
+@group
+@end group
+@end example
+
+@strong{WARNING:} Keyword arguments control the printing of circular
+structures, but seem not to work correctly in the current release.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{display}@fuindex display
+@*
+@example
+@group
+(display obj :optional port)
+@end group
+@group
+@end group
+@end example
+@example
+@group
+ Write a printed representation of `obj' on `port' or
+ `(current-output-port)'.
+@end group
+@group
+@end group
+@end example
+
+@code{display} is similar to @code{write}, except that strings are printed
+without quotes, characters are printed without @geindex #\
+@dfn{#\} and so forth.
+
+
+@strong{WARNING:} Keyword arguments control the printing of circular
+structures, but seem not to work correctly in the current release.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{display*}@fuindex display*
+@*
+@example
+@group
+(display* . args)
+@end group
+@group
+@end group
+@end example
+
+This is simply:
+     (define (display* . args) (for-each display args))
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{display*-port}@fuindex display*-port
+@*
+@example
+@group
+(display*-port port . args)
+@end group
+@group
+@end group
+@end example
+
+This is simply:
+
+@example
+@group
+  (define (display*-port port . args)
+    (if port
+        (with-output-to-port port (lambda () (apply display* args)))
+        (apply display* args)))
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{newline}@fuindex newline
+@*
+@example
+@group
+(newline :optional port)
+@end group
+@group
+@end group
+@end example
+
+Write the character @code{#\nl} to @code{port} or to @code{(current-output-port)}.
+
+
+
+

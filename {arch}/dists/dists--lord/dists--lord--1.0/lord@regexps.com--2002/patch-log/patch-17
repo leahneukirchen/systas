@@ -1,0 +1,18 @@
+Revision: dists--lord--1.0--patch-17
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri Feb  8 15:06:16 PST 2002
+Standard-date: 2002-02-08
+Summary: updated =INSTALL instructions
+Keywords: 
+New-files: {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-17
+  ChangeLog.d/=THANKS
+Modified-files: =INSTALL ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/dists--lord--1.0--patch-17
+
+
+The installation instructions should warn people that 
+parallel makes don't work (a fact which should eventually
+be fixed).
+

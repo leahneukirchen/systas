@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>Running Systas from Emacs</title>
+</head>
+<body>
+
+<a name="Running_Systas_from_Emacs"></a>
+
+
+
+<h2 align=center>Running Systas from Emacs</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+
+<b>prev: </b><a href="modules.html#An_Introduction_to_Systas_Modules">An Introduction to Systas Modules</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>GNU Emacs (and approximately compatible Emacsen) provides
+<code>inferior-scheme-mode</code>
+ for running a Scheme interpreter
+sub-process, and <code>scheme-mode</code>
+ for editing Scheme source.
+</p><p>These two modes interact nicely, especially via the command
+<code>scheme-send-definition</code>
+ (usually bound to <code>M-C-x</code>
+).  That command
+can be invoked in a <code>scheme-mode</code>
+ buffer.  It finds the top level
+expression at or nearest the point, and sends it to the Scheme
+subprocess.
+</p><p>The Systas Scheme module system complicates things slightly.
+Suppose your are editting two files, each of which defines
+a module: <code>module-a.scm</code>
+ and <code>module-b.scm</code>
+.  If you try to send a
+defintion from <code>module-a.scm</code>
+, you want that definition to be
+evaluated in <code>module-a</code>
+.  If you send from <code>module-b.scm</code>
+, you
+expect evaluation in <code>module-b</code>
+.
+</p><p>For that reason, systas is distributed with <code>init-guile-scheme.el</code>
+
+-- an Emacs lisp file you can load in .emacs.  It defines a new
+command called <code>modular-scheme-send-definition</code>
+.
+</p><p>When invoked, <code>modular-scheme-send-definition</code>
+ looks at the top of
+the current source file for a <code>define-module</code>
+ expression.  If it
+finds one, it sends that expression before sending the expression
+at or near the point.  That will cause the module to be made the
+current module (and autoloaded, if necessary) before evaluating the
+expression at the point.
+</p><p>(<code>init-guile-scheme.el</code>
+ provides other useful definitions as well,
+along with an expanded set of indenting rules for Guile Scheme.)
+</p>
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

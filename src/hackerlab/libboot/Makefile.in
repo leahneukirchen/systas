@@ -1,0 +1,7 @@
+# tag: Tom Lord Tue Dec  4 14:52:16 2001 (libboot/Makefile.in)
+#
+
+otherdirs		:=	$(boot_dirs)
+
+include $(makefiles)/library.mk
+

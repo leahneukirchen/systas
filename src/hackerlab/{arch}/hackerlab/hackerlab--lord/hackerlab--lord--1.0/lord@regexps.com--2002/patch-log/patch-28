@@ -1,0 +1,14 @@
+Revision: hackerlab--lord--1.0--patch-28
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Feb 28 18:19:37 PST 2002
+Standard-date: 2002-03-01 02:19:37 GMT
+Summary: updated =TODO
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-28
+Modified-files: =TODO ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/hackerlab--lord--1.0--patch-28
+
+Updated the "=TODO" file.
+

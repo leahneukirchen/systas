@@ -1,0 +1,18 @@
+Revision: package-framework--lord--1.0--patch-2
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon Jan  7 16:27:34 PST 2002
+Standard-date: 2002-01-07
+Summary: ChangeLog's reorganized
+Keywords: 
+New-files: {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-2
+  ChangeLog.d/=README ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+Removed-files: ChangeLog ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord
+Renamed-files: ChangeLog.d/lord@regexps.com--2001Q4/ChangeLog.devo ChangeLog.d/lord@regexps.com--2001Q4/ChangeLog.devo--1.0
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-2
+
+Reorganized the ChangeLogs slightly.  Renamed to reflect branch names
+and master ChangeLog moved to ChangeLog.d since it won't be
+interesting to most people browsing distributions that include it.
+

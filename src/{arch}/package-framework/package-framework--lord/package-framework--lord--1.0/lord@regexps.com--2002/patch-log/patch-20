@@ -1,0 +1,25 @@
+Revision: package-framework--lord--1.0--patch-20
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Feb 14 11:34:52 PST 2002
+Standard-date: 2002-02-14
+Summary: permit alternative shells in `configure'
+Keywords: 
+New-files: {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-20
+Modified-files: =THANKS ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  build-tools/scripts/configure-autoconf
+  build-tools/scripts/configure-dirs
+  build-tools/scripts/configure-generic
+  build-tools/scripts/configure-leaf
+  build-tools/scripts/configure-top configure
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-20
+
+  "config.status" files now start with "#!" lines and the 
+  "src/build-tools/scripts" configuration scripts use an
+  explicitly chosen shell to call each other.  The top-level
+  configure script now accepts a "--config-shell SHELL" option.
+
+  This is a small step towards cygwin portability, and eases
+  some of the portability constraints on "configure" for systems
+  where "/bin/sh" is not quite posix.

@@ -1,0 +1,41 @@
+Revision: hackerlab--lord--1.0--patch-23
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sat Feb 16 14:37:44 PST 2002
+Standard-date: 2002-02-16
+Summary: (interface change) support both short and long help messages
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-23
+Modified-files: =NEWS ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  cmd/opt.c cmd/opt.h tests/arrays-tests/unit-ar.c
+  tests/bitset-tests/unit-bits.c
+  tests/bitset-tests/unit-bitset-tree.c
+  tests/bitset-tests/unit-bitset.c
+  tests/bugs-tests/unit-panic.c
+  tests/bugs-tests/unit-test-coverage.c
+  tests/char-tests/unit-char-class.c
+  tests/char-tests/unit-char-name.c
+  tests/char-tests/unit-str.c tests/fmt-tests/unit-cvt.c
+  tests/fs-tests/unit-file-names.c
+  tests/hash-tests/unit-hash-utils.c
+  tests/hash-tests/unit-hashtree.c
+  tests/mem-tests/unit-alloc-limits.c
+  tests/mem-tests/unit-mem.c
+  tests/mem-tests/unit-must-malloc.c
+  tests/rx-posix-tests/test-dbug.c
+  tests/rx-posix-tests/test-rx.c
+  tests/rx-posix-tests/test-search.c
+  tests/rx-tests/unit-dfa-iso8859-1.c
+  tests/rx-tests/unit-dfa-utf-no-surrogates.c
+  tests/rx-tests/unit-dfa-utf.c
+  tests/rx-tests/unit-dfa-utf16.c
+  tests/rx-tests/unit-dfa-utf8.c tests/uni-tests/unit-coding.c
+  tests/uni-tests/unit-cvt.c
+  tests/unidata-tests/unit-unidata.c
+  unidata-scaffolding/unidata-generate.c
+New-patches: lord@regexps.com--2002/hackerlab--lord--1.0--patch-23
+
+`cmd/opt.c': support both short (options only) and long (options plus
+additional explanatory text) help messages in `opt_standard'.
+

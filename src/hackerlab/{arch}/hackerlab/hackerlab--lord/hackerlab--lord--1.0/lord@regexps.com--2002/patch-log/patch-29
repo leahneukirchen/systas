@@ -1,0 +1,42 @@
+Revision: hackerlab--lord--1.0--patch-29
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sun Mar 10 04:02:00 PST 2002
+Standard-date: 2002-03-10 12:02:00 GMT
+Summary: merge with `devo'
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--2002/patch-log/patch-10
+  {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--2002/patch-log/patch-11
+  {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--2002/patch-log/patch-12
+  {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--2002/patch-log/patch-13
+  {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--2002/patch-log/patch-14
+  {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--2002/patch-log/patch-15
+  {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--2002/patch-log/patch-8
+  {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--2002/patch-log/patch-9
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-29
+Modified-files: =NEWS =TODO ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/hackerlab--devo--1.0--patch-10
+  lord@regexps.com--2002/hackerlab--devo--1.0--patch-11
+  lord@regexps.com--2002/hackerlab--devo--1.0--patch-12
+  lord@regexps.com--2002/hackerlab--devo--1.0--patch-13
+  lord@regexps.com--2002/hackerlab--devo--1.0--patch-14
+  lord@regexps.com--2002/hackerlab--devo--1.0--patch-15
+  lord@regexps.com--2002/hackerlab--devo--1.0--patch-8
+  lord@regexps.com--2002/hackerlab--devo--1.0--patch-9
+  lord@regexps.com--2002/hackerlab--lord--1.0--patch-29
+
+Patches applied (editted):
+
+  * lord@regexps.com--2002/hackerlab--devo--1.0--patch-15
+     updated =TODO
+
+  * lord@regexps.com--2002/hackerlab--devo--1.0--patch-14
+     merge with `lord'
+
+  * lord@regexps.com--2002/hackerlab--devo--1.0--patch-13
+     updated the "=NEWS" file
+
+  * lord@regexps.com--2002/hackerlab--devo--1.0--patch-12
+     merge with `lord'
+     [repeated]

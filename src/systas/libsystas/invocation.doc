@@ -1,0 +1,42 @@
+/* tag: Tom Lord Tue Dec  4 14:57:22 2001 (invocation.doc)
+ */
+/* invocation.doc -
+ *
+ ****************************************************************
+ * Copyright (C) 2001 Thomas Lord
+ * 
+ * See the file "COPYING" for further information about
+ * the copyright and warranty status of this work.
+ */
+
+
+/************************************************************************
+ *(h0 "Invoking Systas")
+ * 
+ * `systas [--eval expression]* [file [other arguments]*]'
+ * 
+ * With no argument, systas enters an interactive read-eval-print
+ * loop which you can exit by calling `(quit)':
+ * 
+ * 	% systas
+ *	systas> (+ 1 2)
+ * 	3
+ * 	...
+ * 	systas> (quit)
+ *	% 
+ * 
+ * With arguments, systas interprets each argument in order and then
+ * invokes the procedure bound to `main'.  By default, that procedure
+ * exits the process with status 0.
+ * 
+ * An argument of the form `--eval expression' simply evaluates
+ * `expression'.
+ * 
+ * An argument of the form `file' attempts to load that file.  
+ * 
+ * In either case, if an error occurs, systas exits with non-0 status.
+ * 
+ * If `main' is invoked, it is passed a list of strings containing
+ * the `other arguments'.
+ * 
+ */

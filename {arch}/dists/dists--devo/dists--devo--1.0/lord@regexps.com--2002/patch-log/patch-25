@@ -1,0 +1,17 @@
+Revision: dists--devo--1.0--patch-25
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon Mar  4 13:48:29 PST 2002
+Standard-date: 2002-03-04 21:48:29 GMT
+Summary: updated arch docs
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-25
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  docs.d/arch/html/indexes.html
+  docs.d/arch/html/inventory.html docs.d/arch/ps/arch.ps
+  docs.d/arch/texi/inventory.texi
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-25
+
+Updated the `arch' user's guide.
+

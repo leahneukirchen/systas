@@ -1,0 +1,6 @@
+# tag: Tom Lord Tue Dec  4 14:52:23 2001 (rx/Makefile.in)
+#
+
+include $(makefiles)/library-objects.mk
+include $(makefiles)/install-includes.mk
+

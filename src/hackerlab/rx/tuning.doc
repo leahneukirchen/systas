@@ -1,0 +1,29 @@
+/* tag: Tom Lord Tue Dec  4 14:57:15 2001 (tuning.doc)
+ */
+/************************************************************************
+ *(h0 "Tuning Posix Regexp and XML Regular Expression Performance")
+ * 
+ * Some programs use Posix regexps or XML Regular Expressions heavily.
+ * The performance of pattern matching (both speed and memory
+ * use) may be important in such programs.
+ * 
+ * The Hackerlab C Library pattern matching functions afford programs
+ * the opportunity to make space-for-time trade-offs: you can 
+ * minimize the amount of memory used for pattern matching at the
+ * cost of speed, or maximize speed, at the cost of memory.  This
+ * chapter provides the details.
+ * 
+ * 
+ */
+/*(menu)
+ */
+
+/*(include-documentation "nfa-cache.c")
+ */
+
+/*(include-documentation "dfa-cache.c")
+ */
+
+/*(include-documentation "cache-sizes.doc")
+ */
+

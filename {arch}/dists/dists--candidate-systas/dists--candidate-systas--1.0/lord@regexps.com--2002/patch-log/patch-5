@@ -1,0 +1,16 @@
+Revision: dists--candidate-systas--1.0--patch-5
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Tue Jan 15 17:54:32 PST 2002
+Standard-date: 2002-01-15
+Summary: snap config for release
+Keywords: 
+New-files: {arch}/dists/dists--candidate-systas/dists--candidate-systas--1.0/lord@regexps.com--2002/patch-log/patch-5
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-5
+Modified-files: =RELEASE-ID ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/dists--candidate-systas--1.0--patch-5
+  lord@regexps.com--2002/dists--devo--1.0--patch-5
+
+snap config for release
+

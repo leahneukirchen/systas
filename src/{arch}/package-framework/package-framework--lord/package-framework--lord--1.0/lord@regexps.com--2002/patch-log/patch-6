@@ -1,0 +1,19 @@
+Revision: package-framework--lord--1.0--patch-6
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Jan 17 13:33:48 PST 2002
+Standard-date: 2002-01-17
+Summary: merge from devo
+Keywords: 
+New-files: {arch}/package-framework/package-framework--devo/package-framework--devo--1.0/lord@regexps.com--2002/patch-log/patch-2
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-6
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/package-framework--devo--1.0--patch-2
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-6
+
+Patches applied:
+
+  * lord@regexps.com--2002/package-framework--devo--1.0--patch-2
+     merge from `lord': --version support
+

@@ -1,0 +1,248 @@
+<html>
+<head>
+<title>Procedures</title>
+</head>
+<body>
+
+<a name="Procedures"></a>
+
+
+
+<h2 align=center>Procedures</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="values.html#Multiple_Return_Values">Multiple Return Values</a></br>
+
+<b>prev: </b><a href="eval.html#Evaluation">Evaluation</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>Procedures are those objects which the evaluator knows how to apply to
+arguments.  Built-in functions are procedures as are any functions
+defined by programs.
+</p><p>A procedure is distinct from the name it is given in any particular context.  
+Thus the symbol `'+' and the primitive procedure bound to the variable called
+<code>+</code>
+ are distinct objects.
+</p><p>Every procedure has an associated property list (association list).  
+The property <em>
+<a name="index-pt:0"></a>
+
+procedure-print-name
+</em>
+, if it is not <code>#f</code>
+, is used when 
+displaying or writing a procedure.
+</p><p><b><u>Function</u> <code><a name="procedure?"></a><a name="index-pt:1"></a>
+procedure?
+</code></b><br>
+<pre>
+(procedure? obj)
+SCM scm_procedure_p (SCM obj);
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is a procedure, <code>#f</code>
+ otherwise.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="procedure-properties"></a><a name="index-pt:2"></a>
+procedure-properties
+</code></b><br>
+<pre>
+(procedure-properties procedure)
+SCM scm_procedure_properties (SCM proc);
+
+</pre>
+<p>Return the property list associated with <code>procedure</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="set-procedure-properties!"></a><a name="index-pt:3"></a>
+set-procedure-properties!
+</code></b><br>
+<pre>
+(set-procedure-properties! procedure list)
+SCM scm_set_procedure_property_x (SCM proc, SCM new_val);
+
+</pre>
+<p>Set the property list associated with <code>procedure</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="procedure-property"></a><a name="index-pt:4"></a>
+procedure-property
+</code></b><br>
+<pre>
+(procedure-property procedure property-name)
+SCM scm_procedure_property (SCM proc, SCM property);
+
+</pre>
+<p>Return the named property (or <code>#f</code>
+) of <code>procedure</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="set-procedure-property!"></a><a name="index-pt:5"></a>
+set-procedure-property!
+</code></b><br>
+<pre>
+(set-procedure-property! procedure property-name value)
+SCM scm_set_procedure_properties_x (SCM proc,
+                                    SCM key,
+                                    SCM value);
+
+</pre>
+<p>Set the named property of <code>procedure</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="closure?"></a><a name="index-pt:6"></a>
+closure?
+</code></b><br>
+<pre>
+(closure? obj)
+
+</pre>
+<p>You probably don't want to use this function.  Use <code>procedure?</code>
+
+instead.  This function is for internal use.
+</p><p>Return <code>#t</code>
+ of <code>obj</code>
+ is a closure, <code>#f</code>
+ otherwise.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="closure-code"></a><a name="index-pt:7"></a>
+closure-code
+</code></b><br>
+<pre>
+(closure-code obj)
+
+</pre>
+<p>This function is for internal use.  It returns the code
+of a closure.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="closure-environment"></a><a name="index-pt:8"></a>
+closure-environment
+</code></b><br>
+<pre>
+(closure-environment obj)
+
+</pre>
+<p>This function is for internal use.  It returns the environment
+of a closure.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="scm_noop"></a><a name="index-pt:9"></a>
+scm_noop
+</code></b><br>
+<pre>
+(noop . args)
+
+</pre>
+<p>Do nothing.  Return the first argument or <code>#f</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="noop2"></a><a name="index-pt:10"></a>
+noop2
+</code></b><br>
+<pre>
+(noop2 . args)
+
+</pre>
+<p>Do nothing.  Return the second argument or <code>#f</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="noop3"></a><a name="index-pt:11"></a>
+noop3
+</code></b><br>
+<pre>
+(noop3 . args)
+
+</pre>
+<p>Do nothing.  Return the third argument or <code>#f</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="noop4"></a><a name="index-pt:12"></a>
+noop4
+</code></b><br>
+<pre>
+(noop4 . args)
+
+</pre>
+<p>Do nothing.  Return the fourth argument or <code>#f</code>
+.
+</p>
+<br>
+<br>
+<a name="Rationale_--_Procedures"></a>
+
+
+
+<h3 align=center>Rationale -- Procedures</h3>
+
+
+
+
+
+
+
+
+
+
+<p><code>procedure?</code>
+ comes from standard Scheme.
+</p><p><code>procedure-properties</code>
+ and related procedures have no particular
+rationale -- they might be removed in a future release.
+</p><p><code>closure?</code>
+, <code>closure-code</code>
+, and <code>closure-environment</code>
+ are principally
+debugging aids.  They may or may not have other uses in the future.
+</p><p>The <code>noop</code>
+ family of procedures are surprisingly handy when programming
+in a functional style.
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

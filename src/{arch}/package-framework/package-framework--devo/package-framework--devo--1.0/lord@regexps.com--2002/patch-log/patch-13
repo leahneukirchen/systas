@@ -1,0 +1,22 @@
+Revision: package-framework--devo--1.0--patch-13
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sun Mar  3 16:49:31 PST 2002
+Standard-date: 2002-03-04 00:49:31 GMT
+Summary: `configure' bug-fix for the value of CC
+Keywords: 
+New-files: {arch}/package-framework/package-framework--devo/package-framework--devo--1.0/lord@regexps.com--2002/patch-log/patch-13
+Modified-files: =TODO ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  PLUGIN/options build-tools/Makefiles/rules.mk
+  build-tools/auto-conf-lib/library-test
+  build-tools/scripts/configure-dirs
+  build-tools/scripts/configure-leaf
+  build-tools/scripts/configure-top
+New-patches: lord@regexps.com--2002/package-framework--devo--1.0--patch-13
+
+
+Support a string option `cc' which determines the C compiler used for
+auto-conf tests and in Makefiles.  See =TODO for information about why
+this is a temporary fix for a larger problem.
+

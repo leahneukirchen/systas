@@ -1,0 +1,39 @@
+
+!			  Systas Scheme NEWS
+
+* 2002-05-16 1.0pre3
+
+  This interpreter is "back from the dead".  Development had stopped 
+  for quite a while, with little or no expectation of continuing in
+  any serious way.  However, two developments changed that:
+
+	*) I found it very convenient to use this implementation
+	   for the `labnotes' web-app toolkit.
+
+	*) I found it to be not-too-hard to add `unexec' support
+	   to the implemenation, which gives a satsifactory (though
+	   far from ideal) solution to the start-up-time problem.
+
+  The big new news of this release is an `unexec' feature.  After being
+  compiled in the usual way, the interpreter is run, a decent number of
+  core modules are loaded, and the running processes is `unexeced'
+  (turned into an executable program).  Consequently, scripts that use
+  those core modules can run with a quite low start-up time.
+
+  The `unexec' feature also makes it possible to create customized
+  versions of systas, with different modules loaded.  There is a 
+  certain amount of black-magic to this though -- not every achievable
+  process state will yield a useful unexeced program.
+
+  The `unexec' implementation is snarfed from emacs and cleaned up
+  to become a generic library.  Ports have been made to FreeBSD and
+  linux -- help reaching other platforms is desirable.
+
+
+<<<
+  -t
+  lord@regexps.com
+>>>
+
+%%% tag: Tom Lord Wed May 15 14:06:03 2002 (SystasScheme.d/ReleaseNews)
+%%%

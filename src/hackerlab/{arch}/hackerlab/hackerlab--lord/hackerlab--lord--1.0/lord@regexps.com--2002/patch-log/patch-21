@@ -1,0 +1,30 @@
+Revision: hackerlab--lord--1.0--patch-21
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Feb 14 13:55:49 PST 2002
+Standard-date: 2002-02-14
+Summary: change the interface to vu_readdir
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-21
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  vu-network/url-socket.c vu/safe.c vu/safe.h vu/url-fd.c
+  vu/vfdbuf.c vu/vfdbuf.h vu/vu-sys.c vu/vu-sys.h
+  vu/vu-virtual-null.c vu/vu.c vu/vu.h
+New-patches: lord@regexps.com--2002/hackerlab--lord--1.0--patch-21
+
+
+There is simply no portable way to copy a dirent structure in Posix.
+
+The amount of memory allocated to a dirent structure is not fixed --
+("sizeof (struct dirent)" is, at best, an upper bound, not a guarantee
+-- if an implementation uses the old 0-or-1-byte tail array trick, it
+isn't even an upper bound.)  The only portable field in dirent is
+`d_name', but there is no guaranteed relation between the string
+stored there and the total size of the structure.
+
+Therefore, `vu_readdir' now returns a dynamically allocated file
+name.  (Those rare applications that don't want to dynamically
+allocate storage for the name can use alloc_limits tricks to avoid
+doing so.)
+

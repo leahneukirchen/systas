@@ -1,0 +1,147 @@
+@need 3200
+
+@node Rationale -- Dictionaries in General
+@chapter Rationale -- Dictionaries in General
+
+A @geindex dictionary
+@dfn{dictionary} is defined to be any data structure that maintains
+an association between @geindex keys
+@dfn{keys} and @geindex values
+@dfn{values}.  A wide variety of
+implementations and semantics are possible for dictionaries.  Some
+examples are association lists, keyword-argument lists, hash
+tables, weak hash tables, and so on.
+
+
+Systas Scheme does not contain a universal @geindex dictionary type
+@dfn{dictionary type} of which
+all actual dictionaries are instances and it does not contain a set of
+generic dictionary procedures that can operate on any dictionary,
+regardless of its actual type.  Instead, Systas defines some common
+minimal calling conventions that apply to all dictionaries.  Because all
+dictionaries have these calling conventions in common, code that you
+write has great flexibility in how it mixes and matches dictionary
+representations.
+
+
+There are three basic dictionary operators:
+
+@example
+@group
+     ;; Looking Up Values
+     ;; =================
+     ;;
+     ;; Return the value bound to `key' in `dictionary'.  
+     ;; Return #f if `key' has no binding.
+     ;;
+     (<dictionary-type>-ref dictionary key)
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     ;; Defining Values
+     ;; ===============
+     ;;
+     ;; Set the value bound to `key' in `dictionary'.
+        ;; 
+     (<dictionary-type>-set! dictionary key value)
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     ;; This may construct a new head for the dictionary.  
+     ;; If your dictionary is bound to `x', be sure to use:
+     ;;
+     (set! x (<dictionary-type>-set! x key value))
+     ;;
+     ;; NOT:  (<dictionary-type>-set! x key value)
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     ;; Removing Values
+     ;; ===============
+     ;; Remove `key' from `dictionary'.
+     ;;
+     (<dictionary-type>-remove! dictionary key)
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     ;; This may construct a new head for the dictionary.  
+     ;; If your dictionary is bound to `x', be sure to use:
+     ;;
+     (set! x (<dictionary-type>-remove! x key value))
+     ;;
+     ;; NOT:  (<dictionary-type>-remove! x key value)
+@end group
+@group
+@end group
+@end example
+
+Here is one way to use these conventions.  Suppose that your code
+involves a dictionary-style data structure.  Initially you choose to
+use association lists.  You might write:
+
+@example
+@group
+  (define (make-widget-dictionary)           '())
+  (define (widget-dictionary-ref . args)     (apply assq-ref args))
+  (define (widget-dictionary-set! . args)    (apply assq-set! args))
+  (define (widget-dictionary-remove! . args) (apply assq-remove! args))
+@end group
+@group
+@end group
+@end example
+
+Later, you can change to hash tables by changing just those four
+lines:
+
+@example
+@group
+  (define (make-widget-dictionary)           (make-hash-table))
+  (define (widget-dictionary-ref . args)     (apply hashq-ref args))
+  (define (widget-dictionary-set! . args)    (apply hashq-set! args))
+  (define (widget-dictionary-remove! . args) (apply hashq-remove! args))
+@end group
+@group
+@end group
+@end example
+
+It is similarly straightforward to define ways to choose the
+representation of a dictionary on-the-fly, or even to change the
+representation of a dictionary in a running program.
+
+
+Another aspect of the dictionary calling convention is that for each
+type of dictionary data structure, three dictionary types are usually
+provided: one each for the possibilities of comparing keys using
+@code{eq?}, @code{eqv?}, and @code{equal?}.  We try to make it so that @code{eq?} and
+@code{eqv?}  dictionary procedures are named with abbreviations using @geindex q
+@dfn{q}
+and @geindex v
+@dfn{v}, while the @code{equal?} version uses no suffix character.  This
+convention gives the cleanest looking names to @geindex equal?
+@dfn{equal?} based
+procedures: @code{hash-ref}, @code{assoc-ref}.
+
+
+Finally, some dictionary types can be extended beyond @code{eq?}, @code{eqv?}
+and @code{equal?} to be based on an arbitrary equivalence relation.  When
+this is the case, a generalized form of the dictionary operators may
+be provided using the suffix @geindex x
+@dfn{x} (as in @code{hashx-ref}).  Compared to
+normal dictionary operators, the @geindex x
+@dfn{x} forms take extra arguments.
+
+
+
+

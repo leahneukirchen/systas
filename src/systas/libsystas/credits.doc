@@ -1,0 +1,42 @@
+/* tag: Tom Lord Tue Dec  4 14:57:21 2001 (credits.doc)
+ */
+/* credits.doc -
+ *
+ ****************************************************************
+ * Copyright (C) 2001 Tom Lord
+ * 
+ * See the file "COPYING" for further information about
+ * the copyright and warranty status of this work.
+ */
+
+
+/************************************************************************
+ *(h0 "Credits")
+ * 
+
+I'm not even going to try and get this right, just now.
+
+Properly speaking, everyone who worked on SCM until around 1995 gets 
+some credit.  Everyone who worked on Guile until around 1997 gets
+some credit.
+
+Frankly, I lost track of all the names.
+
+If you'd like your name to be recorded here, send me some email
+describing what you did.  Hopefully I'll remember events well enough
+to confirm your claim.
+
+Here's the credit list for now:
+
+
+	Aubrey Jaffer is the principle author and maintainer
+	of SCM, from which Systas Scheme ultimately derives.
+
+	Tom Lord did a heck of a lot of work on nearly every
+	aspect of Systas Scheme.
+
+	Several other people who almost certainly deserve 
+	credit aren't listed here, for no good reason.
+
+ * 
+ */

@@ -1,0 +1,48 @@
+/* tag: Tom Lord Tue Dec  4 14:57:12 2001 (bugs.doc)
+ */
+
+/************************************************************************
+ *(h0 "Handling Bugs")
+ * 
+ *
+ * |Burroughs, William S.|
+ * 
+ *	Captain Mission did not fear Panic, the sudden
+ *	intolerable knowing that everything is alive.  
+ *	He was himself an emissary of Panic, of the 
+ *	knowledge that man fears above all else: the
+ *	truth of his origin.  It's so close.  Just wipe 
+ *	away the words and look.
+ *
+ *				William S. Burroughs
+ *				Ghost of a Chance
+ * 
+ * The Hackerlab C library defines a "bug" as a condition within a
+ * running program which is not expected to arise, and which can not
+ * be recovered from if it does arise, but which can not be ruled out
+ * with certainty.
+ * 
+ * When a bug occurs, the only sane alternative is for the process
+ * to exit with a non-0 status.  By convention, a process which 
+ * exits due to a bug should print an error message on its standard
+ * output stream giving some indication of what bug occurred.
+ * 
+ * When a fatal condition arises, call `panic'.  In tricky code, 
+ * play it safe and test for conditions which should always be 
+ * true by using the macro `invariant'. See xref:"Panic".
+ * 
+ * If your program needs to quit in some way besides `_exit(1)', you
+ * might want to replace the function `panic_exit'.  See xref:"Exiting
+ * Due to Panic".
+ * 
+ */
+
+/*(menu)
+ */
+
+/*(include-documentation "panic.c")
+ */
+
+/*(include-documentation "panic-exit.c")
+ */
+

@@ -1,0 +1,166 @@
+# make-links - create a shadow-tree of symlinks
+# 
+################################################################
+# Copyright (C) 2002 Tom Lord
+# 
+# See the file "COPYING" for further information about
+# the copyright and warranty status of this work.
+# 
+
+set -e 
+
+################################################################
+# special options
+# 
+# Some options are special:
+# 
+#	--version | -V
+#	--help | -h
+# 
+if test $# -ne 0 ; then
+
+  for opt in "$@" ; do
+    case $opt in
+
+      --version|-V) printf "make-links 2002-1 from regexps.com\\n"
+		    printf "\\n"
+		    printf "Copyright 2002, Tom Lord\\n"
+		    printf "\\n"
+		    printf "This is free software; see the source for copying conditions.\\n"
+		    printf "There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A\\n"
+		    printf "PARTICULAR PURPOSE.\\n"
+		    printf "\\n"
+		    printf "Report bugs to <bug-file-utils@regexps.com>.\n"
+		    printf "\\n"
+		    exit 0
+		    ;;
+
+      --help|-h)
+		printf "create a shadow tree of symbolic links\\n"
+		printf "usage: make-links [options] from-dir to-dir\\n"
+		printf "\\n"
+		printf " -V --version                  print version info\\n"
+		printf " -h --help                     display help\\n"
+		printf "\\n"
+		printf " -n                            print a list of links, but\\n"
+		printf "                               don't actually create them\\n"
+		printf "\\n"
+		printf " -q                            don't print the list of links\\n"
+		printf "\\n"
+		printf "Create symbolink links in TO-DIR to all regular files in\\n"
+		printf "FROM-DIR, creating new subdirectories in TO-DIR as needed.\\n"
+		printf "\\n"
+		exit 0
+      		;;
+
+      *)
+		;;
+    esac
+  done
+fi
+
+################################################################
+# Ordinary Options
+# 
+# 
+
+no_links=
+quiet=
+
+while test $# -ne 0 ; do
+
+  case "$1" in 
+
+    -n)		shift
+    		no_links=-n
+		;;
+
+    -q)		shift
+    		quiet=-q
+		;;
+
+    --)			shift
+    			break
+			;;
+			
+    -*)			printf "make-links: unrecognized option (%s)\\n" "$1" 1>&2
+			printf "try --help\\n" 1>&2
+			exit 1
+			;;
+
+    *)			break
+    			;;
+
+  esac
+
+done
+
+
+
+################################################################
+# Ordinary Arguments
+# 
+
+if test $# -ne 2 ; then
+  printf "usage: make-links [options] from-dir to-dir\\n" 1>&2
+  printf "try --help\\n" 1>&2
+  exit 1
+fi
+
+from_dir="$1"
+shift
+
+to_dir="$1"
+shift
+
+################################################################
+# Sanity Check and Process Defaults
+# 
+
+here="`pwd`"
+
+cd "$here"
+cd "$from_dir"
+from_dir="`pwd`"
+
+cd "$here"
+cd "$to_dir"
+to_dir="`pwd`"
+
+################################################################
+# Do It
+# 
+
+if test ! -z "$no_links" ; then
+  if test ! -z "$quiet" ; then
+    exit 0
+  fi
+
+  cd "$from_dir"
+  find . -type f 
+  exit 0
+fi
+
+# Really do it
+# 
+
+cd "$to_dir"
+
+( cd "$from_dir" ; \
+  find . -type d \
+  | awk '{ print "mkdir -p \"" $0 "\"" }' ; \
+  find . -type f \
+  | awk -vquiet="$quiet" \
+	-vfrom_dir="$from_dir" \
+    '{
+       if (quiet == "")
+         {
+	   print "printf \"%s\\\\n\" \"" $0 "\"";
+	 }
+       print "ln -s \"" from_dir "/" $0 "\" \"" $0 "\"";
+     }' ) \
+| sh -e 
+
+
+# tag: Tom Lord Fri Apr  5 08:36:26 2002 (links/make-links.sh.in)
+#

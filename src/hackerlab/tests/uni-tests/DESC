@@ -1,0 +1,22 @@
+# tag: Tom Lord Tue Dec  4 15:05:30 2001 (uni-tests/DESC)
+#
+
+We test the installed header files to make sure they compile.
+
+unit-coding, unit-cvt
+
+	Both programs convert between UTF-8 and UTF-16.
+
+	unit-cvt is based on "ConvertUTF.c" (called "cvtutf.c" here).
+	ConvertUTF.c is distributed on the CD-ROM that comes
+	with the Unicode standard (and presumably from the 
+	unicode.org web site).  It is used here as a reference
+	implementation of conversions.
+
+	unit-coding is based on the conversion functions in
+	"libflux/uni/coding.h".
+
+	unit-coding.sh converts a UTF-8 file to UTF-16 and 
+	back again, comparing the results produced by
+	the two programs.
+

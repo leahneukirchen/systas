@@ -1,0 +1,7 @@
+# tag: Tom Lord Tue Dec  4 14:52:20 2001 (vu-network/Makefile.in)
+#
+
+
+include $(makefiles)/library-objects.mk
+include $(makefiles)/install-includes.mk
+

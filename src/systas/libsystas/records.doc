@@ -1,0 +1,104 @@
+/* tag: Tom Lord Tue Dec  4 14:57:22 2001 (records.doc)
+ */
+/* records.doc -
+ *
+ ****************************************************************
+ * Copyright (C) 2001 Thomas Lord
+ * 
+ * See the file "COPYING" for further information about
+ * the copyright and warranty status of this work.
+ */
+
+
+
+/************************************************************************
+ *(h0 "Simple Record Types")
+ * 
+ * Simple records are one type of structure (see xref:"Structures").
+ * 
+ */
+
+
+
+/*(c make-record-type)
+ * (make-record-type type-name field-names)
+ * 
+ * Make a new record type object with the name `type-name' (a symbol)
+ * and fields `field-names' (a list of symbols).
+ * 
+ * Record type names are not necessarily unique -- they are
+ * a debugging aid only.
+ */
+
+
+/*(c record-type?)
+ * (record-type? obj)
+ * 
+ * Return `#t' if `obj' is a record type, `#f' otherwise.
+ */
+
+
+/*(c record-type-name)
+ * (record-type-name rt)
+ * 
+ * Return the type name of record type `rt'.
+ */
+
+
+/*(c record-type-fields)
+ * (record-type-fields rt)
+ * 
+ * Return the list of fields of record type `rt'.
+ */
+
+
+/*(c record-constructor)
+ * (record-constructor rt :optional fields)
+ * 
+ * Return a procedure that build a new record object of type `rt'.
+ * 
+ * Normally, the constructor accepts one argument per field 
+ * in the record type (in the order specified `make-record-type').
+ * If the optional argument `fields' is a list of field names,
+ * the constructor takes just those fields, in that order.
+ */
+
+
+/*(c record?)
+ * (record? obj)
+ * 
+ * Return `#t' if `obj' is a record, `#f' otherwise.
+ */
+
+
+/*(c record-predicate)
+ * (record-predicate rt)
+ * 
+ * Return a procedure of one argument that returns `#t' is a record
+ * of type `rt', `#f' otherwise.
+ */
+
+
+/*(c record-type-descriptor)
+ * (record-type-descriptor record)
+ * 
+ * Return the record type object describing `record'.
+ */
+
+
+/*(c record-accessor)
+ * (record-accessor rt field-name)
+ * 
+ * Return a procedure of one argument (a record of type `rt') that
+ * returns the value of the named field.
+ */
+
+
+/*(c record-modifier)
+ * (record-modifier rt field-name)
+ * 
+ * Return a procedure of two arguments (a record of type `rt' and an
+ * arbitrary value) that modifies the value of the named field.
+ */
+
+

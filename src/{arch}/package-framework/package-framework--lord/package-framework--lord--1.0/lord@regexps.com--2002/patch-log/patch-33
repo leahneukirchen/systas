@@ -1,0 +1,31 @@
+Revision: package-framework--lord--1.0--patch-33
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon May 13 22:55:08 PDT 2002
+Standard-date: 2002-05-14 05:55:08 GMT
+Summary: linux unexec work
+Keywords: 
+New-files: {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-33
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  build-tools/Makefiles/unexec-programs.mk
+  build-tools/platforms/configs/gnu-linux
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-33
+
+
+**** ./build-tools/Makefiles/unexec-programs.mk
+
+Initialize `data_start' in `,precrt0' so that it winds up in data 
+rather than bss (I'm not _certain_ this is needed -- the number
+of variables effecting the linux tests that led to this change
+was too large to be totally scientific -- but it's a completely
+harmless change (and is what emacs does).)  Emacs initializes this
+to 0 so, so did I, but I wonder if it won't be necessary on some
+platform or other to eventually init it to non-0.
+
+
+
+**** ./build-tools/platforms/configs/gnu-linux
+
+Use `unexecelf.c', not `unexecelf2.c'.
+

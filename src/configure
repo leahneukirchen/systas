@@ -1,0 +1,30 @@
+#!/bin/sh
+# tag: Tom Lord Tue Dec  4 15:08:37 2001 (src/configure)
+#
+# configure -
+#
+################################################################
+# Copyright (C) 2001 Tom Lord
+# 
+# See the file "COPYING" for further information about
+# the copyright and warranty status of this work.
+# 
+
+################################################################
+# The generic top-level configure file.
+# 
+# 
+set -e
+
+srcdir=`dirname $0`
+
+# If "$srcdir" is not an absolute path, make it so.
+#
+if echo "$srcdir" | grep -v -q "^/" ; then
+  srcdir="`(cd "$srcdir" ; pwd)`"
+fi
+
+export srcdir
+
+. $srcdir/build-tools/scripts/configure-top "$@"
+

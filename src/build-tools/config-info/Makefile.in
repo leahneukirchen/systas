@@ -1,0 +1,5 @@
+# tag: Tom Lord Tue Dec  4 14:51:56 2001 (config-info/Makefile.in)
+#
+
+include $(makefiles)/config-info.mk
+

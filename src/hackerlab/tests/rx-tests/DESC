@@ -1,0 +1,27 @@
+# tag: Tom Lord Tue Dec  4 15:05:29 2001 (rx-tests/DESC)
+#
+
+We test the installed header files to make sure they compile.
+
+unit-dfa-ascii8
+unit-dfa-utf8
+unit-dfa-utf16
+	Build a few expression trees by hand and use them
+	for DFA string comparisons, using a single string
+	encoding.
+
+	These test low level functionality in Rx.
+
+unit-dfa-utf-no-surrogates
+uni-dfa-utf
+	Build a few expression trees by hand and use them
+	for DFA string comparisons.  In these tests,
+	a single DFA is used with both utf8 and utf16 
+	encodings.
+
+
+These tests are very basic and don't exercise Rx heavily.
+They are mostly useful during development to quickly debug
+some kinds of regressions.
+
+The tests in ../rx-posix test Rx heavily.

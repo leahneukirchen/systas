@@ -1,0 +1,40 @@
+@need 3200
+
+@node Math Routines
+@chapter Math Routines
+
+These procedures need to be documented in a future releae:
+
+@example
+@group
+     random32 random32-seed exact?  odd?  even?  abs magnitude *
+     quotient remainder modulo gcd lcm logand logior logxor logtest
+     logbit?  * logand logior logxor logtest logbit?  lognot
+     integer-expt ash * bit-extract logcount integer-length
+     number->string * string->number number?  complex?  real?
+@end group
+@group
+     rational?  int?  * inexact?  =?  <?  >?  <=?  >=?  zero?
+@end group
+@group
+     positive?  negative?  * max min + - / $asinh $acosh $atanh
+     truncate round * exact->inexact floor ceiling $sqrt $abs $exp
+     $log $sin $cos * $tan $asin $acos $atan $sinh $cosh $tanh
+     $expt $atan2 * make-rectangular make-polar real-part imag-part
+     angle * inexact->exact truncate
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     < <= = > >= 1+ 1- integer?
+     ipow-by-squaring ipow exp expt log sqrt sinh cosh tanh asinh
+     acosh atanh sin cos tan asin acos atan
+@end group
+@group
+@end group
+@end example
+
+
+

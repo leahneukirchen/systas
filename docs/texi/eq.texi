@@ -1,0 +1,156 @@
+@need 3200
+
+@node Equality
+@chapter Equality
+
+There are three built-in ways to compare objects for equality.
+
+
+@code{eq?} tests whether its arguments are one-in-the-same object.  If
+it return @code{#t}, the arguments can not be distinguished.  The @code{eq?}
+test for equality is the fastest.
+
+
+@code{eqv?} tests whether its arguments are indistinguishable except
+possibly by procedures that rely on @code{eq?} equivalence.  For
+example, two inexact numbers may have exactly the same bit-wise
+representation, yet not be @code{eq?}.  Those two numbers are @code{eqv?}.
+
+
+@code{eq?} values are always @code{eqv?}.
+
+
+@code{equal?} tests whether its arguments are structurally similar.  If
+it returns @code{#t}, then the arguments are lists of equal elements, or
+vectors of equal elements, or strings which are @code{string=?}, etc.
+The @code{equal?} test for equality is the slowest.
+
+
+@code{eqv?} values are always @code{equal?}.
+
+
+@code{eq?} is useful to compare objects of types with relevant
+uniqueness properties (such as symbols), and to compare objects
+when the the underlying question is whether or not data-flow
+through a program has brought together two references to the very
+same object.
+
+
+@code{eqv?} is useful to compare objects whose equality under @code{eq?} is 
+not guaranteed by uniqueness properties.
+
+
+@code{eq?} and @code{eqv?} share the property that if two objects are equal,
+mutations to one are mutations to both (in fact, if two mutable
+objects are @code{eqv?}, then they are @code{eq?}).
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{eq?}@fuindex eq?
+@*
+@example
+@group
+(eq? . args)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if all of the arguments are one-in-the-same object,
+otherwise return @code{#f}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{eqv?}@fuindex eqv?
+@*
+@example
+@group
+(eqv? . args)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if all of the arguments are indistinguishable except
+by procedures that rely on @code{eq?} equivalence, otherwise return 
+@code{#f}.
+
+
+@code{eq?} values are always @code{eqv?}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{equal?}@fuindex equal?
+@*
+@example
+@group
+(equal? . args)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if all of the arguments are structurally identical.
+
+
+@geindex Structurally identical
+@dfn{Structurally identical} is recursively defined.  For example,
+two lists are @code{equal?} if they are the same length and the
+corresponding elements are @code{equal?}.
+
+
+@code{eqv?} values are always @code{equal?}.
+
+@need 3200
+
+@section q, v, and generalized
+
+In standard scheme, some procedures which test values for equality
+are grouped in sets of three, corresponding to the three standard
+ways of testing for equality.  These procedures follow a regular
+naming convention of names ending with @geindex q
+@dfn{q} (for procedures that use
+@code{eq?}), @geindex v
+@dfn{v} (@code{eqv?}), and names without a special suffix
+(@code{equal?}).
+
+
+In Systas scheme, the convention is extended.  The procedure that 
+uses @code{equal?} usually accepts an optional argument which is used
+instead of @code{equal?} to test for equality.  For example, 
+
+@example
+@group
+     (assoc hostname domain-rules same-domain?)
+@end group
+@group
+@end group
+@end example
+
+@noindent
+will use @code{same-domain?} to search for matches of @code{hostname} in 
+the association list @code{domain-rules}.
+
+
+The added generality adds very little complexity to the
+implementation, and saves programmers from having to write their
+own generalizations.
+
+
+
+
+@need 3200
+
+@section Rationale -- Equality
+
+The Systas Scheme equality tests simply follow standard Scheme.
+
+
+
+
+
+
+

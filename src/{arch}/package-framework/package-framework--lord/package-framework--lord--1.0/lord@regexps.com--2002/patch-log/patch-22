@@ -1,0 +1,21 @@
+Revision: package-framework--lord--1.0--patch-22
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sun Feb 24 18:45:04 PST 2002
+Standard-date: 2002-02-25 02:45:04 GMT
+Summary: arch -> larch in configure process
+Keywords: 
+New-files: {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-22
+  build-tools/auto-conf-lib/library-test
+Removed-files: build-tools/auto-conf-lib/library-test
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  PLUGIN/options
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-22
+
+`PLUGIN/options': the default value of the `posix-mailx' option is now
+`larch sendmail-mailx', not `arch sendmail-mailx'.
+
+`build-tools/auto-conf-lib/library-test': added a missing inventory
+tag.
+

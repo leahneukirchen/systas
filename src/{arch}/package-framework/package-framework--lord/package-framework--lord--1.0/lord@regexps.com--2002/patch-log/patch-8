@@ -1,0 +1,22 @@
+Revision: package-framework--lord--1.0--patch-8
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri Jan 18 01:22:05 PST 2002
+Standard-date: 2002-01-18
+Summary: bash bug work-around in `unit-tests.mk'
+Keywords: 
+New-files: {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-8
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  build-tools/Makefiles/unit-tests.mk
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-8
+
+
+In `unit-tests.mk', elimiated the possibility of asking the shell to
+evaluate:
+
+	for s in ; do sh $s ; done
+
+since some versions of bash can't cope with that.
+
+

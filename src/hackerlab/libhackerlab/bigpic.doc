@@ -1,0 +1,119 @@
+/* tag: Tom Lord Tue Dec  4 14:57:13 2001 (bigpic.doc)
+ */
+
+/************************************************************************
+ *(h0 "A Bigger Picture")
+ * 
+
+Here's a larger perspective on some of the motivations for the
+Hackerlab C library:
+
+insert*/
+
+Date: Fri, 27 Jul 2001 23:43:50 -0700 (PDT)
+From: Tom Lord <lord@regexps.com>
+To: gcc@gcc.gnu.org
+Subject: a .NET alternative (GJC et al)
+
+This note is about Free Software implementations of high-level
+programming languages, including Java and Scheme.  It think it
+pertains to GJC, and more generally, to the strategic direction of all
+of our language implementations.  At the end of the note there is a
+project announcement, requesting participation and support.  The note
+begins with some background and motivation.
+
+I think it is widely recognized, nowadays, that a good approach to
+implementing high level languages is to build a common run-time system
+on which they run.  The run-time system provides the low-level
+functionality these languages have in common, and is a foundation upon
+which interoperability between languages can be built.
+
+It seems to me that Microsoft has come to some similar conclusions, as
+evidenced by their inventing and committing to a low level language
+that is designed with precise garbage collection in mind (C#), and
+using that language to implement a run-time system supporting multiple
+languages.  Good for Microsoft!
+
+I'm concerned about the run-time systems we currently use.  Here are
+two reasons that indicate some of my thinking: (1) we seem to have
+systems that rely on conservative garbage collectors, which makes
+these implementations needlessly unreliable; (2) we don't seem to have
+any projects to build a common run-time system, designed to support
+several languages (we have Guile, designed to be a multi-lingual
+Scheme, but that's not quite the same thing).
+
+It seems to me that there is now an opportunity and some choices for
+the Open Source community.  
+
+The opportunity is to build a new Free Software run-time system,
+providing a precise collector, and support for multiple languages.
+
+The choices are (1) whether to re-implement the specifications offered
+by Microsoft, or try to implement something better, and (2) whether to
+tie the implementation of a new run time system to a specific compiler
+(GCC, presumably) or try to build something more portable.
+
+The unofficial strategy of the Open Source community seems to be, in
+the always-immortal words of Yogi Berra, "When you come to a fork in
+the road, take it."  Thus, for example, we've already seen Java
+implementors carve out distinct regions of the implementation design
+space, resulting in a pleasing choice of Java implementations for
+users.
+
+There have been announcements in the news recently about the
+possibility of building an Open Source clone of C# and .NET.  That's
+one branch of the fork, and one that is practically guaranteed to find
+commercial support.  I'm not terribly familiar with C#, but what
+little I've read looked like a respectable design.  So if part of the
+Open Source community commits to that branch of the fork, I'd bet
+they'll meet with some form of success.
+
+But I've always thought that Free Software was about more than just
+cloning Microsoft software.  I like to believe that Free Software is
+also about creatively exploring new ideas and having the kind of fun
+that comes from trying to build something "better".  So I'm interested
+in a different branch of the run-time system design space.
+
+In particular, I've been working towards a run-time system in C, not
+C#, supporting multiple high level languages, and providing a a
+precise garbage collector (along with lots of other nice features).
+My intention is to build a portable implementation, not tied to any
+particular compiler.  I have a foundation for my proposed run-time
+system: it's called the Hackerlab C library, and its available at
+www.regexps.com.  There's a long way to go, but I think the foundation
+has several good ideas, implemented and tested well.
+
+In addition to the code that's there, I have some pretty clear ideas
+about what else needs to be built: how to add thread support, how to
+build up the Unicode support, what kinds of data structures, and how
+to finish the I/O subsystem.  I have less clear ideas, and think a
+little bit of experimentation is in order, about what kind of C
+interface to provide to the garbage collector, and how to support
+binary object externalization (for persistence and migration of
+objects).
+
+So if you're interested in high level language implementations, such
+as GJC, please have a look at my web site.  There are some initial
+suggestions for how to participate which you can find in the Hackerlab
+C Library reference manual, though if the project really takes off,
+we'll clearly need to make participation more open and more formal.
+
+I also need some money to work on this project -- badly.  My web site
+implements a form of the "street performer protocol", and that is one
+way to help fund further development.  I'm also happy to discuss
+employment and consulting opportunities that might be out there.
+
+Thanks for your attention,
+happy hacking, 
+peace, love, and penguins,
+fondest regards,
+over and out,
+your eccentric and always friendly Internet pal,
+
+Tom Lord
+
+
+/*end-insert
+ */
+
+

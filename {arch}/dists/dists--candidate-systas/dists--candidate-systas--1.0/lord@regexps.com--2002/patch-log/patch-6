@@ -1,0 +1,304 @@
+Revision: dists--candidate-systas--1.0--patch-6
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri Jan 18 02:41:18 PST 2002
+Standard-date: 2002-01-18
+Summary: distribution-specific documentation rearrangements
+Keywords: 
+New-files: {arch}/dists/dists--candidate-systas/dists--candidate-systas--1.0/lord@regexps.com--2002/patch-log/patch-6
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-6
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-7
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-8
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-9
+  docs/.arch-ids/=id docs/texi/.arch-ids/alist.texi.id
+  docs/texi/.arch-ids/async.texi.id
+  docs/texi/.arch-ids/boolean.texi.id
+  docs/texi/.arch-ids/chars.texi.id
+  docs/texi/.arch-ids/eq.texi.id
+  docs/texi/.arch-ids/error.texi.id
+  docs/texi/.arch-ids/eval.texi.id
+  docs/texi/.arch-ids/continuations.texi.id
+  docs/texi/.arch-ids/credits.texi.id
+  docs/texi/.arch-ids/debug.texi.id
+  docs/texi/.arch-ids/dictionaries.texi.id
+  docs/texi/.arch-ids/dynwind.texi.id
+  docs/texi/.arch-ids/emacs.texi.id
+  docs/texi/.arch-ids/fdsocket.texi.id
+  docs/texi/.arch-ids/filesys.texi.id
+  docs/texi/.arch-ids/gc.texi.id
+  docs/texi/.arch-ids/hash.texi.id
+  docs/texi/.arch-ids/hashtab.texi.id
+  docs/texi/.arch-ids/identifier-index.texi.id
+  docs/texi/.arch-ids/introduction.texi.id
+  docs/texi/.arch-ids/invocation.texi.id
+  docs/texi/.arch-ids/kw.texi.id
+  docs/texi/.arch-ids/list.texi.id
+  docs/texi/.arch-ids/load.texi.id
+  docs/texi/.arch-ids/macros.texi.id
+  docs/texi/.arch-ids/modules.texi.id
+  docs/texi/.arch-ids/numbers.texi.id
+  docs/texi/.arch-ids/pairs.texi.id
+  docs/texi/.arch-ids/ports.texi.id
+  docs/texi/.arch-ids/procs.texi.id
+  docs/texi/.arch-ids/promise.texi.id
+  docs/texi/.arch-ids/read-print.texi.id
+  docs/texi/.arch-ids/records.texi.id
+  docs/texi/.arch-ids/rgx.texi.id
+  docs/texi/.arch-ids/scheme.texi.id
+  docs/texi/.arch-ids/stime.texi.id
+  docs/texi/.arch-ids/strings.texi.id
+  docs/texi/.arch-ids/struct.texi.id
+  docs/texi/.arch-ids/symbols.texi.id
+  docs/texi/.arch-ids/syntax.texi.id
+  docs/texi/.arch-ids/systas.texi.id
+  docs/texi/.arch-ids/system.texi.id
+  docs/texi/.arch-ids/throw.texi.id
+  docs/texi/.arch-ids/values.texi.id
+  docs/texi/.arch-ids/variable.texi.id
+  docs/texi/.arch-ids/vectors.texi.id
+  docs/texi/.arch-ids/weaks.texi.id
+  docs/ps/.arch-ids/systas.ps.id
+  docs/html/.arch-ids/alist.html.id
+  docs/html/.arch-ids/async.html.id
+  docs/html/.arch-ids/boolean.html.id
+  docs/html/.arch-ids/chars.html.id
+  docs/html/.arch-ids/continuations.html.id
+  docs/html/.arch-ids/eq.html.id
+  docs/html/.arch-ids/error.html.id
+  docs/html/.arch-ids/eval.html.id
+  docs/html/.arch-ids/credits.html.id
+  docs/html/.arch-ids/debug.html.id
+  docs/html/.arch-ids/dictionaries.html.id
+  docs/html/.arch-ids/dynwind.html.id
+  docs/html/.arch-ids/emacs.html.id
+  docs/html/.arch-ids/fdsocket.html.id
+  docs/html/.arch-ids/filesys.html.id
+  docs/html/.arch-ids/gc.html.id
+  docs/html/.arch-ids/hash.html.id
+  docs/html/.arch-ids/hashtab.html.id
+  docs/html/.arch-ids/identifier-index.html.id
+  docs/html/.arch-ids/introduction.html.id
+  docs/html/.arch-ids/invocation.html.id
+  docs/html/.arch-ids/kw.html.id
+  docs/html/.arch-ids/list.html.id
+  docs/html/.arch-ids/load.html.id
+  docs/html/.arch-ids/macros.html.id
+  docs/html/.arch-ids/modules.html.id
+  docs/html/.arch-ids/numbers.html.id
+  docs/html/.arch-ids/pairs.html.id
+  docs/html/.arch-ids/ports.html.id
+  docs/html/.arch-ids/procs.html.id
+  docs/html/.arch-ids/promise.html.id
+  docs/html/.arch-ids/read-print.html.id
+  docs/html/.arch-ids/records.html.id
+  docs/html/.arch-ids/rgx.html.id
+  docs/html/.arch-ids/scheme.html.id
+  docs/html/.arch-ids/stime.html.id
+  docs/html/.arch-ids/strings.html.id
+  docs/html/.arch-ids/struct.html.id
+  docs/html/.arch-ids/symbols.html.id
+  docs/html/.arch-ids/syntax.html.id
+  docs/html/.arch-ids/systas.html.id
+  docs/html/.arch-ids/system.html.id
+  docs/html/.arch-ids/throw.html.id
+  docs/html/.arch-ids/values.html.id
+  docs/html/.arch-ids/variable.html.id
+  docs/html/.arch-ids/vectors.html.id
+  docs/html/.arch-ids/weaks.html.id docs/texi/alist.texi
+  docs/texi/async.texi docs/texi/boolean.texi
+  docs/texi/chars.texi docs/texi/eq.texi docs/texi/error.texi
+  docs/texi/eval.texi docs/texi/continuations.texi
+  docs/texi/credits.texi docs/texi/debug.texi
+  docs/texi/dictionaries.texi docs/texi/dynwind.texi
+  docs/texi/emacs.texi docs/texi/fdsocket.texi
+  docs/texi/filesys.texi docs/texi/gc.texi docs/texi/hash.texi
+  docs/texi/hashtab.texi docs/texi/identifier-index.texi
+  docs/texi/introduction.texi docs/texi/invocation.texi
+  docs/texi/kw.texi docs/texi/list.texi docs/texi/load.texi
+  docs/texi/macros.texi docs/texi/modules.texi
+  docs/texi/numbers.texi docs/texi/pairs.texi
+  docs/texi/ports.texi docs/texi/procs.texi
+  docs/texi/promise.texi docs/texi/read-print.texi
+  docs/texi/records.texi docs/texi/rgx.texi
+  docs/texi/scheme.texi docs/texi/stime.texi
+  docs/texi/strings.texi docs/texi/struct.texi
+  docs/texi/symbols.texi docs/texi/syntax.texi
+  docs/texi/systas.texi docs/texi/system.texi
+  docs/texi/throw.texi docs/texi/values.texi
+  docs/texi/variable.texi docs/texi/vectors.texi
+  docs/texi/weaks.texi docs/ps/systas.ps docs/html/alist.html
+  docs/html/async.html docs/html/boolean.html
+  docs/html/chars.html docs/html/continuations.html
+  docs/html/eq.html docs/html/error.html docs/html/eval.html
+  docs/html/credits.html docs/html/debug.html
+  docs/html/dictionaries.html docs/html/dynwind.html
+  docs/html/emacs.html docs/html/fdsocket.html
+  docs/html/filesys.html docs/html/gc.html docs/html/hash.html
+  docs/html/hashtab.html docs/html/identifier-index.html
+  docs/html/introduction.html docs/html/invocation.html
+  docs/html/kw.html docs/html/list.html docs/html/load.html
+  docs/html/macros.html docs/html/modules.html
+  docs/html/numbers.html docs/html/pairs.html
+  docs/html/ports.html docs/html/procs.html
+  docs/html/promise.html docs/html/read-print.html
+  docs/html/records.html docs/html/rgx.html
+  docs/html/scheme.html docs/html/stime.html
+  docs/html/strings.html docs/html/struct.html
+  docs/html/symbols.html docs/html/syntax.html
+  docs/html/systas.html docs/html/system.html
+  docs/html/throw.html docs/html/values.html
+  docs/html/variable.html docs/html/vectors.html
+  docs/html/weaks.html
+New-directories: docs/html docs/ps docs/texi docs/.arch-ids docs/html/.arch-ids
+  docs/ps/.arch-ids docs/texi/.arch-ids docs
+Removed-files: doc/html/.arch-ids/=SYSTAS.html.id
+  doc/html/.arch-ids/alist.html.id
+  doc/html/.arch-ids/async.html.id
+  doc/html/.arch-ids/boolean.html.id
+  doc/html/.arch-ids/chars.html.id
+  doc/html/.arch-ids/continuations.html.id
+  doc/html/.arch-ids/credits.html.id
+  doc/html/.arch-ids/debug.html.id
+  doc/html/.arch-ids/dictionaries.html.id
+  doc/html/.arch-ids/emacs.html.id
+  doc/html/.arch-ids/eq.html.id
+  doc/html/.arch-ids/error.html.id
+  doc/html/.arch-ids/eval.html.id
+  doc/html/.arch-ids/fdsocket.html.id
+  doc/html/.arch-ids/filesys.html.id
+  doc/html/.arch-ids/gc.html.id
+  doc/html/.arch-ids/hash.html.id
+  doc/html/.arch-ids/dynwind.html.id
+  doc/html/.arch-ids/hashtab.html.id
+  doc/html/.arch-ids/identifier-index.html.id
+  doc/html/.arch-ids/introduction.html.id
+  doc/html/.arch-ids/invocation.html.id
+  doc/html/.arch-ids/kw.html.id
+  doc/html/.arch-ids/list.html.id
+  doc/html/.arch-ids/load.html.id
+  doc/html/.arch-ids/macros.html.id
+  doc/html/.arch-ids/modules.html.id
+  doc/html/.arch-ids/numbers.html.id
+  doc/html/.arch-ids/pairs.html.id
+  doc/html/.arch-ids/ports.html.id
+  doc/html/.arch-ids/procs.html.id
+  doc/html/.arch-ids/promise.html.id
+  doc/html/.arch-ids/read-print.html.id
+  doc/html/.arch-ids/records.html.id
+  doc/html/.arch-ids/rgx.html.id
+  doc/html/.arch-ids/scheme.html.id
+  doc/html/.arch-ids/stime.html.id
+  doc/html/.arch-ids/strings.html.id
+  doc/html/.arch-ids/struct.html.id
+  doc/html/.arch-ids/symbols.html.id
+  doc/html/.arch-ids/syntax.html.id
+  doc/html/.arch-ids/systas.html.id
+  doc/html/.arch-ids/system.html.id
+  doc/html/.arch-ids/throw.html.id
+  doc/html/.arch-ids/values.html.id
+  doc/html/.arch-ids/variable.html.id
+  doc/html/.arch-ids/vectors.html.id
+  doc/html/.arch-ids/weaks.html.id
+  doc/ps/.arch-ids/systas.ps.id
+  doc/texi/.arch-ids/alist.texi.id
+  doc/texi/.arch-ids/async.texi.id
+  doc/texi/.arch-ids/boolean.texi.id
+  doc/texi/.arch-ids/chars.texi.id
+  doc/texi/.arch-ids/continuations.texi.id
+  doc/texi/.arch-ids/credits.texi.id
+  doc/texi/.arch-ids/debug.texi.id
+  doc/texi/.arch-ids/dictionaries.texi.id
+  doc/texi/.arch-ids/eq.texi.id
+  doc/texi/.arch-ids/error.texi.id
+  doc/texi/.arch-ids/eval.texi.id
+  doc/texi/.arch-ids/fdsocket.texi.id
+  doc/texi/.arch-ids/filesys.texi.id
+  doc/texi/.arch-ids/gc.texi.id
+  doc/texi/.arch-ids/hash.texi.id
+  doc/texi/.arch-ids/dynwind.texi.id
+  doc/texi/.arch-ids/emacs.texi.id
+  doc/texi/.arch-ids/hashtab.texi.id
+  doc/texi/.arch-ids/identifier-index.texi.id
+  doc/texi/.arch-ids/introduction.texi.id
+  doc/texi/.arch-ids/invocation.texi.id
+  doc/texi/.arch-ids/kw.texi.id
+  doc/texi/.arch-ids/list.texi.id
+  doc/texi/.arch-ids/load.texi.id
+  doc/texi/.arch-ids/macros.texi.id
+  doc/texi/.arch-ids/modules.texi.id
+  doc/texi/.arch-ids/numbers.texi.id
+  doc/texi/.arch-ids/pairs.texi.id
+  doc/texi/.arch-ids/ports.texi.id
+  doc/texi/.arch-ids/procs.texi.id
+  doc/texi/.arch-ids/promise.texi.id
+  doc/texi/.arch-ids/read-print.texi.id
+  doc/texi/.arch-ids/records.texi.id
+  doc/texi/.arch-ids/rgx.texi.id
+  doc/texi/.arch-ids/scheme.texi.id
+  doc/texi/.arch-ids/stime.texi.id
+  doc/texi/.arch-ids/strings.texi.id
+  doc/texi/.arch-ids/struct.texi.id
+  doc/texi/.arch-ids/symbols.texi.id
+  doc/texi/.arch-ids/syntax.texi.id
+  doc/texi/.arch-ids/systas.texi.id
+  doc/texi/.arch-ids/system.texi.id
+  doc/texi/.arch-ids/throw.texi.id
+  doc/texi/.arch-ids/values.texi.id
+  doc/texi/.arch-ids/variable.texi.id
+  doc/texi/.arch-ids/vectors.texi.id
+  doc/texi/.arch-ids/weaks.texi.id doc/html/=SYSTAS.html
+  doc/html/alist.html doc/html/async.html doc/html/boolean.html
+  doc/html/chars.html doc/html/continuations.html
+  doc/html/credits.html doc/html/debug.html
+  doc/html/dictionaries.html doc/html/emacs.html
+  doc/html/eq.html doc/html/error.html doc/html/eval.html
+  doc/html/fdsocket.html doc/html/filesys.html doc/html/gc.html
+  doc/html/hash.html doc/html/dynwind.html
+  doc/html/hashtab.html doc/html/identifier-index.html
+  doc/html/introduction.html doc/html/invocation.html
+  doc/html/kw.html doc/html/list.html doc/html/load.html
+  doc/html/macros.html doc/html/modules.html
+  doc/html/numbers.html doc/html/pairs.html doc/html/ports.html
+  doc/html/procs.html doc/html/promise.html
+  doc/html/read-print.html doc/html/records.html
+  doc/html/rgx.html doc/html/scheme.html doc/html/stime.html
+  doc/html/strings.html doc/html/struct.html
+  doc/html/symbols.html doc/html/syntax.html
+  doc/html/systas.html doc/html/system.html doc/html/throw.html
+  doc/html/values.html doc/html/variable.html
+  doc/html/vectors.html doc/html/weaks.html doc/ps/systas.ps
+  doc/texi/alist.texi doc/texi/async.texi doc/texi/boolean.texi
+  doc/texi/chars.texi doc/texi/continuations.texi
+  doc/texi/credits.texi doc/texi/debug.texi
+  doc/texi/dictionaries.texi doc/texi/eq.texi
+  doc/texi/error.texi doc/texi/eval.texi doc/texi/fdsocket.texi
+  doc/texi/filesys.texi doc/texi/gc.texi doc/texi/hash.texi
+  doc/texi/dynwind.texi doc/texi/emacs.texi
+  doc/texi/hashtab.texi doc/texi/identifier-index.texi
+  doc/texi/introduction.texi doc/texi/invocation.texi
+  doc/texi/kw.texi doc/texi/list.texi doc/texi/load.texi
+  doc/texi/macros.texi doc/texi/modules.texi
+  doc/texi/numbers.texi doc/texi/pairs.texi doc/texi/ports.texi
+  doc/texi/procs.texi doc/texi/promise.texi
+  doc/texi/read-print.texi doc/texi/records.texi
+  doc/texi/rgx.texi doc/texi/scheme.texi doc/texi/stime.texi
+  doc/texi/strings.texi doc/texi/struct.texi
+  doc/texi/symbols.texi doc/texi/syntax.texi
+  doc/texi/systas.texi doc/texi/system.texi doc/texi/throw.texi
+  doc/texi/values.texi doc/texi/variable.texi
+  doc/texi/vectors.texi doc/texi/weaks.texi
+Removed-directories: doc doc/html doc/ps doc/texi doc/html/.arch-ids doc/ps/.arch-ids
+  doc/texi/.arch-ids
+Modified-files: =RELEASE-ID ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  configs/regexps.com/devo
+New-patches: lord@regexps.com--2002/dists--candidate-systas--1.0--patch-6
+  lord@regexps.com--2002/dists--devo--1.0--patch-6
+  lord@regexps.com--2002/dists--lord--1.0--patch-7
+  lord@regexps.com--2002/dists--lord--1.0--patch-8
+  lord@regexps.com--2002/dists--lord--1.0--patch-9
+
+
+Moved the docs directory for this package to the top level and
+delete the rest of "docs.d".
+

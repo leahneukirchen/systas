@@ -1,0 +1,16 @@
+Revision: dists--devo--1.0--patch-24
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Feb 28 16:06:48 PST 2002
+Standard-date: 2002-03-01 00:06:48 GMT
+Summary: updated release IDS
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-24
+Modified-files: =RELEASE-ID.d/=RELEASE-ID.arch
+  =RELEASE-ID.d/=RELEASE-ID.ftp-utils
+  =RELEASE-ID.d/=RELEASE-ID.hackerlab ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-24
+
+Updated release IDS.
+

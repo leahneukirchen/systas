@@ -1,0 +1,82 @@
+* `safe_unbuffer' => `safe_unbuffer_fd'
+
+* rx/tree.h
+
+  Instead of `len', use `min_len', `max_len'
+
+  For example, "[^/]|[^*]" has min_len = 1, max_len = 2
+  which can be used to speed up "([^/]|[^*])*" by reducing
+  the number of split positions in a long string of "*****..".
+
+* Add instrumentation for descriptor leaks
+
+  vu should help to detect descriptor leaks and have a `breakpoint'
+  function for various kinds of usage errors.
+
+* Async. call safety
+
+  In addition to thread safety, it should be possible to arrange to
+  make it safe to call vu_ functions that reduce to vu_sys_ from 
+  signal handlers.  For example, a way to bypass the `regexec' 
+  call in `path_dispatch' and thus avoid malloc reentrancy problems.
+
+* General rule
+
+  When not operating under extreme time pressure, every new addition
+  or change to the library should include:
+
+	- corresponding test suite additions
+	- corresponding reference manual additions
+
+  Following those rules usually *saves* time in the long run.
+  Because of the document-formatting system the library uses,
+  writing reference manual additions is barely more difficult than
+  writing thorough comments.
+
+
+* finish the VU test suite
+
+  The buffering code is tested-by-use, but not by the test suite!
+
+  There are no tests for `printfmt'.
+
+  It is probably worth reviewing the code to find other missing tests.
+
+
+* finish `printfmt'
+
+  Ok, I admit, my first attempt at formatting floating-point numbers
+  completely sucked (and is currently disabled).  It takes me a long
+  time to grok the papers on this subject, and my own attempts to
+  derive a solution work, but are slow, and apparently more "brute
+  force" than a good computer math guy can do.  I'd rather not invoke
+  the complete machinery of an arbitrary precision math package for
+  this.
+
+* see the =README file
+
+  It mentions the APIs that, experience shows, aren't quite right.
+  It also has this list:
+
+    Still needed are: more data structures, especially for (attributed
+    and structured) text processing; better string functions; a
+    `find'-like file system walker; a generic module for parsing input
+    into fields; better support for temporary files; sorting and
+    related functions, both in-core and disk-resident; disk-resident
+    hash tables; a reader and writer for Scheme-like data structures;
+    a GC-based implementation of Scheme-like data structures; a couple
+    of VM implementations, covering signifcant space/time/complexity
+    trade-offs in the VM design space.  Probably some other things
+    I've forgotten at the moment.
+
+
+* Investigate "filesystem in userspace" (freshmeat) as:
+	a gateway from VU to other processes
+
+* in safe_ print errno strings
+
+  I/O error isn't very useful output
+
+
+# tag: Tom Lord Fri Jan 11 20:15:36 2002 (hackerlab/=TODO)
+#

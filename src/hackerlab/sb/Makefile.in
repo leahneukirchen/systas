@@ -1,0 +1,7 @@
+# tag: Tom Lord Tue Dec  4 14:52:16 2001 (sb/Makefile.in)
+#
+libs			:=	$(objroot)/hackerlab/libboot/libboot.a -lm
+mains			:=	sb.c
+
+include $(makefiles)/programs.mk
+include $(makefiles)/install-programs.mk

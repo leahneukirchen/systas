@@ -1,0 +1,60 @@
+/* tag: Tom Lord Tue Dec  4 14:57:14 2001 (bitsets.doc)
+ */
+/* bitsets.doc
+ *
+ ****************************************************************
+ * Copyright (C) 2000 Tom Lord
+ * 
+ * See the file "COPYING" for further information about
+ * the copyright and warranty status of this work.
+ */
+
+
+/************************************************************************
+ *(h0 "Bitsets")
+ * 
+ * The Hackerlab C library provides interfaces for managing several
+ * kinds of bitset.
+ * 
+ * The most familiar bitsets are ``flat bitsets'' -- packed arrays of
+ * bits.  See xref:"Flat Bitsets".
+ * 
+ * ``Bitset trees'' are a space and time efficient representation for
+ * very large bitsets which contain long sub-sequences of all `0' or
+ * all `1' bits.  These sets are stored in a tree with ordinary bitsets
+ * for leaf nodes.  As an important optimization, homogenous subtrees 
+ * (those which are all 1 or 0) are represented by one word -- regardless
+ * of how many bits they contain.  See xref:"Bitset Trees".
+ * 
+ * ``Shared bitset trees'' are bitset trees augmented with copy-on-write
+ * semantics.  See xref:"Shared Bitset Trees".
+ * 
+ */
+
+/*(menu)
+ */
+
+/*(include-documentation "bitset.c")
+ */
+/*(include-documentation "bitset-tree.c")
+ */
+/*(include-documentation "bits.c")
+ */
+/*(include-documentation  "uni-bits.c")
+ */
+
+
+/*h1 "Printing Bitsets")
+ *  
+ * The functions in this section print C code which compiles to
+ * an initialized bitset.
+ */
+/*menu)
+ */
+
+/*include-documentation "bitset-print.c")
+ */
+/*include-documentation "bitset-tree-print.c")
+ */
+/*include-documentation "bits-print.c")
+ */

@@ -1,0 +1,260 @@
+<html>
+<head>
+<title>First-Class Variables</title>
+</head>
+<body>
+
+<a name="First-Class_Variables"></a>
+
+
+
+<h2 align=center>First-Class Variables</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+
+<b>prev: </b><a href="async.html#Asynchronous_Events">Asynchronous Events</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>All bindings are stored in locations called <em>
+<a name="index-pt:0"></a>
+
+variables
+</em>
+.  Variables
+are first-class objects.
+</p><p>A variable has two parts: a <em>
+<a name="index-pt:1"></a>
+
+name hint
+</em>
+ and a <em>
+<a name="index-pt:2"></a>
+
+value
+</em>
+.
+</p><p>The name hint is usually (but not necessarily) the symbol whose
+name denotes this variable in the lexical scope of the variables
+definition.  It is possible to create a variable whose name hint is
+different from the name that denotes the variable.
+</p><p>The value may be uninitialized in which case the variable is
+<em>
+<a name="index-pt:3"></a>
+
+undefined
+</em>
+.  It is an error to try to access the value of an
+undefined variable.
+</p><p>Two variables may represent the same binding, yet not be equal in 
+the sense of <code>eq?</code>
+.  Variables should ordinarily be compared using
+<code>eqv?</code>
+
+</p><ul>
+<li><a href="variable.html#First_Class_Variable_Procedures">First Class Variable Procedures</a></li>
+<li><a href="variable.html#First-Class_Variables_Rationale">First-Class Variables Rationale</a></li>
+</ul>
+
+<hr>
+
+<a name="First_Class_Variable_Procedures"></a>
+
+
+
+<h3 align=center>First Class Variable Procedures</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="variable.html#First-Class_Variables">First-Class Variables</a></br>
+<b>next: </b><a href="variable.html#First-Class_Variables_Rationale">First-Class Variables Rationale</a></br>
+
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="make-variable"></a><a name="index-pt:4"></a>
+make-variable
+</code></b><br>
+<pre>
+(make-variable initial-value :optional name-hint)
+
+</pre>
+<p>Create a new, initialized variable.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="make-undefined-variable"></a><a name="index-pt:5"></a>
+make-undefined-variable
+</code></b><br>
+<pre>
+(make-undefined-variable :optional name-hint)
+
+</pre>
+<p>Create a new uninitialized variable.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="variable?"></a><a name="index-pt:6"></a>
+variable?
+</code></b><br>
+<pre>
+(variable? obj)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is a variable, <code>#f</code>
+ otherwise.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="variable-ref"></a><a name="index-pt:7"></a>
+variable-ref
+</code></b><br>
+<pre>
+(variable-ref var)
+
+</pre>
+<p>Return the value of the variable <code>var</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="variable-name"></a><a name="index-pt:8"></a>
+variable-name
+</code></b><br>
+<pre>
+(variable-name var)
+
+</pre>
+<p>Return the name of the variable <code>var</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="variable-set!"></a><a name="index-pt:9"></a>
+variable-set!
+</code></b><br>
+<pre>
+(variable-set! var val)
+
+</pre>
+<p>Modify the value of a variable.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="builtin-variable"></a><a name="index-pt:10"></a>
+builtin-variable
+</code></b><br>
+<pre>
+(builtin-variable name)
+
+</pre>
+<p>Return the variable denoted by <code>name</code>
+ in the built-in 
+top-level.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="variable-bound?"></a><a name="index-pt:11"></a>
+variable-bound?
+</code></b><br>
+<pre>
+(variable-bound? var)
+
+</pre>
+<p>Return <code>#t</code>
+ if the variable <code>var</code>
+ has a value, <code>#f</code>
+ if
+it is undefined.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="First-Class_Variables_Rationale"></a>
+
+
+
+<h3 align=center>First-Class Variables Rationale</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="variable.html#First-Class_Variables">First-Class Variables</a></br>
+
+<b>prev: </b><a href="variable.html#First_Class_Variable_Procedures">First Class Variable Procedures</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>We exposed top-level variables to Scheme to make it possible
+to implement the module system in Scheme in a conceptually
+straightforward way (a hook in eval permits Scheme programs
+to define the mapping between variable names (represented
+by symbols) and variables (represented by first-class variables).
+</p><p>It is a historical accident that our first-class variables
+have a <em>
+<a name="index-pt:12"></a>
+
+name hint
+</em>
+ -- that is simply a consequence of how
+variables were represented in SCM, the predecessor implementation.
+Programs are free to ignore this feature, although it does make
+the printed representation of a variable easier to understand.
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

@@ -1,0 +1,194 @@
+@need 3200
+
+@node Booleans
+@chapter Booleans
+
+There are two values which are called booleans, written:
+
+@example
+@group
+     `#t'    ;; used to represent "true"
+     `()'    ;; used to represent "false"
+     `#f'    ;; another way to write "false"
+@end group
+@group
+@end group
+@end example
+
+Only one value in the system, @code{()}, represents @geindex false
+@dfn{false}.  All other
+values, including @code{#t}, are interpreted as @geindex true
+@dfn{true}.  @code{#f} is just
+another way to write @code{()}.
+
+
+In the text of a program, @code{()} typically represents "nil" or
+"nothing", "emptiness", "void".  @code{()} is commonly used to
+represent "the empty list", though it has other uses as well.
+
+
+There are two important ways that Systas Scheme diverges from
+standard Scheme, and this is one of them.  (The other is that
+symbols and identifiers in Systas are guaranteed to be case
+sensative.)
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{not}@fuindex not
+@*
+@example
+@group
+(not x)
+@end group
+@group
+@end group
+@end example
+
+If @code{x} is @code{#f}, return @code{#t}, otherwise return @code{#f}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{boolean?}@fuindex boolean?
+@*
+@example
+@group
+(boolean? obj)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is either @code{#t} or @code{#f}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{->bool}@fuindex ->bool
+@*
+@example
+@group
+(->bool obj)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#f} if @code{obj} is @code{#f}, otherwise return @code{#t}.
+
+@need 3200
+
+@section Rationale -- Booleans
+
+Standard Scheme demands that nil (@code{()}) and false (@code{#f}) be
+distinct values, and that nil be a true value.  This is one of the
+ways Systas Scheme is non-standard: nil and false are the same
+value; nil is false.
+
+
+We have a handy mnemonic for remembering the situation with @code{()} and @code{#f}
+in Systas Scheme:
+
+@example
+@group
+             In Systas Scheme, nothing is false.
+@end group
+@group
+@end group
+@end example
+
+Systas deviates from the standard that way for many reasons, 
+including:
+
+
+@strong{0. Compact coding idioms.}
+
+
+For example, I really like being able to write:
+
+@example
+@group
+             (and x (cdr x)) => <list>
+@end group
+@group
+@end group
+@end example
+
+@strong{1. Aesthetic consistency with the design of various control operators
+(`and' and `or' especially).}
+
+
+For example, @code{and}, applied to homogenously typed arguments, returns
+a value of the same type iff that type includes boolean false.
+That encourages the use of boolean false as a member of
+non-primitive types to represent the default distinguished case,
+when there is just one distinguished case.
+
+
+(So, applying that aesthetic: @code{#f} is good as end-of-list, because
+EOL is the natural and unique distinguished case of lists.  But @code{#f}
+is not good as the number @code{0}, because while @code{0} is @emph{sometimes} the
+natural distinguished case for a particular use of numbers, often
+the distinguished case is @code{1} or some other number.)
+
+
+@strong{2. Better type isomorphism of a subset of Scheme types and a subset of
+Common Lisp types.  A step in the direction of a universal standard
+for basic s-expressions.}
+
+
+This would simplify both the exchange of data between CL and
+Scheme, and the possibility of a single implementation supporting
+both languages.  Similarly for Scheme and Emacs Lisp.
+
+
+It would be a step in the direction of making basic s-expression
+types a fundamental unit of exchange between programs in all
+languages.
+
+
+I find it irksome, for example, the way XML has evolved.  A very
+simple idea -- recursively structured data over simple primitive
+types -- is mixed up with some arbitrary restrictions (e.g. each
+node has a keyword-parameterized header followed by a list of
+sub-nodes).  If the Scheme designers had thought of the basic types
+as something that could be usefully standardized across languages,
+we might have general s-expressions instead of XML, and Scheme or
+another simple Lisp as the language in which to express and
+exchange (operational) standards for various kinds of type
+checking, transformations, etc.  
+
+
+Consider XML Schema.  A type system of superior power and greater
+simplicity could have been specified precisely and operationally 
+as a few pages of Scheme code (start with something like Wright's
+pattern matcher, for example).  Instead, we have a huge and fairly
+complex specification, rarely implemented or implemented correctly
+in the public code base, and offering further evidence for the old
+adage about sufficiently complex programs and common lisp.
+
+
+Using s-expression types as the data exchange format would lead
+naturally to using Emacs, Emacs-compatible, and Emacs-like programs
+as extensible front-ends.  Instead, we have absurdly complex web
+browsers fronting for programs exchanging XML data.  Maybe we need
+a new adage: any sufficiently complex web browser is condemned to
+re-implement most of Emacs -- poorly and with @code{10} times as much
+code.
+
+
+@strong{3. Accumulated experience and programming idioms from the larger lisp
+world.}
+
+
+We should give a lot of weight to the accumulated history and
+experience represented by CL.  We should avoid diverging from it
+except where there are very clear reasons for doing so.
+
+
+
+
+
+
+

@@ -1,0 +1,44 @@
+!>	Makefiles for Building Programs From C Source
+
+
+  Let's suppose that you have a directory containing `.c' files
+  from which you want to compile executable programs.
+
+  To do that, you list which source files contain definitions for
+  `main', and then include `programs.mk':
+
+<<<
+	mains	:=	hello.c yes.c
+
+	include $(makefiles)/programs.mk
+>>>
+
+  The build process will first compile all _other_ `.c' files in
+  that directory to create a (non-installed) library.  Then
+  it will compile each file listed for `mains' to produce a 
+  similarly named (non-installed) executable (`hello' and `yes' in
+  this case).
+
+  To install your programs in `$(prefix)/bin', use
+  `install-programs.mk':
+
+<<<
+	mains	:=	hello.c yes.c
+
+	include $(makefiles)/programs.mk
+	include $(makefiles)/install-programs.mk
+>>>
+
+
+  To link your program against non-default libraries, define `libs':
+
+<<<
+	mains	:=	hello.c yes.c
+	libs	:=	$(objroot)/libutils/libutils.a -lm
+
+	include $(makefiles)/programs.mk
+	include $(makefiles)/install-programs.mk
+>>>
+
+%%% tag: Tom Lord Thu May  9 12:46:11 2002 (PackageFramework.d/BuildingPrograms)
+%%%

@@ -1,0 +1,33 @@
+Revision: hackerlab--devo--1.0--patch-9
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sat Feb  9 08:51:36 PST 2002
+Standard-date: 2002-02-09
+Summary: merge from `lord'
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--2002/patch-log/patch-9
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-17
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-18
+  sb/UNPLUGGED/REQ tests/rx-xml-tests/UNPLUGGED/REQ
+New-directories: sb/UNPLUGGED tests/rx-xml-tests/UNPLUGGED
+  sb/UNPLUGGED/.arch-ids
+  tests/rx-xml-tests/UNPLUGGED/.arch-ids
+Removed-files: sb/PLUGIN/REQ tests/rx-xml-tests/PLUGIN/REQ
+Removed-directories: sb/PLUGIN tests/rx-xml-tests/PLUGIN sb/PLUGIN/.arch-ids
+  tests/rx-xml-tests/PLUGIN/.arch-ids
+Renamed-files: tests/rx-xml-tests/PLUGIN/.arch-ids/=dont-care tests/rx-xml-tests/UNPLUGGED/.arch-ids/=dont-care
+  sb/PLUGIN/.arch-ids/=dont-care sb/UNPLUGGED/.arch-ids/=dont-care
+Modified-files: =NEWS =README =THANKS ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/hackerlab--devo--1.0--patch-9
+  lord@regexps.com--2002/hackerlab--lord--1.0--patch-17
+  lord@regexps.com--2002/hackerlab--lord--1.0--patch-18
+
+Patches applied:
+
+  * lord@regexps.com--2002/hackerlab--lord--1.0--patch-18
+     unplugged sb
+
+  * lord@regexps.com--2002/hackerlab--lord--1.0--patch-17
+     disabled the rx-xml unit tests
+

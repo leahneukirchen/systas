@@ -1,0 +1,15 @@
+Revision: package-framework--lord--1.0--patch-5
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sun Jan 13 19:31:38 PST 2002
+Standard-date: 2002-01-13
+Summary: fixed --version support in config-info.c
+Keywords: 
+New-files: {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-5
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  build-tools/config-info/config-info.c
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-5
+
+`config-info' now prints a reasonable release identifier.
+

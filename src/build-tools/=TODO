@@ -1,0 +1,16 @@
+
+
+* the rules for shell scripts should run `sh -n' for `make all'
+
+* generally speaking, this needs a careful review
+
+  resulting in an expanded task list
+
+* this needs documentation
+
+* config-info needs to get the copyright message used for -V 
+  in a generic way
+
+
+# tag: Tom Lord Thu Jan 10 00:53:48 2002 (build-tools/=TODO)
+#

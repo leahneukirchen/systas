@@ -1,0 +1,9 @@
+#!/bin/sh
+# tag: Tom Lord Tue Dec  4 15:08:01 2001 (scripts/announce-headers)
+#
+
+set -e
+
+echo ================================================================
+echo			header file tests
+echo	   "(are certain header files compilable in isolation?)"

@@ -1,0 +1,14 @@
+This is gross and ugly bootstrapping code that is loaded when Systas 
+starts up.
+
+	rt0		-- the very first file
+	basic		-- the second file
+	user		-- the third file
+
+The contents of these files is likely to change as the implementation
+improves.
+
+
+# tag: Tom Lord Tue Dec  4 15:06:41 2001 (ice-9/=README)
+#
+

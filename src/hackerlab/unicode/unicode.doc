@@ -1,0 +1,28 @@
+/* tag: Tom Lord Tue Dec  4 14:57:16 2001 (unicode.doc)
+ */
+/************************************************************************
+ *(h0 "Unicode"
+ *  :include ("flux/unicode/unicode.h"))
+ * 
+
+This chapter describes the foundation of support for the Unicode
+character set in the Hackerlab C library.
+
+This chapter is not a tutorial introduction to Unicode.  We presume
+that readers are already somewhat familiar with Unicode.  A very brief
+introduction can be found in xref:"An Absurdly Brief Introduction to
+Unicode".
+
+
+*/
+/*(menu)
+ */
+
+
+/*(include-documentation "coding.doc")
+ */
+/*(include-documentation "unicode.c")
+ */
+/*(include-documentation "../unidata/db-inlines.c")
+ */
+

@@ -1,0 +1,13 @@
+Revision: dists--devo--1.0--base-0
+Archive: lord@regexps.com--2001Q4
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri Jan 11 21:11:22 PST 2002
+Standard-date: 2002-01-11
+Summary: initial import
+Keywords: 
+New-files: ./.arch-ids ./.arch-ids/=default ./.arch-ids/=id
+  ./.arch-ids/COPYING.id ./=README ./COPYING ./INSTALL ./configs
+  ./configs/devo
+New-patches: lord@regexps.com--2001Q4/dists--devo--1.0--base-0
+
+initial import

@@ -1,0 +1,155 @@
+\input texinfo   @c -*-texinfo-*-
+@c %**start of header
+@setfilename systas.info
+@settitle Systas Scheme
+@setchapternewpage odd
+@c %**end of header
+@defindex fu
+@defindex ma
+@defindex va
+@defindex ty
+@defindex pr
+@defindex ge
+@defindex xa
+@synindex fu xa
+@synindex ma xa
+@synindex va xa
+@synindex ty xa
+@ifinfo
+This manual describes Systas Scheme.
+
+Copyright 2000 2001 Free Software Foundation
+
+
+@end ifinfo
+
+@c  This title page illustrates only one of the
+@c  two methods of forming a title page.
+@titlepage
+@title Systas Scheme
+@subtitle Language Reference Manual
+@subtitle @i{This manual describes Systas Scheme.}
+@author Tom Lord
+
+@c  The following two commands
+@c  start the copyright page.
+@page
+@vskip 0pt plus 1filll
+Copyright @copyright{} 2000 2001 Free Software Foundation
+
+
+
+
+@end titlepage
+
+@ifinfo
+@node Top
+@top
+
+@center @titlefont{Systas Scheme}
+@center Language Reference Manual
+
+
+This manual describes Systas Scheme.
+
+Keywords: scheme implementation, scheme dialect
+@end ifinfo
+
+@menu
+* Introducing Systas Scheme::
+* Credits::
+* Invoking Systas::
+* An Introduction to Systas Modules::
+* Running Systas from Emacs::
+* Equality::
+* Booleans::
+* Characters::
+* Symbols::
+* Strings::
+* Keywords::
+* Vectors::
+* Cons Pairs::
+* Lists::
+* Association Lists::
+* Rationale -- Dictionaries in General::
+* Hash Values::
+* Hash Tables::
+* Weak Vectors and Weak Hash Tables::
+* Structures::
+* Simple Record Types::
+* Promises::
+* Asynchronous Events::
+* First-Class Variables::
+* Dynamic Wind::
+* Catch and Throw::
+* Conventions for Errors::
+* Continuations::
+* Math Routines::
+* Evaluation::
+* Procedures::
+* Multiple Return Values::
+* Low Level Macros::
+* Syntax Rules::
+* Special Forms::
+* Simple Debugging Aids::
+* Garbage Collection::
+* Ports::
+* Reading and Writing Data Structures::
+* Evaluating Expressions in Files::
+* System Calls and C Library Functions::
+* File System and Descriptor Procedures::
+* Networking Procedures::
+* Regexps and Regular Expressions::
+* Time-Related Procedures::
+* Identifier Index::
+@end menu
+
+@include introduction.texi
+@include credits.texi
+@include invocation.texi
+@include modules.texi
+@include emacs.texi
+@include eq.texi
+@include boolean.texi
+@include chars.texi
+@include symbols.texi
+@include strings.texi
+@include kw.texi
+@include vectors.texi
+@include pairs.texi
+@include list.texi
+@include alist.texi
+@include dictionaries.texi
+@include hash.texi
+@include hashtab.texi
+@include weaks.texi
+@include struct.texi
+@include records.texi
+@include promise.texi
+@include async.texi
+@include variable.texi
+@include dynwind.texi
+@include throw.texi
+@include error.texi
+@include continuations.texi
+@include numbers.texi
+@include eval.texi
+@include procs.texi
+@include values.texi
+@include macros.texi
+@include syntax.texi
+@include scheme.texi
+@include debug.texi
+@include gc.texi
+@include ports.texi
+@include read-print.texi
+@include load.texi
+@include system.texi
+@include filesys.texi
+@include fdsocket.texi
+@include rgx.texi
+@include stime.texi
+@include identifier-index.texi
+@shortcontents
+@contents
+@bye

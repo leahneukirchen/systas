@@ -1,0 +1,21 @@
+Odds and ends for text formatting.  These modules are just growing as
+needed and may develop into something more systematic later.
+
+
+	numbers		--	Convert an integer to its ordinal
+				(e.g. 1 => "1st")
+
+	report		--	A weird utility for easily generating
+				a multi-part, plain-text report -- 
+				using output functions
+				(e.g. "display") to add to the report,
+				adding to various sections of the
+				report in no particular order.
+
+				It's handy.  Really.
+
+
+
+# tag: Tom Lord Tue Dec  4 15:06:43 2001 (formatting/=README)
+#
+

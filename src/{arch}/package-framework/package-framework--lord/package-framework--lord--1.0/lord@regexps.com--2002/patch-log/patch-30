@@ -1,0 +1,28 @@
+Revision: package-framework--lord--1.0--patch-30
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon May 13 03:30:41 PDT 2002
+Standard-date: 2002-05-13 10:30:41 GMT
+Summary: additional unexec ld switches for gnu-linux
+Keywords: 
+New-files: {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-30
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  build-tools/platforms/configs/gnu-linux
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-30
+
+
+* build-tools/platforms/configs/gnu-linux
+
+	Added this:
+
+	unexec_ld_switches="-Xlinker -z -Xlinker nocombreloc"
+
+	Because emacs 21.2 says (in src/s/gnu-linux.h)
+
+		Link temacs with -z nocombreloc so that unexec works
+		right, whether or not -z combreloc is the default.
+		GNU ld ignores unknown -z KEYWORD switches, so this
+		also works with older versions that don't implement -z
+		combreloc.
+

@@ -1,0 +1,17 @@
+#!/bin/sh
+# auto: invoke a program in the auto-tools library
+#
+################################################################
+# Copyright (C) 2002 Tom Lord
+# 
+# See the file "COPYING" for further information about
+# the copyright and warranty status of this work.
+# 
+
+prog="$1"
+shift
+
+"$config_shell" "$srcroot/build-tools/auto-conf-lib/$prog" "$@"
+
+# tag: Tom Lord Sat Feb 16 19:42:05 2002 (scripts/auto)
+#

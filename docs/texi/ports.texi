@@ -1,0 +1,353 @@
+@need 3200
+
+@node Ports
+@chapter Ports
+
+Ports are objects, such as open files, from which characters can be
+read or written in sequence.  Ports are distinguished by whether
+they are for reading, writing, or both.
+
+
+In Systas Scheme, ports are indistinguishable from file descriptor
+objects.  (See @emph{xref}).
+
+
+These procedures (defined in @code{scheme-library/ice-9/basic.scm})
+still need documentation
+
+@example
+@group
+    call-with-input-string call-with-output-string open-input-file
+    open-output-file open-io-file close-input-port
+    close-output-port close-io-port call-with-input-file
+    call-with-output-file with-input-from-port with-output-to-port
+    with-error-to-port with-input-from-file with-output-to-file
+    with-error-to-file with-input-from-string with-output-to-string
+    with-error-to-string ->string display->string the-eof-object
+@end group
+@group
+@end group
+@end example
+@menu
+* The Current Ports::
+* Opening Files and Closing Ports::
+@end menu
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{port?}@fuindex port?
+@*
+@example
+@group
+(port? obj)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is a port, @code{#f} otherwise.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{input-port?}@fuindex input-port?
+@*
+@example
+@group
+(input-port? x)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is an input port, @code{#f} otherwise.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{output-port?}@fuindex output-port?
+@*
+@example
+@group
+(output-port? x)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is an output port, @code{#f} otherwise.
+
+@need 3200
+
+@node The Current Ports
+@section The Current Ports
+
+Three dynamic values, the current input, output, and error port,
+provide the default ports for input operations, output operations,
+and error messages.
+
+
+The @geindex current load port
+@dfn{current load port} is the port currently opened for loading a
+file (or @code{#f} if no file is being loaded).
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{current-input-port}@fuindex current-input-port
+@*
+@example
+@group
+(current-input-portvoid)
+@end group
+@group
+@end group
+@end example
+
+Return the current input port.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{current-output-port}@fuindex current-output-port
+@*
+@example
+@group
+(current-output-portvoid)
+@end group
+@group
+@end group
+@end example
+
+Return the current output port.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{current-error-port}@fuindex current-error-port
+@*
+@example
+@group
+(current-error-portvoid)
+@end group
+@group
+@end group
+@end example
+
+Return the current error port.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{current-load-port}@fuindex current-load-port
+@*
+@example
+@group
+(current-load-portvoid)
+@end group
+@group
+@end group
+@end example
+
+Return the current load port.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{set-current-input-port}@fuindex set-current-input-port
+@*
+@example
+@group
+(set-current-input-port port)
+@end group
+@group
+@end group
+@end example
+
+Make @code{port} the current input port.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{set-current-output-port}@fuindex set-current-output-port
+@*
+@example
+@group
+(set-current-output-port port)
+@end group
+@group
+@end group
+@end example
+
+Make @code{port} the current output port.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{set-current-error-port}@fuindex set-current-error-port
+@*
+@example
+@group
+(set-current-error-port port)
+@end group
+@group
+@end group
+@end example
+
+Make @code{port} the current error port.
+
+
+
+
+@need 3200
+
+@node Opening Files and Closing Ports
+@section Opening Files and Closing Ports
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{open-file}@fuindex open-file
+@*
+@example
+@group
+(open-file name flags mode)
+@end group
+@group
+@end group
+@end example
+
+Open the file @code{name} with @code{flags} and @code{mode} as to @code{%open} (*xref).
+Return a port for the newly opened file.
+
+
+The port returned is buffered.  To open an unbuffered port, see
+@code{%open}.
+
+
+If the file can not be opened, an exception is signaled.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%open-buffered}@fuindex %open-buffered
+@*
+@example
+@group
+(%open-buffered name sflags mode)
+@end group
+@group
+@end group
+@end example
+
+Open the file @code{name} with @code{flags} and @code{mode} as to @code{%open} (*xref).
+Return a port for the newly opened file.
+
+
+The port returned is buffered.  To open an unbuffered port, see
+@code{%open}.
+
+
+If the file can not be opened, an errno object is returned. (@emph{xref}).
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{close-port}@fuindex close-port
+@*
+@example
+@group
+(close-port port)
+@end group
+@group
+@end group
+@end example
+
+Close the indicated port.  If an error occurs, an exception is signaled.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{eof-object?}@fuindex eof-object?
+@*
+@example
+@group
+(eof-object? obj)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is the end-of-file indicator.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{read-char}@fuindex read-char
+@*
+@example
+@group
+(read-char :optional port)
+@end group
+@group
+@end group
+@end example
+
+Read one character from @code{port} or the current input port.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{force-output}@fuindex force-output
+@*
+@example
+@group
+(force-output port)
+@end group
+@group
+@end group
+@end example
+
+Flush buffered output from @code{port} or the current output port.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{peek-char}@fuindex peek-char
+@*
+@example
+@group
+(peek-char port)
+@end group
+@group
+@end group
+@end example
+
+Return the next character from @code{port} without consuming that
+character from the input SCM_STREAM.  @code{port} must be a buffered
+input port.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char-ready?}@fuindex char-ready?
+@*
+@example
+@group
+(char-ready? port)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if there is input ready on @code{port}, @code{#f} otherwise.
+
+
+@strong{BROKEN} -- the current implementation always returns @code{#t}.
+
+
+
+
+
+
+

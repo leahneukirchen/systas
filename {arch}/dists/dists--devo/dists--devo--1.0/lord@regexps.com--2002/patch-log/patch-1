@@ -1,0 +1,40 @@
+Revision: dists--devo--1.0--patch-1
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon Jan  7 16:18:19 PST 2002
+Standard-date: 2002-01-07
+Summary: merge with `lord'
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-1
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/base-0
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-1
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-2
+  configs/lord@regexps.com--2002/lord
+  configs/lord@regexps.com--2002/lord.arch ChangeLog.d/=README
+  configs/lord@regexps.com--2002/devo ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-directories: ChangeLog.d ChangeLog.d/lord@regexps.com--2002
+  configs/lord@regexps.com--2002 {arch}/dists/dists--lord
+  {arch}/dists/dists--lord/dists--lord--1.0
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log
+Removed-files: configs/devo
+Renamed-files: configs/arch configs/lord@regexps.com--2002/devo.arch
+Modified-files: configs/lord@regexps.com--2002/devo.arch
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-1
+  lord@regexps.com--2002/dists--lord--1.0--base-0
+  lord@regexps.com--2002/dists--lord--1.0--patch-1
+  lord@regexps.com--2002/dists--lord--1.0--patch-2
+
+This is a merge with the `lord' branch.  For ChangeLog details about
+these changes, see:
+
+	ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+
+lord@regexps.com--2002/dists--lord--1.0--base-0
+    tag of lord@regexps.com--2002/dists--devo--1.0--base-0
+lord@regexps.com--2002/dists--lord--1.0--patch-1
+    modified config file arrangement
+lord@regexps.com--2002/dists--lord--1.0--patch-2
+    Added ChangeLogs
+

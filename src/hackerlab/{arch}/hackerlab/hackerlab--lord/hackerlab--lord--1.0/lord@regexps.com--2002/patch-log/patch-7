@@ -1,0 +1,15 @@
+Revision: hackerlab--lord--1.0--patch-7
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sun Jan 13 19:11:20 PST 2002
+Standard-date: 2002-01-13
+Summary: corrected "Report bugs to" address
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-7
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  sb/sb.c
+New-patches: lord@regexps.com--2002/hackerlab--lord--1.0--patch-7
+
+Probably bugs for this package should be sent to "<bug-make@gnu.org>".
+

@@ -1,0 +1,2 @@
+@set SLIBVERSION 2d2
+@set SLIBDATE July 2001

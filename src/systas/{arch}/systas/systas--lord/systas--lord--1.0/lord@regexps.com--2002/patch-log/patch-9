@@ -1,0 +1,22 @@
+Revision: systas--lord--1.0--patch-9
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sun Mar 10 04:19:06 PST 2002
+Standard-date: 2002-03-10 12:19:06 GMT
+Summary: merge with `devo'
+Keywords: 
+New-files: {arch}/systas/systas--devo/systas--devo--1.0/lord@regexps.com--2002/patch-log/patch-5
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-9
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regepx.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/systas--devo--1.0--patch-5
+  lord@regexps.com--2002/systas--lord--1.0--patch-9
+
+(This is really just a patch-log-escalating merge, but I want
+ to bring `lord' maximally up-to-date.)
+
+Patches applied:
+
+  * lord@regexps.com--2002/systas--devo--1.0--patch-5
+     merge from `lord'
+

@@ -1,0 +1,30 @@
+# tag: Tom Lord Tue Dec  4 15:05:25 2001 (char-tests/DESC)
+#
+
+We test the installed header files to make sure they compile.
+
+unit-char-class
+	Compare the character classes defined by
+	"flux/char/char-class.h" to some hard-coded 
+	character classes in the tests.
+
+	Test some invariants such as that the `to_lower'
+	of an `is_upper' character is not the character 
+	itself.
+
+	Test the value of `digit_value' for all characters.
+
+unit-char-name
+	Test the arrach `char_name' (which contains C names
+	for each character) by generating a C string constant
+	which is compared to part of the source for unit-char-name
+	(see unit-char-name.sh)
+
+unit-str
+
+	Hand written invariant tests for all of the `str_' functions
+	EXCEPT `str_save', `str_save_n', and `str_alloc_cat'.  Those
+	exceptions are tested in "mem-tests".
+
+	The hand written tests hit a variety of boundary cases.
+

@@ -1,0 +1,281 @@
+#!/bin/sh
+# configure-dirs - generic configure for a source dir of subdirs.
+#
+################################################################
+# Copyright (C) 2001 Tom Lord
+# 
+# See the file "COPYING" for further information about
+# the copyright and warranty status of this work.
+# 
+
+
+set -e
+if test x$objroot = x; then
+  echo "ERROR: objroot not set in `pwd`" 1>&2
+  exit 1
+fi
+
+if test x$srcroot = x; then
+  echo "ERROR: srcroot not set in `pwd`" 1>&2
+  exit 1
+fi
+
+if test x$srcdir = x; then
+  echo "ERROR: srcdir not set in `pwd`" 1>&2
+  exit 1
+fi
+
+if test x$prefix = x; then
+  echo "ERROR: prefix not set in `pwd`" 1>&2
+  exit 1
+fi
+
+if test x$config_shell = x; then
+  echo "ERROR: config_shell not set in `pwd`" 1>&2
+  exit 1
+fi
+
+here=`cd $srcdir; pwd`
+base=`cd $srcroot ; pwd`
+
+if test $here = $base; then
+  thispath=
+  export thispath
+elif test x$thispath = x; then
+  thispath=`basename $here`
+else
+  thispath=$thispath/`basename $here`
+fi
+
+
+# What subdirectories do we build?
+# 
+# Some subdirectories contain a file called "PLUGIN/REQ".
+# 
+# Some subdirectories acontain a file called "PLUGIN/OPT".
+# 
+# Both kinds of file contain dependency lists suitable for "tsort".
+# Each line is of the form:
+#
+#		prerequisit-dir		build-dir
+# 
+# which means that if "prerequisit-dir" is being compiled, it must be
+# compiled before compiling "build-dir".
+# 
+# If a directory is named in a "PLUGIN/REQ" directory (either as a
+# prerequisit or a build-dir), we MUST build that directory.  It is a
+# "required directory".
+# 
+# If a directory is named in a "PLUGIN/OPT" directory (either as a
+# prerequisit or a build-dir), we MIGHT build that directory.  It is
+# an "optional directory".
+# 
+# If a directory is both optional and required, it is treated as a
+# required directory.
+# 
+# If a directory has a subdirectory named "PLUGIN", we CAN build that
+# directory.
+# 
+# If a required directory has no subdirectory called "PLUGIN", that is
+# an error because we can not build that directory.
+# 
+# If an optional directory has no subdirectory called "PLUGIN", we
+# don't build that optional subdirectory.  If an optinal directory has
+# a "PLUGIN" subdirectory, we do build that directory.
+# 
+# To summarize, we build all required directories and also build all
+# optional directories that have a subdirectory called "PLUGIN".
+# However, if a required directory does not have a subdirectory called
+# "PLUGIN", that is an error that prevents compiling anything.  We
+# compute the lists of required and optional directories by invoking
+# "tsort" on the files "$srcdir/*/PLUGIN/REQ" and
+# "$srcdir/*/PLUGIN/OPT".
+# 
+# "Prerequisits" don't work like "make" dependencies.  If a make
+# dependency prerequisit is missing, we can't build targets that
+# depend on that prerequisit.  But if a configure prerequisit is
+# missing, as long as the prerequisit is optional, we build the
+# depending targets anyway.  In other words, suppose that "$dirA"
+# is optional and "$dirB" is required, and "$dirA" is a prerequisit of
+# "$dirB".  Also suppose that "$dirA" has no subdirectory called
+# "PLUGIN".  In this case, we bulid "$dirB" anyway.
+# 
+
+
+# Compute the lists of optinal and required directories, in
+# the order in which they should be built.
+# 
+# Unfortunately, "tsort" exits with a 0 status even if cycles
+# are found.  Ideally, this would be an error.
+# 
+
+here="`pwd`"
+cd "$srcdir"
+
+reqs=
+opts=
+
+for f in * ; do
+  if test -d "$f" -a -d "$f/PLUGIN" ; then
+    if test -r "$f/PLUGIN/REQ" ; then
+      reqs="$f/PLUGIN/REQ $reqs"
+    fi
+    if test -r "$f/PLUGIN/OPT" ; then
+      opts="$f/PLUGIN/OPT $opts"
+    fi
+  fi
+done
+
+one_line()
+{
+  printf "$*"
+}
+
+if test -z "$reqs" ; then
+  req_subdirs=
+else
+  req_subdirs=`cat $reqs | tsort`
+  req_subdirs=`one_line "$req_subdirs"`
+fi
+
+if test -z "$opts" ; then
+  opt_subdirs=
+else
+  opt_subdirs=`cat $opts | tsort`
+  opt_subdirs=`one_line "$opt_subdirs"`
+fi
+
+# Make sure that all required directories have subdirectories called "PLUGIN".
+# 
+if test ! -z "$req_subdirs" ; then
+  for d in $req_subdirs; do
+    if test ! -d $srcdir/$d ; then
+      echo "ERROR ($d): missing required directory" 1>&2
+      exit 1
+    fi
+    if test ! -d $srcdir/$d/PLUGIN ; then
+      echo "ERROR ($d): required directory with no PLUGIN directory" 1>&2
+      exit 1
+    fi
+  done
+fi
+
+# Prune the list of optional subdirectories to remove those that do not
+# have a subdirectory called "PLUGIN"
+#
+
+if test "x$opt_subdirs" != x ; then
+  opt2=
+  for d in $opt_subdirs; do
+    if test ! -d $srcdir/$d/PLUGIN ; then
+      echo "WARNING ($d): skipping optional directory (no PLUGIN directory found)" 1>&2
+    else
+      opt2="$opt2 $d"
+    fi
+  done
+  opt_subdirs=$opt2
+fi
+
+cd "$here"
+
+# Build a list of all the directories we will build, in the order
+# they should be built.
+#
+rm -f ,,req-dirs
+rm -f ,,opt-dirs
+touch ,,req-dirs
+touch ,,opt-dirs
+
+if test ! -z "$req_subdirs" ; then
+  for d in $req_subdirs ; do
+    printf "%s\n" "$d" >> ,,req-dirs
+  done
+fi
+
+if test ! -z "$opt_subdirs" ; then
+  for d in $opt_subdirs ; do
+    printf "%s\n" "$d" >> ,,opt-dirs
+  done
+fi
+
+all_dirs=`sort -u -m ,,req-dirs ,,opt-dirs`
+
+# Put all the names on one line:
+# 
+all_dirs=`one_line $all_dirs`
+
+if test -z "$all_dirs" ; then
+  printf "\\n"
+  printf "WARNING: \\n"
+  printf " in directory %s\\n" "$srcdir"
+  printf " no subdirectories being built.\\n"
+  printf "\\n"
+else
+  printf "\\n"
+  printf "configuring subdirectories of %s\\n" "$srcdir"
+  printf "in this order:\\n"
+  printf "\\n"
+  for d in $all_dirs; do
+    printf "    %s\\n" "$d" 
+  done
+  printf "\\n"
+fi
+
+rm -f ,,req-dirs
+rm -f ,,opt-dirs
+
+if test ! -z "$all_dirs" ; then
+  # Run a generic "configure" script for each subdirectory.
+  # 
+  export srcroot
+  export objroot
+  export prefix
+  export config_shell
+
+  for f in $all_dirs; do
+    printf "configuring %s...\n" "$f"
+
+    mkdir -p $f
+
+    cd $f
+    srcdir=$srcdir/$f $srcroot/build-tools/scripts/configure-generic
+    cd ..
+
+  done
+fi
+
+# Generate the top-level "Makefile" from some computed
+# variable definitions and the top-level "Makefile.in" in
+# the source tree.
+# 
+# For GNU compatability, and for debugging purposes, do
+# this in two steps: first generate a "config.status"
+# script which will create the Makefile, then invoke
+# that script.
+# 
+printf "#!%s\\n\\n" "$config_shell" > config.status
+
+cat >> config.status << EOF
+
+  cat > Makefile <<-EOF2
+        srcroot = $srcroot
+        thispath = $thispath
+        objroot = $objroot
+        srcdir = $srcdir
+        prefix = $prefix
+        make-dirs = $all_dirs
+        makefiles = $srcroot/build-tools/Makefiles
+        vpath % $srcdir
+        include \\\$(objroot)/Makefile-config.mk
+
+
+EOF2
+
+  cat $srcdir/Makefile.in >> Makefile
+
+EOF
+
+chmod ugo+x config.status
+
+./config.status
+

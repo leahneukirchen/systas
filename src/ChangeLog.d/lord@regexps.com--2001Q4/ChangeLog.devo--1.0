@@ -1,0 +1,142 @@
+2002-01-06  Tom Lord <lord@regexps.com>
+
+    Summary:
+      doc changes, final check-in
+    Revision:
+      package-framework--devo--1.0--patch-3
+
+    
+    Final check-in to the --2001Q4 archive, prior to setting up
+    the archive structure I'll use for a public release.
+    
+
+    modified files:
+     ChangeLog
+     build-tools/package-framework/system-requirements.doc
+
+
+2002-01-03  Tom Lord <lord@regexps.com>
+
+    Summary:
+      new patch log
+    Revision:
+      package-framework--devo--1.0--patch-2
+
+    Added patch log for public archive.
+    
+
+    new files:
+     {arch}/package-framework/package-framework--devo/package-framework--devo--1.0/lord@regexps.com--public-2001Q4/patch-log/base-0
+
+    modified files:
+     ChangeLog
+
+    new directories:
+     {arch}/package-framework/package-framework--devo/package-framework--devo--1.0/lord@regexps.com--public-2001Q4
+     {arch}/package-framework/package-framework--devo/package-framework--devo--1.0/lord@regexps.com--public-2001Q4/patch-log
+
+    new patches:
+     lord@regexps.com--public-2001Q4/package-framework--devo--1.0--base-0
+
+
+2002-01-03  Tom Lord <lord@regexps.com>
+
+    Summary:
+      fix Maintfile
+    Revision:
+      package-framework--devo--1.0--patch-1
+
+    
+    Updated the rules for making `TAGS' files.
+    
+
+    modified files:
+     ChangeLog Maintfile
+
+
+2001-12-29  Tom Lord <lord@regexps.com>
+
+    Summary:
+      initial import
+    Revision:
+      package-framework--devo--1.0--base-0
+
+    initial import
+
+    new files:
+     ./.arch-ids ./.arch-ids/=id ./=project ./=project/package
+     ./ChangeLog ./Maintfile ./Makefile.in ./PLUGIN
+     ./PLUGIN/.arch-ids ./PLUGIN/.arch-ids/=dont-care
+     ./PLUGIN/compatible ./PLUGIN/options ./PLUGIN/packages
+     ./build-tools ./build-tools/Makefile.in
+     ./build-tools/Makefiles ./build-tools/Makefiles/column.sed
+     ./build-tools/Makefiles/config-info.mk
+     ./build-tools/Makefiles/dirs.mk
+     ./build-tools/Makefiles/dotx.sed
+     ./build-tools/Makefiles/install-includes.mk
+     ./build-tools/Makefiles/install-library.mk
+     ./build-tools/Makefiles/install-programs.mk
+     ./build-tools/Makefiles/install-scm-scripts.mk
+     ./build-tools/Makefiles/install-scm-subdirs.mk
+     ./build-tools/Makefiles/install-scm.mk
+     ./build-tools/Makefiles/install-shell-scripts.mk
+     ./build-tools/Makefiles/install-shell-subcommands.mk
+     ./build-tools/Makefiles/library-html.mk
+     ./build-tools/Makefiles/library-objects.mk
+     ./build-tools/Makefiles/library-pdml.mk
+     ./build-tools/Makefiles/library-ps.mk
+     ./build-tools/Makefiles/library-texi.mk
+     ./build-tools/Makefiles/library.mk
+     ./build-tools/Makefiles/pdml-index.mk
+     ./build-tools/Makefiles/programs.mk
+     ./build-tools/Makefiles/rules.mk
+     ./build-tools/Makefiles/scm-library.mk
+     ./build-tools/Makefiles/scm-scripts.mk
+     ./build-tools/Makefiles/shell-scripts.mk
+     ./build-tools/Makefiles/shell-subcommands.mk
+     ./build-tools/Makefiles/top-level.mk
+     ./build-tools/Makefiles/unit-tests.mk ./build-tools/PLUGIN
+     ./build-tools/PLUGIN/.arch-ids
+     ./build-tools/PLUGIN/.arch-ids/=dont-care
+     ./build-tools/PLUGIN/DIRS ./build-tools/PLUGIN/REQ
+     ./build-tools/config-info
+     ./build-tools/config-info/Makefile.in
+     ./build-tools/config-info/PLUGIN
+     ./build-tools/config-info/PLUGIN/.arch-ids
+     ./build-tools/config-info/PLUGIN/.arch-ids/=dont-care
+     ./build-tools/config-info/PLUGIN/REQ
+     ./build-tools/config-info/config-info.c
+     ./build-tools/package-framework
+     ./build-tools/package-framework/Makefile.in
+     ./build-tools/package-framework/UNPLUGGED
+     ./build-tools/package-framework/UNPLUGGED/.arch-ids
+     ./build-tools/package-framework/UNPLUGGED/.arch-ids/=dont-care
+     ./build-tools/package-framework/UNPLUGGED/REQ
+     ./build-tools/package-framework/configure-and-plugin.doc
+     ./build-tools/package-framework/document-license.doc
+     ./build-tools/package-framework/framework.doc
+     ./build-tools/package-framework/getting-started.doc
+     ./build-tools/package-framework/index.doc
+     ./build-tools/package-framework/introduction.doc
+     ./build-tools/package-framework/makefiles.doc
+     ./build-tools/package-framework/package-tree.doc
+     ./build-tools/package-framework/pit.doc
+     ./build-tools/package-framework/recipes.doc
+     ./build-tools/package-framework/reference.doc
+     ./build-tools/package-framework/soup.doc
+     ./build-tools/package-framework/source-license.doc
+     ./build-tools/package-framework/source-tree.doc
+     ./build-tools/package-framework/system-requirements.doc
+     ./build-tools/package-framework/this-manual.doc
+     ./build-tools/scripts ./build-tools/scripts/announce-headers
+     ./build-tools/scripts/conclude-headers
+     ./build-tools/scripts/configure-autoconf
+     ./build-tools/scripts/configure-dirs
+     ./build-tools/scripts/configure-generic
+     ./build-tools/scripts/configure-leaf
+     ./build-tools/scripts/configure-top
+     ./build-tools/scripts/option ./configure
+
+
+# tag: Tom Lord Mon Jan  7 02:10:53 2002 (lord@regexps.com--2001Q4/ChangeLog)
+#

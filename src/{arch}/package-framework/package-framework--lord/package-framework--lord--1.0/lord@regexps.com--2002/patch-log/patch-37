@@ -1,0 +1,16 @@
+Revision: package-framework--lord--1.0--patch-37
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri May 17 16:29:18 PDT 2002
+Standard-date: 2002-05-17 23:29:19 GMT
+Summary: updated =NEWS
+Keywords: 
+New-files: =fix-library.sh
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-37
+  .arch-ids/=NEWS.package-framework.id =NEWS.package-framework
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-37
+
+Updated =NEWS.
+

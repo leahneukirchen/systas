@@ -1,0 +1,99 @@
+This message announces the availability of Scheme Library release slib2d2.
+
+New in slib2d2:
+
+	* s48-0_57.init: Added.
+	* array.scm (make-shared-array): Fixed offset.
+	* record.scm: Changed identifiers containing VECTOR to VECT or VCT
+	(but no help for scheme48-0.57).
+	* slib.texi (Collections, Lists as sets, Multi-argument / and -,
+	Multi-argument Apply): Improved procedure templates.
+	* comlist.scm: Replaced single-letter identifier names to improve
+	readability.
+	* slib.texi (Lists as sequences): Updated examples per change to
+	comlist.scm.
+	* comlist.scm (comlist:union, comlist:intersection,
+	comlist:set-difference, comlist:remove-if, comlist:remove-if-not,
+	comlist:remove-duplicates): Earlier tail-recursion enhancements
+	changed the element order; which broke things.  Order restored.
+	* array.scm: Rewritten to sidestep license issues.
+	(array=?): Added.
+	* slib.texi (Arrays): Documentation integrated with array.scm.
+	* tree.scm (tree:subst): Rewritten; takes optional equality
+	predicate argument.
+	* Makefile (docfiles): Added "COPYING".
+	* mitcomp.pat: Unmaintained; removed.
+	* RScheme.init: Put in the public domain.
+	* Makefile (slib48): Simplified: scheme48 < scheme48.init
+	* scheme48.init (slib-primitives): Pipe into scheme48, not load.
+	Scheme48-0.45 the only version which runs jacal successfully.
+	* scmactst.scm: Removed for lack of license.
+	* struct.scm, structst.scm: Removed.  struct.scm lacks license.
+	* scheme48.init (atan): Added workaround.
+	* Makefile (slib48-0.55): Makes slib48, but fluid-let broken.
+	* format.scm (mutliarg/and-): Requires.
+	* mularg.scm (two-arg:/, two-arg:-): Added.
+	* scheme48.init (*features*): Doesn't support multiarg/and-.
+	* Makefile (slib48-0.45): Added ",load-package floatnums".
+	* slib.texi (Installation): Added specific instructions for
+	DrScheme, MIT-Scheme, and Guile.
+	* guile.init: Added.
+	* require.scm (program-vicinity): Improved error message.
+	* slib.texi (Installation): Explicit instructions for MzScheme.
+	* Makefile (pdf): Added target for creating $(htmldir)slib.pdf.
+	* slib.texi (Installation): Expanded instructions.
+	* bigloo.init, RScheme.init, STk.init (*features*): Provide srfi.
+	* Template.scm, *.init (*features*): Put into consistent form.
+	* require.scm (srfi): Detect presence of srfi-0 through srfi-30.
+	* srfi-1.scm: Added.
+	* comlist.scm (comlist:remove): Returns don't disturb order.
+	* array.scm: Generalized so strings and vectors are arrays.
+	* slib.texi (Standard Formatted Output): %b was missing.
+	* slib.texi (Sorting and Searching): Section split from
+	"Procedures".
+	* differ.scm (diff:longest-common-subsequence): Added.
+	(diff:longest-common-subsequence, diff:edits, diff:edit-length):
+	Optional third argument is equality predicate.
+	* differ.scm: An O(NP) Sequence Comparison Algorithm.
+	* srfi.scm (cond-expand): Added.
+	* wttree.scm (error:error): Replaces error.
+	* dbutil.scm (make-defaulter): number defaults to 0.
+	* Makefile (rpm): Fixed dependencies.
+
+From  Jacques Mequin  <jmequin@tif.ti.com>
+	* gambit.init: (set-case-conversion! #t)
+	* scheme48.init (defmacro): Defmacro in terms of define-syntax
+	using defmacro:expand*.
+
+From  Wade Humeniuk  <humeniuw@cadvision.com>
+	* yasyn.scm, object.scm, recobj.scm: Placed in public domain.
+
+SLIB is a portable Scheme library providing compatibiliy and utility
+functions for all standard Scheme implementations.
+
+SLIB includes initialization files for Bigloo, Chez, DrScheme, ELK,
+GAMBIT, MacScheme, MITScheme, PocketScheme, RScheme Scheme->C,
+Scheme48, SCM, SCSH, T3.1, UMB-Scheme, and VSCM.
+
+Documentation includes a manifest, installation instructions, and
+coding guidelines for the library.  Documentation of each library
+package is supplied.  SLIB Documentation is online at:
+
+	     http://swissnet.ai.mit.edu/~jaffer/SLIB.html
+
+SLIB is available from:
+ http://swissnet.ai.mit.edu/ftpdir/scm/slib2d2.zip
+ http://swissnet.ai.mit.edu/ftpdir/scm/slib-2d2-1.noarch.rpm
+ swissnet.ai.mit.edu:/pub/scm/slib2d2.zip
+ swissnet.ai.mit.edu:/pub/scm/slib-2d2-1.noarch.rpm
+
+SLIB-PSD is a portable debugger for Scheme (requires emacs editor):
+ http://swissnet.ai.mit.edu/ftpdir/scm/slib-psd1-3.zip
+ swissnet.ai.mit.edu:/pub/scm/slib-psd1-3.zip
+
+SCHELOG is an embedding of Prolog in Scheme+SLIB:
+ http://www.cs.rice.edu/CS/PLT/packages/schelog/
+
+Programs for printing and viewing TexInfo documentation (which SLIB
+has) come with GNU Emacs or can be obtained via ftp from:
+ ftp.gnu.org:pub/gnu/texinfo/texinfo-4.0.tar.gz

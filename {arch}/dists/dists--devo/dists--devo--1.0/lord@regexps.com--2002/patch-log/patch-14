@@ -1,0 +1,46 @@
+Revision: dists--devo--1.0--patch-14
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Tue Feb  5 17:17:17 PST 2002
+Standard-date: 2002-02-05
+Summary: merge from lord
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-14
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-11
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-12
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-13
+  docs.d/arch/examples/.arch-ids/=id
+  docs.d/arch/examples/browser/.arch-ids/=id
+  docs.d/arch/examples/notifier/.arch-ids/=id
+  docs.d/arch/examples/README.000.first-steps
+  docs.d/arch/examples/README.010.first-archive
+  docs.d/arch/examples/README.020.branching-arch
+  docs.d/arch/examples/README.030.importing-arch-releases
+  docs.d/arch/examples/README.040.importing-other-releases
+  docs.d/arch/examples/browser/=browser
+  docs.d/arch/examples/browser/=configs
+  docs.d/arch/examples/browser/=dists
+  docs.d/arch/examples/notifier/=browser-opts
+  docs.d/arch/examples/notifier/=rules.archives
+New-directories: docs.d/arch/examples/.arch-ids
+  docs.d/arch/examples/browser/.arch-ids
+  docs.d/arch/examples/notifier/.arch-ids docs.d/arch/examples
+  docs.d/arch/examples/browser docs.d/arch/examples/notifier
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-14
+  lord@regexps.com--2002/dists--lord--1.0--patch-11
+  lord@regexps.com--2002/dists--lord--1.0--patch-12
+  lord@regexps.com--2002/dists--lord--1.0--patch-13
+
+Patches applied:
+
+  * lord@regexps.com--2002/dists--lord--1.0--patch-13
+     added some missing files
+
+  * lord@regexps.com--2002/dists--lord--1.0--patch-12
+     added examples documentation for arch
+
+  * lord@regexps.com--2002/dists--lord--1.0--patch-11
+     merge from devo
+

@@ -1,0 +1,22 @@
+Revision: unexec--lord--1.0--patch-5
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri May 17 13:21:20 PDT 2002
+Standard-date: 2002-05-17 20:21:20 GMT
+Summary: unexelf.c and =README cleanups
+Keywords: 
+New-files: {arch}/unexec/unexec--lord/unexec--lord--1.0/lord@regexps.com--2002/patch-log/patch-5
+Modified-files: =README libunexec/unexelf.c
+New-patches: lord@regexps.com--2002/unexec--lord--1.0--patch-5
+
+*** patched regular files
+ 
+**** ./=README
+
+	Tweaked.
+ 
+**** ./libunexec/unexelf.c
+ 
+ 	Create output file with `O_EXCL'.
+
+	Tweaked `fatal' macros.

@@ -1,0 +1,175 @@
+<html>
+<head>
+<title>Simple Record Types</title>
+</head>
+<body>
+
+<a name="Simple_Record_Types"></a>
+
+
+
+<h2 align=center>Simple Record Types</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="promise.html#Promises">Promises</a></br>
+
+<b>prev: </b><a href="struct.html#Structures">Structures</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>Simple records are one type of structure (see <a href="struct.html#Structures">Structures</a>).
+</p><p><b><u>Function</u> <code><a name="make-record-type"></a><a name="index-pt:0"></a>
+make-record-type
+</code></b><br>
+<pre>
+(make-record-type type-name field-names)
+
+</pre>
+<p>Make a new record type object with the name <code>type-name</code>
+ (a symbol)
+and fields <code>field-names</code>
+ (a list of symbols).
+</p><p>Record type names are not necessarily unique -- they are
+a debugging aid only.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="record-type?"></a><a name="index-pt:1"></a>
+record-type?
+</code></b><br>
+<pre>
+(record-type? obj)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is a record type, <code>#f</code>
+ otherwise.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="record-type-name"></a><a name="index-pt:2"></a>
+record-type-name
+</code></b><br>
+<pre>
+(record-type-name rt)
+
+</pre>
+<p>Return the type name of record type <code>rt</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="record-type-fields"></a><a name="index-pt:3"></a>
+record-type-fields
+</code></b><br>
+<pre>
+(record-type-fields rt)
+
+</pre>
+<p>Return the list of fields of record type <code>rt</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="record-constructor"></a><a name="index-pt:4"></a>
+record-constructor
+</code></b><br>
+<pre>
+(record-constructor rt :optional fields)
+
+</pre>
+<p>Return a procedure that build a new record object of type <code>rt</code>
+.
+</p><p>Normally, the constructor accepts one argument per field 
+in the record type (in the order specified <code>make-record-type</code>
+).
+If the optional argument <code>fields</code>
+ is a list of field names,
+the constructor takes just those fields, in that order.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="record?"></a><a name="index-pt:5"></a>
+record?
+</code></b><br>
+<pre>
+(record? obj)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is a record, <code>#f</code>
+ otherwise.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="record-predicate"></a><a name="index-pt:6"></a>
+record-predicate
+</code></b><br>
+<pre>
+(record-predicate rt)
+
+</pre>
+<p>Return a procedure of one argument that returns <code>#t</code>
+ is a record
+of type <code>rt</code>
+, <code>#f</code>
+ otherwise.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="record-type-descriptor"></a><a name="index-pt:7"></a>
+record-type-descriptor
+</code></b><br>
+<pre>
+(record-type-descriptor record)
+
+</pre>
+<p>Return the record type object describing <code>record</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="record-accessor"></a><a name="index-pt:8"></a>
+record-accessor
+</code></b><br>
+<pre>
+(record-accessor rt field-name)
+
+</pre>
+<p>Return a procedure of one argument (a record of type <code>rt</code>
+) that
+returns the value of the named field.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="record-modifier"></a><a name="index-pt:9"></a>
+record-modifier
+</code></b><br>
+<pre>
+(record-modifier rt field-name)
+
+</pre>
+<p>Return a procedure of two arguments (a record of type <code>rt</code>
+ and an
+arbitrary value) that modifies the value of the named field.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

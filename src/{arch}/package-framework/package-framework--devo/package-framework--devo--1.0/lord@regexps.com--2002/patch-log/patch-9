@@ -1,0 +1,45 @@
+Revision: package-framework--devo--1.0--patch-9
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Feb  7 02:20:25 PST 2002
+Standard-date: 2002-02-07
+Summary: merge from lord
+Keywords: 
+New-files: {arch}/package-framework/package-framework--devo/package-framework--devo--1.0/lord@regexps.com--2002/patch-log/patch-9
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-14
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-15
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-16
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-17
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-18
+Modified-files: =THANKS ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  build-tools/Makefiles/cpp-to-includes.sed
+  build-tools/Makefiles/library.mk
+  build-tools/scripts/configure-dirs
+  build-tools/scripts/configure-generic
+  build-tools/scripts/configure-top
+New-patches: lord@regexps.com--2002/package-framework--devo--1.0--patch-9
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-14
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-15
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-16
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-17
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-18
+
+
+Patches applied:
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-18
+     watch out for GCC 3.1 when making .d files
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-17
+     avoid trying to build empty libraries
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-16
+     don't use -e in the configure scripts
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-15
+     fixed `--prefix=' handling in `configure-top'
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-14
+     merge from devo
+

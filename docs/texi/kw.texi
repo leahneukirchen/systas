@@ -1,0 +1,253 @@
+@need 3200
+
+@node Keywords
+@chapter Keywords
+
+A @geindex keyword
+@dfn{keyword} is a self-evaluating object with a convenient read
+syntax.  Keywords are written like ordinary symbols except that
+whereas a symbol name may not be written starting with @geindex :
+@dfn{:}, keyword
+names @emph{must} be prefixed by @geindex :
+@dfn{:}.
+
+
+A @geindex keyword name
+@dfn{keyword name} is the string is the text to the right of the @geindex :
+@dfn{:}.
+For example, the name of keyword @code{:foo} is @geindex foo
+@dfn{foo}.  No two keywords 
+have the same keyword name.
+
+
+For every keyword, there is a unique symbol, having the same name,
+called the @geindex keyword symbol
+@dfn{keyword symbol}.  A keyword and its keyword symbol have
+the same name.
+
+
+By convention, keywords are used with functions that accept
+optional arguments to signal which arguments are provided.  Such
+functions should never be passed keywords as parameters except to
+indiciate which optional arguments are provided.  For example, this
+procedure invokes an interactive editor, accepting optional
+parameters @code{:directory} (specifying the directory in which to run
+the editor, the default value is @code{#f}) and @code{:editor} (specifying
+the editor program, which defaults to the value of the environment
+variable @geindex EDITOR
+@dfn{EDITOR}):
+
+@example
+@group
+     (define-public (call-editor . kws)
+       (let ((dir            (kw-arg-ref kws :directory))
+             (editor         
+               (kw-arg-ref kws :editor
+                           (lambda () (getenv "EDITOR")))))
+         ...))
+@end group
+@group
+@end group
+@end example
+
+The function could be invoked any of these ways:
+
+@example
+@group
+     (call-editor)
+     (call-editor :directory "/tmp")
+     (call-editor :editor "emacs")
+     (call-editor :directory "/tmp" :editor "emacs")
+     (call-editor :editor "emacs" :directory "/tmp")
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{keyword?}@fuindex keyword?
+@*
+@example
+@group
+(keyword? obj)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is a keyword, @code{#f} otherwise.
+
+@need 3200
+
+@section Handling Keyword Arguments
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{kw-arg-ref}@fuindex kw-arg-ref
+@*
+@example
+@group
+(kw-arg-ref args kw :optional default)
+@end group
+@group
+@end group
+@end example
+
+If the list @code{args} contains the keyword @code{kw} followed by another
+list element which is not a keyword, return that second element.
+If @code{args} contains @code{kw} only as the last element or followed by
+another keyword, signal an error. If a keyword argument is not
+provided, but @code{default} is provided, return @code{(default)}.
+Otherwise, return @code{#f}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{kw-arg-set!}@fuindex kw-arg-set!
+@*
+@example
+@group
+(kw-arg-set! args kw value)
+@end group
+@group
+@end group
+@end example
+
+If the list @code{args} contains the keyword @code{kw} followed by another
+list element, replace that list element.  If @code{kw} is the last
+element of @code{args}, replace the cdr of the last pair with @code{(cons
+value ())} Otherwise, return:
+
+@example
+@group
+      (cons kw (cons value args))
+@end group
+@group
+@end group
+@end example
+
+
+
+@need 3200
+
+@section Keyword <-> Symbol Conversions
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{symbol->keyword}@fuindex symbol->keyword
+@*
+@example
+@group
+(symbol->keyword symbol)
+@end group
+@group
+@end group
+@end example
+
+Return a keyword having the same name as @code{symbol}.  For example:
+
+@example
+@group
+     (symbol->keyword :foo) => foo
+@end group
+@group
+@end group
+@end example
+
+Note that @code{keyword->symbol} and @code{symbol->keyword} are not
+inverses.  For example:
+
+@example
+@group
+     (eq? 'foo (string->hash-table-symbol #f "foo")) 
+     => #f
+@end group
+@group
+@end group
+@end example
+
+@noindent
+and therefore:
+
+@example
+@group
+     (eq? 'foo 
+          (keyword->symbol
+            (symbol->keyword (string->hash-table-symbol #f "foo")))
+     => #f
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{keyword->symbol}@fuindex keyword->symbol
+@*
+@example
+@group
+(keyword->symbol keyword)
+@end group
+@group
+@end group
+@end example
+
+Return a symbol having the same print-name as @code{keyword}.
+
+
+
+
+@need 3200
+
+@section Rationale -- Keywords
+
+A self-evaluating, disjoint, symbol-like type with a convenient
+read/write syntax is exactly what is needed for two purposes:
+keyword arguments and structure-like lists.
+
+
+Some recent implementations provide keywords, but use a different
+syntax, putting the colon at the end of the keyword name:
+
+@example
+@group
+     Systas keyword:                 Some other implementations:
+     -----------------------------------------------------------
+     :editor                         editor:
+@end group
+@group
+@end group
+@end example
+
+That other syntax emphasizes that keywords are sometimes used
+to tag the value that follows in a list:
+
+@example
+@group
+     :editor "/bin/ed"               editor: "/bin/ed"
+@end group
+@group
+@end group
+@end example
+
+However, there are two serious problems with the other syntax.
+First, it breaks the general rule that a Scheme reader can 
+recognize the type of a value being read by looking at a 
+prefix of the syntax.  Second, it creates visual confusion when 
+keywords are used on their own, not tagging any value at all,
+such as the keyword @code{bg} in these examples:
+
+@example
+@group
+     :bg :editor "/bin/ed"           bg: editor: "/bin/ed"
+@end group
+@group
+@end group
+@end example
+
+
+
+
+
+

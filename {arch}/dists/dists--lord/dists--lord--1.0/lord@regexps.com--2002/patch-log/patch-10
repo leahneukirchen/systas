@@ -1,0 +1,555 @@
+Revision: dists--lord--1.0--patch-10
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon Jan 21 20:22:02 PST 2002
+Standard-date: 2002-01-21
+Summary: updated configs for `shell-utils'
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-6
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-10
+  docs.d/systas/texi/.arch-ids/alist.texi.id
+  docs.d/systas/texi/.arch-ids/async.texi.id
+  docs.d/systas/texi/.arch-ids/boolean.texi.id
+  docs.d/systas/texi/.arch-ids/chars.texi.id
+  docs.d/systas/texi/.arch-ids/eq.texi.id
+  docs.d/systas/texi/.arch-ids/error.texi.id
+  docs.d/systas/texi/.arch-ids/eval.texi.id
+  docs.d/systas/texi/.arch-ids/continuations.texi.id
+  docs.d/systas/texi/.arch-ids/credits.texi.id
+  docs.d/systas/texi/.arch-ids/debug.texi.id
+  docs.d/systas/texi/.arch-ids/dictionaries.texi.id
+  docs.d/systas/texi/.arch-ids/dynwind.texi.id
+  docs.d/systas/texi/.arch-ids/emacs.texi.id
+  docs.d/systas/texi/.arch-ids/fdsocket.texi.id
+  docs.d/systas/texi/.arch-ids/filesys.texi.id
+  docs.d/systas/texi/.arch-ids/gc.texi.id
+  docs.d/systas/texi/.arch-ids/hash.texi.id
+  docs.d/systas/texi/.arch-ids/hashtab.texi.id
+  docs.d/systas/texi/.arch-ids/identifier-index.texi.id
+  docs.d/systas/texi/.arch-ids/introduction.texi.id
+  docs.d/systas/texi/.arch-ids/invocation.texi.id
+  docs.d/systas/texi/.arch-ids/kw.texi.id
+  docs.d/systas/texi/.arch-ids/list.texi.id
+  docs.d/systas/texi/.arch-ids/load.texi.id
+  docs.d/systas/texi/.arch-ids/macros.texi.id
+  docs.d/systas/texi/.arch-ids/modules.texi.id
+  docs.d/systas/texi/.arch-ids/numbers.texi.id
+  docs.d/systas/texi/.arch-ids/pairs.texi.id
+  docs.d/systas/texi/.arch-ids/ports.texi.id
+  docs.d/systas/texi/.arch-ids/procs.texi.id
+  docs.d/systas/texi/.arch-ids/promise.texi.id
+  docs.d/systas/texi/.arch-ids/read-print.texi.id
+  docs.d/systas/texi/.arch-ids/records.texi.id
+  docs.d/systas/texi/.arch-ids/rgx.texi.id
+  docs.d/systas/texi/.arch-ids/scheme.texi.id
+  docs.d/systas/texi/.arch-ids/stime.texi.id
+  docs.d/systas/texi/.arch-ids/strings.texi.id
+  docs.d/systas/texi/.arch-ids/struct.texi.id
+  docs.d/systas/texi/.arch-ids/symbols.texi.id
+  docs.d/systas/texi/.arch-ids/syntax.texi.id
+  docs.d/systas/texi/.arch-ids/systas.texi.id
+  docs.d/systas/texi/.arch-ids/system.texi.id
+  docs.d/systas/texi/.arch-ids/throw.texi.id
+  docs.d/systas/texi/.arch-ids/values.texi.id
+  docs.d/systas/texi/.arch-ids/variable.texi.id
+  docs.d/systas/texi/.arch-ids/vectors.texi.id
+  docs.d/systas/texi/.arch-ids/weaks.texi.id
+  docs.d/systas/ps/.arch-ids/systas.ps.id
+  docs.d/systas/html/.arch-ids/alist.html.id
+  docs.d/systas/html/.arch-ids/async.html.id
+  docs.d/systas/html/.arch-ids/boolean.html.id
+  docs.d/systas/html/.arch-ids/chars.html.id
+  docs.d/systas/html/.arch-ids/continuations.html.id
+  docs.d/systas/html/.arch-ids/eq.html.id
+  docs.d/systas/html/.arch-ids/error.html.id
+  docs.d/systas/html/.arch-ids/eval.html.id
+  docs.d/systas/html/.arch-ids/credits.html.id
+  docs.d/systas/html/.arch-ids/debug.html.id
+  docs.d/systas/html/.arch-ids/dictionaries.html.id
+  docs.d/systas/html/.arch-ids/dynwind.html.id
+  docs.d/systas/html/.arch-ids/emacs.html.id
+  docs.d/systas/html/.arch-ids/fdsocket.html.id
+  docs.d/systas/html/.arch-ids/filesys.html.id
+  docs.d/systas/html/.arch-ids/gc.html.id
+  docs.d/systas/html/.arch-ids/hash.html.id
+  docs.d/systas/html/.arch-ids/hashtab.html.id
+  docs.d/systas/html/.arch-ids/identifier-index.html.id
+  docs.d/systas/html/.arch-ids/introduction.html.id
+  docs.d/systas/html/.arch-ids/invocation.html.id
+  docs.d/systas/html/.arch-ids/kw.html.id
+  docs.d/systas/html/.arch-ids/list.html.id
+  docs.d/systas/html/.arch-ids/load.html.id
+  docs.d/systas/html/.arch-ids/macros.html.id
+  docs.d/systas/html/.arch-ids/modules.html.id
+  docs.d/systas/html/.arch-ids/numbers.html.id
+  docs.d/systas/html/.arch-ids/pairs.html.id
+  docs.d/systas/html/.arch-ids/ports.html.id
+  docs.d/systas/html/.arch-ids/procs.html.id
+  docs.d/systas/html/.arch-ids/promise.html.id
+  docs.d/systas/html/.arch-ids/read-print.html.id
+  docs.d/systas/html/.arch-ids/records.html.id
+  docs.d/systas/html/.arch-ids/rgx.html.id
+  docs.d/systas/html/.arch-ids/scheme.html.id
+  docs.d/systas/html/.arch-ids/stime.html.id
+  docs.d/systas/html/.arch-ids/strings.html.id
+  docs.d/systas/html/.arch-ids/struct.html.id
+  docs.d/systas/html/.arch-ids/symbols.html.id
+  docs.d/systas/html/.arch-ids/syntax.html.id
+  docs.d/systas/html/.arch-ids/systas.html.id
+  docs.d/systas/html/.arch-ids/system.html.id
+  docs.d/systas/html/.arch-ids/throw.html.id
+  docs.d/systas/html/.arch-ids/values.html.id
+  docs.d/systas/html/.arch-ids/variable.html.id
+  docs.d/systas/html/.arch-ids/vectors.html.id
+  docs.d/systas/html/.arch-ids/weaks.html.id
+  docs.d/hackerlab/texi/.arch-ids/arrays.texi.id
+  docs.d/hackerlab/texi/.arch-ids/bigpic.texi.id
+  docs.d/hackerlab/texi/.arch-ids/bitsets.texi.id
+  docs.d/hackerlab/texi/.arch-ids/bugs.texi.id
+  docs.d/hackerlab/texi/.arch-ids/character-and-string.texi.id
+  docs.d/hackerlab/texi/.arch-ids/comments.texi.id
+  docs.d/hackerlab/texi/.arch-ids/conversions.texi.id
+  docs.d/hackerlab/texi/.arch-ids/indexes.texi.id
+  docs.d/hackerlab/texi/.arch-ids/introduction-to-regexps.texi.id
+  docs.d/hackerlab/texi/.arch-ids/introduction-to-unicode.texi.id
+  docs.d/hackerlab/texi/.arch-ids/introduction-to-xml-re.texi.id
+  docs.d/hackerlab/texi/.arch-ids/introduction.texi.id
+  docs.d/hackerlab/texi/.arch-ids/libhackerlab.texi.id
+  docs.d/hackerlab/texi/.arch-ids/document-license.texi.id
+  docs.d/hackerlab/texi/.arch-ids/file-names.texi.id
+  docs.d/hackerlab/texi/.arch-ids/hashing.texi.id
+  docs.d/hackerlab/texi/.arch-ids/machine.texi.id
+  docs.d/hackerlab/texi/.arch-ids/memory.texi.id
+  docs.d/hackerlab/texi/.arch-ids/on-hacking.texi.id
+  docs.d/hackerlab/texi/.arch-ids/opt.texi.id
+  docs.d/hackerlab/texi/.arch-ids/portability.texi.id
+  docs.d/hackerlab/texi/.arch-ids/posix-regexps.texi.id
+  docs.d/hackerlab/texi/.arch-ids/prefixes.texi.id
+  docs.d/hackerlab/texi/.arch-ids/printfmt.texi.id
+  docs.d/hackerlab/texi/.arch-ids/reserv.texi.id
+  docs.d/hackerlab/texi/.arch-ids/rx-posix-data-sheet.texi.id
+  docs.d/hackerlab/texi/.arch-ids/rx-xml-data-sheet.texi.id
+  docs.d/hackerlab/texi/.arch-ids/safe.texi.id
+  docs.d/hackerlab/texi/.arch-ids/source-license.texi.id
+  docs.d/hackerlab/texi/.arch-ids/tuning.texi.id
+  docs.d/hackerlab/texi/.arch-ids/unicode.texi.id
+  docs.d/hackerlab/texi/.arch-ids/unidata-data-sheet.texi.id
+  docs.d/hackerlab/texi/.arch-ids/url-fd.texi.id
+  docs.d/hackerlab/texi/.arch-ids/url-socket.texi.id
+  docs.d/hackerlab/texi/.arch-ids/vfdbuf.texi.id
+  docs.d/hackerlab/texi/.arch-ids/vu-dash.texi.id
+  docs.d/hackerlab/texi/.arch-ids/vu-sys.texi.id
+  docs.d/hackerlab/texi/.arch-ids/vu-utils.texi.id
+  docs.d/hackerlab/texi/.arch-ids/vu-virtual-null.texi.id
+  docs.d/hackerlab/texi/.arch-ids/vu.texi.id
+  docs.d/hackerlab/texi/.arch-ids/xml-re.texi.id
+  docs.d/hackerlab/ps/.arch-ids/libhackerlab.ps.id
+  docs.d/hackerlab/html/.arch-ids/arrays.html.id
+  docs.d/hackerlab/html/.arch-ids/bigpic.html.id
+  docs.d/hackerlab/html/.arch-ids/bitsets.html.id
+  docs.d/hackerlab/html/.arch-ids/bugs.html.id
+  docs.d/hackerlab/html/.arch-ids/character-and-string.html.id
+  docs.d/hackerlab/html/.arch-ids/comments.html.id
+  docs.d/hackerlab/html/.arch-ids/conversions.html.id
+  docs.d/hackerlab/html/.arch-ids/document-license.html.id
+  docs.d/hackerlab/html/.arch-ids/file-names.html.id
+  docs.d/hackerlab/html/.arch-ids/indexes.html.id
+  docs.d/hackerlab/html/.arch-ids/introduction-to-regexps.html.id
+  docs.d/hackerlab/html/.arch-ids/introduction-to-unicode.html.id
+  docs.d/hackerlab/html/.arch-ids/introduction-to-xml-re.html.id
+  docs.d/hackerlab/html/.arch-ids/introduction.html.id
+  docs.d/hackerlab/html/.arch-ids/libhackerlab.html.id
+  docs.d/hackerlab/html/.arch-ids/machine.html.id
+  docs.d/hackerlab/html/.arch-ids/memory.html.id
+  docs.d/hackerlab/html/.arch-ids/hashing.html.id
+  docs.d/hackerlab/html/.arch-ids/on-hacking.html.id
+  docs.d/hackerlab/html/.arch-ids/opt.html.id
+  docs.d/hackerlab/html/.arch-ids/portability.html.id
+  docs.d/hackerlab/html/.arch-ids/posix-regexps.html.id
+  docs.d/hackerlab/html/.arch-ids/prefixes.html.id
+  docs.d/hackerlab/html/.arch-ids/printfmt.html.id
+  docs.d/hackerlab/html/.arch-ids/reserv.html.id
+  docs.d/hackerlab/html/.arch-ids/rx-posix-data-sheet.html.id
+  docs.d/hackerlab/html/.arch-ids/rx-xml-data-sheet.html.id
+  docs.d/hackerlab/html/.arch-ids/safe.html.id
+  docs.d/hackerlab/html/.arch-ids/source-license.html.id
+  docs.d/hackerlab/html/.arch-ids/tuning.html.id
+  docs.d/hackerlab/html/.arch-ids/unicode.html.id
+  docs.d/hackerlab/html/.arch-ids/unidata-data-sheet.html.id
+  docs.d/hackerlab/html/.arch-ids/url-fd.html.id
+  docs.d/hackerlab/html/.arch-ids/url-socket.html.id
+  docs.d/hackerlab/html/.arch-ids/vfdbuf.html.id
+  docs.d/hackerlab/html/.arch-ids/vu-dash.html.id
+  docs.d/hackerlab/html/.arch-ids/vu-sys.html.id
+  docs.d/hackerlab/html/.arch-ids/vu-utils.html.id
+  docs.d/hackerlab/html/.arch-ids/vu-virtual-null.html.id
+  docs.d/hackerlab/html/.arch-ids/vu.html.id
+  docs.d/hackerlab/html/.arch-ids/xml-re.html.id
+  docs.d/arch/texi/.arch-ids/arbitrary-patching.texi.id
+  docs.d/arch/texi/.arch-ids/arch.texi.id
+  docs.d/arch/texi/.arch-ids/archive-format.texi.id
+  docs.d/arch/texi/.arch-ids/archives.texi.id
+  docs.d/arch/texi/.arch-ids/basic-branching-and-merging.texi.id
+  docs.d/arch/texi/.arch-ids/basic-rc.texi.id
+  docs.d/arch/texi/.arch-ids/configurations.texi.id
+  docs.d/arch/texi/.arch-ids/data-sheet.texi.id
+  docs.d/arch/texi/.arch-ids/document-license.texi.id
+  docs.d/arch/texi/.arch-ids/implementing-policies.texi.id
+  docs.d/arch/texi/.arch-ids/in-general.texi.id
+  docs.d/arch/texi/.arch-ids/indexes.texi.id
+  docs.d/arch/texi/.arch-ids/introduction.texi.id
+  docs.d/arch/texi/.arch-ids/inventory.texi.id
+  docs.d/arch/texi/.arch-ids/lines-of-development.texi.id
+  docs.d/arch/texi/.arch-ids/logs-after-merging.texi.id
+  docs.d/arch/texi/.arch-ids/multi-tree-projects.texi.id
+  docs.d/arch/texi/.arch-ids/idempotent-merging.texi.id
+  docs.d/arch/texi/.arch-ids/on-hacking.texi.id
+  docs.d/arch/texi/.arch-ids/overview.texi.id
+  docs.d/arch/texi/.arch-ids/patch-logs.texi.id
+  docs.d/arch/texi/.arch-ids/patch-set-format.texi.id
+  docs.d/arch/texi/.arch-ids/patches.texi.id
+  docs.d/arch/texi/.arch-ids/preparing-to-merge.texi.id
+  docs.d/arch/texi/.arch-ids/pristine-cache.texi.id
+  docs.d/arch/texi/.arch-ids/project-names.texi.id
+  docs.d/arch/texi/.arch-ids/project-trees.texi.id
+  docs.d/arch/texi/.arch-ids/reconciling.texi.id
+  docs.d/arch/texi/.arch-ids/source-license.texi.id
+  docs.d/arch/texi/.arch-ids/star-topology.texi.id
+  docs.d/arch/texi/.arch-ids/system-requirements.texi.id
+  docs.d/arch/texi/.arch-ids/theory-of-patches.texi.id
+  docs.d/arch/texi/.arch-ids/user-names.texi.id
+  docs.d/arch/texi/.arch-ids/web-site.texi.id
+  docs.d/arch/ps/.arch-ids/arch.ps.id
+  docs.d/arch/html/.arch-ids/arbitrary-patching.html.id
+  docs.d/arch/html/.arch-ids/arch.html.id
+  docs.d/arch/html/.arch-ids/archive-format.html.id
+  docs.d/arch/html/.arch-ids/archives.html.id
+  docs.d/arch/html/.arch-ids/basic-branching-and-merging.html.id
+  docs.d/arch/html/.arch-ids/basic-rc.html.id
+  docs.d/arch/html/.arch-ids/configurations.html.id
+  docs.d/arch/html/.arch-ids/data-sheet.html.id
+  docs.d/arch/html/.arch-ids/document-license.html.id
+  docs.d/arch/html/.arch-ids/idempotent-merging.html.id
+  docs.d/arch/html/.arch-ids/implementing-policies.html.id
+  docs.d/arch/html/.arch-ids/in-general.html.id
+  docs.d/arch/html/.arch-ids/indexes.html.id
+  docs.d/arch/html/.arch-ids/introduction.html.id
+  docs.d/arch/html/.arch-ids/inventory.html.id
+  docs.d/arch/html/.arch-ids/lines-of-development.html.id
+  docs.d/arch/html/.arch-ids/logs-after-merging.html.id
+  docs.d/arch/html/.arch-ids/multi-tree-projects.html.id
+  docs.d/arch/html/.arch-ids/on-hacking.html.id
+  docs.d/arch/html/.arch-ids/overview.html.id
+  docs.d/arch/html/.arch-ids/patch-logs.html.id
+  docs.d/arch/html/.arch-ids/patch-set-format.html.id
+  docs.d/arch/html/.arch-ids/patches.html.id
+  docs.d/arch/html/.arch-ids/preparing-to-merge.html.id
+  docs.d/arch/html/.arch-ids/pristine-cache.html.id
+  docs.d/arch/html/.arch-ids/project-names.html.id
+  docs.d/arch/html/.arch-ids/project-trees.html.id
+  docs.d/arch/html/.arch-ids/reconciling.html.id
+  docs.d/arch/html/.arch-ids/source-license.html.id
+  docs.d/arch/html/.arch-ids/star-topology.html.id
+  docs.d/arch/html/.arch-ids/system-requirements.html.id
+  docs.d/arch/html/.arch-ids/theory-of-patches.html.id
+  docs.d/arch/html/.arch-ids/user-names.html.id
+  docs.d/arch/html/.arch-ids/web-site.html.id
+  docs.d/systas/texi/alist.texi docs.d/systas/texi/async.texi
+  docs.d/systas/texi/boolean.texi
+  docs.d/systas/texi/chars.texi docs.d/systas/texi/eq.texi
+  docs.d/systas/texi/error.texi docs.d/systas/texi/eval.texi
+  docs.d/systas/texi/continuations.texi
+  docs.d/systas/texi/credits.texi
+  docs.d/systas/texi/debug.texi
+  docs.d/systas/texi/dictionaries.texi
+  docs.d/systas/texi/dynwind.texi
+  docs.d/systas/texi/emacs.texi
+  docs.d/systas/texi/fdsocket.texi
+  docs.d/systas/texi/filesys.texi docs.d/systas/texi/gc.texi
+  docs.d/systas/texi/hash.texi docs.d/systas/texi/hashtab.texi
+  docs.d/systas/texi/identifier-index.texi
+  docs.d/systas/texi/introduction.texi
+  docs.d/systas/texi/invocation.texi
+  docs.d/systas/texi/kw.texi docs.d/systas/texi/list.texi
+  docs.d/systas/texi/load.texi docs.d/systas/texi/macros.texi
+  docs.d/systas/texi/modules.texi
+  docs.d/systas/texi/numbers.texi
+  docs.d/systas/texi/pairs.texi docs.d/systas/texi/ports.texi
+  docs.d/systas/texi/procs.texi
+  docs.d/systas/texi/promise.texi
+  docs.d/systas/texi/read-print.texi
+  docs.d/systas/texi/records.texi docs.d/systas/texi/rgx.texi
+  docs.d/systas/texi/scheme.texi docs.d/systas/texi/stime.texi
+  docs.d/systas/texi/strings.texi
+  docs.d/systas/texi/struct.texi
+  docs.d/systas/texi/symbols.texi
+  docs.d/systas/texi/syntax.texi
+  docs.d/systas/texi/systas.texi
+  docs.d/systas/texi/system.texi docs.d/systas/texi/throw.texi
+  docs.d/systas/texi/values.texi
+  docs.d/systas/texi/variable.texi
+  docs.d/systas/texi/vectors.texi
+  docs.d/systas/texi/weaks.texi docs.d/systas/ps/systas.ps
+  docs.d/systas/html/alist.html docs.d/systas/html/async.html
+  docs.d/systas/html/boolean.html
+  docs.d/systas/html/chars.html
+  docs.d/systas/html/continuations.html
+  docs.d/systas/html/eq.html docs.d/systas/html/error.html
+  docs.d/systas/html/eval.html docs.d/systas/html/credits.html
+  docs.d/systas/html/debug.html
+  docs.d/systas/html/dictionaries.html
+  docs.d/systas/html/dynwind.html
+  docs.d/systas/html/emacs.html
+  docs.d/systas/html/fdsocket.html
+  docs.d/systas/html/filesys.html docs.d/systas/html/gc.html
+  docs.d/systas/html/hash.html docs.d/systas/html/hashtab.html
+  docs.d/systas/html/identifier-index.html
+  docs.d/systas/html/introduction.html
+  docs.d/systas/html/invocation.html
+  docs.d/systas/html/kw.html docs.d/systas/html/list.html
+  docs.d/systas/html/load.html docs.d/systas/html/macros.html
+  docs.d/systas/html/modules.html
+  docs.d/systas/html/numbers.html
+  docs.d/systas/html/pairs.html docs.d/systas/html/ports.html
+  docs.d/systas/html/procs.html
+  docs.d/systas/html/promise.html
+  docs.d/systas/html/read-print.html
+  docs.d/systas/html/records.html docs.d/systas/html/rgx.html
+  docs.d/systas/html/scheme.html docs.d/systas/html/stime.html
+  docs.d/systas/html/strings.html
+  docs.d/systas/html/struct.html
+  docs.d/systas/html/symbols.html
+  docs.d/systas/html/syntax.html
+  docs.d/systas/html/systas.html
+  docs.d/systas/html/system.html docs.d/systas/html/throw.html
+  docs.d/systas/html/values.html
+  docs.d/systas/html/variable.html
+  docs.d/systas/html/vectors.html
+  docs.d/systas/html/weaks.html
+  docs.d/hackerlab/texi/arrays.texi
+  docs.d/hackerlab/texi/bigpic.texi
+  docs.d/hackerlab/texi/bitsets.texi
+  docs.d/hackerlab/texi/bugs.texi
+  docs.d/hackerlab/texi/character-and-string.texi
+  docs.d/hackerlab/texi/comments.texi
+  docs.d/hackerlab/texi/conversions.texi
+  docs.d/hackerlab/texi/indexes.texi
+  docs.d/hackerlab/texi/introduction-to-regexps.texi
+  docs.d/hackerlab/texi/introduction-to-unicode.texi
+  docs.d/hackerlab/texi/introduction-to-xml-re.texi
+  docs.d/hackerlab/texi/introduction.texi
+  docs.d/hackerlab/texi/libhackerlab.texi
+  docs.d/hackerlab/texi/document-license.texi
+  docs.d/hackerlab/texi/file-names.texi
+  docs.d/hackerlab/texi/hashing.texi
+  docs.d/hackerlab/texi/machine.texi
+  docs.d/hackerlab/texi/memory.texi
+  docs.d/hackerlab/texi/on-hacking.texi
+  docs.d/hackerlab/texi/opt.texi
+  docs.d/hackerlab/texi/portability.texi
+  docs.d/hackerlab/texi/posix-regexps.texi
+  docs.d/hackerlab/texi/prefixes.texi
+  docs.d/hackerlab/texi/printfmt.texi
+  docs.d/hackerlab/texi/reserv.texi
+  docs.d/hackerlab/texi/rx-posix-data-sheet.texi
+  docs.d/hackerlab/texi/rx-xml-data-sheet.texi
+  docs.d/hackerlab/texi/safe.texi
+  docs.d/hackerlab/texi/source-license.texi
+  docs.d/hackerlab/texi/tuning.texi
+  docs.d/hackerlab/texi/unicode.texi
+  docs.d/hackerlab/texi/unidata-data-sheet.texi
+  docs.d/hackerlab/texi/url-fd.texi
+  docs.d/hackerlab/texi/url-socket.texi
+  docs.d/hackerlab/texi/vfdbuf.texi
+  docs.d/hackerlab/texi/vu-dash.texi
+  docs.d/hackerlab/texi/vu-sys.texi
+  docs.d/hackerlab/texi/vu-utils.texi
+  docs.d/hackerlab/texi/vu-virtual-null.texi
+  docs.d/hackerlab/texi/vu.texi
+  docs.d/hackerlab/texi/xml-re.texi
+  docs.d/hackerlab/ps/libhackerlab.ps
+  docs.d/hackerlab/html/arrays.html
+  docs.d/hackerlab/html/bigpic.html
+  docs.d/hackerlab/html/bitsets.html
+  docs.d/hackerlab/html/bugs.html
+  docs.d/hackerlab/html/character-and-string.html
+  docs.d/hackerlab/html/comments.html
+  docs.d/hackerlab/html/conversions.html
+  docs.d/hackerlab/html/document-license.html
+  docs.d/hackerlab/html/file-names.html
+  docs.d/hackerlab/html/indexes.html
+  docs.d/hackerlab/html/introduction-to-regexps.html
+  docs.d/hackerlab/html/introduction-to-unicode.html
+  docs.d/hackerlab/html/introduction-to-xml-re.html
+  docs.d/hackerlab/html/introduction.html
+  docs.d/hackerlab/html/libhackerlab.html
+  docs.d/hackerlab/html/machine.html
+  docs.d/hackerlab/html/memory.html
+  docs.d/hackerlab/html/hashing.html
+  docs.d/hackerlab/html/on-hacking.html
+  docs.d/hackerlab/html/opt.html
+  docs.d/hackerlab/html/portability.html
+  docs.d/hackerlab/html/posix-regexps.html
+  docs.d/hackerlab/html/prefixes.html
+  docs.d/hackerlab/html/printfmt.html
+  docs.d/hackerlab/html/reserv.html
+  docs.d/hackerlab/html/rx-posix-data-sheet.html
+  docs.d/hackerlab/html/rx-xml-data-sheet.html
+  docs.d/hackerlab/html/safe.html
+  docs.d/hackerlab/html/source-license.html
+  docs.d/hackerlab/html/tuning.html
+  docs.d/hackerlab/html/unicode.html
+  docs.d/hackerlab/html/unidata-data-sheet.html
+  docs.d/hackerlab/html/url-fd.html
+  docs.d/hackerlab/html/url-socket.html
+  docs.d/hackerlab/html/vfdbuf.html
+  docs.d/hackerlab/html/vu-dash.html
+  docs.d/hackerlab/html/vu-sys.html
+  docs.d/hackerlab/html/vu-utils.html
+  docs.d/hackerlab/html/vu-virtual-null.html
+  docs.d/hackerlab/html/vu.html
+  docs.d/hackerlab/html/xml-re.html
+  docs.d/arch/texi/arbitrary-patching.texi
+  docs.d/arch/texi/arch.texi
+  docs.d/arch/texi/archive-format.texi
+  docs.d/arch/texi/archives.texi
+  docs.d/arch/texi/basic-branching-and-merging.texi
+  docs.d/arch/texi/basic-rc.texi
+  docs.d/arch/texi/configurations.texi
+  docs.d/arch/texi/data-sheet.texi
+  docs.d/arch/texi/document-license.texi
+  docs.d/arch/texi/implementing-policies.texi
+  docs.d/arch/texi/in-general.texi
+  docs.d/arch/texi/indexes.texi
+  docs.d/arch/texi/introduction.texi
+  docs.d/arch/texi/inventory.texi
+  docs.d/arch/texi/lines-of-development.texi
+  docs.d/arch/texi/logs-after-merging.texi
+  docs.d/arch/texi/multi-tree-projects.texi
+  docs.d/arch/texi/idempotent-merging.texi
+  docs.d/arch/texi/on-hacking.texi
+  docs.d/arch/texi/overview.texi
+  docs.d/arch/texi/patch-logs.texi
+  docs.d/arch/texi/patch-set-format.texi
+  docs.d/arch/texi/patches.texi
+  docs.d/arch/texi/preparing-to-merge.texi
+  docs.d/arch/texi/pristine-cache.texi
+  docs.d/arch/texi/project-names.texi
+  docs.d/arch/texi/project-trees.texi
+  docs.d/arch/texi/reconciling.texi
+  docs.d/arch/texi/source-license.texi
+  docs.d/arch/texi/star-topology.texi
+  docs.d/arch/texi/system-requirements.texi
+  docs.d/arch/texi/theory-of-patches.texi
+  docs.d/arch/texi/user-names.texi
+  docs.d/arch/texi/web-site.texi docs.d/arch/ps/arch.ps
+  docs.d/arch/html/arbitrary-patching.html
+  docs.d/arch/html/arch.html
+  docs.d/arch/html/archive-format.html
+  docs.d/arch/html/archives.html
+  docs.d/arch/html/basic-branching-and-merging.html
+  docs.d/arch/html/basic-rc.html
+  docs.d/arch/html/configurations.html
+  docs.d/arch/html/data-sheet.html
+  docs.d/arch/html/document-license.html
+  docs.d/arch/html/idempotent-merging.html
+  docs.d/arch/html/implementing-policies.html
+  docs.d/arch/html/in-general.html
+  docs.d/arch/html/indexes.html
+  docs.d/arch/html/introduction.html
+  docs.d/arch/html/inventory.html
+  docs.d/arch/html/lines-of-development.html
+  docs.d/arch/html/logs-after-merging.html
+  docs.d/arch/html/multi-tree-projects.html
+  docs.d/arch/html/on-hacking.html
+  docs.d/arch/html/overview.html
+  docs.d/arch/html/patch-logs.html
+  docs.d/arch/html/patch-set-format.html
+  docs.d/arch/html/patches.html
+  docs.d/arch/html/preparing-to-merge.html
+  docs.d/arch/html/pristine-cache.html
+  docs.d/arch/html/project-names.html
+  docs.d/arch/html/project-trees.html
+  docs.d/arch/html/reconciling.html
+  docs.d/arch/html/source-license.html
+  docs.d/arch/html/star-topology.html
+  docs.d/arch/html/system-requirements.html
+  docs.d/arch/html/theory-of-patches.html
+  docs.d/arch/html/user-names.html
+  docs.d/arch/html/web-site.html
+New-directories: docs.d/arch/html docs.d/arch/ps docs.d/arch/texi
+  docs.d/hackerlab/html docs.d/hackerlab/ps
+  docs.d/hackerlab/texi docs.d/systas/html docs.d/systas/ps
+  docs.d/systas/texi docs.d/arch/html/.arch-ids
+  docs.d/arch/ps/.arch-ids docs.d/arch/texi/.arch-ids
+  docs.d/hackerlab/html/.arch-ids
+  docs.d/hackerlab/ps/.arch-ids
+  docs.d/hackerlab/texi/.arch-ids docs.d/systas/html/.arch-ids
+  docs.d/systas/ps/.arch-ids docs.d/systas/texi/.arch-ids
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  configs/regexps.com/devo configs/regexps.com/devo.arch
+  configs/regexps.com/lord configs/regexps.com/lord.arch
+  configs/regexps.com/release-template.arch
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-6
+  lord@regexps.com--2002/dists--lord--1.0--patch-10
+
+In addition to updating the configs, a bunch of redundant file adds 
+will appear in this commit.  Here's a quote from "src/arch/=TODO" that
+explains why:
+
+
+** mkpatch bug
+
+  Suppose you create some untagged directories and then put a bunch of
+  tagged files in them, then commit.  The directories and files appear
+  as adds.  Fine.  Then tag the directories, and commit again.  The
+  untagged directories show up as removed (which is right), but the
+  files do NOT show up as renames (which they should).  Consequently,
+  when that second patch set is applied to matching tree, all of the
+  files are removed (because they are in directories which are removed
+  -- the patch doesn't mention those files at all, so dopatch applies
+  this as is an inexact patch the right way (removing the unmentioned
+  files), which in this case, leads to a wrong result).
+
+  After that second commit, for example, the pristine cache is missing
+  the files, but they are still present in the project tree.  A fresh
+  `get' of the revision will also be missing the files.
+
+  Mkpatch should be fixed to properly record those files as renames
+  (from the untagged dirs, to the tagged dirs having the same
+  locations).  The problem is this code:
+
+  	join -o 1.1,2.1,1.2 -1 2 -2 2 "$orig_files_full_index" "$mod_files_full_index" \
+	| awk '{ if ($1 != $2) print $0 }' \
+	> "$renamed_files"
+
+  and in the similar code for $renamed_dirs
+
+  That code detects renames based only on locations.  There are two
+  approaches to fixing it.  One is to add in renames based on the tag
+  of containing directories.  The other is to detect renames based ONLY
+  on the tag of containing directories.  The latter is probably the
+  better fix, but be sure to verify that the `dopatch' code for
+  renaming directories will, as a side effect, move files whose
+  location has changed, but whose containing directory has the same
+  tag in both revisions.  An advantage of the latter fix is that
+  dopatch will run faster when tagged directories are moved because it
+  won't move all the contained files individually.
+
+  A partial work-around, which I'll use for now, is to commit a third
+  time -- causing the files to re-appear as adds.  This leaves the
+  logs in a mildly bogus state -- files appear to have been added
+  twice without ever having been removed.  It leaves the repository in
+  a mildly bogus state: the second patch set in the series described
+  above is not an exact patch wrt. its immediate ancestor revision.
+  Neither of these bogosities cause problems with any existing arch
+  operations, but they could confuse future commands which compute the
+  add/remove history of individual files.
+
+  I'll soon fix this bug to try to prevent it from effecting others.
+  The revisions known to have problems are patch-8 through patch-10
+  in "lord@regexps.com--2002/dists--lord--1.0".  I might eventually
+  do a sneaky repair to those.  So far, I haven't been tagging very
+  many directories -- so there probably aren't many occurences of this
+  bug in my archive, and they should be easy to find.

@@ -1,0 +1,17 @@
+Revision: systas--lord--1.0--patch-23
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri May 17 16:15:15 PDT 2002
+Standard-date: 2002-05-17 23:15:15 GMT
+Summary: updated =NEWS
+Keywords: 
+New-files: {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-23
+  .arch-ids/=NEWS.id =NEWS
+New-directories: .arch-ids
+Removed-files: =NEWS
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regepx.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/systas--lord--1.0--patch-23
+
+Updated =NEWS.
+

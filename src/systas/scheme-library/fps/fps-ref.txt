@@ -1,0 +1,2014 @@
+=====================================================================
+Functional PostScript Reference Manual
+=====================================================================
+
+      o Global Constants and Variables
+          	pi 1/4pi 1/2pi 3/4pi 5/4pi 3/2pi 7/4pi 2pi	
+		origin
+		identity-matrix 
+		afm-directory-path
+
+      o	Point and Matrices
+      		pt pt?
+                pt:x pt:y pt=
+		add-pts scale-pt negate-pt
+		matrix? matrix=
+		matrix
+		matrix* 
+
+      o Path
+		path?
+		line
+		rect	  	
+		arc	   
+		tangent-arc
+		curve
+		close-path
+		stroke-path   
+		bitmap->path 
+		the-empty-path
+
+      o Font and Glyph Path Makers
+		font 
+      		char->glyphpath	
+		int->glyphpath
+		glyphname->glyphpath
+		vector->glyphpath
+		simple-string->glyphpath
+		string->glyphpath
+
+      o Composite
+		compose	  compose-path   compose-pict
+		join	  join-path      join-pict
+		link
+
+      o Picture
+		picture?
+		paint-glyphpath
+      		stroke
+		fill
+		clip
+		colormap
+		bitmap->pict 
+      		the-empty-pict
+
+      o Transformation
+		translate
+		rotate
+		scale
+
+      o Style and Attributes
+		style?
+		attrib?
+		vary-default  
+		build-style
+		with-style
+		with-attrib
+		:color
+		:line-width
+		:line-cap     
+		:line-join    
+		:dash-pattern
+		:dash-offset
+		:miter-limit
+
+      o Colors
+		color?
+      		gray		gray:val
+		rgb 		rgb:r rgb:g rgb:b
+		hsb		hsb:h hsb:s hsb:b
+		cmyk 		cmyk:c cmyk:m cmyk:y cmyk:k
+
+      o Character Map and Integer Map
+		char-map?
+		base-char-map
+		lookup-char-map
+		function->char-map
+		alist->char-map
+		mask-char-map
+		native-font-char-map
+
+		int-map?
+		base-int-map
+		lookup-int-map
+		function->int-map
+		alist->int-map
+		mask-int-map
+		native-font-char-map
+
+      o Path and Picture Info
+		start-pt
+		end-pt
+		bounding-box
+
+      o Bitmap
+		bitmap?
+		vector->bitmap
+		hex-str->bitmap
+		bin-str->bitmap
+		bitmap-recolor
+
+      o Output Channels
+		show
+		show-w/-ps2-text-channel
+		ps2-text-channel
+		close-channel
+
+      o Options
+		:creator       	:duplex
+		:creation-date 	:duplex-tumble
+		:title         	:num-copies
+		:copyright     	:collate
+		:for  		:orientation
+		:routing  	:page-label   
+
+      o Utilities
+		rad->deg
+		deg->rad
+		inch
+		bounding-box->rect
+
+      o	Appendix A: Base Maps
+
+      o Appendix B: The Missing Pieces
+
+
+
+=====================================================================
+Global Constants and Variables
+=====================================================================
+
+1/4pi 1/2pi 3/4pi pi 5/4pi 3/2pi 7/4pi 2pi    	        constant: real
+origin							constant: pt
+identity-matrix				   		constant: matrix
+
+pi = 3.141593.
+origin is (pt 0 0).
+identity-matrix is (matrix 1 0 0 1 0 0)
+
+====================
+
+FPS_AFM_PATH						env variable
+
+This env variable lists the directories where FPS should look for
+.afm files. The directories are delimited by colon ":".
+
+
+
+
+=====================================================================
+Point and Matrix
+=====================================================================
+
+(pt x y)     -> pt					procedure
+(pt?  obj)   -> boolean					procedure
+(pt:x point) -> real					procedure
+(pt:x point) -> real					procedure
+(pt= p1 p2)  -> boolean					procedure
+
+A point is a Cartesian coordinate reference in space. The origin point
+(0,0) is located on the lower-left hand corner of the page; point
+(1,0) is 1/72 inch to the right of the origin; point (0,1) is 1/72
+inch above the origin, and so forth. 
+
+The pt procedure constructs such a point in space. x and y are the
+point's coordinates in real numbers.
+
+pt:x and pt:y return the x and y coordinates of a point. pt?
+determines whether a scheme-value is a point, and pt= determines
+whether two points have the same x and y values.
+
+====================
+
+(add-pts point1 point2 ...)        -> pt		procedure
+(scale-pt x-factor y-factor point) -> pt		procedure
+(negate-pt point)                  -> pt		procedure
+
+These are utility procedures for working with points. add-pts creates
+a new point whose x and y coordinates are the sums of x and y
+coordinates of all given points. scale-pt multiplies the x- and
+y-factor with the x and y coordinates of the given point. negate-pt is
+the same as (scale-pt -1 -1 point)
+
+====================
+
+(matrix a b c d tx ty)     -> matrix			procedure
+(matrix? obj)              -> boolean			procedure
+(matrix= matrix1 matrix2) -> boolean			procedure
+(matrix* matrix1 matrix2)  -> matrix			procedure
+
+A two-dimensional transformation is described mathematically by a 3x3
+matrix:
+
+	| a  b  0 |
+	| c  d  0 |
+	| tx ty 1 |
+
+In FPS, the matrix is represented as a "matrix" record with six
+fields, a b c d tx ty. The third column in the matrix is omitted
+because it is constant. This matrix transforms a point (x,y) into
+point (x',y') according to the linear equations:
+
+	x' = ax + cy + tx
+	y' = bx + dy + ty
+
+matrix= tests if two matrices have the same six values.  matrix?
+tests whether a scheme object is a matrix. matrix* multiplies two
+matrices together. Remember that matrix multiplications are not
+commutative, so the order of multiplication does matter.
+
+
+
+
+=====================================================================
+Path Makers
+
+Paths are geometrical constructs on a plane that have a starting point,
+an ending point, and a bounding box. They can be created from a 
+variety of procedures (line, arc, etc). New paths can be formed by 
+transformation and composition. Paths can be turned into pictures by 
+the stroke and fill procedures.
+=====================================================================
+
+(path? scheme-value) -> boolean				procedure
+
+path? determines whether some scheme value is a path.  A scheme
+value is a path only if all of its components are paths.
+
+====================
+
+(line pt1 [pt2 pt3...]) -> path				procedure
+
+line constructs a path made out of straight lines that goes from pt1
+to pt2 to pt3 etc. There must be at least one point in a line. For
+example,
+
+	(line (pt 0 0) (pt 50 50) (pt 100 0))
+
+
+====================
+
+(rect pt width height) -> path				procedure
+
+rect creates a closed rectangular path described by a corner on
+pt (x,y) and the width and height of the rectangle.  The rectangle has
+corners located at coordinates (x,y) (x+width, y) (x+width, y+height)
+(x, y+height). Note that width and height can be negative. The
+starting point and the ending point of rectangle is the corner
+specified by the pt argument. For example,
+
+	(rect (pt 100 100) -50 -50)
+
+
+====================
+
+(arc center-pt radius start-angle end-angle) -> path	procedure
+
+arc constructs a path of a counterclockwise arc of a
+circle. start-angle and end-angle are measured in radians
+counterclockwise from the positive x-axis, as shown below.
+
+			     1/2 pi 
+				|
+				|
+		     pi	<---------------> 0 or 2 pi
+		     		|
+				|
+			     3/4 pi	
+
+The arc produced is circular. You can scale it to an ellipse.
+Here is an example that makes a path of a 45-degree "pie slice"
+
+	(close-path (link (line (pt 0 0) (pt 50 0))
+		          (arc  (pt 0 0) 50  0  1/4pi)))
+
+And here's an O shaped elliptical path:
+
+	(scale 2 1 (arc (pt 0 0) 50 0 2pi)))
+
+====================
+
+(tangent-arc point1 point2 point3 radius) -> path	procedure
+
+tangent-arc constructs a path of an arc as follows:
+
+- point1 and point2 define tangent line 1
+- point2 and point3 define tangent line 2
+- The arc is defined by the radius and these two tangent lines.
+  The center of the arc is located within the inner angle between
+  the tangent lines. It is the only point located at distance 
+  radius in a direction perpendicular to both lines.
+- The arc begins at the first tangent point on the first tangent line,
+  passes between this center and point2 and ends at the second
+  tangent point on the second tangent line (this point is NOT point3,
+  it is where the arc touches the second tangent line).
+
+The above technical definition is probably difficult to understand
+without a picture. What is tangent-arc good for anyway?  tangent-arc
+is useful when, say, you want to construct a "rounded cornered"
+rectangular frame. The crude ASCII art below shows such a frame. The
+corners are not connected because we are going to draw them using
+tangent-arc. To construct the upper left corner, we would call
+tangent-arc with three points: 1) the point where the horizontal line
+stops, 2) the point where the real corner of the frame is, and 3) the
+point where the vertical line starts. The radius argument determines
+how "curved" your corner will be.
+
+			.  ______  .
+
+			|	   |
+			|	   |		
+			.  ______  .
+
+For an example of tangent-arc, see the square-to-circle example in
+fps-example.scm.
+
+====================
+
+(curve start-pt ctrl-pt1 ctrl-pt2 end-pt) -> path	procedure
+
+curve constructs a path of a Bezier curve using a start point, two
+Bezier cubic control points, and an end point. The four points define
+the shape of the curve.  The curve starts at start-pt and leaves the
+point in that direction tangent to the line from start-pt to
+ctrl-pt1. The curve approaches the end-pt from the direction tangent
+to the line from ctrl-pt2 to end-pt and stops at end-pt. The curve is
+always entirely enclosed by the convex quadrilateral defined by the
+four points.
+
+For example, (curve (pt 0 50) 
+	            (pt 15 100) (pt 60 0)
+		    (pt 75 50))
+    would give you a tilde ~ shaped curve.
+
+    	     (curve (pt 15 0)
+	     	    (pt 125 200) (pt -50 200)
+		    (pt 65 0))
+    would give you a scripted l shaped curve.
+
+====================
+
+(close-path path) -> path				procedure
+
+close-path constructs a path by appending a straight line from the end
+point to the start point of the given path. If the given path is
+already closed (for example, any circles, where end point equals to
+start point), then close-path has no effect.
+
+	(close-path (arc (pt 100 100) 100 (- 1/2pi) 1/2pi))
+
+        would give you a D shaped curve.
+
+====================
+
+(stroke-outline-path path style) -> path		procedure
+
+stroke-outline-path constructs a new path by outlining the picture
+that would result if the given path were stroked with the given
+style. For example,
+
+      (stroke-outline-path (arc (pt 100 100) 100 0 2pi)
+		           (build-style (vary-default) (:line-width 30)))
+
+returns the outline of a circle of 30 pt thickness.
+
+The path resulting from stroke-outline-path is suitable for filling
+and clipping. In general, the path is not suitable for stroking, as it
+is usually not a "simple outline" path but a path of many complex
+interior segments or disconnected sub-paths.
+
+====================
+
+(bitmap->path bitmap transparent-val) -> path		procedure
+
+bitmap->path creates a path from a bi-level (1-bit gray scale black
+and white) bitmap. This path is suitable for filling and clipping.
+
+How is this path created from a bitmap and what does the
+transparent-val mean? Consider the following sample 3x3 bi-level
+bitmap of a black + sign, where 'X' is black (0)and '-' is white (1).
+
+		  -X-  or in binary  101
+		  XXX                000
+		  -X-                101
+
+So (fill (bitmap->path plus-sign 0)) gives you a picture of a + sign.
+
+And (fill (bitmap->path plus-sign 1)) gives you a picture of four
+squares sitting where the '-' are in the bitmap.
+
+====================
+
+the-empty-path						constant: path
+
+the-empty-path constant is a "null" path. You can combine
+the-empty-path with other paths without making any side-effects.
+
+
+
+=====================================================================
+Font and Glyph Path Makers
+
+Glyph path is a kind of path. It can be transformed and turned into
+pictures just like all other paths. Glyph paths are pre-drawn paths
+that tell us how characters such as "A", "B", "C" etc in a font should
+be drawn.
+
+In FPS, fonts are made up of the following: a collection of glyphs, a
+character map, an integer map, and a transformation matrix. Glyphs are
+data structures that associate strings (glyphnames) to a path
+(glyphpath).  Character and integer maps are data structures that
+associate characters and integers (such as #\A and 65) to glyphnames
+("A").
+=====================================================================
+
+(font font-name size [char map | int map | matrix]) -> font	procedure
+(font? scheme-value) -> boolean					procedure
+
+You need to create fonts in order to create glyph paths. FPS uses
+PostScript font to create and manipulate glyph paths. To use a
+PostScript font, you must have the font's Adobe Font Metrics (AFM)
+file the directory listed in the FPS_AFM_PATH env variable. FPS comes
+with afm files for some common fonts: Helvetica.afm, Symbol.afm,
+Courier.afm, etc.
+
+Argument font-name must be a PostScript filename string (properly
+cased like the AFM file filename). For example, if you installed a
+font with the AFM file "Dingdong.afm", the font-name would be
+"Dingdong". Argument size describes how big your glyphpaths are in
+points. Of course, you can always scale your glyphpaths afterwards.
+
+For example, to define a Helvetica 36 pt font:
+	(define helv (font "Helvetica" 36))
+
+You can then use it to create glyph paths;
+	(string->glyphpath helv "Hola!")
+
+Users can also specify their own char map, int map, and transformation
+matrix. The char and int maps associate characters and integers to
+glyphnames (refer to character and integer map sections for more
+information) And the matrix is a transformation matrix that modify the
+path (so you can do slant, rotate, flip, etc). These optional args do
+not need to come in any order. By default, a font is created with
+the identity matrix (no transformation) and the font's native charmap
+and intmap (as described by the font's AFM file).
+
+====================
+
+(char->glyphpath font char [error-tag]) -> path | #f	procedure
+
+char->glyphpath takes a scheme character, looks up the glyphname that
+the character maps to in the font's character map, and returns the
+corresponding glyphpath associated with the glyphname.
+	
+	(define helv36 (font "Helvetica" 36))
+	(char->glyphpath helv36 #\A)
+
+would give you the path of the letter 'A' in Helvetica 36 point.
+
+error-tag determines what happens if the character does not map to
+any glyphname in the font's character map. error-tag can be one of the
+following:
+
+'empty    Procedure returns the empty path. This is the default.
+'error    Scheme raises an exception.
+#f        Procedure returns #f.
+
+====================
+
+(int->glyphpath font int [error-tag]) -> path | #f	procedure
+
+int->glyphpath takes an integer, looks up the glyphname that the
+integer maps to in the font's integer map, and returns the
+corresponding glyphpath associated with the glyphname. Using integers
+to referece glyphs allows us to access fonts of arbitrarily large
+collection of glyphs (Chinese font, for example) by associating glyphs
+with an integer ID.
+
+	(define helv36 (font "Helvetica" 36))
+	(int->glyphpath helv36 64)
+
+would give you the path of the letter 'A' in Helvetica 36 point.
+
+error-tag determines what happens if the integer does not map to any
+glyphname in the font's integer map. error-tag can be one of the
+following:
+
+'empty    Procedure returns the empty path. This is the default.
+'error    Scheme raises an exception.
+#f        Procedure returns #f.
+
+====================
+
+(glyphname->glyphpath font glyphname [error-tag]) -> path | #f 	procedure
+
+glyphname->glyphpath takes a glyphname (a string), and returns the
+corresponding glyphpath in the given font.
+
+	(define helv36 (font "Helvetica" 36))
+	(glyphname->glyphpath helv36 "copyright")
+
+would give you the path of the copyright symbol in Helvetica 36 pt.
+
+error-tag determines what happens if the glyphname is not found in the
+given font. error-tag can be one of the following:
+
+'empty    Procedure returns the empty path. This is the default.
+'error    Scheme raises an exception.
+#f        Procedure returns #f.
+
+====================
+
+(vector->glyphpath font vector [error-tag]) -> path | #f	procedure
+
+vector->glyphpath takes a vector of characters, integers, glyphnames
+(i.e. strings) finds the glyphpath that each element maps to, and
+joins the paths together horizontally.
+
+	(vector->glyphpath helvetica36 '#(#\A #\B #\C "trademark"))
+
+	would give you a path consists of ABC followed by a trademark 
+	symbol in Helvetica 36 pt.
+
+This version of FPS only supports horizontal writing direction, we
+would like to add in support for vertical writing in the next version
+(for special effects or for Asian fonts). For now, if you want to
+compose characters vertically, the glyphpaths of individual characters
+have to be composed vertically together by writing a separate user
+level procedure.
+
+error-tag determines what happens if a glyphpath cannot be found for
+any elements in the vector (invalid mapping, for example). error-tag
+can be one of the following:
+
+'empty    Procedure joins the empty path to the rest of the glyphpath.
+	  i.e. The illegal element is turned into an empty path and has
+          no side effects. This is the default.
+'error    Scheme raises an exception.
+#f        Procedure returns #f.
+
+====================
+
+(simple-string->glyphpath font string [error-tag]) -> path | #f procedure
+
+simple-string->glyphpath takes a string, looks up the glyphname that
+each character in the string maps to in the font's character map,
+finds the glyphpath associated with the glyphname, and joins the
+glyphpaths together horizontally.
+
+What's a simple string? A simple string is a string with no special
+interpretation for special "escape" characters. In an ordinary string
+(see string->glyphpath), % begins an escape sequence. In
+simple-string, % has no special meaning; it is simply printed as a
+percent-sign.
+
+This is useful for operations such as I/O with users, where one would
+want to print all the characters in the string as is.
+
+Vertical writing direction is not supported in this version. You must
+write a user level procedure achieve the effect.
+
+error-tag determines what happens if a glyphpath cannot be found for
+a character in the string. error-tag can be one of the following:
+
+'empty    Procedure joins the empty path to the rest of the glyphpath.
+	  i.e. The illegal character is turned into an empty path and has
+          no side effects. This is the default.
+'error    Scheme raises an exception.
+#f        Procedure returns #f.
+
+====================
+
+(string->glyphpath font string [error-tag]) -> path | #f	procedure
+
+string->glyphpath takes a string and returns a glyphpath.  It acts very
+much like the simple-string->glyphpath procedure, except that strings
+can contain escape sequences.
+
+	(define helv (font "Helvetica" 36))
+	(string->glyphpath helv36 "Mushroom")
+
+The string "Mushroom" does not contain any escape sequences, and
+string->glyphpath behaves just like simple-string->glyphpath.
+
+Escape sequences allow you to insert glyphnames and constants into the
+string. They begin with a percent-sign % and ends with a colon :
+
+%% prints a percent-sign.
+%: is an empty escape sequence.
+
+The escape sequences contain elements separated by at least one space
+character.  Three kinds of elements may be found in an escape
+sequence:
+
+1) Glyphname - 	glyphnames are separated by space.
+  
+  (string->glyphpath helv36 "%semicolon period copyright:")
+
+2) 8-bit Integers - 8-bit integers in hex are wrapped in a pair of
+		parenthesis. FPS uses these integers to look up the 
+		appropriate glyphs using the integer map.
+
+  (string->glyphpath helv36 "%(023D437F):")
+
+3) 16-bit Integers - 16-bit integers in hex are wrapped in a pair of
+		square brackets. FPS uses these numbers to look up the
+		appropriate glyphs using the integer map.
+
+  (string->glyphpath helv36 "%[573A3D57]:")
+
+Different accessing methods can be mixed in a single escape sequence.
+For example: (string->glyphpath helv36 "A Test %(02) colon Lslash [234F]:")
+
+Vertical writing direction is not supported in this version. You can 
+write your own procedure to achieve the effect or borrow procedure from
+the user library.
+
+error-tag determines what happens if a glyphpath cannot be found for a
+character in the string or an element in the escape
+sequence. error-tag can be one of the following:
+
+'empty    Procedure joins the empty path to the rest of the glyphpath.
+	  i.e. The illegal character/element is turned into an empty
+          path and has no side effects. This is the default.
+'error    Scheme raises an exception.
+#f        Procedure returns #f.
+
+
+=====================================================================
+Making Composite Paths and Pictures
+
+You can create more complex paths and pictures by composing simpler
+ones together. Three composite operators are presented: compose,
+join, and link.
+=====================================================================
+
+(compose path1 [path2 ...])       -> path		procedure
+(compose picture1 [picture2 ...]) -> picture		procedure
+
+Since the compose procedure can handle paths and pictures, whenever
+"path" is mentioned in this section, "or picture" is implied.
+
+compose builds a new path by collecting many paths together.  No
+transformation is done on any of the given paths; the first
+path/picture is drawn, and the second is drawn right over it, and so
+on, resulting in paths/pictures that come later in the composite list
+obscuring ones that are earlier the list. Paths and pictures remain
+disjoint after they are composed together.
+
+The composite procedure must be called with at least one argument. The
+arguments must be all paths or all pictures.
+
+Let's say we want to draw a '%' sign:
+	
+	(compose (line (pt 0 0) (pt 100 100))	; the slanted line
+		 (arc (pt 20 80) 15 0 (* 2 pi)) ; the top left circle
+		 (arc (pt 80 20) 15 0 (* 2 pi))); the bottom right circle
+
+====================
+
+(compose-path [path1 path2 ...])       -> path		procedure
+(compose-pict [picture1 picture2 ...]) -> picture	procedure
+
+These procedures behave just like compose, except that they can take
+zero arguments. When you call compose-path and compose-pict with no
+arguments, the-empty-path and the-empty-pict are returned
+respectively.
+
+====================
+
+(join path1 [path2 ...])       -> path			procedure
+(join picture1 [picture2 ...]) -> picture		procedure
+
+Since the join procedure can handle path and pictures, whenever
+"path" is mentioned in this section, "or picture" is implied.
+
+join builds a new path by "joining" given paths together. By 'joining'
+we mean the following:
+
+	- path1 is added to the new path. 
+	- path2 is translated so that the start point of path2
+	  is on the endpoint of path1.
+	- path3 is translated so that the start point of path3
+          is on the endpoint of path2. 
+        - etc etc.
+
+The join procedure must be called with at least one argument. The
+arguments must be all paths or all pictures.
+
+Note that when two paths are joined togher, they become a single
+path (i.e. the line-join attribute applies to the junction between
+paths).
+
+====================
+
+(join-path [path1 path2 ...])       -> path		procedure
+(join-pict [picture1 picture2 ...]) -> picture		procedure
+
+These procedures behave just like join, except that they can take zero
+arguments. When you call join-path and join-pict with no arguments,
+the-empty-path and the-empty-pict are returned respectively.
+
+====================
+
+(link [path1 path2 ...]) -> path				procedure
+
+link builds new path by 'linking' the given paths together. By linking
+we mean the following:
+
+	- path1 is added to the new path. 
+	- a straight line path that goes from the endpoint of
+	  path1 to the start point of path2 is added.
+	- path2 is added to the new path. 
+	- a straight line path that goes from endpoint of
+	  path2 to start point of path3 is added.
+	- etc etc.
+
+Note that when two paths are linked togher, they become a single
+path (i.e. the line-join attribute applies to the junction between
+paths).
+
+
+=====================================================================
+Picture Makers
+
+Pictures can be thought of as "ink on paper". Pictures can be made
+from lines (by stroke and fill), from bitmaps (bitmap->pict), or
+from other pictures (colormap). Pictures can be transformed and
+composed together to make new pictures.
+=====================================================================
+
+(paint-glyphpath path [style])      	    -> picture	procedure
+(paint-glyphpath path [attrib1 attrib2 ..]) -> picture	procedure
+
+paint-glyphpath paints the glyphpath using the method (stroke or fill)
+as defined by the font itself. Most fonts are designed to be filled,
+but there are outline fonts which are designed to be stroked. Unless
+you specifically want to stroke or fill the glyphpath, use
+paint-glyphpath whenever you can for better rendering performance.
+
+You may also include a style or a number of attributes when calling
+paint-glyphpath.  If you specify a style, the path is painted in that
+style.  If you specify some attributes, the path is painted in the
+style created by calling vary-default on those attributes.  If no
+style or attributes args are supplied, the path is painted in the
+current default style. 
+
+====================
+
+(stroke path [glyphpath-painter] [style])              -> picture   procedure
+(stroke path [glyphpath-painter] [attrib1 attrib2 ..]) -> picture   procedure
+
+stroke creates a picture by painting a line along the path using the
+default style or the user specified style/attribute. If the path is
+the-empty-path, stroke returns the-empty-pict.
+
+You can specify a glyphpath-painter which tells FPS how to paint
+the glyphpaths in the path. glyphpath-painter can be one of the following:
+
+'native		This is the default painter. The painting method is
+		defined by the font with which the glyphpath was created.
+'stroke		Glyphpaths are stroked to produce outlines of the 
+		characters.
+'fill		Glyphpaths are filled to produce solid characters.
+
+You may also include a style or a number of attributes when calling
+stroke.  If you specify a style, the path is stroked in that style.
+If you specify some attributes, the path is stroked in the style
+created by calling vary-default on those attributes.  If no style or
+attributes args are supplied, the path is stroked in the current
+default style. For example, here's how to create a picture of an empty
+green circle:
+
+    	(define green (rgb 0 1 0))
+       	(stroke circle-path (:color green))
+
+====================
+
+(fill path [glyphpath-painter] [style])              -> picture	    procedure
+(fill path [glyphpath-painter] [attrib1 attrib2 ..]) -> picture	    procedure
+
+The fill procedure creates a picture by painting the area enclosed by
+the path in the color of the default style or the user specified
+style/attribute. If the path is the-empty-path, fill returns
+the-empty-pict.
+
+You may specify a glyphpath-painter which tells FPS how to paint
+the glyphpaths in the path. glyphpath-painter can be one of the following:
+
+'native		This is the default painter. The painting method is
+		defined by the font with which the glyphpath was created.
+'stroke		Glyphpaths are stroked to produce outlines of the 
+		characters.
+'fill		Glyphpaths are filled to produce solid characters.
+
+You may also include a style or a number of attributes when calling
+fill.  If you specify a style, the path is filled in that style.  If
+you specify some attributes, the path is filled in the style created
+by calling vary-default on those attributes.  If no style or
+attributes args are supplied, the path is filled in the current
+default style. For example, here's how to create a picture of an empty
+green circle:
+
+	(define green (rgb 0 1 0))
+	(fill circle-path (:color green))
+
+====================
+
+(clip path picture) -> picture				procedure
+
+clip creates a new picture by cropping the given picture with the
+given path. If the path or the picture is empty, then the-empty-pict
+is returned. 
+
+This example is taken from fps-examples.scm. It creates a picture of
+'rays' and then clip the picture with a glyphpath.
+
+(define (clip-msg msg)
+  (let* ((times  (font "Times-BoldItalic" 84))
+	 (m-path (simple-string->glyphpath times msg))
+	 (max-pt (bounding-box:max (bounding-box m-path)))
+	 (height (pt:y max-pt))
+	 (width  (pt:x max-pt))
+	 (l-len  (sqrt (+ (* (/ width 2) (/ width 2))
+			  (* height height))))
+	 (l          (line (pt 0 0) (pt (+ 150 width) 0)))
+	 (angle-step .025)
+	 (rays (translate (/ width 2) 0
+			  (apply compose
+				 (let recur ((angle 0))
+				   (if (> angle pi) '()
+				       (cons (rotate angle l)
+					     (recur (+ angle 
+						       angle-step)))))))))
+    (translate 100 400
+	       (clip m-path 
+		     (stroke rays (:color (hsb 0.4 0.1 0.4)))))))
+
+====================
+
+(colormap c-func picture) -> picture			procedure
+
+colormap creates a new picture by modifying the colors of the given
+picture. The argument c-func is a color transformation function that
+takes an FPS color as argument and returns an FPS color.  For example,
+
+;; make some colors
+(define red   (rgb 1 0 0))
+(define green (rgb 0 1 0))
+
+;; make a picture of green rectangle and a red circle
+(define my-shape (compose (fill my-rectangle (:color green))	
+			  (fill my-circle    (:color red))))	
+
+;; color function that reduces brightness (darkens) the picture
+(define (darken color) (hsb (hsb:h color)
+			    (hsb:s color)
+			    (- .2 (hsb:b color))))
+
+;; now colormap the picture
+(define new-color-shape (colormap darken my-shape))
+
+==================== 
+
+(bitmap->pict bitmap) -> picture			procedure
+
+bitmap->pict creates a picture from a bitmap.  Once a bitmap is turned
+into a picture, you can treat it like any other pictures
+(i.e. compose, transformation, colormap).
+
+Note that when recoloring a bitmap, you can specify the color
+resolution to optimize resources usage. But once a bitmap is turned
+into a picture, colormapping assumes that color resolution is
+infinite.  Therefore, colormapping a picture created from a bitmap is
+usually a very expensive operation. The cheaper way to do color
+changes is to use the bitmap-recolor function, where you can specify
+the color resolution needed. 
+
+==================== 
+
+the-empty-pict						constant: picture
+
+the-empty-pict is a "null" picture. You can combine the-empty-pict
+with other pictures without making any side-effects.
+
+
+
+=====================================================================
+Transformation
+
+New paths and pictures can be created by translating, rotating,
+and scaling existing ones. 
+=====================================================================
+
+(translate x y path)    -> path				procedure
+(translate x y picture) -> picture			procedure
+
+Since the translate procedure can handle paths and pictures, whenever
+"path" is mentioned in this section, "or picture" is implied.
+
+translate builds a new path by adding the x and y numbers to every
+point in the path (or picture) and thereby moving the whole picture by
+the x and y amount.
+
+For example, 
+
+	(define old-circle (arc (pt 0 0) 1 0 2pi))
+	(define new-circle (translate 5 5 circle))
+
+The new circle has center at point 5,5.
+
+====================
+
+(rotate angle path)    -> path				procedure
+(rotate angle picture) -> picture			procedure
+
+Since the rotate procedure can handle path and pictures, whenever
+"path" is mentioned in this section, "or picture" is implied.
+
+rotate builds a new path by rotating the given path around point
+(0,0). The angle must be specified in radians.
+
+For example, let's say that I have a square, called my-square.  The
+square has its bottom left corner at point 0,0. Now let's rotate it by
+45 degrees (or 1/2 pi in radians):
+
+	(rotate 1/2pi my-square) 
+
+This gives us a diamond whose bottom corner lands on point 0,0.
+
+
+====================
+
+(scale x-val y-val path)    -> path			procedure
+(scale x-val y-val picture) -> picture			procedure
+
+Since the scale procedure can handle path and pictures, whenever
+"path" is mentioned in this section, "or picture" is implied.
+
+scale builds a new path by multiplying every point in the old path by
+x-val and y-val. If x-val and y-val are positive numbers, the path is
+stretched or shrunk. If x-val and y-val are negative numbers, then the
+path is not only stretched or shrunk, it is also reflected across the
+axis.
+
+For example, let's say that I have a path of a square, called my-sqr,
+of width and height 1, and whose bottom left corner sits at point (0
+0). Let's look at the following transformation:
+
+(scale 2 3 my-sqr)  ;; stretches my-square into a 2 by 3 rectangle
+(scale -1 1 my-sqr) ;; negate all x-coordinates, thereby "flipping"
+                       the square across the y-axis. 
+(scale 1/2 1/2 my-sqr);; shrunk the square to a quarter size.
+
+
+
+=====================================================================
+Style and Attributes
+
+Style and attributes determine the outcome of stroking and filling
+operations. Attributes are specific pieces of information such as line
+width, color, dash, etc. A style is a collection of attributes.
+=====================================================================
+
+(style?  scheme-val) -> boolean				procedure
+(attrib? scheme-val) -> boolean				procedure
+
+The style? and attrib? predicates determine whether a scheme value is
+a style or an attribute.
+
+====================
+
+(vary-default [attrib1 attrib2 ...]) -> style	procedure
+
+vary-default builds a new style by altering the current default style
+with the user specified attributes. The procedure takes zero or more
+arguments.
+
+The FPS system default style has the following attributes:
+
+	(:color        (rgb 0 0 0)) ;black
+	(:line-width   1)
+	(:line-cap     'butt)
+	(:line-join    'miter)
+	(:dash         'none)
+	(:dash-pattern '#())        ;solid line
+	(:dash-offset  0)
+	(:miter-limit 10)
+
+Here's an example of building a style with color red and line width
+of 5 points. You can then use this style, say, in a stroke operation.
+
+         (define red-style (vary-default (:color (rgb 1 0 0)) 
+                                         (:line-width 5)))
+         (stroke my-line red-style)
+
+my-line will be stroked in color red and line-width of 5 points.
+
+====================
+
+(build-style style [attrib1 attrib2 ...]) -> style	procedure
+
+build-style builds a new style by altering the given style with the
+user specified attributes. The style arg is mandatory.  There can be
+zero or more attribute args.
+
+Here's an example: we can build a generic "thick line" style,
+and then alter it to draw in different colors.
+
+	(define thick (vary-default (:line-width 20)))
+	(define blue-thick   (build-style thick (:color (rgb 0 0 1))))
+	(define yellow-thick (build-style thick (:color (rgb 1 1 0))))
+	(join (stroke my-line   blue-thick)
+	      (stroke my-circle yellow-thick))
+
+====================
+
+(with-style user-style exp ...) 			syntax
+(with-style* style thunk) -> unspecific			procedural eqv
+
+Using the with-style syntax, you can temporarily set the default style
+to the specified user-style. i.e. all expressions inside with-style
+use user-style as the default-style.
+
+For example, let's say you want the next few paths to be stroked in
+different line widths but all in green, you can do the following:
+
+	(with-style (vary-default (:color (rgb 0 1 0)))
+            (join (stroke my-line)
+	          (stroke my-circle   (vary-default (:line-width 10)))
+	          (stroke my-triangle (vary-default (:line-width 20)))))
+
+====================
+
+(with-attrib (attrib ...) exp ...) 			syntax
+
+Using the with-attrib syntax, you can temporarily alter the current
+default style with the specified attributes.
+
+For example, you want to stroke a few paths in different line widths
+but all in green, and you want the line width to be 5 if you don't
+specify it in stroke:
+
+	(with-attrib ((:color (rgb 0 1 0))
+		      (:line-width 5))
+            (join (stroke my-line)
+	          (stroke my-circle   (vary-default (:line-width 10)))	
+		  (stroke my-house)
+	          (stroke my-triangle (vary-default (:line-width 20)))))
+
+====================
+
+(:color color) -> attrib				procedure
+
+:color builds an instance of the color attribute.  The color attribute
+determines the color with which the paths are stroked or filled. The
+argument color is any FPS color.
+
+For example.  (:color (rgb 1 0 0)) builds a red color attribute.
+
+The FPS system default style has color attribute = black (gray 0)
+
+====================
+
+(:line-width width) -> attrib				procedure
+
+:line-width builds an instance of the line-width attribute.  The
+line-width attribute controls the thickness of the line painted by the
+stroke operation. The stroke procedure paints all points whose
+perpendicular distance from the current path in user space is less
+than or equal to 1/2 the value of argument width.
+
+The FPS system default style has line-width attribute = 1.
+
+====================
+
+(:line-cap cap-shape) -> attrib				procedure      
+
+:line-cap builds an instance of the line-cap attribute.  The line-cap
+attribute determines the ending shape of the lines painted by the
+stroke operator. The different line cap geometry is specified by the
+following cap shapes:
+
+ 'butt         Stroke is squared off at the endpoint of the path.
+               There is no projection beyond the end of the path.
+
+ 'round        A semicircular arc with diameter equal to the line 
+               width is drawn around the endpoint and filled in.	
+
+ 'project-square  The stroke continues beyond the endpoint of the
+               path for a distance equal to half the line width and
+               is squared off.
+
+The FPS system default style has line-cap attribute = 'butt
+
+====================
+
+(:line-join join-shape) -> attrib			procedure
+
+:line-join builds an instance of the line-join attribute.  The
+line-join attribute determines the cornering shape of the lines
+painted by the stroke operator. The different line join geometry is
+specified by the following join shapes:
+
+ 'miter    The outer edges of the strokes for the two segments are
+           extended until they meet at an angle, as in a picture
+           frame.
+
+ 'round    A circular arc with diameter equal to the line width is
+           drawn around the point where the segments meet and is filled
+           in, producing a rounded corner.
+
+ 'bevel    The meeting path segments are finished with butt-end caps
+           (see line-cap attribute); the the resulting notch beyond
+           the ends of the segments is filled with a triangle.
+
+Note that the line-join attribute is only relevant for segments of
+straight line path created by a single 'line' procedure call.  (for
+example, (line (pt 0 0) (pt 50 50) (pt 100 0))). The line-join
+attribute does not apply to composite paths created by the compose,
+join, or link procedure.
+
+The FPS system default style has line-join attribute = 'miter
+
+====================
+
+(:dash-pattern pattern-vector) -> attrib		procedure
+
+:dash-pattern builds an instance of the dash-pattern attribute.  The
+dash-pattern attribute determines the the on-off sequence of the line
+painted by the stroke operator. The pattern is specified as a vector
+of positive integers, each integer represents the number of points on
+(painted) or off (not painted). The vector begins with the 'on'
+number, and then alternate between off and on.
+
+For example:
+
+(:dash-pattern '#())       ;solid lines
+(:dash-pattern '#(2 1))    ;2 on, 1 off, 2 on 1 off, ...
+(:dash-pattern '#(3 1 1 1) ;3 on, 1 off, 1 on, 1 off, 3 on, ..
+
+The FPS system default style has dash-pattern attribute = #()
+
+====================
+
+(:dash-offset offset) -> attrib				procedure
+
+:dash-offset builds an instance of the the dash-offset attribute. The
+dash-offset attribute determines how far into the dash pattern does a
+line begin.
+
+For example:
+
+(:dash pattern '#(8 4))
+(:dash-offset  0)         ;8 on, 4 off, 8 on, 4 off
+
+(:dash pattern '#(8 4))
+(:dash-offset 6)          ;2 on, 4 off, 8 on, 4 off
+
+The FPS system default style has dash-offset attribute = 0
+
+====================
+
+(:miter-limit num) -> attrib				procedure	
+
+:miter-limit builds the miter-limit attribute that is used an an
+argument to the style-building procedures or the with-attribute
+syntax. Miter-limit controls the stroke operator's treatment of
+corners when miter joins have been specified (see :line-join). When
+path segments connect at a sharp angle, a miter join results in a
+spike that extends well beyond the connection point. The purpose of
+the miter limit is to cut off such spikes (i.e. convert them into
+bevels) when they become objectionably long.
+
+The radio of miter length to line width is directly related to the
+angle x between the segments by the formula:
+
+	miter length =     1
+        ------------   ---------
+         line width     sin (x/2)
+
+For example: 
+(:miter-limit 1.415) ;; cuts off miters at angles < 90 degrees.
+(:miter-limit 2.0)   ;; cuts off miters at angles < 60 degrees.
+(:miter-limit 10.0)  ;; cuts off miters at angles < 11 degrees.
+(:miter-limit 1.0)   ;; cuts off miters at all angles (always bevel)
+
+The FPS system default style has miter-limit attribute = 10.
+
+
+
+
+=====================================================================
+Colors
+=====================================================================
+
+(gray gray-val)  -> color				procedure
+
+(gray:val color) -> real num between 0 and 1		procedure
+
+gray creates a FPS color with the given gray-val. The argument
+gray-val is a real number between 0 and 1, where 0 means no light
+(black), and 1 means all the light (white), and intermediate values
+are various shades of gray. Numbers outside of this range are rounded
+to the nearest legal value.
+
+gray:val converts a color to gray scale by desaturation and returns
+the gray value.
+
+====================
+
+(rgb red-val green-val blue-val) -> color		procedure
+
+(rgb:r color) -> real num between 0 and 1		procedure
+(rgb:g color) -> real num between 0 and 1		procedure
+(rgb:b color) -> real num between 0 and 1		procedure
+
+rgb creates a FPS color with the given red, green, and blue values.
+Color is formed by adding the specified amount of red, green, and blue
+"lights" (i.e. red and green yields yellow, and equal amount of all
+three lights yields white) The arguments specify the "intensity" of
+the light and must be real numbers between 0 (no light of that color)
+and 1 (all light of that color).  Numbers outside of this range are
+rounded to the nearest legal value.
+
+	(rgb 1 0  0)  ;; pure red
+	(rgb 0 .5 1)  ;; greenish blue
+	(rgb 1 1  1)  ;; white
+	(rgb 0 0  0)  ;; black
+
+rgb:r, rgb:g, and rgb:b return the red, green, and blue component of a
+color.
+
+====================
+
+(hsb hue-val saturation-val brightness-val) -> color	procedure
+
+(hsb:h color) -> real num between 0 and 1		procedure
+(hsb:s color) -> real num between 0 and 1		procedure
+(hsb:b color) -> real num between 0 and 1		procedure
+
+hsb creates a FPS color with the given hue, saturation, and brightness
+values. The arguments must be real numbers between 0 and 1.  Numbers
+outside of this range are rounded to the nearest legal value.  In the
+HSB model, colors are arranged on a "color wheel", and the arguments
+determine where in the color wheel you land.
+
+Hue: corresponds to the common notion of "color" such as purple or sky
+blue. It specifies the angular position of a color on this wheel, with
+pure red at 0, pure green at 1/3, pure blue and 2/3, and red at 1
+again.  Intermediate hue values correspond to mixtures of the adjacent
+colors.
+
+Saturation: indicates how much of the hue there is. Saturation of 1
+shows that the color has all its hue.  Saturation of 0 indicates that
+none of the color's hue is visible, leaving only a shade of gray.  This
+is why the technique used to convert color pictures to black-and-white
+ones is known as "desaturation" - one simply sets all the saturation of
+all the colors to 0.
+
+Brightness: determines how light or how "bright" the color is.
+Brightness of 0 is always black.  Brightness of 1 is shining all the
+lights on the color.  You can "darken" a color by reducing its
+brightness value.
+
+	(hsb 0 1 1)  ;; the purest and brightest red
+	(hsb 0 1 .5) ;; a darker red
+        (hsb 0 1 0)  ;; black (zero brightness)
+
+hsb:h, hsb, and hsb:b return the hue, saturation, and brightness
+components of a color.
+ 
+====================
+
+(cmyk cyan-val magenta-val yellow-val black-val) -> color procedure
+
+(cmyk:c color) -> real num between 0 and 1		procedure
+(cmyk:m color) -> real num between 0 and 1		procedure
+(cmyk:y color) -> real num between 0 and 1		procedure
+(cmyk:k color) -> real num between 0 and 1		procedure
+
+cmyk creates a FPS color from the cyan, magenta, yellow, and black
+values.  The color is formed by adding the cyan, magenta, yellow, and
+black "ink" together. The arguments specify the amount of ink applied
+on a piece of white paper, where 0 means no ink (white) and 1 means
+all the ink.  Numbers outside of this range are rounded to the nearest
+legal value.
+
+	(cmyk 1 1 0 0) ;; blue
+	(cmyk 1 0 1 0) ;; green
+
+cmyk:c, cmyk:m, cmyk:y, and cmyk:k return the cyan, magenta, yellow,
+and black component of a color.
+
+====================
+
+(color= color1 color2) -> boolean			procedure
+
+color= compares two FPS colors and determines whether they are the
+same colors or not.
+
+
+
+
+=====================================================================
+Character and Integer Map
+
+Recall that in FPS, a font is made up of three elements: a character
+map, an integer map, an a collection of glyphs. Character and integer
+maps are collections of key-value pairs, where the keys are characters
+and integers and the values are strings representing glyphnames. 
+
+Every font comes with its own native character and integer map. For
+example, in Helvetica, character #\a maps to the glyphname "a" by
+default, but in the Symbols font, #\a maps to the name "alpha". You
+can change this mapping to access special characters.  For example,
+instead of mapping #\! to "exclam", you may wish to map #\! to the
+copyright symbol (with the glyphname "copyright"). You can do this by
+creating new maps with the procedures described in this section.
+=====================================================================
+
+(char-map? scheme-val) -> boolean			procedure
+(int-map?  scheme-val) -> boolean			procedure
+
+char-map? and int-map? determine whether a scheme value is a character
+map or an integer map.
+
+====================
+
+base-char-map						constant
+
+In this version of FPS for ASCII Scheme, base-char-map contains the
+Adobe standard mapping of characters to glyphnames, where the
+character #\a maps to the glyphname string "a"; character #\1 maps to
+glyphname "one" etc. (Appendix A contains the complete listing.)  This
+charmap simply serves as a 'starting point' template character map for
+the user. Since this version of FPS is written for ASCII Scheme, the
+base-char-map only contains the 128 ASCII characters.  For unicode
+Scheme, however, one may expect that the base-char-map contain
+mappings for foreign characters to glyphnames.
+
+====================
+
+(function->char-map func) -> char map			procedure
+
+function->char-map creates a new character map from the given
+function.  The function must take a character as argument and return a
+string which is a glyphname, or #f which indicates that the character
+does not map to any glyphnames in this map.  All Scheme characters
+will be fed through func, and key-value pairs for the character map
+will be created from the characters and the glyphnames returned.
+
+====================
+
+(alist->char-map alist [default]) -> char map		procedure
+
+alist->char-map creates a new character map from an alist. The alist
+must be a list of a-pairs of characters and glyphname strings.  The
+characters that are not specified in the alist are mapped to the
+default value #f, or users can specify their own default value.
+
+For example, we can create a character map that maps characters
+a, b, and c to "alpha", "beta", and "gamma". All other characters
+are mapped to the glyph "space".
+
+(alist->char-map ((#\a . "alpha")
+                  (#\b . "beta" )
+		  (#\c . "gamma"))
+		  "space")
+		 
+====================
+
+(mask-char-map alist template-c-map) -> char map	procedure
+
+mask-char-map creates a new char map from an existing char map and an
+a-list.  This procedure makes a copy of the template-c-map and then
+overwrites entries in the new map with the key-value pairs in the
+a-list.
+
+For example, we can create a new char map based on base-char-map where
+the dieresis characters (also known as "umlout", as found in the
+German alphabet set) are easily accessible from keyboard characters.
+
+(mask-char-map ((#\* "adieresis") ;; "a" with two dots above it
+	        (#\( "edieresis") ;; "e" with two dots above it
+		(#\) "idieresis") ;; "i" with two dots above it
+		(#\- "odieresis") ;; "o" with two dots above it
+		(#\- "udieresis"));; "u" with two dots above it
+	       base-char-map)
+
+====================
+
+(native-font-char-map font [default-val]) -> char map	procedure
+
+native-font-char-map retrieves a given font's native character map as
+defined in the font's AFM (Adobe Font Metrics) file.
+
+The default-val allows you specify a glyphname to which all characters
+which do not map to any glyphnames in the native map will be
+mapped. If no default-val is specified, the characters that do not map
+to glyphnames will be mapped to #f.
+
+====================
+
+(lookup-char-map c-map char) -> glyphname (string) | #f	procedure
+
+You can use this procedure to find out what a character is mapped to
+in a given character map. If the character is mapped to a glyphname,
+then the glyphname is returned. If the character does not map to any
+glyphnames, then #f is returned.
+
+====================
+
+base-int-map						constant
+
+In this version of FPS for ASCII Scheme, base-int-map contains the
+Adobe standard mapping of integers to glyphnames, where the integer 65
+maps to the glyphname "a" and the integer 49 maps to the glyphname
+"one" etc. (Appendix A contains the complete listing.) Since this
+version of FPS is written for ASCII Scheme, base-int-map is 256
+entries big.
+
+
+====================
+
+(function->int-map func map-size) -> int map		procedure
+
+function->int-map creates a new integer map from the given function.
+The function must takes an integer as an argument and return a string
+which is a glyphname, or #f which indicates that the integer does not
+map to any glyphnames in this map. Integers from 0 to (map-size - 1)
+are fed through func, and key-value pairs for the integer map will be
+created from the integers and the glyphnames returned.
+
+====================
+
+(alist->int-map alist map-size [default]) -> int map	procedure
+
+alist->int-map constructs a new integer map from an alist. The alist
+must be a list of a-pairs of positive integers and glyphname strings
+The map-size arg specifies the range of integers (0 to mapsize-1) in
+this integer map. The integers that are not specified in the alist are
+mapped to a default value #f, or users can specify their own default
+value.
+
+====================
+
+(mask-int-map alist template-i-map) -> int map		procedure
+
+mask-int-map creates a new int map from an existing int map and an
+a-list. This procedure makes a copy of the template-i-map and then
+overwrites entries in the new map with the key-values pairs in the
+a-list.
+
+For example, we can modify the base-char-map so that the dieresis
+characters (also known as "umlout", as found in the German alphabet
+set) are accessible from easily remembered integers:
+
+(mask-int-map ((1 "adieresis") ;; "a" with two dots above it
+	       (2 "edieresis") ;; "e" with two dots above it
+	       (3 "idieresis") ;; "i" with two dots above it
+	       (4 "odieresis") ;; "o" with two dots above it
+	       (5 "udieresis"));; "u" with two dots above it
+	      base-int-map)
+
+====================
+
+(native-font-int-map font [default-val]) -> int map  	procedure
+
+native-font-int-map retrieves a given font's native integer map as
+defined in the font's AFM (Adobe Font Metrics) file.
+
+The default-val allows you to specify a glyphname to which all
+integers which do not map to any glyphnames in the native map will be
+mapped. If no default-val is specified, the integers that do not map
+to glyphnames will be mapped to #f.
+
+====================
+
+(lookup-int-map int-map int) -> glyphname (string) | #f	procedure
+
+You can use this procedure to find out what an integer is mapped to in
+a given integer map. If the integer is mapped to a glyphname, then the
+glyphname is returned. If the integer does not map to any glyphnames,
+then #f is returned.
+
+
+
+=====================================================================
+Path and Picture Info
+=====================================================================
+
+(start-pt path)    -> pt				procedure
+(start-pt picture) -> pt				procedure
+(end-pt path)      -> pt				procedure
+(end-pt picture)   -> pt				procedure
+
+Returns the starting point and ending point of paths and pictures.
+the-empty-path and the-empty-pict have starting point and ending
+point at pt (0,0).
+
+====================
+
+(bounding-box path)    -> bbox				procedure
+(bounding-box picture) -> bbox				procedure
+
+(bbox:max bbox) -> pt					procedure
+(bbox:min bbox) -> pt					procedure
+
+Returns the bounding box of a path or picture in the bbox record
+in the fields 'max' and 'min' for the upper-right and the lower-left
+corner. the-empty-path and the-empty-pict have bounding box whose
+lower-left and upper-right corners land on pt (0,0).
+
+
+
+=====================================================================
+Bitmap
+
+Bitmaps are matrices of colors. The matrix of colors is enumerated
+horizontally from top-left-most sample point to the bottom-right-most
+sample point, each sample point being a rectangular space that
+contains a color value. Any bitmap can be turned into pictures but
+only a bi-level (1-bit gray-scale) bitmap can be turned into path. You
+can create new bitmaps by recoloing an existing one.
+=====================================================================
+
+(bitmap? scheme-val) -> boolean				procedure
+
+The bitmap? predicate determines whether a scheme value is a bitmap.
+
+====================
+
+(vector->bitmap  row col res colorspace vect)   -> bitmap    procedure 
+
+vector->bitmap creates a bitmap from a vector of integers. Recall that
+bitmaps are matrices of colors, and so this procedure converts a
+vector of numbers to a matrix of colors. Each element in the vector is
+an integer that specifies a color value. How the vector gets turned
+into a matrices of color depends on the color resolution and
+colorspace.
+
+The row and col specify the geometry and the number of total "sample
+points" in the bitmap. The res argument specifies the color resolution
+and can be either 1, 2, 4, 8, or 12 bits. So if res = 1 bit, your
+vector can only contain 0 or 1. If res = 2 bits, your vector can
+contain integers 0, 1, 2, or 3. If res = 8 bits, your vector can
+contain integers ranging from 0 to 255.
+
+The colorspace argument can be either the symbol 'gray or 'rgb. In the
+gray colorspace, each sample point has a single value which is its
+gray-scale value. In the rgb colorspace, each sample point has three
+values, which is its red, green, blue values, respectively.  So the
+vector length for a gray-scale bitmap would be row*col; but the vector
+length for a color bitmap would be 3*row*rol. The bitmap is created
+such that the matrix of colors
+
+Let's say you want to create a 1x4 bitmap where each sample point is
+either black or white:
+
+	(vector->bitmap 1 4 1 'gray '#(1 0 1 0))
+
+Or you can create a 1x4 bitmap in the rgb color space, and each sample
+point only has 1 bit of resolution (8 colors all together):
+
+	(vector->bitmap 1 4 1 'rgb '#(1 0 1   1 1 0   0 1 1   0 1 0))
+
+Note that there are twelve numbers in the vector for the four sample points.
+This is because each sample point needs a red, a green, and a blue value.
+
+====================
+
+(hex-str->bitmap row col res colorspace hex-str) -> bitmap    procedure
+(bin-str->bitmap row col res colorspace bin-str) -> bitmap    procedure
+
+hex-str->bitmap and bin-str->bitmap create bitmaps from hex strings
+and binary strings. Recall that bitmaps are matrices of colors, so
+these procedures convert a string of constants into matrices of
+colors. The constant strings are converted into string of binary
+constants, each digit representing a bit value. The procedure
+traverses down the string and depending on the resolution and
+colorspace, some number or some groups of number of bits are read off
+and converted into colors.
+
+The row and col specify the geometry and the number of total "sample
+points" in the bitmap. The res argument specifies the color resolution
+and can be either 1, 2, 4, 8, or 12 bits. To construct the bitmap, the
+string constants get converted into a stream of binary digits, if res
+= 1 bit, every 1 binary digit is interpreted as a sample point color;
+if res = 2 bits, every 2 binary digits is interpreted as a sample
+point color; and so on.
+
+The colorspace argument can be either the symbol 'gray or 'rgb. In the
+gray colorspace, each sample point has a single value which is its
+gray-scale value. In the rgb colorspace, each sample point has three
+values, which is its red, green, blue values, respectively.
+
+Let's say you want to create a 1x4 bitmap where each sample point is
+either black or white:
+
+	(bin-str->bitmap 1 4 1 'gray "1010") or
+	(hex-str->bitmap 1 4 1 'gray "A")
+
+Or you can create a 1x4 bitmap in the rgb color space, and each sample
+point only has 1 bit of resolution (8 colors all together):
+
+	(bin-str->bitmap 1 4 1 'rgb "101110011010")
+	(hex-str->bitmap 1 4 1 'rgb "B9A")
+
+Note that there are twelve binary digits in the string for the four
+sample points.  This is because each sample point needs a red, a
+green, and a blue value.
+
+====================
+
+(bitmap-recolor bitmap c-func) -> bitmap		procedure
+
+bitmap-recolor creates a new bitmap by modifying the given bitmap's
+color with the c-func. The c-func argument is a function that takes
+three arguments (red, green, and blue value) and returns three values
+(red, green, blue) using the Scheme multiple-return "values"
+procedure. For example, the following in a c-func that removes the red
+component:
+
+	(lambda (r g b) (values 0 g b))
+
+
+
+===================================================================== 
+Output Channels             
+
+Channels are mechanisms for rendering pictures on specific targets
+such as PostScript printers, screens, etc.
+=====================================================================
+
+(show channel picture [options]) -> unspecific		procedure
+
+show renders the picture on some output target.  The channel argument
+specify how the rendering is done. For example, a ps2-text-channel
+outputs PostScript text to a Scheme output port, but a
+Ghostscript-channel could render directly to an X display.
+
+You may specify some FPS options which supply additional information
+about how this picture is rendered.
+
+==================== 
+
+(show-w/ps2-text-channel filename-or-port picture [options])
+-> unspecific						procedure
+
+show-w/ps2-text-channel shows the picture like show does, but creates
+a channel from the given filename-or-port and automatically closes the
+channel at the end of the show-picture. The arg filename-or-port can
+be a string (filename) or any scheme port.
+
+You may specify some FPS options which supply additional information
+about how this picture is rendered.
+
+==================== 
+
+(channel? scheme-val) -> boolean			procedure
+
+The channel? predicate determines whether a scheme value is a channel.
+
+==================== 
+
+(ps2-text-channel filename-or-port [options]) -> channel  procedure
+
+Creates a ps2-text-channel given a filename (a string) or any other
+scheme port.
+
+==================== 
+
+(close-channel channel) -> unspecific			procedure
+
+close-channel explicitly closes a channel. For a ps2-text-channel, the
+procedure forces all text output to be written to the file (or port)
+and closes the file (or port). If you don't use
+show-w/ps2-text-channel, you must close the channel to force all
+output from the text buffer and into the file (or port).
+
+
+
+=====================================================================
+Options
+
+Options are extra information and switches supplied by the user about
+the picture(s) that are going to be drawn. 
+=====================================================================
+
+(:format str)  -> option				procedure
+
+This option specify the format of the output. For ps2-text-channel,
+instead of printing out plain PostScript, you can specify (:format
+"EPS) to get Encapsulated PostScript file format. Default format 
+is normal plain PostScript (non EPS).
+
+====================
+
+(:creator str)       -> option				procedure
+(:creation-date str) -> option				procedure
+(:title str)         -> option				procedure
+(:copyright str)     -> option				procedure
+(:for str)           -> option				procedure
+(:routing str)       -> option				procedure
+
+These options are for documentation and informational use. For PS2-text
+output, these information are printed out at the beginning of the text
+output and may be interpreted as useful info by your print manager or
+previewer.  These options only take effects when they are called with
+channel makers or with show-w/channel.
+
+====================
+
+(:duplex boolean)               -> option		procedure
+(:duplex-tumble boolean)        -> option		procedure
+(:num-copies int)               -> option		procedure
+(:collate boolean)              -> option		procedure
+(:orientation orientation)      -> option		procedure
+
+These options specify how the pages are printed on paper. Since they
+are interpreted only when they are called with channel makers or with
+show-w/channel, these options cannot be changed after a channel is
+created. Note that these options are largely device dependent.  For
+example, if your printer is not capable of double-sided printing, the
+:duplex option will have no effect.
+
+:duplex is set to #f by default. When it is set to true, you get
+double-sided printing.
+
+:duplex-tumble is set to #f by default. When it is set to true, you
+get double-sided printing, but the picture on the back side of the
+page is rotated 180 degree -- the resulting set of pages is suitable
+for binding at the top or the bottom.
+
+:num-copies is set to 1 by default. This option specifies how many
+copies of the document, that is, all pages output by the channel,  
+are printed.
+
+:collate is set to #f by default. This option determines how the
+output is organized when multiple copies are requested (by
+:num-copies) for a multiple-page document. Output consists of 'sets'
+of pages that are delivered together. If :collate is #t, a set
+consists of one copy of all pages of the document. If :collate is #f,
+a set consists of all copies of one page of the document.
+
+:orientation specifies the orientation of the picture when it is
+printed on the page from this channel. The arg orientation can be one
+of the following:
+
+	'normal		Normal default orientation.
+	'rotate-left	Rotate the image on the page 90 degrees counter-
+			clockwise with respect to the default orientation.
+	'rotate-right	Rotate the image on the page 90 degrees clockwise
+			with respect to the default orientation.
+	'upside-down	Rotate the image 180 degrees with respect to the 
+			default orientation.
+
+====================
+
+(:page-label label) -> option			procedure
+
+:page-label specifies the label associated with a particular picture.
+The option only takes effect when it is called with the show
+procedure. The arg label is any scheme-value that can be displayed
+(could be a string, a number, a symbol, etc). Page labels to not have
+to be the physical page numbers, it could be the title of the page or
+anything else that you like. If the page-label option is not
+specified, FPS automatically assumes the physical page number of the
+picture to be the page label. Page labels are especially useful for
+viewing your multi-page picture in postscript previewers such as
+ghostview. ghostview uses these numbers to help you navigate through
+the PostScript document.
+
+Some examples of page-labels:
+
+(:page-label "Intro")  ;; intro page
+(:page-label 1)        ;; first page with Arabic numeral 1
+(:page-label 'ii)      ;; first page with Roman numeral 2
+
+
+
+
+=====================================================================
+Utilities
+=====================================================================
+
+(deg->rad real) -> real					procedure
+(rad->deg real) -> real					procedure
+
+These procedures convert angle measurements between degrees and
+radians.
+
+====================
+
+(inch real)      -> real				procedure
+
+This procedure converts inch to point by multiplying the arg by
+72. For example, 
+
+	(translate 0 (inch 4.5) my-picture)
+	(translate 0 (* 72 4.5) my-picture)
+
+The two expressions above are equivelant: they move my-picture up 4.5
+inches (or 4.5 * 72 points)
+
+====================
+
+(bounding-box->rect box) -> path			procedure
+
+This procedure builds a rectangle path out of the min/max points of
+a bounding box.
+
+
+=====================================================================
+Appendix A: Base Maps
+=====================================================================
+
+base-char-map and base-int-map
+
+	Integer 	Character	Glyphname
+	-------------------------------------------------------
+	0 to 31				notdef (the-empty-path)
+	32				space
+	33 		 !		exclam 
+	34 		 "		quotedbl 
+	35 		 #		numbersign 
+	36 		 $		dollar 
+	37 		 %		percent 
+	38 		 &		ampersand 
+	39 		 '		quoteright 
+	40 		 (		parenleft 
+	41 		 )		parenright 
+	42 		 *		asterisk 
+	43 		 +		plus 
+	44 		 ,		comma 
+	45 		 -		hyphen 
+	46 		 .		period 
+	47 		 /		slash 
+	48 		 0		zero 
+	49 		 1		one 
+	50 		 2		two 
+	51 		 3		three 
+	52 		 4		four 
+	53 		 5		five 
+	54 		 6		six 
+	55 		 7		seven 
+	56 		 8		eight 
+	57 		 9		nine 
+	58 		 :		colon 
+	59 		 ;		semicolon 
+	60 		 <		less 
+	61 		 =		equal 
+	62 		 >		greater 
+	63 		 ?		question 
+	64 		 @		at 
+	65 		 A		A 
+	66 		 B		B 
+	67 		 C		C
+	68 		 D		D 
+	69 		 E		E 
+	70 		 F		F 
+	71 		 G		G 
+	72 		 H		H 
+	73 		 I		I 
+	74 		 J		J 
+	75 		 K		K 
+	76 		 L		L 
+	77 		 M		M 
+	78 		 N		N 
+	79 		 O		O 
+	80 		 P		P 
+	81 		 Q		Q 
+	82 		 R		R 
+	83 		 S		S 
+	84 		 T		T 	
+	85 		 U		U 
+	86 		 V		V 
+	87 		 W		W 
+	88 		 X		X 
+	89 		 Y		Y 
+	90 		 Z		Z 
+	91 		 [		bracketleft 
+	92 		 \		backslash 
+	93 		 ]		bracketright 
+	94 		 ^		asciicircum 
+	95 		 _		underscore 
+	96 		 `		quoteleft 
+	97 		 a		a 
+	98 		 b		b 
+	99 		 c		c
+	100 		 d		d 
+	101 		 e		e 
+	102 		 f		f 
+	103 		 g		g 
+	104 		 h		h 
+	105 		 i		i 
+	106 		 j		j 
+	107 		 k		k 
+	108 		 l		l 
+	109 		 m		m 
+	110 		 n		n 
+	111 		 o		o 
+	112 		 p		p 
+	113 		 q		q 
+	114 		 r		r 
+	115 		 s		s 
+	116 		 t		t 
+	117 		 u		u 
+	118 		 v		v 
+	119 		 w		w 
+	120 		 x		x 
+	121 		 y		y 
+	122 		 z		z 
+	123 		 {		braceleft 
+	124 		 |		bar 
+	125 		 }		braceright 
+	126 		 ~		asciitilde 
+	127 to 160			notdef (the-empty-path)
+	161 		 		exclamdown 
+	162 		 		cent 
+	163 		 		sterling 
+	164 		 		fraction 
+	165 		 		yen 
+	166 		 		florin 
+	167 		 		section 
+	168 		 		currency 
+	169 		 		quotesingle 
+	170 		 		quotedblleft 
+	171 		 		guillemotleft 
+	172 		 		guilsinglleft 
+	173 		 		guilsinglright 
+	174 		 		fi 
+	175 		 		fl 
+	177 		 		endash 
+	178 		 		dagger 
+	179 		 		daggerdbl 
+	180 		 		periodcentered 
+	182 		 		paragraph 
+	183 		 		bullet 
+	184 		 		quotesinglbase 
+	185 		 		quotedblbase 
+	186 		 		quotedblright 
+	187 		 		guillemotright 
+	188 		 		ellipsis 
+	189 		 		perthousand 
+	191 		 		questiondown 
+	193 		 		grave 
+	194 		 		acute 
+	195 		 		circumflex 
+	196 		 		tilde 
+	197 		 		macron 
+	198 		 		breve 
+	199 		 		dotaccent 
+	200 		 		dieresis 
+	202 		 		ring 
+	203 		 		cedilla 
+	205 		 		hungarumlaut 
+	206 		 		ogonek 
+	207 		 		caron 
+	208 		 		emdash 
+	225 		 		AE 
+	227 		 		ordfeminine 
+	232 		 		Lslash 
+	233 		 		Oslash 
+	234 		 		OE 
+	235 		 		ordmasculine 
+	241 		 		ae 
+	245 		 		dotlessi 
+	248 		 		lslash 
+	249 		 		oslash 
+	250 		 		oe 
+	251 		 		germandbls 
+	252 to 256			notdef (the-empty-path)
+
+=====================================================================
+Appendix B: The Missing Pieces
+=====================================================================	
+
+Features that will be included in future version of FPS:
+
+1) Kerning	Spacing adjustment between each pair of glyph
+	  	in the glyphpath.
+
+2) Pattern	Filling with any picture by tiling the picture
+		across the page.
+
+3) CID Fonts	Access to fonts with big glyph sets such as Chinese, 
+		Japanese, Korean fonts.
+
+4) Vertical Writing	Connectng glyphpaths of individual glyphs from 
+			top to bottom, achieving the vertical writing
+			direction effect.
+
+=====================================================================
+Copyright (C) 1996 by Wandy Sae-Tan and Olin Shivers
+
+
+
+
+
+
+
+
+

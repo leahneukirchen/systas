@@ -1,0 +1,26 @@
+Revision: dists--devo--1.0--patch-3
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sun Jan 13 13:03:43 PST 2002
+Standard-date: 2002-01-13
+Summary: merge from `lord'
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-3
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-5
+  =NEWS.d/.arch-ids/=NEWS.arch.id
+  =NEWS.d/.arch-ids/=NEWS.ftp-utils.id
+  =NEWS.d/.arch-ids/=NEWS.hackerlab.id
+  =NEWS.d/.arch-ids/=NEWS.systas.id =NEWS.d/=NEWS.arch
+  =NEWS.d/=NEWS.ftp-utils =NEWS.d/=NEWS.hackerlab
+  =NEWS.d/=NEWS.systas
+New-directories: =NEWS.d =NEWS.d/.arch-ids
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-3
+  lord@regexps.com--2002/dists--lord--1.0--patch-5
+
+Patches applied:
+
+  * lord@regexps.com--2002/dists--lord--1.0--patch-5
+     add =NEWS file symlinks
+

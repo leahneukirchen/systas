@@ -1,0 +1,313 @@
+/* tag: Tom Lord Tue Dec  4 14:57:16 2001 (posix-regexps.doc)
+ */
+/************************************************************************
+ *(h0 "Posix Regexps")
+ * 
+ * |Posix| |Posix.2| |1003.2| |ANSI/IEEE 1003.2| |ISO/IEDC 994502|
+ * |regular expression notation|
+ * |regexp|
+ * |regular expression|
+ * 
+ * The *Posix.2* standard (*ISO/IEC 994502: 1993 (ANSI/IEEE Std 1003.2
+ * - 1992*)), section *2.8*) specifies the syntax and semantics of a
+ * ``Regular Expression Notation''.  Appendix ``B.5'' defines a ``C Binding
+ * for RE Matching'' which includes the functions `regcomp' (to compile
+ * a Posix regexp), `regexec' (to search for a match), `regerror' (to
+ * translate a regexp error code into a string), and `regfree' (to
+ * release storage associated with a compiled regexp).
+ * 
+ * The Hackerlab C library provides "Rx", an implementation of
+ * Posix.2 regexp functions (with some extensions).
+ * 
+ * This chapter describes that interface.  An appendix to this manual
+ * contains an introduction to Posix regexps.  (See xref:"An
+ * Introduction to Posix Regexps".)  If you are unfamiliar with
+ * regexps, reading that appendix before reading this chapter may be
+ * helpful.
+ * 
+ * This chapter begins with documentation for the standard Posix
+ * functions (and some closely related non-standard extensions).  If
+ * you are looking for programmer reference manual, see xref:"Posix
+ * Regexp Functions".
+ * 
+ * The Posix standard for regexps is precise.  On the other hand, it
+ * is often implemented incorrectly and almost never implemented
+ * completely.  A discussion of the relation between the Posix
+ * standard and Rx can be found in xref:"Rx and Conformance to the
+ * Posix Standard".
+ * 
+ * Obtaining good performance from regexp matchers is sometimes
+ * complicated: they are easy to understand and use in many common
+ * situations, but they require careful attention in applications that
+ * use complicated regexps and in applications that use regexp
+ * matching heavily.  Some general advice can be found in xref:"Rx
+ * and the Performance of Regexp Pattern Matching".
+ * 
+ * Finally, if you are performance tuning a regexp-intensive
+ * application, you'll need to understand the non-standard interfaces
+ * in xref:"Tuning Posix Regexp and XML Regular Expression Performance".
+ */
+
+
+/*(menu)
+ */
+
+
+/*(include-documentation "posix.c")
+ */
+
+
+
+
+/************************************************************************
+ *(h1 "Rx and Conformance to the Posix Standard")
+ * 
+ * Posix specifies the behavior of the C regexp functions quite
+ * precisely.  Rx attempts to honor this specification to the 
+ * greatest extent possible in a portable implementation.
+ * There are two areas of conformance that are worthy of note:
+ * the question of what is matched by a given regexp, and the 
+ * question of how regexp matching interacts with Posix locales.
+ * 
+ * The question of ``what is matched'' is worthy of note because 
+ * obtaining correct behavior has proven to be extremely difficult --
+ * few implementations succeed.  The implementation of Rx has been
+ * carefully developed and tested with correctness in mind.
+ * 
+ * The question of how regexps and locales interact is worthy of note
+ * because it is impossible to completely implement the behavior
+ * specified by Posix in a portable implementation (i.e., in an
+ * implementation that is not intimately familiar with the
+ * non-standard internals of a particular implementation of the
+ * standard C library).
+ * 
+ */
+
+/************************************************************************
+ *(h2 "What is Matched by a Posix Regexp")
+ * 
+ * Posix requires that when `regexec' reports the position of a
+ * matching substring, it must report the first-occurring (``leftmost'')
+ * match.  Of the possible first-occuring matches, the longest match
+ * must be returned.  This is called the "left-most longest rule".
+ * 
+ * Posix requires that when `regexec' reports the position of a 
+ * substring matched by a parenthesized subexpression, it must report
+ * the last substring matched by that subexpression.  If one
+ * parenthesized expression (the ``inner expression'') is enclosed 
+ * in another (the ``outer expression'') and the inner expression did
+ * not participate in the last match of the outer expression, then
+ * no substring match may be reported for the inner expression.
+ * 
+ * Finally, Posix requires that when regexec determines what
+ * each subpattern matched (regardless of whether the subpattern is
+ * surrounded by parentheses), if there is more than one possibility,
+ * regexec must choose the possibility that first maximizes the length
+ * of substrings matched by the outermost subpatterns, from
+ * left-to-right, and then recursively apply the same rule to
+ * inner subpatterns.  However, this rule is subordinate to the
+ * left-most longest rule: if an earlier-occuring or longer overall
+ * match can be obtained by returning a non-maximal match for some
+ * subpattern, `regexec' must return that earlier or longer match.
+ * 
+ * This combination of constraints completely determines the return
+ * value of `regexec' and describes the behavior of Rx.  Many other
+ * implementations do not conform to the standard in this regard --
+ * in exceptional situations, compatibility issues may arise when 
+ * switching between regexp implementations.
+ */
+
+/************************************************************************
+ *(h2 "Rx and Posix Locales")
+ * 
+ * Posix requires that a character set containing a multi-character
+ * collating element be treated specially.  For example, if the
+ * character sequence `ch' is a collating element, then the regexp:
+ * 
+ * 	[[.ch.]]
+ * 
+ * will match `ch'.  On the other hand, if `ch' is not a collating
+ * element, the same expression is illegal.  Similarly, an expression
+ * like: 
+ * 
+ * 	[a-z]
+ * 
+ * should match all collating elements which collate between ``a'' and
+ * ``z'' (inclusively), including multi-character collating elements 
+ * that collate between ``a'' and ``z''.
+ * 
+ * Unfortunately, Posix provides no portable mechanism for determining
+ * which sequences of characters are multi-character collating
+ * elements, and which are not.  Consequently, Rx operates as if
+ * multi-character collating elements did not exist.
+ * 
+ * Posix also defines a character set construct called an ``equivalence
+ * class'':
+ * 
+ * 	[[=<X>=]]	where <X> is a collating element
+ * 
+ * An equivalence class stands for the set of all collating elements
+ * having the same primary collation weight as `<X>'.  Unfortunately,
+ * Posix provides no portable mechanism for determining the primary
+ * collation weight of any collating element.  Consequently, Rx
+ * implements the equivalence class construct by returning an error
+ * from `regcomp' whenever it is used.
+ * 
+ * Posix requires that in a character set, a range of characters such
+ * as:
+ * 
+ * 	[a-z]
+ * 
+ * includes all characters that collate between `a' and `z' in the
+ * current locale.  Some people argue that this behavior is confusing:
+ * that character ranges should be based on the encoding values of
+ * characters -- not on the rules of collation.  Because of
+ * differences in collation, Posix advises that character ranges are a
+ * non-portable construct: portable programs should not use them at
+ * all!
+ * 
+ * Rx conforms to Posix by using collation order to interpret
+ * character ranges (with the exception that Rx always behaves as if
+ * there are no multi-character collating elements).  Using the C
+ * locale when calling `regcomp' and `regexec' ensures that character
+ * ranges will be interpreted in a way consistent with the ASCII
+ * character set.
+ * 
+ */
+
+/************************************************************************
+ *(h1 "Rx and the Performance of Regexp Pattern Matching")
+ * 
+ * 
+ * The performance (speed and memory use) of any Posix regexp matcher
+ * (including Rx) is a complicated subject.  Programmers who want to use
+ * regexps will benefit by understanding the issues, at least in
+ * broad outline, so that they can avoid pitfalls, so they can make
+ * the best possible use of a particular implementation (Rx, in this
+ * case), and so they know where to delve deeper when performance
+ * issues become particularly important.
+ * 
+ * Traditionally, many programmers use regexps as if they were always
+ * computationally *inexpensive*.  This is naive.  Some uses of
+ * regexps are inexpensive, others are intractable.  Many fall
+ * somewhere in the middle.  Which uses fall into which cases varies
+ * between implementations.
+ * 
+ */
+
+
+/************************************************************************
+ *(h2 "Posix Regexp Performance in General")
+ * 
+ * This section describes the performance of Posix regexp matching
+ * in general -- it is not specific to Rx.
+ * 
+ * Posix regexp pattern matching, in its full generality, is a
+ * computationally expensive process.  In some cases, involving only
+ * moderately sized regexps, it is intractably expensive, regardless of
+ * what implementation is being used.  Thus, one should never write
+ * programs with the assumption that `regexec' will always return
+ * normally in a reasonable amount of time.  (Rx includes non-standard
+ * functionality which can be used to interrupt a call to `regexec'
+ * after a time-out.  See xref:"Escaping Long-Running Matches".)
+ * 
+ * On the other hand, for many very simple regexps, Posix regexp
+ * matching is very inexpensive, again, (nearly) regardless of
+ * implementation.  For example, if a regexp is simply a string of
+ * literal characters, searching for a match is almost certain to be
+ * fast.
+ * 
+ * Implementations of Posix regexps often differ in the set of
+ * optimizations they provide.  Simplistic implementations, containing
+ * few optimizations, perform well for small and simple regexps, but
+ * poorly in many other cases.  Sophisticated implementations can
+ * perform very well on even large regexps if those regexps are true
+ * regular expressions or are nearly true regular expressions.  (For
+ * an explanation of the distinction between regexps in general and
+ * ``true regular expressions'', see xref:"An Introduction to Posix
+ * Regexps".)
+ * 
+ * Implementations of Posix regexps often differ in correctness, and
+ * this has a bearing on performance.  Several popular implementations
+ * sometimes give incorrect results.  The bugs that cause those errors
+ * also improve the performance of the same matchers on some patterns
+ * for which they give correct results.  Thus, programmers choosing an
+ * implementation are sometimes faced with the uncomfortable trade-off
+ * between the best performance bench-mark results, and the best
+ * correctness testing results.  In such situations, an important
+ * question is the relevance of the tests: do the bench-mark tests
+ * accurately reflect regexp usage in the target application?  What
+ * are the risks of using an incorrect matcher in the application?
+ * Consider whether the better performance of buggy matchers on some
+ * expressions is offset by their considerably worse performance on
+ * other expressions: it is not the case that the buggy
+ * implementations are always faster.
+ * 
+ */
+
+ /************************************************************************
+ *(h2 "Posix Regexp Performance in Rx")
+ * 
+ * This section describes the performance of Posix regexp matching
+ * in Rx.
+ * 
+ * Rx is designed to give excellent performance over the widest
+ * possible range of regexps (including many large, complicated
+ * regexps), but to never sacrifice correctness.  While Rx is at least
+ * competitive with most most implementations on most regexps (and
+ * is sometimes much faster), there are some regexps for which Rx
+ * is much slower than other implementations.  Often, this difference
+ * can be attributed to the bugs in other implementations which
+ * speed up some cases while getting other cases wrong.  This is
+ * something to keep in mind when comparing Rx to other implementations.
+ * 
+ * When a trade-off is necessary between memory use and speed, Rx is
+ * designed to allow programmers to choose how much memory to use and
+ * to provide programmers with the tools necessary to tune memory use
+ * for best possible performance.  Rx can operate usefully (though
+ * comparatively slowly) with as little as 10-20K of dynamically
+ * allocated memory.  As a rule of thumb, Rx's default of
+ * approximately 2MB is suitable even for applications that use
+ * regexps fairly heavily.  (See xref:"Tuning Posix Regexp and 
+ * XML Regular Expression Performance".)
+ *  
+ * Rx contains optimizations targetted for regexps which are true
+ * regular expressions.  Rx converts true regular expressions to
+ * deterministic automata and can compare such expressions to a
+ * potentially matching string very quickly.  This optimization makes
+ * it practical to use even quite large regular expressions.  For more
+ * information, see the the appendix xref:"Data Sheet
+ * for the Hackerlab Rx Posix Regexp Functions".
+ * 
+ * Sometimes regexps which are not true regular expressions can be
+ * matched as quickly as if they were true regular expressions.  If a
+ * regexp is not a regular expression only because it begins with a
+ * left anchor (`^') and/or ends with a right anchor (`$'), Rx can
+ * match the expression as quickly as a true regular expression.
+ * If, in addition, the regexp contains parenthesized subexpressions,
+ * Rx can use regular expression optimizations if, either, the
+ * `REG_NOSUB' flag is passed to `regcomp', or the `nmatch' parameter
+ * to `regexec' is less than or equal to 1 (i.e., if `regexec' is not
+ * required to report the positions of substrings matched by
+ * parenthesized subexpressions).
+ * 
+ * If a regexp is not a regular expression because it contains
+ * backreferences (`\n') or counted iterations (`RE{n,m}'), Rx's DFA
+ * optimizations do not apply in their full generality.  Such
+ * regexps run the greatest risk of being slow.
+ * 
+ * The Rx implementation of `regcomp' supports a non-standard flag,
+ * `REG_DFA_ONLY', which can be used to disable all regexp constructs
+ * that are forbidden in true regular expressions.  See
+ * xref:"regcomp".
+ * 
+ * When regexps are being used for lexical analysis, good performance can
+ * often be achieved by using true regular expressions in combination
+ * with the non-standard regexp operator `[[:cut n:]]'.  See xref:"The
+ * cut Operator".
+ */
+
+
+/*(include-documentation "../rx/escape.c")
+ */
+

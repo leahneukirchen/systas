@@ -1,0 +1,15 @@
+Revision: package-framework--lord--1.0--patch-31
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon May 13 05:15:57 PDT 2002
+Standard-date: 2002-05-13 12:15:57 GMT
+Summary: build precrt0.o with debugging
+Keywords: 
+New-files: {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-31
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  build-tools/Makefiles/unexec-programs.mk
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-31
+
+Build precrt0.o with debugging.
+

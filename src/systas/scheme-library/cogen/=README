@@ -1,0 +1,11 @@
+This directory contains code that helps when using Scheme to generate
+C code.
+
+There isn't much here yet, it isn't very exciting, it will probably be
+radically altered and expanded or else go away entirely.
+
+
+# tag: Tom Lord Tue Dec  4 15:06:40 2001 (cogen/=README)
+#
+
+

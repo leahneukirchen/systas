@@ -1,0 +1,12 @@
+# tag: Tom Lord Tue Dec  4 14:52:11 2001 (rx-xml-tests/Makefile.in)
+#
+
+
+tested-headers	:=	re.h
+
+test-headers	:=	$(addprefix hackerlab/rx-xml/, $(tested-headers))
+
+libs		:=	$(objroot)/hackerlab/libhackerlab/libhackerlab.a
+
+include $(makefiles)/unit-tests.mk
+

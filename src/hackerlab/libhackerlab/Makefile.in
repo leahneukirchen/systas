@@ -1,0 +1,52 @@
+# tag: Tom Lord Tue Dec  4 14:52:08 2001 (libhackerlab/Makefile.in)
+#
+
+
+the-pdml-index		:=	libhackerlab.pdml-index
+texi-main		:=	libhackerlab.texi
+
+other-documentation	:=	../bugs/bugs.doc \
+				../machine/machine.doc \
+				../mem/memory.doc \
+				../cmd/opt.c \
+				../bitsets/bitsets.doc \
+				../rx-posix/posix-regexps.doc \
+				../rx-posix/introduction-to-regexps.doc \
+				../rx-posix/rx-posix-data-sheet.doc \
+				../rx/tuning.doc \
+				../hash/hashing.doc \
+				../arrays/arrays.doc \
+				../char/character-and-string.doc \
+				../fmt/conversions.doc \
+				../fs/file-names.c \
+				../vu/vu.c \
+				../vu/printfmt.c \
+				../vu/reserv.c \
+				../vu/safe.c \
+				../vu/url-fd.c \
+				../vu/vfdbuf.c \
+				../vu/vu-dash.c \
+				../vu/vu-sys.c \
+				../vu/vu-utils.c \
+				../vu/vu-virtual-null.c \
+				../vu-network/url-socket.c \
+				../unicode/unicode.doc \
+				../unicode/introduction-to-unicode.doc \
+				../unidata/unidata-data-sheet.doc \
+				../rx-xml/xml-re.doc \
+				../rx-xml/introduction-to-xml-re.doc \
+				../rx-xml/comments.doc \
+				../rx-xml/rx-xml-data-sheet.doc
+
+# 				../piw/instrumentation.doc \
+# 				../piw-malloc/piw-malloc.doc \
+#				../piw-malloc/write-barriers.c
+
+
+otherdirs		:=	$(hackerlab_dirs)
+
+include $(makefiles)/library.mk
+include $(makefiles)/install-library.mk
+
+include $(makefiles)/library-ps.mk
+include $(makefiles)/library-html.mk

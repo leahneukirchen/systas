@@ -1,0 +1,300 @@
+
+!	    Tools for Building Programs That Call `unexec'
+
+* Background
+
+  This is an unexec implementation snarfed from emacs, then "cooked" a
+  little bit.
+
+  `unexec' is one of those things that shouldn't work, but can 
+  be made to work anyway.  Briefly, it takes a running program
+  and turns it into an executable.  When you run that executable,
+  it's `state' is (more or less) the same as when the original
+  program called `unexec'.  You can use this trick to speed up
+  start-up times for programs that do a lot of initialization,
+  for example.
+
+  `unexec' implementations depend on the gross (highly non-portable)
+  details of how system libraries are arranged.  They also depend on
+  the details of executable-file formats (and good luck finding
+  convenient and lucid documentation for those).
+
+  This is an attempt to turn `unexec' into something reasonably
+  clean and portable (or rather -- widely ported) so that more
+  programs than just Emacs can use it.
+
+  The basic strategy is to grab an implementation from Emacs, clean
+  it up, and add it to this library.
+
+  Currently supported are two Elf 32 platforms: FreeBSD and Linux.
+
+
+* Using `unexec'
+
+  I wish I could state some simple rules for how to successfully write
+  a program that can use `unexec'.  Unfortunately, it appears to be
+  a black art.  
+
+  Roughly speaking, you call:
+
+<<<
+	unexec (&errn, new_file, old_file)
+>>>
+
+  If that returns 0, it has created `new_file' from the current
+  process, taking debugging symbols (if any) from `old_file'.
+  Presumably `old_file' should be the executable that was run
+  to create the process calling `unexec'.
+
+  When you run `new_file', execution starts in `main' in the usual
+  way.  `main' can figure out if it has already been initialized,
+  and then proceed as usual.
+
+  But it's really not that simple.  
+
+  Here's what I've discovered so far:
+
+
+** Link Specially
+
+  A program that uses `unexec' can't, in general, be linked in the
+  usual way.  On some systems, for example, you can't use the standard
+  `crt0.o', but have to use one that comes with the `unexec' library.
+
+  The system-specific link rules are (beginning to be) implemented by
+  `build-tools/Makefiles/unexec-programs.mk' and you can see an
+  example of how to use them in the Systas Scheme distribution
+  (`src/systas/systas/').
+
+
+** Avoid Shared Libraries
+
+  Shared libraries and `unexec' don't always mix well.  
+
+  The problem I've actually observed concerns shared library data
+  structures;  the problem I assume also exists concerns shared
+  library load locations.
+
+*** Shared Library Data Structures
+
+  Suppose, for example, that programs usually dynamically link with
+  `malloc' when they first start up.  When that happens, all of
+  `malloc''s internal data structures are initialized.  As far as
+  `malloc' is concerned, no memory has yet been allocated.  But in a
+  program built by `unexec', `malloc' already has state -- memory has
+  already been allocated -- so reinitializing `malloc' is a lose.
+
+  Of course, shared functions that don't have any state in the data
+  space of a program work just fine.  For example, it seems to work
+  just find if you dynamically link with the interfaces to the system
+  calls.
+
+  One practical implication is that you can't, in general, use
+  `unexec' in a program that uses the system's implementation of 
+  `malloc'.  For that reason, there is a `malloc' replacement (based
+  originally on one from glibc, but actually taken from emacs)
+  in `libunexec'.
+
+  Another practical impliciation concerns `atexit', which is also
+  sometimes in a shared library, and which definately does keep state
+  in the data segment.  I've found that if your program registers
+  `atexit' handlers, a safe-seeming course is to re-register those
+  handlers when the `unexec'ed program starts, making sure that it
+  is safe to call each handler more than once (in case the
+  re-registration is redundant).
+
+  Another practical implication concerns `stdio'.  I assume that there
+  are issues on systems where `stdio' is in a shared library -- though
+  I don't know for sure since all of my programs statically link with
+  `libhackerlab' and use `vu' instead of `stdio'.  Even if you use
+  `vu', you must still discard I/O buffers before unexecing and then
+  recreate them on start-up.
+
+
+* To port a new implementation, there are a few steps:
+
+  The raw emacs implementations can be found in an emacs 
+  distributions.  They generally all have filenemes starting
+  with "unex".
+
+  In addition, you need to know how to specially compile an
+  unexec program on each target platform you want to support.
+  I've found that a good way to do this is to compile emacs,
+  observe how `temacs' is built, then reverse engineer the 
+  emacs build process to find out where the various parameters
+  are coming from (generally from "src/s/*.h", it seems, but there
+  are provisions for getting them from "src/m/*.h" as well, and
+  special cases in the makefile for GCC).
+
+  Copy a raw implementation to `libunexec/ and then "clean it up":
+
+
+** Fix the Prototype
+
+   In emacs, the prototype of `unexec' is:
+
+<<<
+	unexec (new_name, a_name, data_start, bss_start, entry_address)
+	     char *new_name, *a_name;
+	     unsigned data_start, bss_start, entry_address;
+>>>
+
+   In this library, the prototype is:
+
+<<<
+	int
+	unexec (int * errn, char * new_name, char * old_name);
+>>>
+
+  The return value is 0 on success, a value less than 0 on error.
+  On errors, `*errn' is filled in with an `errno' value.  Initially,
+  I tried carefully rewriting lots of code in `unexelf.c' to give
+  clean error handling instead of calling `fatal'.  I also fixed the
+  formatting, the declarations, etc.  That took a couple of hours
+  and a few days later I realized that (1) 
+
+  `new_name' is the file to create, `old_name' is the executable
+  from which to read a symbol table.  
+
+  The other parameters found in Emacs (`data_start', etc) appear to be
+  vestigial: not all `unexec' implementations support them.  Because
+  of that, and their problematic types, they are simply removed here.
+
+
+** Add the `unexec' Include File
+
+  Each unexec implementation should contain:
+
+<<<
+	#include "unexec/unexec.h"
+>>>
+
+  which declares `unexec' as an external function (this helps to 
+  ensure that the type of the definition agrees with the type
+  of the declaration).
+
+
+** Edit the Comments
+
+  Edit the comments down to just the parts that are system specific.
+  Some of the implementations just blindly copy the comments from the
+  original `a.out' implementation and a lot of that (sometimes
+  erroneous) commentary can be removed.
+
+
+** Fix the Includes
+
+  If the implementation uses lots of standard include files, it 
+  is best practice to use the `hackerlab' wrappers for those.
+  That way, in case those files have to be handled in a special
+  way on some system, the `unexec' library can benefit from the
+  porting work done for `libhackerlab'.  For example:
+
+<<<
+		#include <sys/types.h>
+	=>	#include "hackerlab/os/sys/types.h"
+>>>
+
+
+
+** Fix the Output File `open' Call
+
+  The output file should be opened with the flags `O_CREAT | O_EXCL'
+  (plus any others, such as `O_RDWR').
+
+  The point being -- `unexec' *must not* blindly overwrite an existing
+  file (`O_EXCL' is important).  Callers of `unexec' must ensure that
+  the output file does not already exist.
+
+
+** Do Away With `stdio'
+
+  `unexec' should not depend on `stdio'.  If there are debugging
+  statements that want to use `printf' or a `printf' variant, you can
+  either delete those or use `vu' functions instead
+  (e.g. `safe_printfmt').  Believe it or not, I think deleting them
+  is the right thing to do -- that's what `gdb' is for.
+
+
+** Do Away with `<string.h>' and `<memory.h>' Functions
+
+  Instead, use the `hackerlab/mem/mem.h' and `hackerlab/char/str.h'
+  functions.  For example, replace `strcmp' with `str_cmp'.
+
+  This removes a `libc' dependency and most programs that use this
+  version of `unexec' will already be linking with the `libhackerlab' 
+  functions.
+
+** Do Away with Calls to `fatal'
+
+  Wherever the existing implementation calls `fatal', insert code 
+  to clean-up, set `*errn', and return -1.
+
+  If there is no natural errno value to use, use `EINVAL'.
+
+  Cleaning up means unmapping any mapped memory, closing all open 
+  descriptors, and unlinking the output file.
+
+** Eliminate Gratuitous Configuration Conditionals
+
+  Find all the `#if' and `#ifdef' uses in the code.  Some of these
+  may be machine or system specific (e.g. `#ifdef __sgi') -- leave
+  those alone.  
+
+  Others, though, will refer to symbols defined in Emacs source or
+  machine headers (`src/s/*.h' and `src/m/*.h' in an Emacs
+  distribution).  As many of those as possible should be eliminated.
+
+  For example, `unexelf' has code to avoid using `MAP_SHARED' because,
+  apparently, at one time, `mmap' on GNU/Linux was broken.  Well,
+  now it isn't -- so that code can be eliminated.
+
+
+** Use ANSI Prototypes
+
+  Eliminate old-style function prototypes in favor of ANSI-style.
+
+
+** Fix Formatting (Optional, but Highly Desirable)
+
+  This is truly a fork from the Emacs code -- I don't have much hope
+  of picking up patches from Emacs to apply to the cooked versions of
+  `unexec' in this library.  So, it is better to have the code
+  formatted nicely and regularly than to preserve the existing
+  formatting.
+
+  General rules are:
+
+<<<
+    /* long comments
+     * look like
+     * this.
+     */
+>>>
+
+  Don't use initializers in local variable declarations (except for
+  static variables).
+
+  Put every variable declaration on its own line.
+
+  Use GNU-style indenting (two spaces per level, each brace on its own
+  line).
+
+  Use form-feed characters to split the code up into logical sections.
+
+  Add a space after the last `*' in pointer declarations.
+
+  Add a space before `(' in function calls and declarations.
+
+  In function definitions, put function types on their own line,
+  function names at column 0
+
+  Use long lines (up to ~165 columns) rather than continued lines.
+
+
+
+Look for the string emacs and fix any problems that might be related.
+For example, look for `#if defined (emacs) ...'.
+
+# tag: Tom Lord Fri May 10 02:16:37 2002 (unexec/=README)
+#

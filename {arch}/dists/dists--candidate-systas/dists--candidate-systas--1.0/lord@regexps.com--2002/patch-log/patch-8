@@ -1,0 +1,141 @@
+Revision: dists--candidate-systas--1.0--patch-8
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sat May 18 16:06:12 PDT 2002
+Standard-date: 2002-05-18 23:06:12 GMT
+Summary: merge with `devo'
+Keywords: 
+New-files: {arch}/dists/dists--candidate-systas/dists--candidate-systas--1.0/lord@regexps.com--2002/patch-log/patch-8
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-10
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-11
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-12
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-13
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-14
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-15
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-16
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-17
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-18
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-19
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-20
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-21
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-22
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-23
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-24
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-25
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-26
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-27
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-28
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-29
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-30
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-31
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-32
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-33
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-7
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-8
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-9
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-10
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-11
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-12
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-13
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-14
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-15
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-16
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-17
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-18
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-19
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-20
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-21
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-22
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-23
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-24
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-25
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-26
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-27
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-28
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-29
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-30
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-31
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-32
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-33
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-34
+  ChangeLog.d/=THANKS configs/local/devo.arch
+  configs/regexps.com/devo.labnotes
+  configs/regexps.com/release-template.labnotes =INSTALL
+  configs/regexps.com/arch-1.1 configs/local/arch-1.1
+New-directories: configs/local configs/regexps.com/=bitrot
+Removed-files: INSTALL
+Renamed-files: configs/regexps.com/lord.arch configs/regexps.com/=bitrot/lord.arch
+  configs/regexps.com/lord.hackerlab configs/regexps.com/=bitrot/lord.hackerlab
+  configs/regexps.com/devo.ftp-utils configs/regexps.com/=bitrot/devo.ftp-utils
+  configs/regexps.com/lord.ftp-utils configs/regexps.com/=bitrot/lord.ftp-utils
+  configs/regexps.com/lord.systas configs/regexps.com/=bitrot/lord.systas
+  configs/regexps.com/release-template.ftp-utils configs/regexps.com/=bitrot/release-template.ftp-utils
+Modified-files: =README =RELEASE-ID ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  configs/regexps.com/=bitrot/devo.ftp-utils
+  configs/regexps.com/=bitrot/lord.arch
+  configs/regexps.com/=bitrot/lord.ftp-utils
+  configs/regexps.com/=bitrot/lord.hackerlab
+  configs/regexps.com/=bitrot/lord.systas
+  configs/regexps.com/=bitrot/release-template.ftp-utils
+  configs/regexps.com/devo configs/regexps.com/devo.arch
+  configs/regexps.com/devo.hackerlab
+  configs/regexps.com/devo.systas configs/regexps.com/lord
+  configs/regexps.com/release-template.arch
+  configs/regexps.com/release-template.hackerlab
+  configs/regexps.com/release-template.systas
+New-patches: lord@regexps.com--2002/dists--candidate-systas--1.0--patch-8
+  lord@regexps.com--2002/dists--devo--1.0--patch-10
+  lord@regexps.com--2002/dists--devo--1.0--patch-11
+  lord@regexps.com--2002/dists--devo--1.0--patch-12
+  lord@regexps.com--2002/dists--devo--1.0--patch-13
+  lord@regexps.com--2002/dists--devo--1.0--patch-14
+  lord@regexps.com--2002/dists--devo--1.0--patch-15
+  lord@regexps.com--2002/dists--devo--1.0--patch-16
+  lord@regexps.com--2002/dists--devo--1.0--patch-17
+  lord@regexps.com--2002/dists--devo--1.0--patch-18
+  lord@regexps.com--2002/dists--devo--1.0--patch-19
+  lord@regexps.com--2002/dists--devo--1.0--patch-20
+  lord@regexps.com--2002/dists--devo--1.0--patch-21
+  lord@regexps.com--2002/dists--devo--1.0--patch-22
+  lord@regexps.com--2002/dists--devo--1.0--patch-23
+  lord@regexps.com--2002/dists--devo--1.0--patch-24
+  lord@regexps.com--2002/dists--devo--1.0--patch-25
+  lord@regexps.com--2002/dists--devo--1.0--patch-26
+  lord@regexps.com--2002/dists--devo--1.0--patch-27
+  lord@regexps.com--2002/dists--devo--1.0--patch-28
+  lord@regexps.com--2002/dists--devo--1.0--patch-29
+  lord@regexps.com--2002/dists--devo--1.0--patch-30
+  lord@regexps.com--2002/dists--devo--1.0--patch-31
+  lord@regexps.com--2002/dists--devo--1.0--patch-32
+  lord@regexps.com--2002/dists--devo--1.0--patch-33
+  lord@regexps.com--2002/dists--devo--1.0--patch-7
+  lord@regexps.com--2002/dists--devo--1.0--patch-8
+  lord@regexps.com--2002/dists--devo--1.0--patch-9
+  lord@regexps.com--2002/dists--lord--1.0--patch-10
+  lord@regexps.com--2002/dists--lord--1.0--patch-11
+  lord@regexps.com--2002/dists--lord--1.0--patch-12
+  lord@regexps.com--2002/dists--lord--1.0--patch-13
+  lord@regexps.com--2002/dists--lord--1.0--patch-14
+  lord@regexps.com--2002/dists--lord--1.0--patch-15
+  lord@regexps.com--2002/dists--lord--1.0--patch-16
+  lord@regexps.com--2002/dists--lord--1.0--patch-17
+  lord@regexps.com--2002/dists--lord--1.0--patch-18
+  lord@regexps.com--2002/dists--lord--1.0--patch-19
+  lord@regexps.com--2002/dists--lord--1.0--patch-20
+  lord@regexps.com--2002/dists--lord--1.0--patch-21
+  lord@regexps.com--2002/dists--lord--1.0--patch-22
+  lord@regexps.com--2002/dists--lord--1.0--patch-23
+  lord@regexps.com--2002/dists--lord--1.0--patch-24
+  lord@regexps.com--2002/dists--lord--1.0--patch-25
+  lord@regexps.com--2002/dists--lord--1.0--patch-26
+  lord@regexps.com--2002/dists--lord--1.0--patch-27
+  lord@regexps.com--2002/dists--lord--1.0--patch-28
+  lord@regexps.com--2002/dists--lord--1.0--patch-29
+  lord@regexps.com--2002/dists--lord--1.0--patch-30
+  lord@regexps.com--2002/dists--lord--1.0--patch-31
+  lord@regexps.com--2002/dists--lord--1.0--patch-32
+  lord@regexps.com--2002/dists--lord--1.0--patch-33
+  lord@regexps.com--2002/dists--lord--1.0--patch-34
+
+Merge with `devo'.

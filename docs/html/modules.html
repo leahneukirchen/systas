@@ -1,0 +1,516 @@
+<html>
+<head>
+<title>An Introduction to Systas Modules</title>
+</head>
+<body>
+
+<a name="An_Introduction_to_Systas_Modules"></a>
+
+
+
+<h2 align=center>An Introduction to Systas Modules</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="emacs.html#Running_Systas_from_Emacs">Running Systas from Emacs</a></br>
+
+<b>prev: </b><a href="invocation.html#Invoking_Systas">Invoking Systas</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>This chapter provides a brief introduction to the Systas module system.
+It is possible to use Systas without worrying about modules, but
+the scheme library distributed with Systas uses this module system.
+</p>
+<a name="What_is_a_Module?"></a>
+
+
+
+<h3 align=center>What is a Module?</h3>
+
+
+
+
+
+
+
+
+
+
+<p>Modules provide a mechanism for organizing large libraries 
+of Scheme code.
+</p><p>A module, in Systas Scheme, is a top level namespace in which
+programs may be evaluated.   Some definitions in a module are
+<code>private</code>
+ -- meaning that they are only visible within that module.
+Other definitions are <code>public</code>
+ -- meaning that they may be made
+visible as top-level definitions in other modules.
+</p><p>When your program defines a new module, it specifies a list of
+other modules from which to import public definitions.  Here
+is a simple example:
+</p><pre>
+     In file &quot;module-a.scm&quot;:
+
+</pre>
+<pre>
+     (define-module (first-module))
+
+</pre>
+<pre>
+     (define a 1)
+     (define-public b 2)
+
+</pre>
+<p><code>first-module</code>
+ contains two definitions: a private definition for
+<code>a</code>
+ and a public definition for <code>b</code>
+.
+</p><pre>
+     In file &quot;second-module.scm&quot;:
+
+</pre>
+<pre>
+     (define-module (second-module))
+
+</pre>
+<pre>
+     (define-public a 100)
+     (define b 200)
+
+</pre>
+<p><code>second-module</code>
+ does just the opposite: a public definition for
+<code>a</code>
+, and a private definition for <code>b</code>
+.
+</p><p>We can import those definitions in a third module:
+</p><pre>
+     In file &quot;test.scm&quot;
+
+</pre>
+<pre>
+     (define-module (third-module)
+       :use-module (first-module)
+       :use-module (second-module))
+
+</pre>
+<pre>
+     (display* &quot;the sum of a and b is &quot; 
+               (+ a b)
+               &quot;.\n&quot;)
+
+</pre>
+<p>Now we can run:
+</p><pre>
+     % systas test.scm
+     The sum of a and b is 102.
+
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+<a name="Module_Names"></a>
+
+
+
+<h3 align=center>Module Names</h3>
+
+
+
+
+
+
+
+
+
+
+<p>Module names are lists of symbols.  Some example module names are:
+</p><pre>
+     (standard list-lib)
+     (standard char-set-lib)
+     (unix filenames)
+
+</pre>
+<p>By convention, modules are stored under one of the directories
+in the <code>load-path</code>
+, at a relative location corresponding to the
+module name.  For example:
+</p><pre>
+     module name                     relative file name
+     --------------------------------------------------
+
+</pre>
+<pre>
+     (standard list-lib)             &quot;standard/list-lib.scm&quot;
+     (standard char-set-lib)         &quot;standard/char-set-lib.scm&quot;
+     (unix filenames)                &quot;unix/filenames.scm&quot;
+
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+<a name="The_Module_Autoloader"></a>
+
+
+
+<h3 align=center>The Module Autoloader</h3>
+
+
+
+
+
+
+
+
+
+
+<p>The first time a module is mentioned in a program, systas
+searches for a corresponding source file along the <code>load-path</code>
+.
+If such a file is found, it is loaded on the presumption that
+it defines the indicated module.
+</p><p>If the file doesn't define the indicated module (for example,
+it doesn't begin with <code>define-module</code>
+) a warning is printed.
+</p><p>The module autoloader makes this attempt at most once per
+module name.  For example, if the autoloader tries to load
+a module, finds the file, starts loading it, but encounters an
+error halfway through, it won't automatically re-load the module
+later.  Instead, you should use a procedure such as <code>load</code>
+ to 
+re-load the corrected source file.
+</p><p>It is usually a mistake to pass the filename of a module file
+as a command line argument to systas, if that module's filename
+corresponds to the module name.  To continue the example above,
+suppose we had defined
+</p><pre>
+     In file &quot;fourth-module.scm&quot;
+
+</pre>
+<pre>
+     (define-module (fourth-module)
+       :use-module (first-module)
+       :use-module (second-module))
+
+</pre>
+<pre>
+     (display* &quot;the sum of a and b is &quot; 
+               (+ a b)
+               &quot;.\n&quot;)
+
+</pre>
+<p>and then ran <code>% systas fourth-module.scm</code>
+.  What would happen?
+Systas would start to read expressions from <code>fourth-module.scm</code>
+.
+The first expression is <code>define-module</code>
+ for module name
+<code>(fourth-module)</code>
+.  Evaluating that expression causes the module
+autoloader to be invoked -- so the autoloader searches for, and
+finds, <code>fourth-module.scm</code>
+.  The autoloader recursively loads that
+file, causing <code>the sum of a and b...</code>
+ to be printed.  Finally, the
+command line interpreter continues reading <code>fourth-module.scm</code>
+,
+causing <code>the sum of a and b...</code>
+ to be printed a second time.
+</p><p>One way to fix this, if you're defining a program to be invoked
+from the command line, is to choose a module name for which there
+is no corresponding filename.  That's why the earlier example used:
+</p><pre>
+     In file &quot;test.scm&quot;
+
+</pre>
+<pre>
+     (define-module (third-module)
+     ...
+
+</pre>
+<p>Another way to fix this in program scripts is to not use
+<code>define-module</code>
+ at all, but to use the procedure <code>use</code>
+ (below)
+instead to import other modules.
+</p>
+
+
+
+
+
+
+
+
+
+
+
+<a name="Defining_a_Module"></a>
+
+
+
+<h3 align=center>Defining a Module</h3>
+
+
+
+
+
+
+
+
+
+
+<p><b><u>Macro</u> <code><a name="define-module"></a><a name="index-pt:0"></a>
+define-module
+</code></b><br>
+<pre>
+(define-module module-name . use-list)
+
+</pre>
+<p>Create a new module or find an existing module, try to autoload its
+source (if a new module), and make it the current module.
+</p><p><code>module-name</code>
+ should be a list of symbols.
+</p><p>The <code>use-list</code>
+ is a keyword argument list with any number of
+keyword-value pairs:
+</p><pre>
+     :use-module module-name
+
+</pre>
+<p>The public definitions in each indicated module are made available
+in the module being defined.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<a name="Definitions_Within_a_Module"></a>
+
+
+
+<h3 align=center>Definitions Within a Module</h3>
+
+
+
+
+
+
+
+
+
+
+<p>When you reference a top-level variable from within a module, but
+your module contains no definition for that variable, the variable
+is inherited from the public definitions of modules in the
+use-list, or from the default built-in variables.
+</p><p>When you define a top-level variable in your module, a new variable 
+is created for your module specifically.
+</p><p>Continuing the earlier example:
+</p><pre>
+     (define-module (third-module)
+       :use-module (first-module)
+       :use-module (second-module))
+
+</pre>
+<pre>
+     ;; At this point, neither `a' nor `b' are defined
+     ;; in `third-module', so we inherit variables from
+     ;; `first-module' and `second-module'.
+     ;; 
+     ;; The variable `+' is inherited from the built-in 
+     ;; variables.
+     ;; 
+     (display* &quot;the sum of a and b is &quot; 
+               (+ a b)
+               &quot;.\n&quot;)
+
+</pre>
+<pre>
+     ;; We still haven't defined `a' locally, so this 
+     ;; `set!' modifies the public variable in `second-module'.
+     ;; 
+     (set! a 9999)
+
+</pre>
+<pre>
+     ;; But now we define `b' locally.  After this, `b' in 
+     ;; `first-module' and `b' in `third-module' are two 
+     ;; separate variables.  In `first-module', `b' is still 2.
+     ;; In `third-module', it is 8888:
+     ;; 
+     (define b 8888)
+
+</pre>
+<pre>
+     ;; Now this expression will print:
+     ;; 
+     ;;      the sum of a and b is 18887.
+     ;; 
+     (display* &quot;the sum of a and b is &quot; 
+               (+ a b)
+               &quot;.\n&quot;)
+
+</pre>
+<p><b><u>Function</u> <code><a name="define-public"></a><a name="index-pt:1"></a>
+define-public
+</code></b><br>
+<pre>
+(define-public name value)
+(define-public (name formals) value)
+(define-public ((name formals) formals) value)
+...
+
+</pre>
+<p>Create a public definition in the current module.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<a name="Procedural_Module_Facilities"></a>
+
+
+
+<h3 align=center>Procedural Module Facilities</h3>
+
+
+
+
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="in"></a><a name="index-pt:2"></a>
+in
+</code></b><br>
+<pre>
+(in module-name)
+
+</pre>
+<p>Find or create (autoloading if possible) the indicated module.
+Make that the current module.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="use"></a><a name="index-pt:3"></a>
+use
+</code></b><br>
+<pre>
+(use module-name)
+
+</pre>
+<p>Find or create (autoloading if possible) the indicated module.
+Add that module to the use-list of the current module.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<a name="Rationale_--_Modules"></a>
+
+
+
+<h3 align=center>Rationale -- Modules</h3>
+
+
+
+
+
+
+
+
+
+
+<p>Other implementations provide much more advanced module systems,
+providing facilities such as variable renaming, selective
+importing, and multi-module mixin-style instantiation.
+</p><p>The current implementation provides ample low-level facilities
+to implement any of those facilities.
+</p><p>The minimal facilities described here have proven to be comfortable
+and effective for organizing the Systas Scheme Library and for 
+interactive programming, especially with emacs.
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

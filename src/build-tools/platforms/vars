@@ -1,0 +1,70 @@
+
+
+################################################################
+# unexec support
+# 
+################################################################
+
+# binary unexec_should_work
+# 
+# Should programs that only use `unexec' as an option give
+# it a go by default?
+# 
+binary unexec_should_work no
+
+# string unexec-implementation
+# 
+# The name of a file in `src/unexec/libunexec/unexec-impls' which
+# is the unexec implementation to use for this system.
+# 
+string unexec_implementation "unexec-unsupported.c"
+
+
+# binary unexec_needs_precrt0
+# 
+# If true, the very first file in a link (just) defines `data_start'
+#
+binary unexec_needs_precrt0 no
+
+
+# string unexec-start-files
+# 
+# A list of .o files which should be listed first among the objects
+# when linking an executable for a program that might call `unexec'.
+# Typically, these are alternatives to the default `crt0.o'.
+# 
+string unexec_start_files "%none%"
+
+
+# string unexec-ld-switches
+# 
+# A list of ld switches for programs which might call `unexec'.
+# 
+string unexec_ld_switches "%none%"
+
+
+# string unexec-libs
+# 
+# Extra libraries to link against for programs that might call
+# `unexec'.
+# 
+string unexec_libs "%none%"
+
+
+# string unexec-libc-substitute
+# 
+# What to link against in place of libc for programs that might
+# call `unexec'.
+# 
+string unexec_libc_substitute "%none%"
+
+
+# string unexec_linker
+# 
+# What to use instead of the default to link `unexec'-able
+# programs.  On GCC-based platforms, %none% is a safe binding.
+# 
+string unexec_linker "%none%"
+
+# tag: Tom Lord Fri May 10 02:16:23 2002 (platforms/vars)
+#

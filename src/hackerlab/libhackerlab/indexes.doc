@@ -1,0 +1,24 @@
+/* tag: Tom Lord Tue Dec  4 14:57:12 2001 (indexes.doc)
+ */
+
+/************************************************************************
+ *(h0 "Indexes" :unnumbered)
+ * 
+ */
+/*(menu)
+ */
+
+/************************************************************************
+ *(h1 	"General Index"
+ *	:index (general)
+ *	:index-for "libhackerlab")
+ */
+
+
+/************************************************************************
+ *(h1 	"Identifier Index"
+ *	:need 8500
+ *	:index (function macro variable type)
+ *	:index-for "libhackerlab")
+ */
+

@@ -1,0 +1,15 @@
+Revision: hackerlab--lord--1.0--patch-5
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sun Jan 13 18:35:15 PST 2002
+Standard-date: 2002-01-13
+Summary: fixed bug in version id printing
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-5
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  cmd/opt.c
+New-patches: lord@regexps.com--2002/hackerlab--lord--1.0--patch-5
+
+Simple typo in `opt.c'.
+

@@ -1,0 +1,28 @@
+
+! 		`unexec' Release News
+
+2002-05-16	1.0pre1
+
+This is the first release of the `unexec' library.
+
+It has currently been used successfully on just two platforms, both
+of which use `Elf32' for executables: (a version of) *FreeBSD* and
+(a version of) *GNU/Linux*.
+
+PortingUnexec to new platforms is straightforward and can, I think, be
+done in just a few hours per platform.  It is almost certainly
+necessary to have a recent copy of [GNU Emacs] on-hand.
+
+<<<
+  -t
+  lord@regexps.com
+>>>
+
+
+*reference*
+
+[GNU Emacs]:: http://www.gnu.org/software/emacs
+
+
+%%% tag: Tom Lord Wed May 15 12:55:07 2002 (LibUnexec.d/ReleaseNews)
+%%%

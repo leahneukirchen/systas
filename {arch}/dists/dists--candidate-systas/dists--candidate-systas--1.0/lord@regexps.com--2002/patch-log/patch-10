@@ -1,0 +1,15 @@
+Revision: dists--candidate-systas--1.0--patch-10
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sun May 19 19:05:01 PDT 2002
+Standard-date: 2002-05-20 02:05:01 GMT
+Summary: snapped a release config
+Keywords: 
+New-files: {arch}/dists/dists--candidate-systas/dists--candidate-systas--1.0/lord@regexps.com--2002/patch-log/patch-10
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  configs/regexps.com/release.systas
+New-patches: lord@regexps.com--2002/dists--candidate-systas--1.0--patch-10
+
+Snapped a release config.
+

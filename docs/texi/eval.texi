@@ -1,0 +1,536 @@
+@need 3200
+
+@node Evaluation
+@chapter Evaluation
+
+@geindex Source forms
+@dfn{Source forms} are list structures which obey the rules of Systas
+Scheme syntax.
+
+
+@geindex Evaluation
+@dfn{Evaluation} is the operation by which source forms are interpreted
+by the system to make a series of calls to primitive functions.
+
+
+Evaluation has the job of resolving variable references, interpreting
+special forms, and carrying out function calls.   This section
+describes the interface to those capabilities.
+
+
+An introduction to Scheme or the current @geindex Revised Report on Scheme
+@dfn{Revised Report on Scheme}
+would be a good place to read about evaluation in more detail.  This
+overview is intended just as an informal reference.
+
+@menu
+* Understanding How Evaluation Works in Systas Scheme::
+* Specifying Top-Level Environments for Evaluation::
+* Eval-Related Procedures::
+* Support for Debugging::
+* Debugging-Related Procedures::
+* Rationale -- Evaluation::
+@end menu
+
+@need 3200
+
+@node Understanding How Evaluation Works in Systas Scheme
+@section Understanding How Evaluation Works in Systas Scheme
+
+When an expression is read for evaluation, the result is an
+ordinary structure of lists, symbols and other objects.  Evaluation
+begins by making a copy of the list and structure of the expression
+and the copy is then interpreted directly.  The source form is
+copied for two reasons.  First, so that if the original source form
+is later modified, the modifications have no effect on evaluation.
+Second, so that the evaluator is free to modify the copy without
+effecting the original source form.  It is possible to write
+self-modifying code in Systas Scheme (by using low-level macros),
+but not by modifying the source forms passed to the evaluator.
+
+
+As evaluation proceeds, the copied source form is modified by the
+evaluator.  Calls to macros are replaced by their expansion and
+variable names (symbols) are replaced by absolute or relative
+pointers to the variables they address (absolute pointers for
+global variables, relative pointers for local variables).  When the
+same expression is evaluated more than once (for example, the
+expressions in the body of a procedure), these modifications speed
+up subsequent evaluations of the same source forms.
+
+
+Basic Scheme syntax (@code{define}, @code{lambda}, @code{let}, @code{set!}, etc.) is
+implemented by macros that expand to a kind of list-structured
+virtual machine code which the evaluator can interpret rapidly.
+
+
+Environments are represented as a list of lists.  The environment
+is a list of frames (lexical scopes) and each frame is a list of
+the variables and values of the variables in that scope.  For
+example, in the body of the function:
+
+@example
+@group
+     (lambda (v1 v2 . rest) . body)
+@end group
+@group
+@end group
+@end example
+
+The lexical environment is:
+
+@example
+@group
+     ( ;; One frame of the environment:
+       ;; 
+       (   (v1 v2 . rest)            ;; The variables in this frame.
+           value-of-v1               ;; The values of those variables.
+           value-of-v2 
+        . value-of-rest)
+@end group
+@group
+@end group
+@end example
+@example
+@group
+      ;; Frames for the enclosing scopes.
+      ;;
+      . outer-frames-of-environment)
+@end group
+@group
+@end group
+@end example
+
+The outermost frame of an environment may be a procedure instead of
+a list.  In that case, the procedure is a top-level lookup function
+that maps free variable names to first-class variable objects.
+
+
+
+
+@need 3200
+
+@node Specifying Top-Level Environments for Evaluation
+@section Specifying Top-Level Environments for Evaluation
+
+The procedure @code{eval2} permits programs to specify the mapping
+between the names of free variables (also known as @geindex global
+variables
+@dfn{global
+variables} and first-class variable objects.  This is done by means
+of a procedure called the @geindex top-level environment mapping
+@dfn{top-level environment mapping}, as in
+this example:
+
+@example
+@group
+  ;; tiny-top-level defines a top-level environment.
+  ;; It maps variable names to the variables they 
+  ;; stand for.
+  ;;
+  (define tiny-top-level
+@end group
+@group
+    (let ((+-var (make-variable + '+))
+          (x-var (make-variable 1 'x))
+          (y-var (make-variable 2000 'y))
+          (define-var (make-variable define 'define))
+          (quote-var (make-variable quote 'quote))
+@end group
+@group
+          (extras ()))
+      (lambda (name defining?)
+        (case name
+          ((+)       +-var)
+          ((x)       x-var)
+@end group
+@group
+          ((y)       y-var)
+          ((define)  define-var)
+          ((quote)   quote-var)
+          (else      (or (assq-ref extras name)
+                         (if (not defining?)
+@end group
+@group
+                             (error "undefined variable" name)
+                             (begin
+                               (set! extras
+@end group
+@group
+                                     (cons
+                                       (cons name
+                                             (make-variable name #f))
+                                           extras))
+                               (assq-ref extras name)))))))))
+@end group
+@group
+@end group
+@end example
+@example
+@group
+  (eval2 '(+ x y) tiny-top-level) 
+  => 2001
+@end group
+@group
+@end group
+@end example
+@example
+@group
+  (eval2 'q tiny-top-level)
+  ;;; ERROR: undefined variable q
+  ;;; ABORT
+  ;;;
+@end group
+@group
+@end group
+@end example
+@example
+@group
+  (eval2 '(define q 420) tiny-top-level)
+  => ()
+@end group
+@group
+@end group
+@end example
+@example
+@group
+  (eval2 'q tiny-top-level)
+  => 420
+@end group
+@group
+@end group
+@end example
+
+It is important to understand that the environment function passed
+to @code{eval2} is not called every time a particular global variable
+reference is evaluated.  Within a closure, each global variable
+reference is normally resolved at most once, the first time it is
+evaluated.  At that time, the resolution is cached.  If the same
+variable reference is evaluated in the future, the costly lookup
+using an environment function is avoided.  (See @ref{Understanding How Evaluation Works in Systas Scheme}.)
+
+
+This can lead to some behaviors that might seem odd at first:
+
+@example
+@group
+     ;; Create two variables with the same name, but
+     ;; different values:
+     ;;
+     (define var1 (make-variable 'var1-value 'xyzzy))
+     (define var2 (make-variable 'var2-value 'xyzzy))
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     (define the-var var1)
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     ;; This trivial env-fn maps all "xyzzy" to
+     ;; whichever variable is bound to the-var:
+     ;;
+     (define (an-env-fn name define?)
+       (if (eq? name 'xyzzy)
+           the-var
+           ;; otherwise, use the normal binding:
+           ;;
+           (module-variable (current-module) name)))
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     ;; Use eval2 to capture that env-fn in some closures:
+     ;;
+     (define sample-fn (eval2 '(lambda () xyzzy) an-env-fn))
+     (define sample-fn2 (eval2 '(lambda () xyzzy) an-env-fn))
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     ;; Evaluating the resulting function resolves xyzzy to var1,
+     ;; and caches that result:
+     ;;
+     (sample-fn)
+     => 'var1-value
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     ;; Even if `the-var' is changed, since `sample-fn' has
+     ;; executed at least once, var1 is still used:
+     ;;
+     (set! the-var var2)
+     (sample-fn)
+     => 'var1-value
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     ;; On the other hand, sample-fn2 has never been executed.
+     ;; If it is run now, xyzzy will be looked up and resolved to
+     ;; var2:
+     ;;
+     (sample-fn2)
+     => 'var2-value
+@end group
+@group
+@end group
+@end example
+
+You can flush the cache for any particular variable name using this
+function @code{unhash-names}:
+
+@example
+@group
+     (unhash-names '(xyzzy))
+     (sample-fn)
+     => 'var2-value
+@end group
+@group
+@end group
+@end example
+
+
+
+@need 3200
+
+@node Eval-Related Procedures
+@section Eval-Related Procedures
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{denoted-variable}@fuindex denoted-variable
+@*
+@example
+@group
+(denoted-variable name env)
+@end group
+@group
+@end group
+@end example
+
+Return the first-class variable denoted by @code{name} in the
+environment @code{env}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{eval}@fuindex eval
+@*
+@example
+@group
+(eval exp)
+@end group
+@group
+@end group
+@end example
+
+Evaluate @code{exp} at the top-level.
+
+
+The list structure of @code{exp} is copied before it is evaluated.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{eval2}@fuindex eval2
+@*
+@example
+@group
+(eval2 exp proc)
+@end group
+@group
+@end group
+@end example
+
+Evaluate @code{exp} at the top-level.  Free variables are 
+resolved by calling @code{proc} with two arguments:
+
+@example
+@group
+     (proc variable-name define?)
+@end group
+@group
+@end group
+@end example
+
+@code{variable-name} is a symbol whose name is the name of the
+free variable.
+
+
+@code{define?} is @code{#t} if the variable is being defined by @code{define} or
+something equivalent.  
+
+
+If @code{define?} is @code{#f}, and there is no binding for @code{variable-name},
+then @code{proc} should return @code{#f}.  Otherwise (if there is a binding
+of if @code{define?} is not @code{#f}) then @code{proc} should return a variable
+object. (*Note: First-Class Variables.)
+
+
+The list structure of @code{exp} is copied before it is evaluated.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{eval-environment!}@fuindex eval-environment!
+@*
+@example
+@group
+(eval-environment! expression environment)
+@end group
+@group
+@end group
+@end example
+
+Evaluate @code{expression} in @code{environment}.  The evaluator may modify
+@code{expression}.
+
+
+
+
+@need 3200
+
+@node Support for Debugging
+@section Support for Debugging
+
+@strong{WARNING:} This code hasn't been touched in a long time and is
+probably somewhat broken.
+
+
+The evaluator provides low-level support for debugging Scheme
+programs.  The evalutator can single-step through expressions
+allowing Scheme programs to examine what is being evaluated, skip
+chosen subexpressions, catch errors in chosen subexpressions, and
+override the return value of already evaluated expressions.  At any
+time the evaluator can produce a backtrace that describes what
+expressions are currently being evaluated.
+
+
+The procedure @code{call-stepping} is used to enter the evaluator in
+single-step mode.  While in single step mode, the evaluator pauses
+before each subexpression and calls the (user-definable) procedure
+@code{step-break} with no arguments.  If @code{step-break} returns a cons
+pair, evaluation of that subexpression is skipped and the value in
+the car of that pair is used as the value of the subexpression.
+
+
+
+
+@need 3200
+
+@node Debugging-Related Procedures
+@section Debugging-Related Procedures
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{call-stepping}@fuindex call-stepping
+@*
+@example
+@group
+(call-stepping thunk)
+@end group
+@group
+@end group
+@end example
+
+Invoke @code{thunk} in single-step mode. 
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{raw-backtrace}@fuindex raw-backtrace
+@*
+@example
+@group
+(raw-backtrace)
+@end group
+@group
+@end group
+@end example
+
+Return the current bactkrace information. 
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{set-stepbrk-flag}@fuindex set-stepbrk-flag
+@*
+@example
+@group
+(set-stepbrk-flag frame-id value)
+@end group
+@group
+@end group
+@end example
+
+Set the @geindex stepbrk-flag
+@dfn{stepbrk-flag} for a particular backtrace frame.  
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{set-retbrk-flag}@fuindex set-retbrk-flag
+@*
+@example
+@group
+(set-retbrk-flag frame-id value)
+@end group
+@group
+@end group
+@end example
+
+Set the @geindex retbrk-flag
+@dfn{retbrk-flag} for a particular backtrace frame.  (*Note:
+Support for Debugging.)
+
+
+
+
+@need 3200
+
+@node Rationale -- Evaluation
+@section Rationale -- Evaluation
+
+One of the design goals of Systas is:
+
+
+@strong{Interactive Use} Systas should include whatever features are
+desirable for @emph{interactive use}.  In particular, it should be a
+pleasant experience to extend, modify, and examine a Systas
+application @emph{as it is running.}
+
+
+Thus, @code{eval} is needed.   
+
+
+@code{eval2} provides everything needed to implement most module systems
+I can think of.
+
+
+@code{eval-environment} is strictly experimental.
+
+
+There is no rationale for the debugging procedures -- some design
+work is needed.
+
+
+
+
+
+
+

@@ -1,0 +1,72 @@
+Revision: systas--lord--1.0--patch-14
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri May  3 11:23:39 PDT 2002
+Standard-date: 2002-05-03 18:23:39 GMT
+Summary: wiki hacking
+Keywords: 
+New-files: {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-14
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regepx.com--2002/ChangeLog.lord--1.0
+  scheme-library/Makefile.in scheme-library/ice-9/basic.scm
+  scheme-library/wiki/config.scm
+  scheme-library/wiki/library.scm scheme-library/wiki/view.scm
+New-patches: lord@regexps.com--2002/systas--lord--1.0--patch-14
+
+ 
+**** ./scheme-library/Makefile.in
+
+	Moved the tag line to make this file prettier.
+ 
+**** ./scheme-library/ice-9/basic.scm
+ 
+	Add the build-tree version of systas/scheme-library to the
+	develpment-mode load-path.  This is preparation for 
+	modules that are generated during compilation.
+
+**** ./scheme-library/wiki/config.scm
+ 
+ 	Reorganized and cleaned up while starting to work out
+	the install mechanisms for a release.
+
+**** ./scheme-library/wiki/library.scm
+
+	Added virtual topics and workbooks for "no such topic
+	or workbook" for the case when the bogus topic can't
+	even be created.
+
+	Added `library home page' and `home page' links to 
+	workbook and library indexes.
+
+
+**** ./scheme-library/wiki/view.scm
+
+	Dont't build a paragrahp lexer when showing plain-text of a
+	topic.  Also don't parse document headers in that case.
+
+	There's an anchor ("<a name=...>") at the bottom of every
+	page.  Some browsers can't hack that if there is no text
+	enclosed between "<a...>" and "</a>".  So, insert the
+	customary server-app add there ("You are using LabNotes...").
+
+	Added support for comment lines in topic plain text (lines
+	starting with "%%%").
+
+	Fixed a linking bug in the topic heading navigation links (the
+	"<< < > >>" links).
+
+	Added a macro-expander cheat for the specific string of 
+	"$$$WorkbookName/$$$TopicName" to ensure that links get
+	created for that string (used by PageHeader).  The problem is
+	that macro expansion can't be naively recursive (consider 
+	StupidMacro defined as "$$$StupidMacro"), so macro text isn't
+	formatted by `wiki-render-text', so ordinarilly, wikiwords in
+	macros don't get turned into links.   Overall, the macro
+	expander has to be carefully thought out -- this is just 
+	quick hack.
+
+	Added the "<<library>>" markup in text to link to the library
+	home page.
+
+	Handle (limited) markup in bibliograph links.      
+

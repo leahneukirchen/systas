@@ -1,0 +1,20 @@
+Revision: dists--devo--1.0--patch-8
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Jan 31 16:03:18 PST 2002
+Standard-date: 2002-01-31
+Summary: update the installation instructions
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-8
+  =INSTALL
+Removed-files: INSTALL
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-8
+
+Renamed `INSTALL' to `=INSTALL' so it sorts better.
+
+Added a file tag to `=INSTALL'.
+
+Pointed out `../configure --help'.
+

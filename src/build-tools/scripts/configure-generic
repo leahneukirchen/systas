@@ -1,0 +1,50 @@
+#!/bin/sh
+# tag: Tom Lord Tue Dec  4 15:07:59 2001 (scripts/configure-generic)
+#
+
+set -e 
+
+# Set on entry:
+# 
+# All the usual configure variables, especially srcdir
+# 
+#
+
+if test x$objroot = x; then
+  echo "ERROR: objroot not set in `pwd`" 1>&2
+  exit 1
+fi
+
+if test x$srcroot = x; then
+  echo "ERROR: srcroot not set in `pwd`" 1>&2
+  exit 1
+fi
+
+if test x$srcdir = x; then
+  echo "ERROR: srcdir not set in `pwd`" 1>&2
+  exit 1
+fi
+
+if test x$prefix = x; then
+  echo "ERROR: prefix not set in `pwd`" 1>&2
+  exit 1
+fi
+
+if test x$config_shell = x; then
+  echo "ERROR: config_shell not set in `pwd`" 1>&2
+  exit 1
+fi
+
+export prefix
+export srcroot
+export objroot
+export srcdir
+export config_shell
+
+if test -r $srcdir/PLUGIN/DIRS ; then
+   "$config_shell" $srcroot/build-tools/scripts/configure-dirs
+elif test -r $srcdir/PLUGIN/AUTOCONF ; then
+   "$config_shell" $srcroot/build-tools/scripts/configure-autoconf
+else
+   "$config_shell" $srcroot/build-tools/scripts/configure-leaf 
+fi

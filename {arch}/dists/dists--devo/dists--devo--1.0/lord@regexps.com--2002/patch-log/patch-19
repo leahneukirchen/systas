@@ -1,0 +1,19 @@
+Revision: dists--devo--1.0--patch-19
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Feb 14 19:00:28 PST 2002
+Standard-date: 2002-02-14
+Summary: updated arch examples
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-19
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  docs.d/arch/examples/README.000.first-steps
+  docs.d/arch/examples/README.010.first-archive
+  docs.d/arch/examples/README.020.branching-arch
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-19
+
+
+Updated the arch examples documentation to reflect the "arch" ->
+"larch" transition.
+

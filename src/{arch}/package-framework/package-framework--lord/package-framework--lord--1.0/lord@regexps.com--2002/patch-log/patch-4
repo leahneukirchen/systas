@@ -1,0 +1,26 @@
+Revision: package-framework--lord--1.0--patch-4
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sun Jan 13 16:47:46 PST 2002
+Standard-date: 2002-01-13
+Summary: =project/package fixes
+Keywords: 
+New-files: {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-4
+  =project/.arch-ids/package.id =project/package
+New-directories: =project/.arch-ids
+Removed-files: =project/package
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  build-tools/=README
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-4
+
+
+The file "=project/package" drives the version identifiers printed by
+programs in this tree.  It should be derived from a value that is
+specific to the "dists" package (the parent dir).  Therefore,
+"=project/package" is now a symlink to the top-level file
+"=RELEASE-ID".
+
+Also tweaked the `build-utils' readme file.
+
+

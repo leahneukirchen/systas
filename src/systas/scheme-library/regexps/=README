@@ -1,0 +1,12 @@
+
+This isn't a nice collection of modules.
+
+This is where I put things to experiment with until they
+are good enough to move to "../standard".
+
+For example, the "regexps.scm" here has been replaced by
+"../standard/regexps.scm", though some older code still
+uses this version.
+
+# tag: Tom Lord Tue Dec  4 15:06:38 2001 (regexps/=README)
+#

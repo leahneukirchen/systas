@@ -1,0 +1,22 @@
+Revision: dists--lord--1.0--patch-9
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri Jan 18 01:57:07 PST 2002
+Standard-date: 2002-01-18
+Summary: added tags to dirs in docs.d tree
+Keywords: 
+New-files: {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-9
+  docs.d/arch/.arch-ids/=id docs.d/hackerlab/.arch-ids/=id
+  docs.d/systas/.arch-ids/=id docs.d/.arch-ids/=id
+New-directories: docs.d/.arch-ids docs.d/arch/.arch-ids
+  docs.d/hackerlab/.arch-ids docs.d/systas/.arch-ids
+  docs.d/arch docs.d/hackerlab docs.d/systas docs.d
+Removed-directories: docs.d docs.d/arch docs.d/hackerlab docs.d/systas
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/dists--lord--1.0--patch-9
+
+Added tags to dirs in docs.d tree to make it easier to 
+maintain the `candidate' branches (i.e., record the directory
+deletes and moves just once).
+

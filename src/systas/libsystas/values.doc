@@ -1,0 +1,41 @@
+/* tag: Tom Lord Tue Dec  4 14:57:22 2001 (values.doc)
+ */
+/* values.doc -
+ *
+ ****************************************************************
+ * Copyright (C) 2001 Thomas Lord
+ * 
+ * See the file "COPYING" for further information about
+ * the copyright and warranty status of this work.
+ */
+
+
+/************************************************************************
+ *(h0 "Multiple Return Values")
+ * 
+ * Systas permits a procedure to return more than one value using
+ * the facilities described here.
+ * 
+ */
+
+
+/*(c values)
+ * (values . args)
+ * 
+ * Return all of the arguments as multiple return values
+ */
+
+
+/*(c call-with-values)
+ * (call-with-values producer consumer)
+ * 
+ * Invoke `producer', passing all of the values it returns
+ * as arguments to `consumer'.
+ * 
+ * For example:
+ * 
+ * 	(call-with-values (lambda () (values 1 2 3))
+ *			  +)
+ *	=> 6
+ */
+

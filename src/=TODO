@@ -1,0 +1,77 @@
+
+(This is the =TODO file for the package framework.  Individual
+ sub-packages (e.g. arch) have their own =TODO files
+ (e.g. arch/=TODO))
+
+* get unexec dependencies on computed libraries right 
+
+  (e.g., dependency on gnulib_var)
+
+* configure should work smoothly with make's standard tools
+
+  We should count on the installed GNU make to (by default) get the 
+  names of standard tools (e.g. CC and AWK) right, and user's should
+  be able to override that with generic configure options that take
+  effect in `rules.mk'.  
+
+  Platform tests (e.g. `library-test') should be selected at configure
+  time, but actually run at build time, so that if the user sets, say,
+  CC or CFLAGS on the make command line, those options are double
+  checked.  At the same time, might as well put in a way to support 
+  cross compiling.  This should be fixed before too many
+  build-tools/auto-conf scripts accumulate.
+
+
+* GNU make needs rule dependencies
+
+  Targets should implicitly depend on the (expanded) text of the rules
+  that build them.  This makes compile-time platform testing reliable,
+  not to mention improving the reliability of builds generally.
+
+  Optionally, make should use checksums, not timestamps, to decide
+  when prereqs have changed.
+
+
+* shared library support
+
+  libtool needs to be rewritten.
+
+
+* parallel makes should work
+
+  E.g., `make -j3'.  There is at least one bug: when installing
+  shell subcommands, one user reports:
+
+  	ln: `/usr/local/arch/libexec/arch/inventory/../arch/add': File exists
+	ln: `/usr/local/arch/libexec/arch/inventory/../arch/inventory': File exists
+	...
+
+* add a configure trick for finding optional libraries
+
+  For example, Solaris needs -lsocket.
+
+* Finish Makefiles cleanup
+
+  Some of the less important makefiles aren't done yet.
+  See build-tools/Makefiles/=TODO
+
+* Per-package PLUGINs
+
+  Different distributions need different files in src/PLUGIN
+  (e.g., for different sets of configuration options).
+
+  This is a little bit of a pain, though, since currently, all
+  distributions take their copy of package-framework from the
+  same branch.  One idea is to put a PLUGIN.d directory somewhere
+  in dists, and symlink there.
+
+* two Makefiles from configure in leaf dirs 
+
+  So that `clean' doesn't generate .d files for `make clean'
+  when run only in a leaf dir, `configure' should produce two 
+  Makefiles: one generic, and one built from `Makefile.in'.
+  The former should propogate makes to the latter, adding
+  `clean-only=1' for `make clean'.
+
+# tag: Tom Lord Tue Jan 22 18:28:52 2002 (src/=TODO)
+#

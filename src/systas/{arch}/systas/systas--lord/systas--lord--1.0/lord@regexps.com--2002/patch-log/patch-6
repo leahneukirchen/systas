@@ -1,0 +1,16 @@
+Revision: systas--lord--1.0--patch-6
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri Jan 18 01:26:24 PST 2002
+Standard-date: 2002-01-18
+Summary: tweaked =NEWS file
+Keywords: 
+New-files: {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-6
+Modified-files: =NEWS ChangeLog
+  ChangeLog.d/lord@regepx.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/systas--lord--1.0--patch-6
+
+
+Tweaked the =NEWS file to avoid having to update it for every
+bug-fix release.
+

@@ -1,0 +1,8 @@
+# tag: Tom Lord Tue Dec  4 14:52:18 2001 (unidata-scaffolding/Makefile.in)
+#
+
+libs			:=	$(objroot)/hackerlab/libboot/libboot.a -lm
+mains			:=	unidata-generate.c
+
+include $(makefiles)/programs.mk
+

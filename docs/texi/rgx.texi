@@ -1,0 +1,331 @@
+@need 3200
+
+@node Regexps and Regular Expressions
+@chapter Regexps and Regular Expressions
+@menu
+* Compiling Regexps::
+* Comparing Strings to Regexps::
+* Compiling Regular Expressions::
+* DFA Procedures::
+@end menu
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{compiled-regexp?}@fuindex compiled-regexp?
+@*
+@example
+@group
+(compiled-regexp? obj)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is a compiled regular expression @code{#f} otherwise.
+
+@need 3200
+
+@node Compiling Regexps
+@section Compiling Regexps
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{regcomp}@fuindex regcomp
+@*
+@example
+@group
+(regcomp pattern :optional cflags)
+@end group
+@group
+@end group
+@end example
+
+Compile @code{pattern} to produce a compiled regular expression.
+
+
+See the documentation for @code{regcomp}.
+
+
+
+
+@need 3200
+
+@node Comparing Strings to Regexps
+@section Comparing Strings to Regexps
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{regexec}@fuindex regexec
+@*
+@example
+@group
+(regexec rgx str :optional match-pick eflags return error-return)
+@end group
+@group
+@end group
+@end example
+
+This is a complex procedure, with many convenience features.  If you
+use regexps, it is worth learning its details.
+
+
+@code{regexec} compares @code{str} to compiled regular expression @code{rgx}.
+The argument @code{match-pick} describes what values to return if a 
+match occurs.
+
+
+@code{eflags} is a list of symbols (such as @code{REG_NOTBOL})
+that refine the search done by @code{regexec} -- see the documentation
+for @code{regexec} in the @emph{libhackerlab} reference manual, or the @code{man}
+page on most unix-like systems.
+
+
+If @code{return} is missing, and a match is found, the data specified by
+@code{match-pick} is simply returned.  If @code{return} is provided, and 
+@code{match-pick} specifies that a list should be returned, the @code{return}
+is applied to the elements of that list.  If @code{match-pick} specifies
+a non-list value, @code{return} is applied to just that value.
+
+
+If @code{error-return} is missing, and no match is found, @code{#f} is returned.
+Otherwise, @code{(error-return)} is invoked.
+
+
+The most complex part of the interface is the parameter @code{match-pick}.
+If @code{match-pick} is:
+
+
+@strong{`#f'} -- return @code{#t} if @code{str} contains a match for @code{rgx}.
+
+
+@strong{`#t'} -- return a list of three shared substrings of @code{str} which are the
+text to the left of the match, the match itself, and the text to the right
+of the match.
+
+
+@strong{a vector whose 0 element is `cut'} -- If the final state label is @code{N}, return
+the @code{N}th element of the vector, or @code{N} itself if @code{N} is negative or the vector
+has fewer than @code{N} elements.
+
+
+@strong{a vector} -- For each vector element @code{N > 0}, if subexpression @code{N} matched, 
+fill that vector element with a pair of integers @code{(start-offset . end-offset)} 
+describing the position of the subexpression match.  Fill vector element @code{0} with
+a pair describing the position of the entire match.  Fill other vector elements
+with @code{#f}.
+
+
+@strong{a keyword} -- return the keyword.
+
+
+@strong{`<'} (the symbol) -- return a shared substring of @code{str} which is the text to 
+the left of the match.
+
+
+@strong{`>'} (the symbol) -- return a shared substring of @code{str} which is the text to 
+the right of the match.
+
+
+@strong{`state-label'} (the symbol) -- return the integer state label of the final DFA
+state reached during the match.
+
+
+@strong{`N'} (an integer) -- return a shared substring which is the text matched by
+subexpression @code{N} @code{(0 }for the entire match).
+
+
+@strong{a list} -- process each list element individually, returning a
+list of the indicated results.  Elements of the list may be @code{<},
+@code{>}, @code{state-label}, a vector whose @code{0} element is @code{cut}, or an
+integer (as above) or a @geindex complex substring specification
+@dfn{complex substring specification}
+(described below).
+
+
+A @geindex complex substring specification
+@dfn{complex substring specification} is a two element list:
+
+@example
+@group
+     (start-position end-position)
+@end group
+@group
+@end group
+@end example
+
+@noindent
+which describes the starting and ending positions of a substring of
+@code{str}.
+
+
+@code{start-position} may be:
+
+
+@strong{`N'} (an integer) -- the beginning of the substring matched by
+subexpression @code{N} @code{(0 }for the beginning of the entire match).
+
+
+@strong{`<'} -- the beginning of @code{str}.
+
+
+@strong{`>'} -- the end of the match.
+
+
+@strong{`(part . extreme)'} -- this is an @geindex arbitrary endpoint specifier
+@dfn{arbitrary endpoint specifier},
+described below.
+
+
+@strong{`end-position'} may be:
+
+
+@strong{`N'} (an integer) -- the end of the substring matched by
+subexpression @code{N} @code{(0 }for the beginning of the entire match).
+
+
+@strong{`<'} -- the beginning of the match.
+
+
+@strong{`>'} -- the end of @code{str}.
+
+
+@strong{`(part . extreme)'} -- this is an @geindex arbitrary endpoint specifier
+@dfn{arbitrary endpoint specifier},
+described below.
+
+
+An @geindex arbitrary endpoint specifier
+@dfn{arbitrary endpoint specifier} is of the form @code{(part
+. extreme)}.  @code{extreme} may be either @code{0} (meaning "starting point
+of") or @code{1} (meaning "end point of") and @code{part} may be either an
+integer subexpression number @code{(0 }for the entire match), @code{<} (text to
+the left of the match), or '>' (text to the right of the match).
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{set-rx-dfa-cache-threshold}@fuindex set-rx-dfa-cache-threshold
+@*
+@example
+@group
+(set-rx-dfa-cache-threshold n)
+@end group
+@group
+@end group
+@end example
+
+Set the goal threshold (in bytes) of the Rx superstate cache.  @emph{xref}.
+
+
+
+
+@need 3200
+
+@node Compiling Regular Expressions
+@section Compiling Regular Expressions
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{regexp->dfa}@fuindex regexp->dfa
+@*
+@example
+@group
+(regexp->dfa regexp cflags)
+@end group
+@group
+@end group
+@end example
+
+Compile @code{regexp} to produce a DFA.
+
+
+
+
+@need 3200
+
+@node DFA Procedures
+@section DFA Procedures
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{dfa-fork}@fuindex dfa-fork
+@*
+@example
+@group
+(dfa-fork dfa)
+@end group
+@group
+@end group
+@end example
+
+Create a copy of @code{dfa}.  The copy is initially in the same state as @code{dfa}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{reset-dfa!}@fuindex reset-dfa!
+@*
+@example
+@group
+(reset-dfa! dfa)
+@end group
+@group
+@end group
+@end example
+
+Return @code{dfa} to its starting state.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{dfa-final-tag}@fuindex dfa-final-tag
+@*
+@example
+@group
+(dfa-final-tag dfa)
+@end group
+@group
+@end group
+@end example
+
+Return the integer state label of the current state of @code{dfa}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{dfa-continuable?}@fuindex dfa-continuable?
+@*
+@example
+@group
+(dfa-continuable? dfa)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if there are transitions out of the current state of
+@code{dfa}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%advance-dfa-to-final-state!}@fuindex %advance-dfa-to-final-state!
+@*
+@example
+@group
+(%advance-dfa-to-final-state! dfa str)
+@end group
+@group
+@end group
+@end example
+
+Advance @code{dfa} using characters from @code{str}.  Stop when @code{dfa} enters
+a final state.
+
+
+
+
+
+
+

@@ -1,0 +1,651 @@
+<html>
+<head>
+<title>Evaluation</title>
+</head>
+<body>
+
+<a name="Evaluation"></a>
+
+
+
+<h2 align=center>Evaluation</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="procs.html#Procedures">Procedures</a></br>
+
+
+</small>
+<br>
+
+
+
+
+
+
+<p><em>
+<a name="index-pt:0"></a>
+
+Source forms
+</em>
+ are list structures which obey the rules of Systas
+Scheme syntax.
+</p><p><em>
+<a name="index-pt:1"></a>
+
+Evaluation
+</em>
+ is the operation by which source forms are interpreted
+by the system to make a series of calls to primitive functions.
+</p><p>Evaluation has the job of resolving variable references, interpreting
+special forms, and carrying out function calls.   This section
+describes the interface to those capabilities.
+</p><p>An introduction to Scheme or the current <em>
+<a name="index-pt:2"></a>
+
+Revised Report on Scheme
+</em>
+
+would be a good place to read about evaluation in more detail.  This
+overview is intended just as an informal reference.
+</p><ul>
+<li><a href="eval.html#Understanding_How_Evaluation_Works_in_Systas_Scheme">Understanding How Evaluation Works in Systas Scheme</a></li>
+<li><a href="eval.html#Specifying_Top-Level_Environments_for_Evaluation">Specifying Top-Level Environments for Evaluation</a></li>
+<li><a href="eval.html#Eval-Related_Procedures">Eval-Related Procedures</a></li>
+<li><a href="eval.html#Support_for_Debugging">Support for Debugging</a></li>
+<li><a href="eval.html#Debugging-Related_Procedures">Debugging-Related Procedures</a></li>
+<li><a href="eval.html#Rationale_--_Evaluation">Rationale -- Evaluation</a></li>
+</ul>
+
+<hr>
+
+<a name="Understanding_How_Evaluation_Works_in_Systas_Scheme"></a>
+
+
+
+<h3 align=center>Understanding How Evaluation Works in Systas Scheme</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="eval.html#Evaluation">Evaluation</a></br>
+<b>next: </b><a href="eval.html#Specifying_Top-Level_Environments_for_Evaluation">Specifying Top-Level Environments for Evaluation</a></br>
+
+
+</small>
+<br>
+
+
+
+
+
+
+<p>When an expression is read for evaluation, the result is an
+ordinary structure of lists, symbols and other objects.  Evaluation
+begins by making a copy of the list and structure of the expression
+and the copy is then interpreted directly.  The source form is
+copied for two reasons.  First, so that if the original source form
+is later modified, the modifications have no effect on evaluation.
+Second, so that the evaluator is free to modify the copy without
+effecting the original source form.  It is possible to write
+self-modifying code in Systas Scheme (by using low-level macros),
+but not by modifying the source forms passed to the evaluator.
+</p><p>As evaluation proceeds, the copied source form is modified by the
+evaluator.  Calls to macros are replaced by their expansion and
+variable names (symbols) are replaced by absolute or relative
+pointers to the variables they address (absolute pointers for
+global variables, relative pointers for local variables).  When the
+same expression is evaluated more than once (for example, the
+expressions in the body of a procedure), these modifications speed
+up subsequent evaluations of the same source forms.
+</p><p>Basic Scheme syntax (<code>define</code>
+, <code>lambda</code>
+, <code>let</code>
+, <code>set!</code>
+, etc.) is
+implemented by macros that expand to a kind of list-structured
+virtual machine code which the evaluator can interpret rapidly.
+</p><p>Environments are represented as a list of lists.  The environment
+is a list of frames (lexical scopes) and each frame is a list of
+the variables and values of the variables in that scope.  For
+example, in the body of the function:
+</p><pre>
+     (lambda (v1 v2 . rest) . body)
+
+</pre>
+<p>The lexical environment is:
+</p><pre>
+     ( ;; One frame of the environment:
+       ;; 
+       (   (v1 v2 . rest)            ;; The variables in this frame.
+           value-of-v1               ;; The values of those variables.
+           value-of-v2 
+        . value-of-rest)
+
+</pre>
+<pre>
+      ;; Frames for the enclosing scopes.
+      ;;
+      . outer-frames-of-environment)
+
+</pre>
+<p>The outermost frame of an environment may be a procedure instead of
+a list.  In that case, the procedure is a top-level lookup function
+that maps free variable names to first-class variable objects.
+</p>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Specifying_Top-Level_Environments_for_Evaluation"></a>
+
+
+
+<h3 align=center>Specifying Top-Level Environments for Evaluation</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="eval.html#Evaluation">Evaluation</a></br>
+<b>next: </b><a href="eval.html#Eval-Related_Procedures">Eval-Related Procedures</a></br>
+
+<b>prev: </b><a href="eval.html#Understanding_How_Evaluation_Works_in_Systas_Scheme">Understanding How Evaluation Works in Systas Scheme</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>The procedure <code>eval2</code>
+ permits programs to specify the mapping
+between the names of free variables (also known as <em>
+<a name="index-pt:3"></a>
+
+global
+variables
+</em>
+ and first-class variable objects.  This is done by means
+of a procedure called the <em>
+<a name="index-pt:4"></a>
+
+top-level environment mapping
+</em>
+, as in
+this example:
+</p><pre>
+  ;; tiny-top-level defines a top-level environment.
+  ;; It maps variable names to the variables they 
+  ;; stand for.
+  ;;
+  (define tiny-top-level
+    (let ((+-var (make-variable + '+))
+          (x-var (make-variable 1 'x))
+          (y-var (make-variable 2000 'y))
+          (define-var (make-variable define 'define))
+          (quote-var (make-variable quote 'quote))
+          (extras ()))
+      (lambda (name defining?)
+        (case name
+          ((+)       +-var)
+          ((x)       x-var)
+          ((y)       y-var)
+          ((define)  define-var)
+          ((quote)   quote-var)
+          (else      (or (assq-ref extras name)
+                         (if (not defining?)
+                             (error &quot;undefined variable&quot; name)
+                             (begin
+                               (set! extras
+                                     (cons
+                                       (cons name
+                                             (make-variable name #f))
+                                           extras))
+                               (assq-ref extras name)))))))))
+
+</pre>
+<pre>
+  (eval2 '(+ x y) tiny-top-level) 
+  => 2001
+
+</pre>
+<pre>
+  (eval2 'q tiny-top-level)
+  ;;; ERROR: undefined variable q
+  ;;; ABORT
+  ;;;
+
+</pre>
+<pre>
+  (eval2 '(define q 420) tiny-top-level)
+  => ()
+
+</pre>
+<pre>
+  (eval2 'q tiny-top-level)
+  => 420
+
+</pre>
+<p>It is important to understand that the environment function passed
+to <code>eval2</code>
+ is not called every time a particular global variable
+reference is evaluated.  Within a closure, each global variable
+reference is normally resolved at most once, the first time it is
+evaluated.  At that time, the resolution is cached.  If the same
+variable reference is evaluated in the future, the costly lookup
+using an environment function is avoided.  (See <a href="eval.html#Understanding_How_Evaluation_Works_in_Systas_Scheme">Understanding How Evaluation Works in Systas Scheme</a>.)
+</p><p>This can lead to some behaviors that might seem odd at first:
+</p><pre>
+     ;; Create two variables with the same name, but
+     ;; different values:
+     ;;
+     (define var1 (make-variable 'var1-value 'xyzzy))
+     (define var2 (make-variable 'var2-value 'xyzzy))
+
+</pre>
+<pre>
+     (define the-var var1)
+
+</pre>
+<pre>
+     ;; This trivial env-fn maps all &quot;xyzzy&quot; to
+     ;; whichever variable is bound to the-var:
+     ;;
+     (define (an-env-fn name define?)
+       (if (eq? name 'xyzzy)
+           the-var
+           ;; otherwise, use the normal binding:
+           ;;
+           (module-variable (current-module) name)))
+
+</pre>
+<pre>
+     ;; Use eval2 to capture that env-fn in some closures:
+     ;;
+     (define sample-fn (eval2 '(lambda () xyzzy) an-env-fn))
+     (define sample-fn2 (eval2 '(lambda () xyzzy) an-env-fn))
+
+</pre>
+<pre>
+     ;; Evaluating the resulting function resolves xyzzy to var1,
+     ;; and caches that result:
+     ;;
+     (sample-fn)
+     => 'var1-value
+
+</pre>
+<pre>
+     ;; Even if `the-var' is changed, since `sample-fn' has
+     ;; executed at least once, var1 is still used:
+     ;;
+     (set! the-var var2)
+     (sample-fn)
+     => 'var1-value
+
+</pre>
+<pre>
+     ;; On the other hand, sample-fn2 has never been executed.
+     ;; If it is run now, xyzzy will be looked up and resolved to
+     ;; var2:
+     ;;
+     (sample-fn2)
+     => 'var2-value
+
+</pre>
+<p>You can flush the cache for any particular variable name using this
+function <code>unhash-names</code>
+:
+</p><pre>
+     (unhash-names '(xyzzy))
+     (sample-fn)
+     => 'var2-value
+
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Eval-Related_Procedures"></a>
+
+
+
+<h3 align=center>Eval-Related Procedures</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="eval.html#Evaluation">Evaluation</a></br>
+<b>next: </b><a href="eval.html#Support_for_Debugging">Support for Debugging</a></br>
+
+<b>prev: </b><a href="eval.html#Specifying_Top-Level_Environments_for_Evaluation">Specifying Top-Level Environments for Evaluation</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="denoted-variable"></a><a name="index-pt:5"></a>
+denoted-variable
+</code></b><br>
+<pre>
+(denoted-variable name env)
+
+</pre>
+<p>Return the first-class variable denoted by <code>name</code>
+ in the
+environment <code>env</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="eval"></a><a name="index-pt:6"></a>
+eval
+</code></b><br>
+<pre>
+(eval exp)
+
+</pre>
+<p>Evaluate <code>exp</code>
+ at the top-level.
+</p><p>The list structure of <code>exp</code>
+ is copied before it is evaluated.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="eval2"></a><a name="index-pt:7"></a>
+eval2
+</code></b><br>
+<pre>
+(eval2 exp proc)
+
+</pre>
+<p>Evaluate <code>exp</code>
+ at the top-level.  Free variables are 
+resolved by calling <code>proc</code>
+ with two arguments:
+</p><pre>
+     (proc variable-name define?)
+
+</pre>
+<p><code>variable-name</code>
+ is a symbol whose name is the name of the
+free variable.
+</p><p><code>define?</code>
+ is <code>#t</code>
+ if the variable is being defined by <code>define</code>
+ or
+something equivalent.  
+</p><p>If <code>define?</code>
+ is <code>#f</code>
+, and there is no binding for <code>variable-name</code>
+,
+then <code>proc</code>
+ should return <code>#f</code>
+.  Otherwise (if there is a binding
+of if <code>define?</code>
+ is not <code>#f</code>
+) then <code>proc</code>
+ should return a variable
+object. (*Note: First-Class Variables.)
+</p><p>The list structure of <code>exp</code>
+ is copied before it is evaluated.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="eval-environment!"></a><a name="index-pt:8"></a>
+eval-environment!
+</code></b><br>
+<pre>
+(eval-environment! expression environment)
+
+</pre>
+<p>Evaluate <code>expression</code>
+ in <code>environment</code>
+.  The evaluator may modify
+<code>expression</code>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Support_for_Debugging"></a>
+
+
+
+<h3 align=center>Support for Debugging</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="eval.html#Evaluation">Evaluation</a></br>
+<b>next: </b><a href="eval.html#Debugging-Related_Procedures">Debugging-Related Procedures</a></br>
+
+<b>prev: </b><a href="eval.html#Eval-Related_Procedures">Eval-Related Procedures</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p><strong><u>WARNING:</u></strong> This code hasn't been touched in a long time and is
+probably somewhat broken.
+</p><p>The evaluator provides low-level support for debugging Scheme
+programs.  The evalutator can single-step through expressions
+allowing Scheme programs to examine what is being evaluated, skip
+chosen subexpressions, catch errors in chosen subexpressions, and
+override the return value of already evaluated expressions.  At any
+time the evaluator can produce a backtrace that describes what
+expressions are currently being evaluated.
+</p><p>The procedure <code>call-stepping</code>
+ is used to enter the evaluator in
+single-step mode.  While in single step mode, the evaluator pauses
+before each subexpression and calls the (user-definable) procedure
+<code>step-break</code>
+ with no arguments.  If <code>step-break</code>
+ returns a cons
+pair, evaluation of that subexpression is skipped and the value in
+the car of that pair is used as the value of the subexpression.
+</p>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Debugging-Related_Procedures"></a>
+
+
+
+<h3 align=center>Debugging-Related Procedures</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="eval.html#Evaluation">Evaluation</a></br>
+<b>next: </b><a href="eval.html#Rationale_--_Evaluation">Rationale -- Evaluation</a></br>
+
+<b>prev: </b><a href="eval.html#Support_for_Debugging">Support for Debugging</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="call-stepping"></a><a name="index-pt:9"></a>
+call-stepping
+</code></b><br>
+<pre>
+(call-stepping thunk)
+
+</pre>
+<p>Invoke <code>thunk</code>
+ in single-step mode. 
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="raw-backtrace"></a><a name="index-pt:10"></a>
+raw-backtrace
+</code></b><br>
+<pre>
+(raw-backtrace)
+
+</pre>
+<p>Return the current bactkrace information. 
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="set-stepbrk-flag"></a><a name="index-pt:11"></a>
+set-stepbrk-flag
+</code></b><br>
+<pre>
+(set-stepbrk-flag frame-id value)
+
+</pre>
+<p>Set the <em>
+<a name="index-pt:12"></a>
+
+stepbrk-flag
+</em>
+ for a particular backtrace frame.  
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="set-retbrk-flag"></a><a name="index-pt:13"></a>
+set-retbrk-flag
+</code></b><br>
+<pre>
+(set-retbrk-flag frame-id value)
+
+</pre>
+<p>Set the <em>
+<a name="index-pt:14"></a>
+
+retbrk-flag
+</em>
+ for a particular backtrace frame.  (*Note:
+Support for Debugging.)
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Rationale_--_Evaluation"></a>
+
+
+
+<h3 align=center>Rationale -- Evaluation</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="eval.html#Evaluation">Evaluation</a></br>
+
+<b>prev: </b><a href="eval.html#Debugging-Related_Procedures">Debugging-Related Procedures</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>One of the design goals of Systas is:
+</p><p><strong><u>Interactive Use</u></strong> Systas should include whatever features are
+desirable for <em>interactive use</em>.  In particular, it should be a
+pleasant experience to extend, modify, and examine a Systas
+application <em>as it is running.</em>
+</p><p>Thus, <code>eval</code>
+ is needed.   
+</p><p><code>eval2</code>
+ provides everything needed to implement most module systems
+I can think of.
+</p><p><code>eval-environment</code>
+ is strictly experimental.
+</p><p>There is no rationale for the debugging procedures -- some design
+work is needed.
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

@@ -1,0 +1,299 @@
+/* tag: Tom Lord Tue Dec  4 14:57:17 2001 (unidata-data-sheet.doc)
+ */
+/************************************************************************
+ *(h0 "Data Sheet for the Hackerlab Unicode Database"
+ *    :appendix)
+ * 
+ insert*/
+
+Package:
+        Hackerlab Unicode Database (the Unicode Character Database in C)
+
+Supplier:
+	regexps.com
+
+Function:        
+
+        The Hackerlab Unicode Database provides a C interface
+	to data taken from the Unicode Character Database
+	published by the Unicode Consortium.
+	
+
+Key Features:
+                
+	Space and time efficient.
+
+	Accurate (based on comparisons to the Unicode 3.0 databases).
+
+	Clean and simple "classic C" interface.
+
+	Provides:
+		assigned test -- is a code point assigned?
+		general category
+		decimal digit value
+		bidirectional category
+		bidirectional mirroring property
+		canonical combining class
+		default case mappings
+		character decomposition mappings
+		Unicode blocks
+		general category bitsets
+
+	Easy to upgrade: most data is automatically extracted from
+	the standard file ``unidata.txt'' published by the 
+	Unicode Consortium.
+
+	Ready for Unicode 3.1: Database data structures are designed
+	for a character set with 2^21 code points.
+
+        Validation tests are included.
+
+        Postscript and HTML documentation is included.
+
+	Variable depth trie structures for the database, selectable
+	at compile time.  (A space/time trade-off.)
+
+
+Licensing:
+
+	The Hackerlab Unicode Database is part of the Hackerlab C
+	Library, which is distributed under the terms of the GNU
+	General Public License, Version 2, as published by the Free
+	Software Foundation.
+	
+	Alternative licenses (such as licenses permitting binary-only
+	re-distribution) can be purchased from regexps.com.
+
+
+Prerequisites:
+
+        standard C compiler
+        Posix libc.a (standard C library)
+        GNU Make
+
+
+Recommended and Disrecommended Applications:
+
+	Recommended for all applications needing access to Unicode
+	Character Database properties.
+	
+
+Limitations:
+	
+	This is the first public release.  The database has been 
+	carefully tested but is not in widespread use.  
+
+	Some important features, which are likely to be added in
+	future releases, are not present in this release.  These
+	include:
+
+		locale-sensitive case mappings
+		pre-computed normalization forms
+
+
+Contribution to Executable Size:
+
+        On a Pentium based machine, running gcc (egcs version
+        2.91.66) we compiled this simple (nonsense) program and 
+	linked it against the Hackerlab C Library:
+	
+
+	    #include <hackerlab/unicode/unicode.h>
+
+
+	    int
+	    main (int argc, char * argv[])
+	    {
+	      t_unicode c;
+	      int value;
+	    
+	      c = argv[0][0];
+	    
+	      value = unidata_is_assigned_code_point (c);
+	      value += (int)unidata_general_category (c);
+	      value += (int)unidata_decimal_digit_value (c);
+	      value += (int)unidata_bidi_category (c);
+	      value += (int)unidata_is_mirrored (c);
+	      value += (int)unidata_canonical_combining_class (c);
+	      value += (int)unidata_to_upper (c);
+	      value += (int)unidata_to_lower (c);
+	      value += (int)unidata_to_title (c);
+	      value += 
+	        (int)unidata_character_decomposition_mapping (c)->type;
+	      value += (int)uni_blocks[0].start;
+	      value += 
+	        bits_population 
+		  (uni_general_category_bitset 
+		    (uni_general_category_Sm));
+	    
+	      return value;
+	    }
+
+        Both the library and the program were compiled with the "-g"
+        option.
+	
+	The program forces linkage with all of the Hackerlab Unicode 
+	Database.
+	
+        Total executable size:
+
+	   text	   data
+	  43120	 221064
+
+        The following list of object files from the Hackerlab
+	C library were linked into the executable:
+	
+	    alloc-limits.o bits.o bitset-lookup.o bitset-tree.o
+	    bitset.o bitsets.o blocks.o case-db-inlines.o case-db.o
+	    char-class.o combine-db.o cvt.o db-inlines.o db.o
+	    decomp-db.o mem.o must-malloc.o panic-exit.o panic.o str.o
+
+	The contribution of those files to the executable size is:
+
+	   text	   data
+	  41541	 218056
+	    
+	Those sizes represent maximums: they are for a program
+	that access all of the information in the database,
+	and that uses both the general category mapping and
+	precomputed bitsets for each general category.
+
+	A realistic scenario is a program which does not
+	use the bidi properties, the decomposition mapping,
+	or the category bitsets.  To measure size in that
+	scenario, we compiled this test program:
+
+
+	    #include <hackerlab/unicode/unicode.h>
+
+
+	    int
+	    main (int argc, char * argv[])
+	    {
+	      t_unicode c;
+	      int value;
+	    
+	      c = argv[0][0];
+	    
+	      value = unidata_is_assigned_code_point (c);
+	      value += (int)unidata_general_category (c);
+	      value += (int)unidata_decimal_digit_value (c);
+	      value += (int)unidata_canonical_combining_class (c);
+	      value += (int)unidata_to_upper (c);
+	      value += (int)unidata_to_lower (c);
+	      value += (int)unidata_to_title (c);
+	      value += (int)uni_blocks[0].start;
+	    
+	      return value;
+	    }
+	    
+        and obtained the total executable size:
+
+	   text	   data
+	  13864	 104980
+
+
+	Sizes may differ slightly from the latest release
+        of Rx.  Sizes will obviously vary with platform
+        compiler, and compiler options.
+
+
+External Linkage Dependencies:
+
+	When compiled under FreeBSD 3.0, the simple program used to
+        test executable sizes depends on the following symbols
+        defined in "libc":
+
+
+		write
+		malloc
+		realloc
+		free
+		_exit
+
+
+Accuracy:
+
+	We test the accuracy of the Hackerlab Unicode database by
+	using it to print a text file containing a subset of the
+	fields present in "unidata.txt".  We then extract those fields
+	from "unidata.txt" itself using a sed script and compare the
+	resulting files.
+
+	There are no known bugs in the Hackerlab Unicode database.
+
+
+Execution Speed:
+	
+	All of the functions that access the Hackerlab Unicode
+	Database are very fast.
+
+	To give a quantitative sense of what "very fast" means, we have
+	measured the size of some functions in instructions, as
+	compiled by gcc (egcs version 2.91.66) for a Pentium
+	architecture machine with the compiler option `-g'.  None of
+	the functions contain loops.
+
+		function		     instruction
+					       count
+	    -----------------------------------------------
+	    unidata_is_assigned_code_point	28
+	    unidata_general_category		29
+	    unidata_decimal_digit_value 	41
+	    unidata_bidi_category		31
+	    unidata_is_mirrored			31
+	    unidata_to_upper			56
+	    unidata_to_lower			56
+	    unidata_to_title			56
+
+	Most of those functions performs two array look-ups and a
+	number of bit-manipulation operations.  The three
+	case-conversion functions perform five array look-ups
+	and a number of bit-manipulation operations.
+	
+	`unidata_decimal_digit_value' performs a conditional test.
+	
+	Instruction counts include function prologues and epilogues.
+	For programs compiled with GCC, those functions are also 
+	available as inlinable functions.
+	
+	`unidata_character_decomposition_mapping' is a macro which
+	performs five array look-ups and a number of bit-manipulation
+	operations.
+
+	These instruction counts may, obviously, vary with choice of
+	compiler, compiler options, and platform.  Cited
+	implementation details may change in future releases.
+
+
+Run-time Allocation Requirements:
+
+	The Hackerlab Unicode database does not perform a significant
+	amount of memory allocation at run-time.
+
+
+Support:
+
+
+	To purchase an alternative license, request additional
+	features, or for any kind of support assistance, you can
+	contact us at "hackerlab@regexps.com" or via our web site
+	"www.regexps.com".  We can also be reached at (412) 401-5204.
+	We are currently in the midst of relocating from Pennsylvania
+	to California, so at this time, we have no reliable postal
+	address.
+
+        Available support includes (but is not limited to):
+
+                - porting assistance
+                - customized extensions
+                - consultation concerning regexp-intensive applications
+                - bug fixing
+
+        In most cases, support is offered as a commercial
+        service.
+
+/*end-insert
+ */
+
+

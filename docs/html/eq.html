@@ -1,0 +1,236 @@
+<html>
+<head>
+<title>Equality</title>
+</head>
+<body>
+
+<a name="Equality"></a>
+
+
+
+<h2 align=center>Equality</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="boolean.html#Booleans">Booleans</a></br>
+
+
+</small>
+<br>
+
+
+
+
+
+
+<p>There are three built-in ways to compare objects for equality.
+</p><p><code>eq?</code>
+ tests whether its arguments are one-in-the-same object.  If
+it return <code>#t</code>
+, the arguments can not be distinguished.  The <code>eq?</code>
+
+test for equality is the fastest.
+</p><p><code>eqv?</code>
+ tests whether its arguments are indistinguishable except
+possibly by procedures that rely on <code>eq?</code>
+ equivalence.  For
+example, two inexact numbers may have exactly the same bit-wise
+representation, yet not be <code>eq?</code>
+.  Those two numbers are <code>eqv?</code>
+.
+</p><p><code>eq?</code>
+ values are always <code>eqv?</code>
+.
+</p><p><code>equal?</code>
+ tests whether its arguments are structurally similar.  If
+it returns <code>#t</code>
+, then the arguments are lists of equal elements, or
+vectors of equal elements, or strings which are <code>string=?</code>
+, etc.
+The <code>equal?</code>
+ test for equality is the slowest.
+</p><p><code>eqv?</code>
+ values are always <code>equal?</code>
+.
+</p><p><code>eq?</code>
+ is useful to compare objects of types with relevant
+uniqueness properties (such as symbols), and to compare objects
+when the the underlying question is whether or not data-flow
+through a program has brought together two references to the very
+same object.
+</p><p><code>eqv?</code>
+ is useful to compare objects whose equality under <code>eq?</code>
+ is 
+not guaranteed by uniqueness properties.
+</p><p><code>eq?</code>
+ and <code>eqv?</code>
+ share the property that if two objects are equal,
+mutations to one are mutations to both (in fact, if two mutable
+objects are <code>eqv?</code>
+, then they are <code>eq?</code>
+).
+</p><p><b><u>Function</u> <code><a name="eq?"></a><a name="index-pt:0"></a>
+eq?
+</code></b><br>
+<pre>
+(eq? . args)
+
+</pre>
+<p>Return <code>#t</code>
+ if all of the arguments are one-in-the-same object,
+otherwise return <code>#f</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="eqv?"></a><a name="index-pt:1"></a>
+eqv?
+</code></b><br>
+<pre>
+(eqv? . args)
+
+</pre>
+<p>Return <code>#t</code>
+ if all of the arguments are indistinguishable except
+by procedures that rely on <code>eq?</code>
+ equivalence, otherwise return 
+<code>#f</code>
+.
+</p><p><code>eq?</code>
+ values are always <code>eqv?</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="equal?"></a><a name="index-pt:2"></a>
+equal?
+</code></b><br>
+<pre>
+(equal? . args)
+
+</pre>
+<p>Return <code>#t</code>
+ if all of the arguments are structurally identical.
+</p><p><em>
+<a name="index-pt:3"></a>
+
+Structurally identical
+</em>
+ is recursively defined.  For example,
+two lists are <code>equal?</code>
+ if they are the same length and the
+corresponding elements are <code>equal?</code>
+.
+</p><p><code>eqv?</code>
+ values are always <code>equal?</code>
+.
+</p>
+<br>
+<br>
+<a name="q,_v,_and_generalized"></a>
+
+
+
+<h3 align=center>q, v, and generalized</h3>
+
+
+
+
+
+
+
+
+
+
+<p>In standard scheme, some procedures which test values for equality
+are grouped in sets of three, corresponding to the three standard
+ways of testing for equality.  These procedures follow a regular
+naming convention of names ending with <em>
+<a name="index-pt:4"></a>
+
+q
+</em>
+ (for procedures that use
+<code>eq?</code>
+), <em>
+<a name="index-pt:5"></a>
+
+v
+</em>
+ (<code>eqv?</code>
+), and names without a special suffix
+(<code>equal?</code>
+).
+</p><p>In Systas scheme, the convention is extended.  The procedure that 
+uses <code>equal?</code>
+ usually accepts an optional argument which is used
+instead of <code>equal?</code>
+ to test for equality.  For example, 
+</p><pre>
+     (assoc hostname domain-rules same-domain?)
+
+</pre>
+<p>will use <code>same-domain?</code>
+ to search for matches of <code>hostname</code>
+ in 
+the association list <code>domain-rules</code>
+.
+</p><p>The added generality adds very little complexity to the
+implementation, and saves programmers from having to write their
+own generalizations.
+</p>
+
+
+
+
+
+
+
+
+
+
+
+<a name="Rationale_--_Equality"></a>
+
+
+
+<h3 align=center>Rationale -- Equality</h3>
+
+
+
+
+
+
+
+
+
+
+<p>The Systas Scheme equality tests simply follow standard Scheme.
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

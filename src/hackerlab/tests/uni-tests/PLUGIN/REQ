@@ -1,0 +1,3 @@
+bitset-tests		uni-tests
+mem-tests		uni-tests
+hash-tests		uni-tests

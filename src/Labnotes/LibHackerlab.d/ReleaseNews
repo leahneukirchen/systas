@@ -1,0 +1,32 @@
+
+
+!		Hackerlab C Library Release News
+
+* 2002-05-16 1.0pre9
+
+  *A new buffering function,* `vfdbuf_unbuffer_fd' can be used to
+  remove an established file buffer.  This is useful, for example,
+  before calling `unexec'.
+
+  *Some `Rx' bugs have been fixed* in the Posix matching functions
+  (Hopefully these weere rather obscure bugs, unlikely to effect most
+  programs.)
+
+
+* `rx-xml-tests' still deactivated
+
+  The test suite `rx-xml-tests' has been deactivated for now.  There
+  is apparently a bug in `rx-xml' that effects big-endian machines.
+  It is proving to be difficult to find without direct access to such
+  a machine.  For now, to my knowledge, people are using `arch' (which
+  needs this library, but not `rx-xml').  So, this is a quick hack to
+  smooth out `arch' builds without making an `arch'-specific branch of
+  `hackerlab'.
+
+<<<
+  -t
+  lord@regexps.com
+>>>
+
+%%% tag: Tom Lord Wed May 15 14:11:39 2002 (LibHackerlab.d/ReleaseNews)
+%%%

@@ -1,0 +1,21 @@
+Revision: dists--lord--1.0--patch-28
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri Mar 22 04:54:42 PST 2002
+Standard-date: 2002-03-22 12:54:42 GMT
+Summary: updated manuals
+Keywords: 
+New-files: {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-28
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  docs.d/arch/html/arch.html
+  docs.d/arch/html/star-topology.html docs.d/arch/ps/arch.ps
+  docs.d/arch/texi/arch.texi
+  docs.d/arch/texi/star-topology.texi
+  docs.d/hackerlab/html/libhackerlab.html
+  docs.d/hackerlab/ps/libhackerlab.ps
+  docs.d/hackerlab/texi/libhackerlab.texi
+New-patches: lord@regexps.com--2002/dists--lord--1.0--patch-28
+
+Updated manuals for arch and libhackerlab.
+

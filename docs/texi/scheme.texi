@@ -1,0 +1,836 @@
+@need 3200
+
+@node Special Forms
+@chapter Special Forms
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{quote}@fuindex quote
+@*
+@example
+@group
+(quote expresion)
+@end group
+@group
+@end group
+@end example
+
+Return @code{expresion}, unevaluated, substituting variable names for
+first-class variables in @code{expression}.  Quote expressions can be
+written using the special syntax:
+
+@example
+@group
+     'expression
+@end group
+@group
+@end group
+@end example
+
+@noindent
+as in:
+
+@example
+@group
+     '(this list is not evaluated)
+@end group
+@group
+@end group
+@end example
+
+See also @code{strong-quote}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{strong-quote}@fuindex strong-quote
+@*
+@example
+@group
+(strong-quote expresion)
+@end group
+@group
+@end group
+@end example
+
+Return @code{expresion} completely unevaluated.  @code{strong-quote} expressions
+can be written using the special syntax:
+
+@example
+@group
+     #'expression
+@end group
+@group
+@end group
+@end example
+
+@noindent
+as in:
+
+@example
+@group
+     #'(this list is not evaluated)
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{begin}@fuindex begin
+@*
+@example
+@group
+(begin expression . expressions)
+@end group
+@group
+@end group
+@end example
+
+Evaluate the expressions in order, returning the value of
+the last expression.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{if}@fuindex if
+@*
+@example
+@group
+(if condition then-expression else-expression)
+@end group
+@group
+@end group
+@end example
+
+Evaluate @code{condition}.  If it returns a true value, evaluate
+@code{the-expression} and return its value.  Otherwise, evaluate 
+@code{else-expression} and return its value.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{set!}@fuindex set!
+@*
+@example
+@group
+(set! variable expression . rest)
+@end group
+@group
+@end group
+@end example
+
+Evaluate @code{expression} and bind its value to @code{variable}.
+@code{variable} is not evaluated.
+
+
+More than one variable and expression may be provided:
+
+@example
+@group
+     ;; assign 1 to a, 2 to b and 3 to c
+     ;;
+     (set! a 1 b 2 c 3)
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{and}@fuindex and
+@*
+@example
+@group
+(and . expressions)
+@end group
+@group
+@end group
+@end example
+
+Evaluate the expressions in order, stopping if one of them
+returns @code{#f}.  Return the value of the last expression evaluated.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{and=>}@fuindex and=>
+@*
+@example
+@group
+(and=> value thunk)
+@end group
+@group
+@end group
+@end example
+
+This is simply:
+
+@example
+@group
+     (define (and=> value thunk) (and value (thunk value)))
+@end group
+@group
+@end group
+@end example
+
+It saves you from having to invent a variable name for @code{value}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{or}@fuindex or
+@*
+@example
+@group
+(or . expressions)
+@end group
+@group
+@end group
+@end example
+
+Evaluate the expressions in order, stopping if one of them
+returns a value other than @code{#f}.  Return the value of the last 
+expression evaluated.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{case}@fuindex case
+@*
+@example
+@group
+(case expression . cases)
+@end group
+@group
+@end group
+@end example
+
+Each case must be of the form:
+
+@example
+@group
+     (values . body)
+@end group
+@group
+@end group
+@end example
+
+Each @code{values} is a list of unevaluated values or the symbol @code{else}.
+
+
+Evaluate @code{expression}.  Search for its value in the values lists,
+in order, comparing values with @code{eqv?}.  If a matching value is
+found, evaluate the expressions of the corresponding @code{body} and
+return the value of the last expression evaluated.
+
+
+If the @code{values} part of a case is @code{else}, immediate evaluate
+the corresponding body and return the value of the last expression
+evaluated.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{cond}@fuindex cond
+@*
+@example
+@group
+(cond . cases)
+@end group
+@group
+@end group
+@end example
+
+Each case must be of the form:
+
+@example
+@group
+     (test . body)
+@end group
+@group
+@end group
+@end example
+
+@noindent
+or
+
+@example
+@group
+     (test => procedure-expression)
+@end group
+@group
+@end group
+@end example
+
+Evaluate the tests, in order, until one returns a value other than @code{#f}.
+Evaluate the expressions of the corresponding @code{body} and return the
+value of the last expression. 
+
+
+If the case is of the @code{=>} form, then evaluate @code{procedure-expression} to 
+yield a procedure and apply that procedure to the value returned from @code{test}.
+Return the value of the procedure.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{extended-formals->scheme}@fuindex extended-formals->scheme
+@*
+@example
+@group
+(extended-formals->scheme lambda-exp)
+@end group
+@group
+@end group
+@end example
+
+Convert a list of formal parameters from extended syntax to ordinary
+Scheme syntax. 
+
+@example
+@group
+  I. (lambda ((a b ...) x y ...) <body>)
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     =>
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     (lambda (a b ...)
+       (lambda (x y ...)
+         <body>))
+@end group
+@group
+@end group
+@end example
+@example
+@group
+ II. (lambda (a b :optional c d . e)
+       <body>)
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     =>
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     (lambda (a b . optionals)
+       (let ((c (and (pair? optionals)
+                     (noop (car optionals)
+                           (set! optionals (cdr optionals)))))
+             (d (and (pair? optionals)
+                     (noop (car optionals)
+                           (set! optionals (cdr optionals)))))
+             (e optionals))
+         <body>))
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{lambda}@fuindex lambda
+@*
+@example
+@group
+(lambda formals . body)
+@end group
+@group
+@end group
+@end example
+
+Return a procedure.  @code{formals} and @code{body} are not evaluated.
+@code{formals} may be of one the forms:
+
+@example
+@group
+     a               ;; Accept any number of parameters, 
+                     ;; binding a list of them to `a'
+     (a b c ...)     ;; Accept the indicated number of parameters
+                     ;; binding the first to `a', the second to `b',
+                     ;; etc.
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     (a b ... . z)   ;; Accept any number of parameters, binding the
+                     ;; first to `a', the second to `b' etc. and 
+                     ;; binding all remaining parameters as a list
+                     ;; to `z'.
+@end group
+@group
+@end group
+@end example
+
+When invoked with a correct number of parameters, the expressions
+of @code{body} are evaluated in order in a context with variable bindings as
+described above.  The value of the last expression of @code{body} is returned.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{let*}@fuindex let*
+@*
+@example
+@group
+(let* bindings . body)
+@end group
+@group
+@end group
+@end example
+
+Bindings must be of the form:
+
+@example
+@group
+     ((variable init-expression) ...)
+@end group
+@group
+@end group
+@end example
+
+Each @code{init-expression} is evaluated in order and its 
+value bound to the corresponding @code{variable} (which is not evaluated).
+Each @code{init-expression} is evaluated in a scope in containing the 
+preceeding variable bindings.  
+
+
+The expressions of @code{body} are evaluated in order and the value
+of the last expression evaluated is returned.  The body is evaluated
+in the scope of all of the variables of the @code{let}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{letrec}@fuindex letrec
+@*
+@example
+@group
+(letrec bindings . body)
+@end group
+@group
+@end group
+@end example
+
+Bindings must be of the form:
+
+@example
+@group
+     ((variable init-expression) ...)
+@end group
+@group
+@end group
+@end example
+
+Each @code{init-expression} is evaluated in order and its 
+value bound to the corresponding @code{variable} (which is not 
+evaluated).  The expressions are evaluated in the scope of
+all of the variables of the @code{let*}.  If an expression references
+a value before its value is established, an error is signalled.
+
+
+The expressions of @code{body} are evaluated in order and the value
+of the last expression evaluated is returned.  The body is evaluated
+in the scope of all of the variables of the @code{letrec}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{let}@fuindex let
+@*
+@example
+@group
+(let bindings . body)
+@end group
+@group
+@end group
+@end example
+
+Bindings must be of the form:
+
+@example
+@group
+     ((variable init-expression) ...)
+@end group
+@group
+@end group
+@end example
+
+Each @code{init-expression} is evaluated in order and its 
+value bound to the corresponding @code{variable} (which is not 
+evaluated).  The expressions are evaluated outside of the scope of
+all of the variables of the @code{let}. 
+
+
+The expressions of @code{body} are evaluated in order and the value
+of the last expression evaluated is returned.  The body is evaluated
+in the scope of all of the variables of the @code{letrec}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{do}@fuindex do
+@*
+@example
+@group
+(do loop-variables return-condition . body)
+@end group
+@group
+@end group
+@end example
+
+@code{loop-variables} must be of the form:
+
+@example
+@group
+     ((variable-name init-expression step-expression) ...)
+@end group
+@group
+@end group
+@end example
+
+@code{return-condition} must be of the form:
+
+@example
+@group
+     (test-expression . body)
+@end group
+@group
+@end group
+@end example
+
+Each of the init expressions is evaluated in order to produce
+values that will be bound to the corresponding loop variables.
+
+
+Each iteration begins by evaluating @code{test-expression} in the
+context of the loop variable bindings.  If it returns a true
+value, the expressions of the return-condition body are evaluated
+in order and the value of the last expression is returned.
+
+
+If the test expression returns @code{#f}, then the expressions of the
+body are evaluated in order and then the step expressions
+are evaluated to produce bindings for the loop variables for the
+next iteration.  The loop begins again, with the evaluation of the
+test expression.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{quasiquote}@fuindex quasiquote
+@*
+@example
+@group
+(quasiquote template)
+@end group
+@group
+@end group
+@end example
+
+Quasiquote is a convenient short-hand for writing expressions that
+compose the functions and syntax @code{list}, @code{vector}, @code{cons}, and
+@code{quote}.
+
+
+Put another way, it is a convenient way to write expressions
+denoting @geindex almost constant
+@dfn{almost constant} values.
+
+
+@code{template} should be a list (possibly improper but non-circular) or
+vector.  The template is recursively copied with two exceptions.
+
+
+If an element has the form @code{(unquote exp)}, it is replaced by
+the result of evaluating @code{exp}.  A one element list beginning
+with @code{unquote} can be written using a comma:
+
+@example
+@group
+     ,exp    ;; The same as ,(exp)
+@end group
+@group
+@end group
+@end example
+
+If the final element of a proper list has the form
+@code{(unquote-splicing exp)}, then the value of evaluating @code{exp}
+becomes the tail of the list.   A one element list beginning
+with @code{unquote-splicing} can be written using the special symbol
+@code{,@@}:
+
+@example
+@group
+     ,@@exp   ;; The same as (unquote-splicing exp)
+@end group
+@group
+@end group
+@end example
+
+Here are some expamples that illustrate quasiquotation:
+
+@example
+@group
+     (let ((x 5))
+       `(1 (+ 2 3) ,(+ 4 x)))
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     => (1 (+ 2 3) 9)
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     (let ((x 5))
+       `(1 (+ 2 3) #(,(+ 4 x) a b)))
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     => (1 (+ 2 3) #(9 a b))
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     (let ((naughts '(bowman tichy)))
+       `(kelvin ,@@ naughts))
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     => (kelvin bowman tichy)
+@end group
+@group
+@end group
+@end example
+
+Quasiquotes nest, so:
+
+@example
+@group
+     ;; Note that the inner quasiquote prevents
+     ;; the outer quasiquote from evaluating one
+     ;; level of unquotes:
+     ;;
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     `(1 2 `(3 ,(+ 4 ,(+ 1 5))))
+     =>
+     (1 2 (quasiquote (3 (unquote (+ 4 6)))))
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{strong-quasiquote}@fuindex strong-quasiquote
+@*
+@example
+@group
+(strong-quasiquote exp)
+@end group
+@group
+@end group
+@end example
+
+Like @code{quasiquote} except that quoted objects are quoted with @code{strong-quote}
+instead of @code{quote}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{the-environment}@fuindex the-environment
+@*
+@example
+@group
+(the-environment)
+@end group
+@group
+@end group
+@end example
+
+Return the current environment.  This is a dangerous procedure
+since corruptions to the environment can hopelessly confuse and
+even crash the interpreter.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{delay}@fuindex delay
+@*
+@example
+@group
+(delay expression)
+@end group
+@group
+@end group
+@end example
+
+Promises are expressions whose evaluation is postponed until the
+result it will yield is needed.  The result of a promise may be
+requested more than once, but the expression is evaluated only once.
+(*Note: @code{force}.)
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{define}@fuindex define
+@*
+@example
+@group
+(define name-and-formals . definition)
+@end group
+@group
+@end group
+@end example
+
+Create a top-level binding for @code{name} to the value of @code{expression}.
+
+
+There are three forms for @code{define}:
+
+@example
+@group
+     (define name expression)
+     (define (name . formals) . body)
+     (define ((name . formals-1) . formals2) . body)
+@end group
+@group
+@end group
+@end example
+
+The second form of define:
+
+@example
+@group
+     (define (name arg1 arg2 ...)  exp1 exp2 ...)
+@end group
+@group
+@end group
+@end example
+
+@noindent
+is equivalent to:
+
+@example
+@group
+     (define name (lambda (arg1 arg2 ...) exp1 exp2...))
+@end group
+@group
+@end group
+@end example
+
+The form
+
+@example
+@group
+     (define ((name arg1 ...) arg2 ...)  exp1 exp2 ...)
+@end group
+@group
+@end group
+@end example
+
+@noindent
+means:
+
+@example
+@group
+     (define (name arg1...) (lambda (arg2 ...) exp1 exp2...))
+@end group
+@group
+@end group
+@end example
+
+The nesting can go on arbitrarily:
+
+@example
+@group
+     (define ((((name arg1...) arg2...) arg3...) arg4...) exp1 exp2 ...)
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     ;; is like:
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     (define (name arg1...)
+        (lambda (arg2...)
+           (lambda (arg3...)
+              (lambda (arg4 ...)
+                 exp1
+                 exp2
+                 ...))))
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{apply}@fuindex apply
+@*
+@example
+@group
+(apply function . arguments)
+@end group
+@group
+@end group
+@end example
+
+Apply @code{function} to the @code{arguments}.  The last argument provided is special:
+it should be a list.  Each member of the list is treated as an individual
+argument.
+
+
+For example:
+
+@example
+@group
+     (apply + 1 2 '(3 4 5)) => 15
+@end group
+@group
+@end group
+@end example
+
+
+

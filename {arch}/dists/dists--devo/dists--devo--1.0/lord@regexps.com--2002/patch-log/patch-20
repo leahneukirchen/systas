@@ -1,0 +1,32 @@
+Revision: dists--devo--1.0--patch-20
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Tue Feb 19 18:25:10 PST 2002
+Standard-date: 2002-02-20 02:25:10 GMT
+Summary: merge from `lord'
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-20
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-23
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-24
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-25
+Modified-files: =RELEASE-ID.d/=RELEASE-ID.arch
+  =RELEASE-ID.d/=RELEASE-ID.hackerlab ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  docs.d/arch/examples/README.010.first-archive
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-20
+  lord@regexps.com--2002/dists--lord--1.0--patch-23
+  lord@regexps.com--2002/dists--lord--1.0--patch-24
+  lord@regexps.com--2002/dists--lord--1.0--patch-25
+
+
+Patches applied:
+
+  * lord@regexps.com--2002/dists--lord--1.0--patch-25
+     updated release IDs
+
+  * lord@regexps.com--2002/dists--lord--1.0--patch-24
+     merge from `devo'
+
+  * lord@regexps.com--2002/dists--lord--1.0--patch-23
+     fix an error in arch examples
+

@@ -1,0 +1,515 @@
+2002-01-03  Tom Lord <lord@regexps.com>
+
+    Summary:
+      sin_len
+    Revision:
+      hackerlab--devo--1.0--patch-4
+
+    It appears to be acceptable to ignore `sin_len' in `url-socket.c' and,
+    since `sin_len' isn't portable, that's what I've done.
+    
+
+    modified files:
+     ChangeLog vu-network/url-socket.c
+
+
+2002-01-03  Tom Lord <lord@regexps.com>
+
+    Summary:
+      added patch log for public repository
+    Revision:
+      hackerlab--devo--1.0--patch-3
+
+    added patch log for public repository
+    
+
+    new files:
+     {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--public-2001Q4/patch-log/base-0
+
+    modified files:
+     ChangeLog
+
+    new patches:
+     lord@regexps.com--public-2001Q4/hackerlab--devo--1.0--base-0
+
+
+2002-01-03  Tom Lord <lord@regexps.com>
+
+    Summary:
+      bug fixes in networking code
+    Revision:
+      hackerlab--devo--1.0--patch-2
+
+    
+    A few small bug-fixes.
+    
+    In `url-socket.c': remember to initialize teh `sin_len' field of a
+    `struct sockaddr_in'.  Remember to clear a parameters structure
+    when not all of the fields are going to be filled in.
+    
+    In `safe-vu-utils-vfdbuf.c': print a more meaningful error message
+    in one case.
+    
+
+    modified files:
+     ChangeLog vu-network/url-socket.c vu/safe-vu-utils-vfdbuf.c
+
+    new directories:
+     {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--public-2001Q4
+     {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--public-2001Q4/patch-log
+
+
+2002-01-02  Tom Lord <lord@regexps.com>
+
+    Summary:
+      removed piw
+    Revision:
+      hackerlab--devo--1.0--patch-1
+
+    Removed `piw' from libhackerlab -- it should be a separate library.
+    
+
+    removed files:
+     piw-malloc/.arch-ids/=default
+     tests/piw-tests/PLUGIN/.arch-ids/=dont-care
+     tests/piw-malloc-tests/PLUGIN/.arch-ids/=dont-care
+     piw-glob/PLUGIN/.arch-ids/=dont-care
+     piw/PLUGIN/.arch-ids/=dont-care
+     piw-malloc/PLUGIN/.arch-ids/=dont-care
+     piw-printlog/PLUGIN/.arch-ids/=dont-care
+     piw-malloc/piw-malloc.c piw/gdb.c piw-malloc/malloc.h
+     piw-malloc/libc-malloc.c tests/piw-tests/unit-log.c
+     tests/piw-tests/unit-variables.c piw/=later/backtrace.c
+     piw/piw.h piw/gdb.h piw/piw.c piw-glob/piw-glob.c
+     tests/piw-malloc-tests/Makefile.in tests/piw-tests/Makefile.in
+     piw-glob/Makefile.in piw-printlog/Makefile.in piw/Makefile.in
+     tests/piw-tests/unit-log.sh tests/piw-tests/unit-variables.sh
+     tests/piw-malloc-tests/unit-malloc.sh piw/instrumentation.doc
+     piw-malloc/=scaffolding/log-formats.scm
+     tests/piw-printlog-tests/DESC tests/piw-tests/DESC
+     tests/piw-glob-tests/DESC
+     piw-malloc/=scaffolding/log-cogen.scm piw-malloc/libc-malloc.h
+     piw/variables.h piw-malloc/errno.h piw-malloc/errno.c
+     piw/log.c piw/log.h piw-malloc/watchpt-breakpoints.c
+     piw-printlog/piw-printlog.c piw/variables.c
+     tests/piw-malloc-tests/unit-malloc.c
+     piw-malloc/piw-write-barriers.h piw-glob/PLUGIN/REQ
+     piw-malloc/PLUGIN/REQ piw-printlog/PLUGIN/REQ piw/PLUGIN/REQ
+     tests/piw-malloc-tests/PLUGIN/REQ tests/piw-tests/PLUGIN/REQ
+     piw-malloc/Makefile.in piw-malloc/gcc.c
+     piw-malloc/log-printing.c piw-malloc/log-printing.h
+     piw-malloc/logging.c piw-malloc/logging.h
+     piw-malloc/piw-malloc.doc piw-malloc/piw-malloc.h
+     piw-malloc/piw-variables.c piw-malloc/piw-variables.h
+     piw-malloc/piw-write-barriers.c
+     piw-malloc/watchpt-breakpoints.h
+     piw-malloc/write-barrier-breakpoints.c
+     piw-malloc/write-barrier-breakpoints.h
+     piw-malloc/write-barriers.c piw-malloc/write-barriers.h
+
+    modified files:
+     ChangeLog Makefile.in
+
+    removed directories:
+     piw piw-glob piw-glob/PLUGIN piw-malloc/=scaffolding
+     piw-malloc/PLUGIN piw-printlog piw-printlog/PLUGIN piw/=later
+     piw/PLUGIN tests/piw-glob-tests tests/piw-malloc-tests
+     tests/piw-malloc-tests/PLUGIN tests/piw-printlog-tests
+     tests/piw-tests tests/piw-tests/PLUGIN
+     piw-glob/PLUGIN/.arch-ids piw-malloc/.arch-ids
+     piw-malloc/PLUGIN/.arch-ids piw-printlog/PLUGIN/.arch-ids
+     piw/PLUGIN/.arch-ids tests/piw-malloc-tests/PLUGIN/.arch-ids
+     tests/piw-tests/PLUGIN/.arch-ids piw-malloc
+
+
+2001-12-29  Tom Lord <lord@regexps.com>
+
+    Summary:
+      initial import
+    Revision:
+      hackerlab--devo--1.0--base-0
+
+    initial import
+
+    new files:
+     ./ChangeLog ./Makefile.in ./PLUGIN ./PLUGIN/.arch-ids
+     ./PLUGIN/.arch-ids/=dont-care ./PLUGIN/DIRS ./PLUGIN/REQ
+     ./arrays ./arrays/Makefile.in ./arrays/PLUGIN
+     ./arrays/PLUGIN/.arch-ids ./arrays/PLUGIN/.arch-ids/=dont-care
+     ./arrays/PLUGIN/REQ ./arrays/ar.c ./arrays/ar.h
+     ./arrays/arrays.doc ./arrays/pow2-array-compact.c
+     ./arrays/pow2-array-compact.h ./arrays/pow2-array-print.c
+     ./arrays/pow2-array-print.h ./arrays/pow2-array.c
+     ./arrays/pow2-array.h ./bitsets ./bitsets/=scaffolding
+     ./bitsets/=scaffolding/=ffc.c ./bitsets/=scaffolding/=ffs.c
+     ./bitsets/Makefile.in ./bitsets/PLUGIN
+     ./bitsets/PLUGIN/.arch-ids
+     ./bitsets/PLUGIN/.arch-ids/=dont-care ./bitsets/PLUGIN/REQ
+     ./bitsets/bits-print.c ./bitsets/bits-print.h ./bitsets/bits.c
+     ./bitsets/bits.h ./bitsets/bitset-print.c
+     ./bitsets/bitset-print.h ./bitsets/bitset-tree-print.c
+     ./bitsets/bitset-tree-print.h ./bitsets/bitset-tree.c
+     ./bitsets/bitset-tree.h ./bitsets/bitset.c ./bitsets/bitset.h
+     ./bitsets/bitsets-data-sheet.doc ./bitsets/bitsets.doc
+     ./bitsets/uni-bits.c ./bitsets/uni-bits.h ./bugs
+     ./bugs/Makefile.in ./bugs/PLUGIN ./bugs/PLUGIN/.arch-ids
+     ./bugs/PLUGIN/.arch-ids/=dont-care ./bugs/PLUGIN/REQ
+     ./bugs/bugs.doc ./bugs/panic-exit.c ./bugs/panic-exit.h
+     ./bugs/panic.c ./bugs/panic.h ./bugs/test-coverage.h ./char
+     ./char/=scaffolding ./char/=scaffolding/=names.c
+     ./char/Makefile.in ./char/PLUGIN ./char/PLUGIN/.arch-ids
+     ./char/PLUGIN/.arch-ids/=dont-care ./char/PLUGIN/REQ
+     ./char/char-class.c ./char/char-class.h ./char/char-name.c
+     ./char/char-name.h ./char/character-and-string.doc
+     ./char/str.c ./char/str.h ./cmd ./cmd/Makefile.in ./cmd/PLUGIN
+     ./cmd/PLUGIN/.arch-ids ./cmd/PLUGIN/.arch-ids/=dont-care
+     ./cmd/PLUGIN/REQ ./cmd/main.h ./cmd/opt.c ./cmd/opt.h ./fmt
+     ./fmt/=scaffolding ./fmt/=scaffolding/=pow2-base100-tables.scm
+     ./fmt/Makefile.in ./fmt/PLUGIN ./fmt/PLUGIN/.arch-ids
+     ./fmt/PLUGIN/.arch-ids/=dont-care ./fmt/PLUGIN/REQ
+     ./fmt/conversions.doc ./fmt/cvt-double-constants.h
+     ./fmt/cvt-double-tables.h ./fmt/cvt-double.c
+     ./fmt/cvt-double.h ./fmt/cvt.c ./fmt/cvt.h ./fs
+     ./fs/Makefile.in ./fs/PLUGIN ./fs/PLUGIN/.arch-ids
+     ./fs/PLUGIN/.arch-ids/=dont-care ./fs/PLUGIN/REQ
+     ./fs/file-names.c ./fs/file-names.h ./hash ./hash/=scaffolding
+     ./hash/=scaffolding/=shuffle.c
+     ./hash/=scaffolding/=shuffle2-8.c
+     ./hash/=scaffolding/=shuffle2.c ./hash/Makefile.in
+     ./hash/PLUGIN ./hash/PLUGIN/.arch-ids
+     ./hash/PLUGIN/.arch-ids/=dont-care ./hash/PLUGIN/REQ
+     ./hash/hash-utils.c ./hash/hash-utils.h ./hash/hashing.doc
+     ./hash/hashtree.c ./hash/hashtree.h ./libboot
+     ./libboot/Makefile.in ./libboot/PLUGIN
+     ./libboot/PLUGIN/.arch-ids
+     ./libboot/PLUGIN/.arch-ids/=dont-care ./libboot/PLUGIN/REQ
+     ./libboot2 ./libboot2/Makefile.in ./libboot2/PLUGIN
+     ./libboot2/PLUGIN/.arch-ids
+     ./libboot2/PLUGIN/.arch-ids/=dont-care ./libboot2/PLUGIN/REQ
+     ./libhackerlab ./libhackerlab/Makefile.in
+     ./libhackerlab/PLUGIN ./libhackerlab/PLUGIN/.arch-ids
+     ./libhackerlab/PLUGIN/.arch-ids/=dont-care
+     ./libhackerlab/PLUGIN/REQ ./libhackerlab/bigpic.doc
+     ./libhackerlab/document-license.doc ./libhackerlab/indexes.doc
+     ./libhackerlab/introduction.doc
+     ./libhackerlab/libhackerlab.doc ./libhackerlab/on-hacking.doc
+     ./libhackerlab/portability.doc ./libhackerlab/prefixes.doc
+     ./libhackerlab/source-license.doc ./machine ./machine/=README
+     ./machine/Makefile.in ./machine/PLUGIN
+     ./machine/PLUGIN/.arch-ids
+     ./machine/PLUGIN/.arch-ids/=dont-care ./machine/PLUGIN/REQ
+     ./machine/endian.sh ./machine/gen-alignment.to-c
+     ./machine/machine.doc ./machine/types.h ./mem
+     ./mem/Makefile.in ./mem/PLUGIN ./mem/PLUGIN/.arch-ids
+     ./mem/PLUGIN/.arch-ids/=dont-care ./mem/PLUGIN/REQ
+     ./mem/alloc-limits.c ./mem/alloc-limits.h ./mem/mem.c
+     ./mem/mem.h ./mem/memory.doc ./mem/must-malloc.c
+     ./mem/must-malloc.h ./os ./os/=README ./os/Makefile.in
+     ./os/PLUGIN ./os/PLUGIN/.arch-ids
+     ./os/PLUGIN/.arch-ids/=dont-care ./os/PLUGIN/REQ ./os/arpa
+     ./os/arpa/inet.h ./os/char-class-locale.c
+     ./os/char-class-locale.h ./os/char-cmp-locale.c
+     ./os/char-cmp-locale.h ./os/dirent.h ./os/errno-to-string.c
+     ./os/errno-to-string.h ./os/errno.h ./os/exit-status.gen
+     ./os/exit.c ./os/exit.h ./os/fcntl.h ./os/limits.h
+     ./os/malloc.h ./os/math.h ./os/netdb.h ./os/netinet
+     ./os/netinet/in.h ./os/pwd.h ./os/setjmp.h ./os/signal.h
+     ./os/stdarg.h ./os/stddef.h ./os/stdlib.h ./os/sys
+     ./os/sys/param.h ./os/sys/socket.h ./os/sys/stat.h
+     ./os/sys/time.h ./os/sys/types.h ./os/sys/un.h ./os/sys/wait.h
+     ./os/unistd.h ./os/utime.h ./piw ./piw-glob
+     ./piw-glob/Makefile.in ./piw-glob/PLUGIN
+     ./piw-glob/PLUGIN/.arch-ids
+     ./piw-glob/PLUGIN/.arch-ids/=dont-care ./piw-glob/PLUGIN/REQ
+     ./piw-glob/piw-glob.c ./piw-malloc ./piw-malloc/.arch-ids
+     ./piw-malloc/.arch-ids/=default ./piw-malloc/=scaffolding
+     ./piw-malloc/=scaffolding/log-cogen.scm
+     ./piw-malloc/=scaffolding/log-formats.scm
+     ./piw-malloc/Makefile.in ./piw-malloc/PLUGIN
+     ./piw-malloc/PLUGIN/.arch-ids
+     ./piw-malloc/PLUGIN/.arch-ids/=dont-care
+     ./piw-malloc/PLUGIN/REQ ./piw-malloc/errno.c
+     ./piw-malloc/errno.h ./piw-malloc/gcc.c
+     ./piw-malloc/libc-malloc.c ./piw-malloc/libc-malloc.h
+     ./piw-malloc/log-printing.c ./piw-malloc/log-printing.h
+     ./piw-malloc/logging.c ./piw-malloc/logging.h
+     ./piw-malloc/malloc.h ./piw-malloc/piw-malloc.c
+     ./piw-malloc/piw-malloc.doc ./piw-malloc/piw-malloc.h
+     ./piw-malloc/piw-variables.c ./piw-malloc/piw-variables.h
+     ./piw-malloc/piw-write-barriers.c
+     ./piw-malloc/piw-write-barriers.h
+     ./piw-malloc/watchpt-breakpoints.c
+     ./piw-malloc/watchpt-breakpoints.h
+     ./piw-malloc/write-barrier-breakpoints.c
+     ./piw-malloc/write-barrier-breakpoints.h
+     ./piw-malloc/write-barriers.c ./piw-malloc/write-barriers.h
+     ./piw-printlog ./piw-printlog/Makefile.in
+     ./piw-printlog/PLUGIN ./piw-printlog/PLUGIN/.arch-ids
+     ./piw-printlog/PLUGIN/.arch-ids/=dont-care
+     ./piw-printlog/PLUGIN/REQ ./piw-printlog/piw-printlog.c
+     ./piw/=later ./piw/=later/backtrace.c ./piw/Makefile.in
+     ./piw/PLUGIN ./piw/PLUGIN/.arch-ids
+     ./piw/PLUGIN/.arch-ids/=dont-care ./piw/PLUGIN/REQ ./piw/gdb.c
+     ./piw/gdb.h ./piw/instrumentation.doc ./piw/log.c ./piw/log.h
+     ./piw/piw.c ./piw/piw.h ./piw/variables.c ./piw/variables.h
+     ./rx ./rx-posix ./rx-posix/Makefile.in ./rx-posix/PLUGIN
+     ./rx-posix/PLUGIN/.arch-ids
+     ./rx-posix/PLUGIN/.arch-ids/=dont-care ./rx-posix/PLUGIN/REQ
+     ./rx-posix/dup-max.h ./rx-posix/errnorx.c ./rx-posix/errnorx.h
+     ./rx-posix/introduction-to-regexps.doc ./rx-posix/limits.h
+     ./rx-posix/match-regexp.c ./rx-posix/match-regexp.h
+     ./rx-posix/performance-hints.c ./rx-posix/posix-regexps.doc
+     ./rx-posix/posix.c ./rx-posix/posix.h ./rx-posix/re8-parse.c
+     ./rx-posix/re8-parse.h ./rx-posix/regex.h ./rx-posix/regexps.h
+     ./rx-posix/rx-posix-data-sheet.doc ./rx-xml
+     ./rx-xml/Makefile.in ./rx-xml/PLUGIN ./rx-xml/PLUGIN/.arch-ids
+     ./rx-xml/PLUGIN/.arch-ids/=dont-care ./rx-xml/PLUGIN/REQ
+     ./rx-xml/comments.doc ./rx-xml/introduction-to-xml-re.doc
+     ./rx-xml/re.c ./rx-xml/re.h ./rx-xml/rx-xml-data-sheet.doc
+     ./rx-xml/using.doc ./rx-xml/xml-re.doc ./rx/Makefile.in
+     ./rx/PLUGIN ./rx/PLUGIN/.arch-ids
+     ./rx/PLUGIN/.arch-ids/=dont-care ./rx/PLUGIN/REQ
+     ./rx/bits-tree-rules.c ./rx/bits-tree-rules.h
+     ./rx/cache-sizes.doc ./rx/dbug.c ./rx/dbug.h ./rx/dfa-cache.c
+     ./rx/dfa-cache.h ./rx/dfa-iso8859-1.c ./rx/dfa-iso8859-1.h
+     ./rx/dfa-utf16.c ./rx/dfa-utf16.h ./rx/dfa-utf8.c
+     ./rx/dfa-utf8.h ./rx/dfa.c ./rx/dfa.h ./rx/escape.c
+     ./rx/escape.h ./rx/nfa-cache.c ./rx/nfa-cache.h ./rx/nfa.c
+     ./rx/nfa.h ./rx/regexps-formally.c ./rx/super.c ./rx/super.h
+     ./rx/tree.c ./rx/tree.h ./rx/tuning.doc ./sb ./sb/Makefile.in
+     ./sb/PLUGIN ./sb/PLUGIN/.arch-ids
+     ./sb/PLUGIN/.arch-ids/=dont-care ./sb/PLUGIN/REQ ./sb/sb.c
+     ./tests ./tests/Makefile.in ./tests/PLUGIN
+     ./tests/PLUGIN/.arch-ids ./tests/PLUGIN/.arch-ids/=dont-care
+     ./tests/PLUGIN/DIRS ./tests/PLUGIN/REQ ./tests/arrays-tests
+     ./tests/arrays-tests/DESC ./tests/arrays-tests/Makefile.in
+     ./tests/arrays-tests/PLUGIN
+     ./tests/arrays-tests/PLUGIN/.arch-ids
+     ./tests/arrays-tests/PLUGIN/.arch-ids/=dont-care
+     ./tests/arrays-tests/PLUGIN/REQ ./tests/arrays-tests/unit-ar.c
+     ./tests/arrays-tests/unit-ar.sh
+     ./tests/arrays-tests/unit-pow2-array.c
+     ./tests/arrays-tests/unit-pow2-array.sh ./tests/bitset-tests
+     ./tests/bitset-tests/.arch-ids
+     ./tests/bitset-tests/.arch-ids/=default
+     ./tests/bitset-tests/=scaffolding
+     ./tests/bitset-tests/=scaffolding/gen-bitset-test.scm
+     ./tests/bitset-tests/DESC ./tests/bitset-tests/Makefile.in
+     ./tests/bitset-tests/PLUGIN
+     ./tests/bitset-tests/PLUGIN/.arch-ids
+     ./tests/bitset-tests/PLUGIN/.arch-ids/=dont-care
+     ./tests/bitset-tests/PLUGIN/OPT
+     ./tests/bitset-tests/PLUGIN/REQ
+     ./tests/bitset-tests/unit-bits.c
+     ./tests/bitset-tests/unit-bits.sh
+     ./tests/bitset-tests/unit-bitset-tree.c
+     ./tests/bitset-tests/unit-bitset-tree.sh
+     ./tests/bitset-tests/unit-bitset.answers
+     ./tests/bitset-tests/unit-bitset.c
+     ./tests/bitset-tests/unit-bitset.sh
+     ./tests/bitset-tests/unit-bitset.tests ./tests/bugs-tests
+     ./tests/bugs-tests/.arch-ids
+     ./tests/bugs-tests/.arch-ids/=default ./tests/bugs-tests/DESC
+     ./tests/bugs-tests/Makefile.in ./tests/bugs-tests/PLUGIN
+     ./tests/bugs-tests/PLUGIN/.arch-ids
+     ./tests/bugs-tests/PLUGIN/.arch-ids/=dont-care
+     ./tests/bugs-tests/PLUGIN/REQ ./tests/bugs-tests/unit-panic.c
+     ./tests/bugs-tests/unit-panic.panic-msg
+     ./tests/bugs-tests/unit-panic.sh
+     ./tests/bugs-tests/unit-test-coverage.c
+     ./tests/bugs-tests/unit-test-coverage.sh ./tests/char-tests
+     ./tests/char-tests/.arch-ids
+     ./tests/char-tests/.arch-ids/=default ./tests/char-tests/DESC
+     ./tests/char-tests/Makefile.in ./tests/char-tests/PLUGIN
+     ./tests/char-tests/PLUGIN/.arch-ids
+     ./tests/char-tests/PLUGIN/.arch-ids/=dont-care
+     ./tests/char-tests/PLUGIN/REQ
+     ./tests/char-tests/unit-char-class.c
+     ./tests/char-tests/unit-char-class.h
+     ./tests/char-tests/unit-char-class.sh
+     ./tests/char-tests/unit-char-name.c
+     ./tests/char-tests/unit-char-name.h
+     ./tests/char-tests/unit-char-name.sh
+     ./tests/char-tests/unit-str.c ./tests/char-tests/unit-str.sh
+     ./tests/fmt-tests ./tests/fmt-tests/DESC
+     ./tests/fmt-tests/Makefile.in ./tests/fmt-tests/PLUGIN
+     ./tests/fmt-tests/PLUGIN/.arch-ids
+     ./tests/fmt-tests/PLUGIN/.arch-ids/=dont-care
+     ./tests/fmt-tests/PLUGIN/REQ ./tests/fmt-tests/unit-cvt.c
+     ./tests/fmt-tests/unit-cvt.sh ./tests/fs-tests
+     ./tests/fs-tests/DESC ./tests/fs-tests/Makefile.in
+     ./tests/fs-tests/PLUGIN ./tests/fs-tests/PLUGIN/.arch-ids
+     ./tests/fs-tests/PLUGIN/.arch-ids/=dont-care
+     ./tests/fs-tests/PLUGIN/REQ ./tests/fs-tests/unit-file-names.c
+     ./tests/fs-tests/unit-file-names.sh ./tests/hash-tests
+     ./tests/hash-tests/.arch-ids
+     ./tests/hash-tests/.arch-ids/=default
+     ./tests/hash-tests/=scaffolding
+     ./tests/hash-tests/=scaffolding/gen-hashtree-test.scm
+     ./tests/hash-tests/DESC ./tests/hash-tests/Makefile.in
+     ./tests/hash-tests/PLUGIN ./tests/hash-tests/PLUGIN/.arch-ids
+     ./tests/hash-tests/PLUGIN/.arch-ids/=dont-care
+     ./tests/hash-tests/PLUGIN/REQ
+     ./tests/hash-tests/unit-hash-utils.c
+     ./tests/hash-tests/unit-hash-utils.sh
+     ./tests/hash-tests/unit-hashtree.answers
+     ./tests/hash-tests/unit-hashtree.c
+     ./tests/hash-tests/unit-hashtree.script
+     ./tests/hash-tests/unit-hashtree.sh ./tests/machine-tests
+     ./tests/machine-tests/DESC ./tests/machine-tests/Makefile.in
+     ./tests/machine-tests/PLUGIN
+     ./tests/machine-tests/PLUGIN/.arch-ids
+     ./tests/machine-tests/PLUGIN/.arch-ids/=dont-care
+     ./tests/machine-tests/PLUGIN/REQ ./tests/mem-tests
+     ./tests/mem-tests/DESC ./tests/mem-tests/Makefile.in
+     ./tests/mem-tests/PLUGIN ./tests/mem-tests/PLUGIN/.arch-ids
+     ./tests/mem-tests/PLUGIN/.arch-ids/=dont-care
+     ./tests/mem-tests/PLUGIN/REQ
+     ./tests/mem-tests/unit-alloc-limits.c
+     ./tests/mem-tests/unit-alloc-limits.sh
+     ./tests/mem-tests/unit-mem.c ./tests/mem-tests/unit-mem.sh
+     ./tests/mem-tests/unit-must-malloc.c
+     ./tests/mem-tests/unit-must-malloc.sh ./tests/os-tests
+     ./tests/os-tests/DESC ./tests/os-tests/Makefile.in
+     ./tests/os-tests/PLUGIN ./tests/os-tests/PLUGIN/.arch-ids
+     ./tests/os-tests/PLUGIN/.arch-ids/=dont-care
+     ./tests/os-tests/PLUGIN/REQ ./tests/piw-glob-tests
+     ./tests/piw-glob-tests/DESC ./tests/piw-malloc-tests
+     ./tests/piw-malloc-tests/Makefile.in
+     ./tests/piw-malloc-tests/PLUGIN
+     ./tests/piw-malloc-tests/PLUGIN/.arch-ids
+     ./tests/piw-malloc-tests/PLUGIN/.arch-ids/=dont-care
+     ./tests/piw-malloc-tests/PLUGIN/REQ
+     ./tests/piw-malloc-tests/unit-malloc.c
+     ./tests/piw-malloc-tests/unit-malloc.sh
+     ./tests/piw-printlog-tests ./tests/piw-printlog-tests/DESC
+     ./tests/piw-tests ./tests/piw-tests/DESC
+     ./tests/piw-tests/Makefile.in ./tests/piw-tests/PLUGIN
+     ./tests/piw-tests/PLUGIN/.arch-ids
+     ./tests/piw-tests/PLUGIN/.arch-ids/=dont-care
+     ./tests/piw-tests/PLUGIN/REQ ./tests/piw-tests/unit-log.c
+     ./tests/piw-tests/unit-log.sh
+     ./tests/piw-tests/unit-variables.c
+     ./tests/piw-tests/unit-variables.sh ./tests/rx-posix-tests
+     ./tests/rx-posix-tests/=generic-test-regex.c
+     ./tests/rx-posix-tests/=pseudo-grep.c
+     ./tests/rx-posix-tests/DESC ./tests/rx-posix-tests/Makefile.in
+     ./tests/rx-posix-tests/PLUGIN
+     ./tests/rx-posix-tests/PLUGIN/.arch-ids
+     ./tests/rx-posix-tests/PLUGIN/.arch-ids/=dont-care
+     ./tests/rx-posix-tests/PLUGIN/REQ
+     ./tests/rx-posix-tests/posix-test-cases.h
+     ./tests/rx-posix-tests/test-cases.h
+     ./tests/rx-posix-tests/test-dbug.c
+     ./tests/rx-posix-tests/test-decls.h
+     ./tests/rx-posix-tests/test-rx-size.c
+     ./tests/rx-posix-tests/test-rx.c
+     ./tests/rx-posix-tests/test-rx.h
+     ./tests/rx-posix-tests/test-rx.scm
+     ./tests/rx-posix-tests/test-rx.sh
+     ./tests/rx-posix-tests/test-search.c
+     ./tests/rx-posix-tests/unit-regex.c ./tests/rx-tests
+     ./tests/rx-tests/DESC ./tests/rx-tests/Makefile.in
+     ./tests/rx-tests/PLUGIN ./tests/rx-tests/PLUGIN/.arch-ids
+     ./tests/rx-tests/PLUGIN/.arch-ids/=dont-care
+     ./tests/rx-tests/PLUGIN/REQ
+     ./tests/rx-tests/unit-dfa-iso8859-1.c
+     ./tests/rx-tests/unit-dfa-iso8859-1.sh
+     ./tests/rx-tests/unit-dfa-utf-no-surrogates.c
+     ./tests/rx-tests/unit-dfa-utf-no-surrogates.sh
+     ./tests/rx-tests/unit-dfa-utf.c
+     ./tests/rx-tests/unit-dfa-utf.sh
+     ./tests/rx-tests/unit-dfa-utf16.c
+     ./tests/rx-tests/unit-dfa-utf16.sh
+     ./tests/rx-tests/unit-dfa-utf8.c
+     ./tests/rx-tests/unit-dfa-utf8.sh ./tests/rx-xml-tests
+     ./tests/rx-xml-tests/Makefile.in ./tests/rx-xml-tests/PLUGIN
+     ./tests/rx-xml-tests/PLUGIN/.arch-ids
+     ./tests/rx-xml-tests/PLUGIN/.arch-ids/=dont-care
+     ./tests/rx-xml-tests/PLUGIN/REQ
+     ./tests/rx-xml-tests/test-time-re.c
+     ./tests/rx-xml-tests/tests.c ./tests/rx-xml-tests/tests.h
+     ./tests/rx-xml-tests/unit-re.c ./tests/rx-xml-tests/unit-re.sh
+     ./tests/uni-tests ./tests/uni-tests/.arch-ids
+     ./tests/uni-tests/.arch-ids/=default ./tests/uni-tests/DESC
+     ./tests/uni-tests/Makefile.in ./tests/uni-tests/PLUGIN
+     ./tests/uni-tests/PLUGIN/.arch-ids
+     ./tests/uni-tests/PLUGIN/.arch-ids/=dont-care
+     ./tests/uni-tests/PLUGIN/REQ ./tests/uni-tests/cvtutf.c
+     ./tests/uni-tests/cvtutf.h ./tests/uni-tests/demo.utf8
+     ./tests/uni-tests/unit-coding.c
+     ./tests/uni-tests/unit-coding.sh ./tests/uni-tests/unit-cvt.c
+     ./tests/unidata-tests ./tests/unidata-tests/DESC
+     ./tests/unidata-tests/Makefile.in ./tests/unidata-tests/PLUGIN
+     ./tests/unidata-tests/PLUGIN/.arch-ids
+     ./tests/unidata-tests/PLUGIN/.arch-ids/=dont-care
+     ./tests/unidata-tests/PLUGIN/REQ
+     ./tests/unidata-tests/unit-unidata.c
+     ./tests/unidata-tests/unit-unidata.sh ./uni ./uni/Makefile.in
+     ./uni/PLUGIN ./uni/PLUGIN/.arch-ids
+     ./uni/PLUGIN/.arch-ids/=dont-care ./uni/PLUGIN/REQ
+     ./uni/coding-inlines.c ./uni/coding-inlines.h ./uni/coding.c
+     ./uni/coding.h ./uni/invariant.h ./uni/unidata.c
+     ./uni/unidata.h ./unicode ./unicode/=comparison
+     ./unicode/=later ./unicode/=later/uni-str-inlines.c
+     ./unicode/=later/uni-str-inlines.h ./unicode/=later/uni-str.c
+     ./unicode/=later/uni-str.h ./unicode/=later/unichar-str.c
+     ./unicode/=later/unichar-str.h ./unicode/=why-unicode.doc
+     ./unicode/Makefile.in ./unicode/PLUGIN
+     ./unicode/PLUGIN/.arch-ids
+     ./unicode/PLUGIN/.arch-ids/=dont-care ./unicode/PLUGIN/REQ
+     ./unicode/coding.doc ./unicode/introduction-to-unicode.doc
+     ./unicode/unicode.c ./unicode/unicode.doc ./unicode/unicode.h
+     ./unicode/unidata.h ./unidata ./unidata-scaffolding
+     ./unidata-scaffolding/.arch-ids
+     ./unidata-scaffolding/.arch-ids/=default
+     ./unidata-scaffolding/Makefile.in ./unidata-scaffolding/PLUGIN
+     ./unidata-scaffolding/PLUGIN/.arch-ids
+     ./unidata-scaffolding/PLUGIN/.arch-ids/=dont-care
+     ./unidata-scaffolding/PLUGIN/REQ
+     ./unidata-scaffolding/unidata-generate.c
+     ./unidata-scaffolding/unidata.txt ./unidata/=later
+     ./unidata/=later/bitsets.h
+     ./unidata/=later/categories-constants.h ./unidata/=later/db.h
+     ./unidata/=later/decomp.h ./unidata/=later/numbers.h
+     ./unidata/=later/uni-pow2-array.c
+     ./unidata/=later/uni-pow2-array.h ./unidata/=unidata-size.c
+     ./unidata/=unidata-size2.c ./unidata/Makefile.in
+     ./unidata/PLUGIN ./unidata/PLUGIN/.arch-ids
+     ./unidata/PLUGIN/.arch-ids/=dont-care ./unidata/PLUGIN/REQ
+     ./unidata/bitset-lookup.c ./unidata/bitset-lookup.h
+     ./unidata/blocks.c ./unidata/blocks.h
+     ./unidata/case-db-inlines.c ./unidata/case-db-inlines.h
+     ./unidata/case-db-macros.h ./unidata/coding.h
+     ./unidata/combine-db-macros.h ./unidata/db-inlines.c
+     ./unidata/db-inlines.h ./unidata/db-macros.h
+     ./unidata/decomp-db-macros.h ./unidata/unidata-data-sheet.doc
+     ./unidata/unidata.h ./vu ./vu-network ./vu-network/Makefile.in
+     ./vu-network/PLUGIN ./vu-network/PLUGIN/.arch-ids
+     ./vu-network/PLUGIN/.arch-ids/=dont-care
+     ./vu-network/PLUGIN/REQ ./vu-network/url-socket.c
+     ./vu-network/url-socket.h ./vu/Makefile.in ./vu/PLUGIN
+     ./vu/PLUGIN/.arch-ids ./vu/PLUGIN/.arch-ids/=dont-care
+     ./vu/PLUGIN/REQ ./vu/printfmt-va.c ./vu/printfmt-va.h
+     ./vu/printfmt.c ./vu/printfmt.h ./vu/reserv.c ./vu/reserv.h
+     ./vu/safe-printfmt.c ./vu/safe-printfmt.h ./vu/safe-vfdbuf.c
+     ./vu/safe-vfdbuf.h ./vu/safe-vu-utils-vfdbuf.c
+     ./vu/safe-vu-utils-vfdbuf.h ./vu/safe-vu-utils.c
+     ./vu/safe-vu-utils.h ./vu/safe.c ./vu/safe.h ./vu/url-fd.c
+     ./vu/url-fd.h ./vu/vfdbuf.c ./vu/vfdbuf.h ./vu/vu-bad-arg.c
+     ./vu/vu-bad-arg.h ./vu/vu-dash.c ./vu/vu-dash.h ./vu/vu-help.c
+     ./vu/vu-help.h ./vu/vu-sys.c ./vu/vu-sys.h
+     ./vu/vu-utils-vfdbuf.c ./vu/vu-utils-vfdbuf.h ./vu/vu-utils.c
+     ./vu/vu-utils.h ./vu/vu-virtual-null.c ./vu/vu-virtual-null.h
+     ./vu/vu.c ./vu/vu.h ./xml ./xml-scaffolding
+     ./xml-scaffolding/Makefile.in ./xml-scaffolding/PLUGIN
+     ./xml-scaffolding/PLUGIN/.arch-ids
+     ./xml-scaffolding/PLUGIN/.arch-ids/=dont-care
+     ./xml-scaffolding/PLUGIN/REQ ./xml-scaffolding/xml-generate.c
+     ./xml/Makefile.in ./xml/PLUGIN ./xml/PLUGIN/.arch-ids
+     ./xml/PLUGIN/.arch-ids/=dont-care ./xml/PLUGIN/REQ
+     ./xml/charsets.h ./xml/xml.doc
+
+
+# tag: Tom Lord Mon Jan  7 02:16:05 2002 (lord@regexps.com--2001Q4/ChangeLog.devo)
+#

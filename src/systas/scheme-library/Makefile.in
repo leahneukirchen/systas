@@ -1,0 +1,5 @@
+
+include $(makefiles)/install-scm-subdirs.mk
+
+# tag: Tom Lord Tue Dec  4 14:52:20 2001 (scheme-library/Makefile.in)
+#

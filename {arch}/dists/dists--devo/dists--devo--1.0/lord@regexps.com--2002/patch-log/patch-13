@@ -1,0 +1,19 @@
+Revision: dists--devo--1.0--patch-13
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon Feb  4 17:54:53 PST 2002
+Standard-date: 2002-02-04
+Summary: added a generic config file for arch
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-13
+  configs/local/devo.arch
+New-directories: configs/local
+Modified-files: =RELEASE-ID.d/=RELEASE-ID.arch ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-13
+
+
+The new config file consults the default archive, rather than
+lord@regexps.com--2002 explicitly.  This is for people who want 
+to make their own branches of the arch sub-projects.
+

@@ -1,0 +1,23 @@
+# 
+# Check out an arch distribution from the `lord' branches.  
+# Latest revisions.
+#
+
+./src                   lord@regexps.com--2002/package-framework--lord
+./src/arch              lord@regexps.com--2002/arch--lord
+./src/file-utils        lord@regexps.com--2002/file-utils--lord
+./src/ftp-utils         lord@regexps.com--2002/ftp-utils--lord
+./src/hackerlab         lord@regexps.com--2002/hackerlab--lord
+./src/shell-utils	lord@regexps.com--2002/shell-utils--lord
+./src/text-utils        lord@regexps.com--2002/text-utils--lord
+
+./src/labnotes/=authdata		lord@regexps.com--2002/AuthData--labnotes
+./src/labnotes/AboutThisLibrary.d	lord@regexps.com--2002/AboutThisLibrary--labnotes
+./src/labnotes/ArchRevCtl.d	lord@regexps.com--2002/ArchRevCtl--labnotes
+./src/labnotes/LabNotes.d	lord@regexps.com--2002/LabNotes--labnotes
+./src/labnotes/LabNotesSystem.d	lord@regexps.com--2002/LabNotesSystem--labnotes
+./src/labnotes/LibHackerlab.d	lord@regexps.com--2002/LibHackerlab--labnotes
+
+
+# tag: Tom Lord Mon Jan  7 02:47:40 2002 (lord@regexps.com--2002/lord.arch)
+#

@@ -1,0 +1,51 @@
+/* tag: Tom Lord Tue Dec  4 14:57:16 2001 (coding.doc)
+ */
+/************************************************************************
+ *(h1 "Naming Unicode Coding Forms"
+ *    :include ("hackerlab/unicode/coding.h"))
+ * 
+ */
+
+
+/*(c uni_encoding_schemes :category type)
+ * enum uni_encoding_schemes;
+ * 
+ * Values of the enumerated type `uni_encoding_schemes' are used in
+ * interfaces throughout the Hackerlab C library to identify encoding
+ * schemes for strings or streams of Unicode characters.  (See
+ * xref:"An Absurdly Brief Introduction to Unicode".)
+ * 
+ *      enum uni_encoding_schemes
+ *       {
+ *         uni_iso8859_1,
+ *         uni_utf8,
+ *         uni_utf16,
+ *         uni_utf16be,
+ *         uni_utf16le,
+ *       };	
+ * 
+ * `uni_iso8859_1' refers to a degenerate encoding scheme.  Each
+ * character is stored in one byte.  Only characters in the
+ * range `U+0000 .. U+00FF' can be represented.
+ * 
+ * `uni_utf8' refers to the UTF-8 encoding scheme.
+ * 
+ * `uni_utf16' refers to UTF-16 in the native byte order of
+ * the machine.
+ * 
+ * `uni_utf16be' refers to UTF-16, explicitly in big-endian order.
+ * 
+ * `uni_utf16le' refers to UTF-16, explicitly in little-endian order.
+ * 
+ * 
+ * Some low-level functions in the Hackerlab C library work with 
+ * any of these five encodings.  Higher-level functions work
+ * only with `uni_iso8859_1', `uni_utf8', and `uni_utf16'.
+ * 
+ * Code units in a `uni_utf8' string are of type `t_uchar' (unsigned,
+ * 8-bit integer).  Code units in a `uni_utf16' string are of type
+ * `t_unichar' (unsigned 16-bit integer).  Unicode code points are
+ * of type `t_unicode'.  (See xref:"Machine-Specific Definitions".)
+ * 
+ */
+

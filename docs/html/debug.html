@@ -1,0 +1,74 @@
+<html>
+<head>
+<title>Simple Debugging Aids</title>
+</head>
+<body>
+
+<a name="Simple_Debugging_Aids"></a>
+
+
+
+<h2 align=center>Simple Debugging Aids</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+
+<b>prev: </b><a href="scheme.html#Special_Forms">Special Forms</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>This is a surprisingly handy tool for debugging without
+needing a complete debugger:
+</p><p><b><u>Function</u> <code><a name="peek"></a><a name="index-pt:0"></a>
+peek
+</code></b><br>
+<pre>
+peek . any
+
+</pre>
+<p>Accept any non-0 number of arguments, write them to the
+current error port as a comment.  Return the last argument.
+</p><pre>
+     (+ 10 (troublesome-fn))
+     => (+ 10 (pk 'troublesome-fn-returned (troublesome-fn)))
+
+</pre>
+
+<br>
+<br><p><b><u>Function</u> <code><a name="pk"></a><a name="index-pt:1"></a>
+pk
+</code></b><br>
+<pre>
+pk . any
+
+</pre>
+<p><code>pk</code>
+ is a synonym for <code>peek</code>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

@@ -1,0 +1,19 @@
+Revision: hackerlab--lord--1.0--patch-15
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Feb  7 00:55:58 PST 2002
+Standard-date: 2002-02-07
+Summary: fixed a machine alignment requirements bug
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-15
+  =THANKS
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  machine/gen-alignment.to-c
+New-patches: lord@regexps.com--2002/hackerlab--lord--1.0--patch-15
+
+
+`machine/gen-alignment.to-c' was computing the greatest common 
+divisor of two numbers incorrectly, leading to alignment errors
+on some platforms.
+

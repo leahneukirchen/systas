@@ -1,0 +1,17 @@
+Revision: dists--lord--1.0--patch-16
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Feb  7 01:39:35 PST 2002
+Standard-date: 2002-02-07
+Summary: rebuilt arch documentation
+Keywords: 
+New-files: {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-16
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  docs.d/arch/html/getting-started.html
+  docs.d/arch/html/indexes.html docs.d/arch/ps/arch.ps
+  docs.d/arch/texi/getting-started.texi
+New-patches: lord@regexps.com--2002/dists--lord--1.0--patch-16
+
+Rebuilt arch documentation.
+

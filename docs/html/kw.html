@@ -1,0 +1,335 @@
+<html>
+<head>
+<title>Keywords</title>
+</head>
+<body>
+
+<a name="Keywords"></a>
+
+
+
+<h2 align=center>Keywords</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="vectors.html#Vectors">Vectors</a></br>
+
+<b>prev: </b><a href="strings.html#Strings">Strings</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>A <em>
+<a name="index-pt:0"></a>
+
+keyword
+</em>
+ is a self-evaluating object with a convenient read
+syntax.  Keywords are written like ordinary symbols except that
+whereas a symbol name may not be written starting with <em>
+<a name="index-pt:1"></a>
+
+:
+</em>
+, keyword
+names <em>must</em> be prefixed by <em>
+<a name="index-pt:2"></a>
+
+:
+</em>
+.
+</p><p>A <em>
+<a name="index-pt:3"></a>
+
+keyword name
+</em>
+ is the string is the text to the right of the <em>
+<a name="index-pt:4"></a>
+
+:
+</em>
+.
+For example, the name of keyword <code>:foo</code>
+ is <em>
+<a name="index-pt:5"></a>
+
+foo
+</em>
+.  No two keywords 
+have the same keyword name.
+</p><p>For every keyword, there is a unique symbol, having the same name,
+called the <em>
+<a name="index-pt:6"></a>
+
+keyword symbol
+</em>
+.  A keyword and its keyword symbol have
+the same name.
+</p><p>By convention, keywords are used with functions that accept
+optional arguments to signal which arguments are provided.  Such
+functions should never be passed keywords as parameters except to
+indiciate which optional arguments are provided.  For example, this
+procedure invokes an interactive editor, accepting optional
+parameters <code>:directory</code>
+ (specifying the directory in which to run
+the editor, the default value is <code>#f</code>
+) and <code>:editor</code>
+ (specifying
+the editor program, which defaults to the value of the environment
+variable <em>
+<a name="index-pt:7"></a>
+
+EDITOR
+</em>
+):
+</p><pre>
+     (define-public (call-editor . kws)
+       (let ((dir            (kw-arg-ref kws :directory))
+             (editor         
+               (kw-arg-ref kws :editor
+                           (lambda () (getenv &quot;EDITOR&quot;)))))
+         ...))
+
+</pre>
+<p>The function could be invoked any of these ways:
+</p><pre>
+     (call-editor)
+     (call-editor :directory &quot;/tmp&quot;)
+     (call-editor :editor &quot;emacs&quot;)
+     (call-editor :directory &quot;/tmp&quot; :editor &quot;emacs&quot;)
+     (call-editor :editor &quot;emacs&quot; :directory &quot;/tmp&quot;)
+
+</pre>
+<p><b><u>Function</u> <code><a name="keyword?"></a><a name="index-pt:8"></a>
+keyword?
+</code></b><br>
+<pre>
+(keyword? obj)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is a keyword, <code>#f</code>
+ otherwise.
+</p>
+<br>
+<br>
+<a name="Handling_Keyword_Arguments"></a>
+
+
+
+<h3 align=center>Handling Keyword Arguments</h3>
+
+
+
+
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="kw-arg-ref"></a><a name="index-pt:9"></a>
+kw-arg-ref
+</code></b><br>
+<pre>
+(kw-arg-ref args kw :optional default)
+
+</pre>
+<p>If the list <code>args</code>
+ contains the keyword <code>kw</code>
+ followed by another
+list element which is not a keyword, return that second element.
+If <code>args</code>
+ contains <code>kw</code>
+ only as the last element or followed by
+another keyword, signal an error. If a keyword argument is not
+provided, but <code>default</code>
+ is provided, return <code>(default)</code>
+.
+Otherwise, return <code>#f</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="kw-arg-set!"></a><a name="index-pt:10"></a>
+kw-arg-set!
+</code></b><br>
+<pre>
+(kw-arg-set! args kw value)
+
+</pre>
+<p>If the list <code>args</code>
+ contains the keyword <code>kw</code>
+ followed by another
+list element, replace that list element.  If <code>kw</code>
+ is the last
+element of <code>args</code>
+, replace the cdr of the last pair with <code>(cons
+value ())</code>
+ Otherwise, return:
+</p><pre>
+      (cons kw (cons value args))
+
+</pre>
+
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<a name="Keyword_<->_Symbol_Conversions"></a>
+
+
+
+<h3 align=center>Keyword <-> Symbol Conversions</h3>
+
+
+
+
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="symbol->keyword"></a><a name="index-pt:11"></a>
+symbol->keyword
+</code></b><br>
+<pre>
+(symbol->keyword symbol)
+
+</pre>
+<p>Return a keyword having the same name as <code>symbol</code>
+.  For example:
+</p><pre>
+     (symbol->keyword :foo) => foo
+
+</pre>
+<p>Note that <code>keyword->symbol</code>
+ and <code>symbol->keyword</code>
+ are not
+inverses.  For example:
+</p><pre>
+     (eq? 'foo (string->hash-table-symbol #f &quot;foo&quot;)) 
+     => #f
+
+</pre>
+<p>and therefore:
+</p><pre>
+     (eq? 'foo 
+          (keyword->symbol
+            (symbol->keyword (string->hash-table-symbol #f &quot;foo&quot;)))
+     => #f
+
+</pre>
+
+<br>
+<br><p><b><u>Function</u> <code><a name="keyword->symbol"></a><a name="index-pt:12"></a>
+keyword->symbol
+</code></b><br>
+<pre>
+(keyword->symbol keyword)
+
+</pre>
+<p>Return a symbol having the same print-name as <code>keyword</code>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<a name="Rationale_--_Keywords"></a>
+
+
+
+<h3 align=center>Rationale -- Keywords</h3>
+
+
+
+
+
+
+
+
+
+
+<p>A self-evaluating, disjoint, symbol-like type with a convenient
+read/write syntax is exactly what is needed for two purposes:
+keyword arguments and structure-like lists.
+</p><p>Some recent implementations provide keywords, but use a different
+syntax, putting the colon at the end of the keyword name:
+</p><pre>
+     Systas keyword:                 Some other implementations:
+     -----------------------------------------------------------
+     :editor                         editor:
+
+</pre>
+<p>That other syntax emphasizes that keywords are sometimes used
+to tag the value that follows in a list:
+</p><pre>
+     :editor &quot;/bin/ed&quot;               editor: &quot;/bin/ed&quot;
+
+</pre>
+<p>However, there are two serious problems with the other syntax.
+First, it breaks the general rule that a Scheme reader can 
+recognize the type of a value being read by looking at a 
+prefix of the syntax.  Second, it creates visual confusion when 
+keywords are used on their own, not tagging any value at all,
+such as the keyword <code>bg</code>
+ in these examples:
+</p><pre>
+     :bg :editor &quot;/bin/ed&quot;           bg: editor: &quot;/bin/ed&quot;
+
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

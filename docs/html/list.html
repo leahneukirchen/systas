@@ -1,0 +1,963 @@
+<html>
+<head>
+<title>Lists</title>
+</head>
+<body>
+
+<a name="Lists"></a>
+
+
+
+<h2 align=center>Lists</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="alist.html#Association_Lists">Association Lists</a></br>
+
+<b>prev: </b><a href="pairs.html#Cons_Pairs">Cons Pairs</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>A <em>
+<a name="index-pt:0"></a>
+
+list
+</em>
+, or <em>
+<a name="index-pt:1"></a>
+
+proper list
+</em>
+ is considered to be any chain of
+cons-pairs, the cdr of each pair pointing to the next pair in the
+chain, and the cdr of the last pair containing <code>()</code>
+.
+</p><p>A list is written as a left-parenthesis, followed by a white-space
+separated enumeration of the car slots of the cells in the list,
+followed by a right-parenthesis.
+</p><pre>
+     ;; Note that lists typed-in have to be quoted or else
+     ;; they will be interpreted as an expression and
+     ;; evaluated accordingly:
+     ;;
+     '(a b c) => (a b c)     ; a three element list
+
+</pre>
+<p>An <em>
+<a name="index-pt:2"></a>
+
+improper list
+</em>
+ is similar, except that the cdr slot of the last
+pair is filled with some object other than <code>()</code>
+.  Dotted-pair notation
+is used to write an improper list (see <a href="pairs.html#Cons_Pairs">Cons Pairs</a>):
+</p><pre>
+     '(a b . c) => (a b . c)     ; a two element improper list
+                                 ; with the symbol c in the last cdr
+                                 ; slot.  It is the c that makes
+                                 ; the list &quot;improper&quot;
+
+</pre>
+<p><b><u>Function</u> <code><a name="null?"></a><a name="index-pt:3"></a>
+null?
+</code></b><br>
+<pre>
+(null? obj)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is the empty list, <code>#f</code>
+ otherwise.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="list?"></a><a name="index-pt:4"></a>
+list?
+</code></b><br>
+<pre>
+(list? obj)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is a proper list, <code>#f</code>
+ otherwise.
+</p>
+<br>
+<br>
+<a name="Constructing_Lists"></a>
+
+
+
+<h3 align=center>Constructing Lists</h3>
+
+
+
+
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="list"></a><a name="index-pt:5"></a>
+list
+</code></b><br>
+<pre>
+(list . args)
+
+</pre>
+<p>Return a newly constructed list of the arguments.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="make-list"></a><a name="index-pt:6"></a>
+make-list
+</code></b><br>
+<pre>
+(make-list n :optional init)
+
+</pre>
+<p>Construct a new list of <code>n</code>
+ elements, initially <code>#f</code>
+ or <code>init</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="range"></a><a name="index-pt:7"></a>
+range
+</code></b><br>
+<pre>
+(range x :optional y)
+
+</pre>
+<p>Return a new <code>x</code>
+ element list of the integers <code>0 .. x-1</code>
+.
+With two arguments, return a list <code>x..y-1</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="reverse-range"></a><a name="index-pt:8"></a>
+reverse-range
+</code></b><br>
+<pre>
+(reverse-range x :optional y)
+
+</pre>
+<p>Return a new <code>x</code>
+ element list of the integers <code>x-1 .. 0</code>
+.
+With two arguments, return a list <code>y-1..x</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="list-append"></a><a name="index-pt:9"></a>
+list-append
+</code></b><br>
+<pre>
+(list-append . arguments)
+
+</pre>
+<p>Append the elements of the argument lists to form a mostly new
+list.  The new list may share state with the last argument.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="append"></a><a name="index-pt:10"></a>
+append
+</code></b><br>
+<pre>
+(append . arguments)
+
+</pre>
+<p>A synonym for <code>list-append</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="list-append!"></a><a name="index-pt:11"></a>
+list-append!
+</code></b><br>
+<pre>
+(list-append! . arguments)
+
+</pre>
+<p>Append the elements of the argument lists to form a list.  The
+arguments are modified: the cdr of the last cons pair of each
+argument but the last is modified to point to the next argument.
+</p><p>The arguments may be improper lists.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="append!"></a><a name="index-pt:12"></a>
+append!
+</code></b><br>
+<pre>
+(append! . arguments)
+
+</pre>
+<p>A synonym for <code>list-append!</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="list-copy"></a><a name="index-pt:13"></a>
+list-copy
+</code></b><br>
+<pre>
+(list-copy list)
+
+</pre>
+<p>Return a new list with the same elements as <code>list</code>
+.
+</p><p>If <code>list</code>
+ is an improper list, the new list and <code>list</code>
+
+have the same element in the cdr of the last pair.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="copy-tree"></a><a name="index-pt:14"></a>
+copy-tree
+</code></b><br>
+<pre>
+(copy-tree obj)
+
+</pre>
+<p>Recursively copy the list and vector structure of <code>obj</code>
+.  Return
+the copy.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<a name="List_Length"></a>
+
+
+
+<h3 align=center>List Length</h3>
+
+
+
+
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="list-length"></a><a name="index-pt:15"></a>
+list-length
+</code></b><br>
+<pre>
+(list-length obj)
+
+</pre>
+<p>Return the length of <code>obj</code>
+ if it is a list, otherwise
+signal an error.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="list-length+"></a><a name="index-pt:16"></a>
+list-length+
+</code></b><br>
+<pre>
+(list-length+ obj)
+
+</pre>
+<p>Like <code>list-length</code>
+, but return <code>#f</code>
+ for circular lists and the
+number of elements for improper lists.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="soft-list-length"></a><a name="index-pt:17"></a>
+soft-list-length
+</code></b><br>
+<pre>
+(soft-list-length obj)
+
+</pre>
+<p>Return the length of <code>obj</code>
+ if it is a proper list, otherwise
+return <code>#f</code>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<a name="Reversing_Lists"></a>
+
+
+
+<h3 align=center>Reversing Lists</h3>
+
+
+
+
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="list-reverse"></a><a name="index-pt:18"></a>
+list-reverse
+</code></b><br>
+<pre>
+(list-reverse list :optional new-tail)
+
+</pre>
+<p>Return a list having the same elements as <code>list</code>
+, but 
+in reverse order.
+</p><p>If <code>new-tail</code>
+ is provided, it is stored in the cdr of the
+last pair of the returned list.  If <code>list</code>
+ is <code>()</code>
+, <code>new-tail</code>
+
+is returned.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="list-reverse!"></a><a name="index-pt:19"></a>
+list-reverse!
+</code></b><br>
+<pre>
+(list-reverse! list :optional new-tail)
+
+</pre>
+<p>Return a list having the same elements as <code>list</code>
+, but 
+in reverse order. <code>list</code>
+ is modified -- pairs form <code>list</code>
+
+are re-used to form the new list.
+</p><p>If <code>new-tail</code>
+ is provided, it is stored in the cdr of the
+last pair of the returned list.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="reverse!"></a><a name="index-pt:20"></a>
+reverse!
+</code></b><br>
+<pre>
+(reverse! list :optional new-tail)
+
+</pre>
+<p>A synonym for <code>list-reverse!</code>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<a name="Partitioning_Lists"></a>
+
+
+
+<h3 align=center>Partitioning Lists</h3>
+
+
+
+
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="list-head"></a><a name="index-pt:21"></a>
+list-head
+</code></b><br>
+<pre>
+(list-head list n)
+
+</pre>
+<p>Return a new list containing the first <code>n</code>
+ elements of <code>list</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="list-tail"></a><a name="index-pt:22"></a>
+list-tail
+</code></b><br>
+<pre>
+(list-tail list n)
+
+</pre>
+<p>Return the cdr of pair <code>n</code>
+ (counting from <code>0</code>
+) of <code>list</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="last-pair"></a><a name="index-pt:23"></a>
+last-pair
+</code></b><br>
+<pre>
+(last-pair list)
+
+</pre>
+<p>Return the last pair in a (possibly improper) list.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<a name="Indexed_Access_to_Lists"></a>
+
+
+
+<h3 align=center>Indexed Access to Lists</h3>
+
+
+
+
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="list-ref"></a><a name="index-pt:24"></a>
+list-ref
+</code></b><br>
+<pre>
+(list-ref list n)
+
+</pre>
+<p>Return element <code>n</code>
+ (counting from <code>0</code>
+) of <code>list</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="list-set!"></a><a name="index-pt:25"></a>
+list-set!
+</code></b><br>
+<pre>
+(list-set! list n value)
+
+</pre>
+<p>Set element <code>n</code>
+ (counting from <code>0</code>
+) of <code>list</code>
+.  Return <code>list</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="list-cdr-ref"></a><a name="index-pt:26"></a>
+list-cdr-ref
+</code></b><br>
+<pre>
+(list-cdr-ref list n)
+
+</pre>
+<p>Return the cdr of pair <code>n</code>
+ (counting from <code>0</code>
+) of <code>list</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="list-cdr-set!"></a><a name="index-pt:27"></a>
+list-cdr-set!
+</code></b><br>
+<pre>
+(list-cdr-set! list n value)
+
+</pre>
+<p>Set the cdr of pair <code>n</code>
+ (counting from <code>0</code>
+) of <code>list</code>
+.  Return
+<code>list</code>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<a name="Searching_for_List_Elements"></a>
+
+
+
+<h3 align=center>Searching for List Elements</h3>
+
+
+
+
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="memq"></a><a name="index-pt:28"></a>
+memq
+</code></b><br>
+<pre>
+(memq obj list)
+
+</pre>
+<p>If <code>obj</code>
+ occurs in <code>list</code>
+, return the first sublist whose car is
+<code>eq?</code>
+ to <code>obj</code>
+.
+</p><p><code>list</code>
+ may be an improper list.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="memv"></a><a name="index-pt:29"></a>
+memv
+</code></b><br>
+<pre>
+(memv obj list)
+
+</pre>
+<p>If <code>obj</code>
+ occurs in <code>list</code>
+, return the first sublist whose car is
+<code>eqv?</code>
+ to <code>obj</code>
+.
+</p><p><code>list</code>
+ may be an improper list.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="member"></a><a name="index-pt:30"></a>
+member
+</code></b><br>
+<pre>
+(member obj list :optional =)
+
+</pre>
+<p>If <code>obj</code>
+ occurs in <code>list</code>
+, return the first sublist whose car is
+<code>equal?</code>
+ to <code>obj</code>
+.
+</p><p><code>list</code>
+ may be an improper list.
+</p><p>If <code>=</code>
+ is supplied, it is used to compare <code>obj</code>
+ to elements of
+<code>list</code>
+ in this way:
+</p><pre>
+     (compare obj elt-of-list)
+
+</pre>
+
+<br>
+<br><p><b><u>Function</u> <code><a name="list-elt-indexq"></a><a name="index-pt:31"></a>
+list-elt-indexq
+</code></b><br>
+<pre>
+(list-elt-indexq l k)
+
+</pre>
+<p>Return the index <code>(0 </code>
+based) of the first element in list <code>l</code>
+
+that matches (<code>eq?</code>
+) the value <code>k</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="list-elt-indexv"></a><a name="index-pt:32"></a>
+list-elt-indexv
+</code></b><br>
+<pre>
+(list-elt-indexv l k)
+
+</pre>
+<p>Return the index <code>(0 </code>
+based) of the first element in list <code>l</code>
+
+that matches (<code>eqv?</code>
+) the value <code>k</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="list-elt-index"></a><a name="index-pt:33"></a>
+list-elt-index
+</code></b><br>
+<pre>
+(list-elt-index l k)
+
+</pre>
+<p>Return the index <code>(0 </code>
+based) of the first element in list <code>l</code>
+
+that matches (<code>equal?</code>
+) the value <code>k</code>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<a name="Removing_List_Elements"></a>
+
+
+
+<h3 align=center>Removing List Elements</h3>
+
+
+
+
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="delq!"></a><a name="index-pt:34"></a>
+delq!
+</code></b><br>
+<pre>
+(delq! obj list)
+
+</pre>
+<p>Modify <code>list</code>
+ by removing the all pairs whose car is <code>eq?</code>
+ to obj.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="delq"></a><a name="index-pt:35"></a>
+delq
+</code></b><br>
+<pre>
+(delq obj list)
+
+</pre>
+<p>Return a new copy of <code>list</code>
+ omitting all pairs whose car is <code>eq?</code>
+
+to <code>obj</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="delv!"></a><a name="index-pt:36"></a>
+delv!
+</code></b><br>
+<pre>
+(delv! obj list)
+
+</pre>
+<p>Modify <code>list</code>
+ by removing the all pairs whose car is <code>eqv?</code>
+ to obj.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="delv"></a><a name="index-pt:37"></a>
+delv
+</code></b><br>
+<pre>
+(delv obj list)
+
+</pre>
+<p>Return a new copy of <code>list</code>
+ omitting all pairs whose car is <code>eqv?</code>
+
+to obj.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="delete!"></a><a name="index-pt:38"></a>
+delete!
+</code></b><br>
+<pre>
+(delete! obj list :optional =)
+
+</pre>
+<p>Modify <code>list</code>
+ by removing the all pairs whose car is <code>equal?</code>
+ to
+obj.
+</p><p>If <code>=</code>
+ is supplied, it is used to compare <code>obj</code>
+ to elements of
+<code>list</code>
+ in this way:
+</p><pre>
+     (compare obj elt-of-list)
+
+</pre>
+
+<br>
+<br><p><b><u>Function</u> <code><a name="delete"></a><a name="index-pt:39"></a>
+delete
+</code></b><br>
+<pre>
+(delete obj list :optional =)
+
+</pre>
+<p>Return a new copy of <code>list</code>
+ omitting all pairs whose car is
+<code>equal?</code>
+ to obj.
+</p><p>If <code>=</code>
+ is supplied, it is used to compare <code>obj</code>
+ to elements of
+<code>list</code>
+ in this way:
+</p><pre>
+     (compare obj elt-of-list)
+
+</pre>
+
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<a name="List-based_Iterators"></a>
+
+
+
+<h3 align=center>List-based Iterators</h3>
+
+
+
+
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="map"></a><a name="index-pt:40"></a>
+map
+</code></b><br>
+<pre>
+(map procedure . arguments)
+
+</pre>
+<p>Construct a new list by applying <code>procedure</code>
+ to each element of the
+list arguments.
+</p><p>For example:
+</p><pre>
+     (map - '(1 2 3)) => (-1 -2 -3)
+
+</pre>
+<pre>
+     (map + '(1 2 3) '(10 10 11))
+      => (11 12 14)
+
+</pre>
+<p>The list arguments to map need not be proper lists, but if they
+improper, the contents of the last cdr are ignored.
+</p><p>The list elements may differ in length, but <code>map</code>
+ stops when the
+shortest list is exhausted.
+</p><p><code>map</code>
+ is applied to the elements of its arguments in order.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="for-each"></a><a name="index-pt:41"></a>
+for-each
+</code></b><br>
+<pre>
+(for-each procedure . arguments)
+
+</pre>
+<p>Apply function to the list arguments, element-wise, for side
+effects.
+</p><p><code>for-each</code>
+ is similar to <code>map</code>
+, but <code>for-each</code>
+ does not return a
+useful value - the results of applying <code>function</code>
+ are ignored.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="filter"></a><a name="index-pt:42"></a>
+filter
+</code></b><br>
+<pre>
+(filter pred list)
+
+</pre>
+<p>Return all the elements of list that satisfy predicate <code>pred</code>
+. The
+list is not disordered -- elements that appear in the result list
+occur in the same order as they occur in the argument list. The
+returned list may share a common tail with the argument list. The
+dynamic order in which the various applications of pred are made is
+not specified.
+</p><pre>
+     (filter even? '(0 7 8 8 43 -4)) => (0 8 8 -4)
+
+</pre>
+
+<br>
+<br><p><b><u>Function</u> <code><a name="and-map"></a><a name="index-pt:43"></a>
+and-map
+</code></b><br>
+<pre>
+(and-map f l)
+
+</pre>
+<p>Apply <code>f</code>
+ to successive elements of <code>l</code>
+ until the end of list or <code>f</code>
+ 
+returns <code>#f</code>
+.
+</p><p>If returning early, return <code>#f</code>
+.  Otherwise, return the last value returned
+by <code>f</code>
+.  If <code>f</code>
+ has never been called because <code>l</code>
+ is empty, return <code>#t</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="or-map"></a><a name="index-pt:44"></a>
+or-map
+</code></b><br>
+<pre>
+(or-map f l)
+
+</pre>
+<p>Apply <code>f</code>
+ to successive elements of <code>l</code>
+ until end of list or until <code>f</code>
+
+returns a value other than <code>#f</code>
+.
+</p><p>If returning early, return the return value of the last call to <code>f</code>
+.
+Otherwise, return <code>#f</code>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<a name="Rationale_--_Lists"></a>
+
+
+
+<h3 align=center>Rationale -- Lists</h3>
+
+
+
+
+
+
+
+
+
+
+<p>Systas follows the Scheme standard with a few obvious extensions.
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

@@ -1,0 +1,56 @@
+Revision: package-framework--devo--1.0--patch-2
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon Jan 14 15:43:26 PST 2002
+Standard-date: 2002-01-14
+Summary: merge from `lord': --version support
+Keywords: 
+New-files: {arch}/package-framework/package-framework--devo/package-framework--devo--1.0/lord@regexps.com--2002/patch-log/patch-2
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-3
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-4
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-5
+  =project/.arch-ids/package.id COPYING build-tools/=README
+  build-tools/=TODO =project/package
+New-directories: =project/.arch-ids
+Removed-files: build-tools/package-framework/UNPLUGGED/.arch-ids/=dont-care
+  build-tools/package-framework/Makefile.in
+  build-tools/package-framework/document-license.doc
+  build-tools/package-framework/pit.doc
+  build-tools/package-framework/source-tree.doc
+  build-tools/package-framework/system-requirements.doc
+  build-tools/package-framework/framework.doc
+  build-tools/package-framework/getting-started.doc
+  build-tools/package-framework/index.doc
+  build-tools/package-framework/introduction.doc
+  build-tools/package-framework/soup.doc
+  build-tools/package-framework/source-license.doc
+  build-tools/package-framework/package-tree.doc
+  build-tools/package-framework/recipes.doc
+  build-tools/package-framework/reference.doc
+  build-tools/package-framework/this-manual.doc
+  build-tools/package-framework/configure-and-plugin.doc
+  build-tools/package-framework/makefiles.doc =project/package
+  build-tools/package-framework/UNPLUGGED/REQ
+Removed-directories: build-tools/package-framework
+  build-tools/package-framework/UNPLUGGED
+  build-tools/package-framework/UNPLUGGED/.arch-ids
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  build-tools/config-info/config-info.c
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/base-0
+New-patches: lord@regexps.com--2002/package-framework--devo--1.0--patch-2
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-3
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-4
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-5
+
+Patches applied:
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-5
+     fixed --version support in config-info.c
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-4
+     =project/package fixes
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-3
+     removed vestigial docs
+

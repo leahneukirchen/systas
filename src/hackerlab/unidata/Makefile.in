@@ -1,0 +1,18 @@
+# tag: Tom Lord Tue Dec  4 14:52:17 2001 (unidata/Makefile.in)
+#
+
+libs			:=	$(objroot)/hackerlab/libboot/libboot.a -lm
+
+generated-includes	:=	bitsets.h db.h case-db.h combine-db.h decomp-db.h
+generated-source	:=	bitsets.c db.c case-db.c combine-db.c decomp-db.c
+
+include $(makefiles)/library-objects.mk
+include $(makefiles)/install-includes.mk
+
+$(generated-includes) $(generated-source): ../unidata-scaffolding/unidata-generate $(srcdir)/../unidata-scaffolding/unidata.txt
+	echo
+	echo "================ parsing unidata.txt ================"
+	echo
+	-rm $(generated-includes) $(generated-source)
+	../unidata-scaffolding/unidata-generate --verbose  $(srcdir)/../unidata-scaffolding/unidata.txt
+

@@ -1,0 +1,25 @@
+# tag: Tom Lord Tue Dec  4 14:52:13 2001 (fs-tests/Makefile.in)
+#
+libs			:=	$(objroot)/hackerlab/libhackerlab/libhackerlab.a -lm
+mains			:=	$(notdir $(wildcard $(srcdir)/unit-*.c))
+test-progs		:=	$(patsubst %.c, %, $(mains))
+test-scripts		:=	$(wildcard $(srcdir)/*.sh)
+
+include $(makefiles)/programs.mk
+
+all:
+
+test: tests-timestamp
+
+tests-timestamp: $(test-progs) $(test-scripts)
+	set -e ; \
+	for s in $(test-scripts) ; do \
+	  $(cfg__posix_shell) $$s; \
+	done
+	touch tests-timestamp
+
+clean: clean-timestamp
+
+clean-timestamp:
+	-rm -f tests-timestamp
+

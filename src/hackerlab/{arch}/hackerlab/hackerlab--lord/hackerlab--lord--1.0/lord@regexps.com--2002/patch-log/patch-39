@@ -1,0 +1,15 @@
+Revision: hackerlab--lord--1.0--patch-39
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon May 13 15:44:44 PDT 2002
+Standard-date: 2002-05-13 22:44:44 GMT
+Summary: put PIW back in place for the moment
+Keywords: 
+New-files: piw piw-glob piw-malloc
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-39
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  Makefile.in
+New-patches: lord@regexps.com--2002/hackerlab--lord--1.0--patch-39
+
+Put PIW back in place for the moment.

@@ -1,0 +1,378 @@
+/* tag: Tom Lord Tue Dec  4 14:57:17 2001 (comments.doc)
+ */
+/* xml-comments.c -
+ *
+ ****************************************************************
+ * Copyright (C) 2000 Tom Lord
+ * 
+ * See the file "COPYING" for further information about
+ * the copyright and warranty status of this work.
+ */
+
+
+/************************************************************************
+ *(h0 "Comments on the XML Schema Regular Expression Syntax" :appendix)
+
+|regular expression language|
+|XML|
+|W3C|
+|Schema (XML)|
+|XML Schema|
+|errors (in the XML specification)|
+
+Appendix E of the W3C publication *XML Schema Part 2: Datatypes* defines
+a syntax for Unicode regular expressions.  That syntax is supported by
+Rx. (See xref:"XML Regular Expression Functions".)
+
+This chapter describes some minor error's in W3C's specification (as
+of the ``24 October 2000'' draft).  It will make the most sense if read
+alongside the W3C specification.
+
+*/
+/*(menu)
+ */
+
+
+
+/************************************************************************
+ *(h1 "| is not Specified as a Metacharacter")
+
+Taking the grammar specification literally, the following
+regular expression is ambiguous:
+
+   	a|b
+
+It could match one of:
+
+   	a
+	b
+
+or it could match only:
+
+	a|b
+
+That's because `|' is defined both as the separator character for
+branches, and as a normal character.  It is defined as a normal
+character because it is an XML character that is not included in the
+list of meta-characters.
+
+
+\Solution:/ Add `|' to the list of meta-characters.  As a
+side-effect, a new single character escape is created:
+
+	\|
+
+which denotes a literal `|'.
+
+*/	
+
+
+/************************************************************************
+ *(h1 "The Specification of \\i is Wrong")
+ * 
+
+We presume that the intended meaning of the multi-character escape
+`\i' is ``Any character which may be the first character of an XML
+Name''.  That makes `\i' useful in conjunction with `\c'.
+
+The specification says that multi-character escape `\i' is:
+
+	[\p{L}\p{Nl}:_]
+
+which doesn't agree with the XML definition of a name, and is besides
+an odd definition.
+
+
+\Solution:/ Define `\i' as the set of character that match the
+production:
+
+	NameInitial	::= (Letter | '_' | ':')
+
+if that production is added to the grammar for XML (in
+url:"http://www.w3.org/TR/REC-xml").
+
+
+*/
+
+
+
+/************************************************************************
+ *(h1 "The Specification of \\w is Wrong")
+ * 
+
+The specification says that multi-character escape `\w' is:
+
+    [&#x0000;-&#xFFFF;-[\p{P}\p{S}\p{C}]]
+
+but also that it is:
+
+    all characters except the set of "punctuation", "separator" and
+    "control" characters
+
+The range `&#x0000;-&xFFFF' contains code points which are not valid
+XML characters and which are not valid Unicode characters.
+Furthermore, it does not contain code points (above `0xffff') which
+are valid XML and Unicode characters.
+
+
+\Solution:/ Define `\w' as:
+
+     [^\p{P}\p{Z}\p{C}]
+
+*/
+
+
+
+/************************************************************************
+ *(h1 "Character Class Expression Syntax is Botched")
+ * 
+
+
+The syntax of character class expressions is ambiguous.  If the
+ambiguity is ignored, the syntax requires an arbitrary amount of
+look-ahead to parse correctly.
+
+
+\The Specified Syntax:/ 
+
+The basic syntax for a character class expression (as currently
+specified) is:
+
+
+     character_class_expression: '[' character_group ']'
+         |    '[' character_group '-' character_class_expression ']'
+		
+
+     character_group:	positive_character_group
+         |    '^' positive_character_group
+
+A `positive_character_group' is defined as:
+     
+      one or more character ranges or character class escapes,
+      concatenated together.
+
+A character range may be a single character escape, or any ordinary
+XML character other than one of `[]\^-', except that `^' is permitted
+as the first character of a `positive_character_group' following the
+`^' that indicates a negated character group, and `-' is permitted as
+either the first or last character of any `positive_character_group'.
+   
+A character range is a pair of characters:
+
+	s-e
+
+where `s' may be a single character escape or any XML character
+other than one of `^\', except that `^' is permitted if `s' is not
+the first character of a character class expression.
+
+`e' may be a single character escape or any XML character which is
+not one of `[\'.
+
+Finally, the code point of `e' must be greater than or equal to the
+code point of `s'.
+
+
+\The Problems:/
+   
+First, consider the ambiguous expression:
+
+	[abc]-z[-def]
+
+On the one hand, the expression matches four characters such as:
+
+	a-zd
+	a-ze
+	a-z-
+
+because `[abc]' and `[-def]' are valid character class expressions.
+Note that we are using the special case exception that `-' is
+permitted as the first character of a positive character group.
+
+On the other hand, the expression matches one character:
+
+	a
+	b
+	c
+	w
+	x
+	]
+	[
+	...
+
+because `]-z' and `[-d' are valid character ranges.  Here we are using
+the special case that the start character of a character range which
+is not the first element of a character class expression may be any
+XML character other than `\'.
+
+
+Second, consider the expression:
+
+       ['--9]
+
+The specification does not make it clear whether that is set
+containing the range:
+
+       '--
+
+and the character:
+
+       9
+
+or a set containing the character:
+
+      '
+
+and the range:
+
+      --9
+
+We are again using the special case rule that `-' is not a
+meta-character in a character class expression if it occurs as an
+end-point of a character class expression.
+
+Third, consider the first four characters of an XML regular expression:
+
+	[A-]
+
+Is that a two character character class?  It is if the entire regular
+expression is:
+
+	[A-]mistake
+
+because in that case, `-' occurs as the last character of a
+`positive_character_group'.
+
+On the other hand, if the entire regular expression is:
+
+	[A-]mistake]
+
+then the `-' indicates a character range from `A' to `]'.
+
+
+Overall, the special case rules concerning characters in `[]^-' create
+ambiguities, make it difficult to write a correct parser, difficult to
+read some expressions correctly, and easier than it needs to be to
+write an un-intended pattern.
+
+
+
+\Proposed Solutions/
+
+We propose several possible ways to solve the problems with character
+class expressions.  All of our proposals are based on this
+(incomplete) grammar:
+
+
+     character_class_expression: '[' character_group ']'
+         |	'[' character_group 
+		    SUBTRACTION character_class_expression ']'
+
+
+     character_group:	positive_character_group
+         |	'^' positive_character_group
+
+     positive_character_group:
+		positive_character_subgroup
+	|	positive_character_subgroup positive_character_group
+
+
+     positive_character_subgroup:
+		multi_character_escape
+	|	category_escape
+	|	range_endpoint
+	|	range_endpoint RANGE range_endpoint
+
+
+     range_endpoint:
+		single_character_escape
+	|	normal_range_character
+
+
+     normal_range_character:		[\p{isXmlChar}-SPECIALS]
+
+Three productions are missing from that grammar and we have several
+ideas of how each may be defined.  Those productions are for:
+
+
+	SUBTRACTION	the character class subtraction operator
+
+	RANGE		the character class range operator
+
+	SPECIALS	the set of characters that are
+			special in a character class expression.
+			These characters must be escaped by
+			`\' to have literal meaning in a
+			character class expression.
+
+
+For `SUBTRACTION', we propose one of these alternatives:
+
+	[s1] 	SUBTRACTION: '^'
+	[s2]	SUBTRACTION: '-'
+
+We include `[s1]' because that is the syntax used in *Unicode
+Technical Report #18* (available from url:"http://www.unicode.org").
+
+For `RANGE', we propose one of:
+
+	[r1]	RANGE: '..'
+	[r2]	RANGE: '-'
+
+For `SPECIALS', we propose one of:
+
+	[sp1]	SPECIALS: [\{isMetaChar} SUBTRACTION RANGE]
+	[sp2]	SPECIALS: [\{isCCMetaChar} SUBTRACTION RANGE]
+
+where the set "MetaChar" contains the characters that have special
+meaning ^outside^ of character class expressions which are:
+
+	. \ ? * + { } ( ) [ ] |
+
+where the set "CCMetaChar" contains the characters that have
+special meaning ^inside^ of character class expressions in 
+all of the proposed syntaxes.  These are:
+
+	\ [ ]   
+
+
+\Discussion:/
+
+We have described a solution space of eight possible repairs
+to the character class syntax.  Each solution in this 
+space differs from the others in one or more of: the syntax
+for character set subtraction; the syntax for character ranges;
+the set of characters that must be escaped (with `\') to have
+literal meaning.
+
+In our implementation of an XML regular expression matcher, the
+default syntax we provided is:
+
+	[s2]	SUBTRACTION: '-'
+	[r2]	RANGE: '-'
+	[sp2]	SPECIALS: [\{isCCMetaChar} SUBTRACTION RANGE]
+
+We made that the default because it most closely resembles the syntax
+of the current specification, but removes the ambiguities.
+
+If we had free reign to change the standard, we would instead choose:
+
+	[s2] 	SUBTRACTION: '-'
+	[r1]	RANGE: '..'
+	[sp1]	SPECIALS: [\{isMetaChar} SUBTRACTION RANGE]
+
+for several reasons:
+
+\1/ We believe that using `..' for ranges and `-' for subtraction
+avoids confusion and is intuitive for most people.
+
+\2/ We believe that requiring all meta-characters to be quoted
+to have literal meaning in a character set expression is an easy
+rule to understand and use.
+
+\3/ Requiring meta-characters to be quoted leaves room for future
+extensions in which unused meta-characters are given special meaning
+in character class expressions.  For example, `^' could be used as a
+``symmetric difference'' (``xor'') operator.  
+
+
+*/

@@ -1,0 +1,49 @@
+Revision: hackerlab--devo--1.0--patch-5
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri Jan 18 01:41:19 PST 2002
+Standard-date: 2002-01-18
+Summary: merge from `lord'
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--2002/patch-log/patch-5
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-10
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-11
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-8
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-9
+Modified-files: =NEWS ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  bitsets/bits-print.c bitsets/bitset.c bitsets/bitset.h
+  cmd/main.h rx/dbug.c tests/bitset-tests/unit-bitset.c
+  tests/rx-posix-tests/test-rx.c
+  tests/rx-tests/unit-dfa-iso8859-1.c
+  tests/rx-tests/unit-dfa-utf-no-surrogates.c
+  tests/rx-tests/unit-dfa-utf.c
+  tests/rx-tests/unit-dfa-utf16.c
+  tests/rx-tests/unit-dfa-utf8.c
+  tests/rx-xml-tests/test-time-re.c
+  tests/rx-xml-tests/unit-re.c
+  tests/unidata-tests/unit-unidata.c
+  unidata-scaffolding/unidata-generate.c
+  vu-network/url-socket.c vu/printfmt.c vu/printfmt.h
+  vu/reserv.c vu/safe-printfmt.c vu/safe-printfmt.h
+  vu/safe-vfdbuf.c vu/safe-vu-utils.c vu/vu-help.c vu/vu-sys.c
+New-patches: lord@regexps.com--2002/hackerlab--devo--1.0--patch-5
+  lord@regexps.com--2002/hackerlab--lord--1.0--patch-10
+  lord@regexps.com--2002/hackerlab--lord--1.0--patch-11
+  lord@regexps.com--2002/hackerlab--lord--1.0--patch-8
+  lord@regexps.com--2002/hackerlab--lord--1.0--patch-9
+
+Patches applied:
+
+  * lord@regexps.com--2002/hackerlab--lord--1.0--patch-11
+     fixed non-POSIX bug in url-socket.c, updated =NEWS
+
+  * lord@regexps.com--2002/hackerlab--lord--1.0--patch-10
+     nit city
+
+  * lord@regexps.com--2002/hackerlab--lord--1.0--patch-9
+     merge from `devo'
+
+  * lord@regexps.com--2002/hackerlab--lord--1.0--patch-8
+     merge from `devo'
+

@@ -1,0 +1,317 @@
+
+!>		The End-user View of `package-framework'
+
+
+  All `package-framework' packages can be built and installed 
+  the same way.  The basic build mechanism is a variation on the
+  pattern commonly used for *GNU* software.
+
+  -*-*-
+
+* Some Standard Files
+
+  Every `package-framework'-based distribution has a top-level
+  directory, usually named after the distribution itself.
+
+  For example, the package `hello-3.1pre86' would have a top-level 
+  directory named `hello-3.1pre86'.
+
+  Every top-level directory contains a file with the slightly unusual
+  name `=RELEASE-ID'.  In fact, the presense of a file with that name
+  is a good hint that the package is a `package-framework'-based
+  distribution.  The `=RELEASE-ID' file contains a single line (aside
+  from comment lines and blank lines), containing a release identifier
+  that is uniquely assigned to the distribution.  That identifier can
+  be used in bug reports and to distinguish different versions of the
+  package.  (It is not, strictly speaking, required that the
+  distribution name and the release id be identical.  For example, the
+  release ID might be the name of a specific revision in a source
+  control repository; the distribution name a name formatted for human
+  consumption.)
+
+  Every top-level directory has a subdirectory named `src' which
+  contains a shell script called `configure'.  
+
+  Every `src' directory also contains a subdirectory, `build-tools',
+  which contains various generic scripts and makefiles used by the
+  configure/build process.
+
+  Finally, every `src' directory contains a subdirectory `link-tools',
+  which contains `make-links' and `remove-links' -- some scripts
+  provided for your convenience as a package installer.
+
+  Putting these together, the minimal contents of a
+  `package-framework' distribution are:
+
+<<<
+	$package/
+	  $package/=RELEASE-ID
+	  $package/src/
+	    $package/src/build-tools/[...]
+	    $package/src/configure
+	    $package/src/link-tools/
+	      $package/src/link-tools/make-links
+	      $package/src/link-tools/remove-links
+>>>
+
+
+
+
+* Standard Build Process
+
+  Whenever you compile using the `package-framework', you do so
+  in a build tree which is _separate from_ the source tree.
+  A typical build sequence is something like:
+
+<<<
+        % cd $package/src
+
+        % mkdir =build
+
+        % cd =build
+
+        % ../configure [...]
+        [...]
+
+        % make all
+        [...]
+
+        % make test
+        [...]
+
+        % make install
+        [...]
+>>>
+
+
+
+
+
+* Configure Options
+
+  Note that you can provide various options to `configure'.  The most
+  commonly used option is `--prefix', used to specify where a package
+  should be installed, for example:
+
+<<<
+	% ../configure --prefix /usr/releases/$package
+>>>
+
+
+  Other options can be discovered with `--help':
+
+<<<
+	% ../configure --help
+	[...]
+>>>
+
+  One important option is `--with OPTION VALUE' (and convenience
+  variants on that syntax) which is used to set configure-time
+  parameters:
+
+<<<
+	% ../configure --with posix-shell /usr/local/bin/bash
+	[...]
+>>>
+
+
+  You can see the complete list of available options with:
+
+<<<
+	% ../configure --help-options
+>>>
+
+
+
+
+
+
+* A Safe Default Install Location
+
+  `package-framework' packages never install into system directories
+  by default.  A common practice is install in `/usr/local' by
+  default, but a proper `package-framework' distribution will
+  __never__ do so (of course, an _improper_ `package-framework'
+  distribution might :-).
+
+  Instead, the default install location is in a subdirectory of the
+  build tree called `=install'.  User's can override that by using
+  the `--prefix' option to the `configure' script.
+
+
+
+
+
+* Standard `make' Targets
+ 
+  The `package-framework' supports a handful of standard make
+  targets.   (This list may expand in the future, especially to 
+  better support documentation.)  The standard targets are:
+
+  + `all'                       :::     Compile the entire package.
+
+  + `test'                      :::     Run a test suite to help
+                                        verify successful
+                                        compilation.  Developers 
+                                        also use `make test' to 
+                                        verify that recent changes to
+                                        the code haven't broken
+                                        existing functionality.
+
+  + `install'                   :::     Install the package.
+
+  + `clean'                     :::     Ensure that the next `make
+                                        all' will rebuild everything.
+
+  + `uninstall'                 :::     Remove files installed by
+                                        `make install'.
+
+
+
+
+
+
+* Setting `CFLAGS'
+
+  You can specify extra flags to be used (at least by default) for 
+  C compilation by setting `CFLAGS' on the `make' command line, e.g.:
+
+<<<
+	% make "CFLAGS=-Wall -g -O4" all
+>>>
+
+  Of course, not every possible value for `CFLAGS' will lead to a
+  successful build, but the point is that the `Makefiles' themselves
+  permit you to add to the `CFLAGS' this way.
+
+
+
+
+* System Names
+
+  Some (not all, but some) distributions that use the
+  `package-framework' need to know the ``canonical-system-name'' when
+  they're configured.
+
+  A canoncal system name is a string with three mandatory parts, and
+  one optional part, separated by dashes:
+
+<<<
+	CPU-MFR-[KERNEL-]OS
+>>>
+
+  `CPU' identifies (approximately) the processor architecture
+  (e.g. `alpha' or `i386').  Note that lots of different, but
+  essentially compatiable processors may be lumped together under a
+  single name (thus, `i386' is often used as the `CPU' name even on
+  later chips or chips made by other companies).
+
+  `MFR' identifies the system manufacturer where it matters.  For
+  `PC'-type machines, it often doesn't matter, and the manufacturer
+  appears as `unknown'.
+
+  `OS' identifies the operating system, including it's version number.
+
+  `KERNEL', when it matters, can be used to distinguish different
+  builds of a given `OS' version.
+
+  If you don't specifiy a system name, `configure' will try to guess
+  one (by running `src/build-tools/gnu/config.guess').
+
+  If you do specify a system name (as a regular argument to
+  `configure'), then `configure' will try to "normalize" that name
+  by running `src/build-tools/gnu/config.subs'.  
+
+  For the vast majority of users, letting `configure' guess the system
+  name is the best idea.  If you aren't part of that majority -- you
+  have probably encountered this while building other packages as
+  well.  As a rule of thumb, you can use the same system name you
+  would use if you were building *GNU* emacs.
+
+
+
+
+
+* Using the Link Tools During Installation
+
+  The recommended way to install a `package-framework'-based
+  distribution is to give it its own installation directory.
+
+  For example, you might use `/usr/releases/' for this purpose.
+  In that case, when building `hello-3.1pre86', you would configure
+  with:
+
+<<<
+	% ../configure --prefix /usr/releases/hello-3.1pre86
+>>>
+
+  In that way, you can safely install multiple versions side-by-side,
+  and easilly remove a previously installed version.
+
+  For convenience, though, you might want to _also_ have a directory
+  with symbollic links to all the various packages you've installed.
+  You can do that with `make-links':
+
+<<<
+	# Build a symbolic link tree in /usr/local to all of
+	# the files in the `hello-3.1pre86' installation:
+	#
+	% package/src/link-tools/make-links \
+	  	/usr/releases/hello-3.1pre86 \
+		/usr/local
+>>>
+
+  You can remove the links to just one installed package with `remove-links':
+
+
+<<<
+	# Remoe symbolic links in /usr/local to all of
+	# the files in the `hello-3.1pre86' installation:
+	#
+	% package/src/link-tools/remove-links \
+	  	/usr/releases/hello-3.1pre86 \
+		/usr/local
+>>>
+  
+
+
+
+* Rationales
+
+  __Why a separate build tree?__ Because we like to keep source trees
+  __clean__.  That means, for example, that we don't want to fill up a
+  source tree with `.o' files or built executables. A good way to
+  think of this goal is that it should be possible to mount a CD-ROM
+  or other read-only device containing source pacakges, and build
+  directly from that.
+
+  __Why not install in `/usr/local'?__  We want to reduce the risk
+  of messing up the system directories of a running, perfectly
+  functional system.  Anyway, in gneral, it isn't a good practice to
+  install every package in the world in the system directories.
+  For one thing, that makes it awkward to try to install multiple
+  versions of a given package.  For another, it can make it difficult
+  to _uninstall_ a package (especially if you no longer have the
+  original source tree on hand).  System administration is grately
+  simplified by installing every package _in its own tree_, and then,
+  if you like, using symbolic links to create a tree which combines
+  all those installations. 
+
+  __Why have standard `make' targets?__ A handful of standard make
+  targets make it practical to build and install packages
+  automatically.  It also makes life easier for developers and users
+  when all packages work more or less the same way.
+
+  __What's so great about setting `CFLAGS'?__  This is simply a very
+  handy feature to have for anyone who is trying to do a slightly
+  tricky compile.  Many non-`package-framework' distributions don't 
+  support this feature, so it's worth mentioning here.
+
+  __Why use system names?  Why not just write portable code?__
+  Because some very useful kinds of programs can't be written 
+  portably, and can't be made portable using `autoconf' tricks.  The
+  only practical solution is a little database of obscure
+  target-system factoids, keyed (in essense) by the system name.
+
+%%% tag: Tom Lord Thu May  9 12:47:13 2002 (PackageFramework.d/UserView)
+%%%

@@ -1,0 +1,137 @@
+/* tag: Tom Lord Tue Dec  4 14:57:14 2001 (machine.doc)
+ */
+/************************************************************************
+ *(h0 "Machine-Specific Definitions"
+ *    :includes ("hackerlab/machine/types.h"))
+ * 
+
+The following machine-specific types and macros are used throughout
+the Hackerlab C library.
+
+ */
+/*(menu)
+ */
+
+
+/************************************************************************
+ *(h1 "Known-Width Integer Types")
+ * 
+ */
+
+/*(c t_uint8 :category type)
+ * 
+ * An 8-bit unsigned integer.
+ * 
+ */
+
+
+/*(c t_int8 :category type)
+ * 
+ * An 8-bit signed integer.
+ * 
+ */
+
+/*(c t_uint16 :category type)
+ * 
+ * An 16-bit unsigned integer.
+ * 
+ */
+
+
+/*(c t_int16 :category type)
+ * 
+ * An 16-bit signed integer.
+ * 
+ */
+
+/*(c t_uint32 :category type)
+ * 
+ * An 32-bit unsigned integer.
+ * 
+ */
+
+
+/*(c t_int32 :category type)
+ * 
+ * An 32-bit signed integer.
+ * 
+ */
+
+
+/************************************************************************
+ *(h1 "Unsigned Integer Types")
+ * 
+ * 
+ * 
+ */
+
+/*(c t_uchar :category type)
+ * 
+ * Short-hand for `unsigned char'.
+ * 
+ */
+
+/*(c t_ushort :category type)
+ * 
+ * Short-hand for `unsigned short'.
+ * 
+ */
+
+/*(c t_uint :category type)
+ * 
+ * Short-hand for `unsigned int'.
+ * 
+ */
+
+/*(c t_ulong :category type)
+ * 
+ * Short-hand for `unsigned long'.
+ * 
+ */
+
+
+/************************************************************************
+ *(h1 "Sizeof Macros")
+ * 
+ */
+
+/*(c MACHINE_SIZEOF_SHORT :category macro)
+ * 
+ * An integer equal to `sizeof (short)'.
+ */
+
+/*(c MACHINE_SIZEOF_INT :category macro)
+ * 
+ * An integer equal to `sizeof (int)'.
+ */
+
+/*(c MACHINE_SIZEOF_LONG :category macro)
+ * 
+ * An integer equal to `sizeof (long)'.
+ */
+
+
+/************************************************************************
+ *(h1 "Types for Unicode")
+ * 
+ * 
+ * 
+ */
+
+/*(c t_unichar :category type)
+ * 
+ * A synonym for `t_uint16' -- an unsigned 16-bit integer.
+ * 
+ * This type is used to represent code units in the UTF-16 encoding
+ * form.
+ */
+
+/*(c t_unicode :category type)
+ * 
+ * A synonym for `t_uint32' -- an unsigned 32-bit integer.
+ * 
+ * This type is used to represent Unicode code points and can
+ * also be used to represent code units in the UTF-32 encoding
+ * form.
+ */
+

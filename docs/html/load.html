@@ -1,0 +1,239 @@
+<html>
+<head>
+<title>Evaluating Expressions in Files</title>
+</head>
+<body>
+
+<a name="Evaluating_Expressions_in_Files"></a>
+
+
+
+<h2 align=center>Evaluating Expressions in Files</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+
+<b>prev: </b><a href="read-print.html#Reading_and_Writing_Data_Structures">Reading and Writing Data Structures</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="load"></a><a name="index-pt:0"></a>
+load
+</code></b><br>
+<pre>
+(load filename)
+
+</pre>
+<p>Try to load a file by searching the <code>load-path</code>
+.  Both <code>filename</code>
+ and
+<code>filename</code>
+ with the various <code>scheme-file-suffixes</code>
+ appended are
+tried.
+</p><p>If the file can not be found, an error is signalled.
+</p><p><code>load-verbosely</code>
+ controls the printed output
+of this procedure.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="load-with-path"></a><a name="index-pt:1"></a>
+load-with-path
+</code></b><br>
+<pre>
+(load-with-path filename path)
+
+</pre>
+<p>Like <code>load</code>
+, but searches the specified path instead of the
+default path.  <code>path</code>
+ is a list of directory names.
+</p>
+<br>
+<br><p><b><u>Variable</u> <code><a name="load-verbosely"></a><a name="index-pt:2"></a>
+load-verbosely
+</code></b><br>
+<pre>
+load-verbosely
+
+</pre>
+<p>If not <code>#f</code>
+, then print informative messages on the
+current output port while loading files.
+</p>
+<br>
+<br><p><b><u>Variable</u> <code><a name="load-path"></a><a name="index-pt:3"></a>
+load-path
+</code></b><br>
+<pre>
+(load-path)
+
+</pre>
+<p>A list of directories to search for scheme source code.
+</p><p>The list consists of elements from the environment variable
+<em>
+<a name="index-pt:4"></a>
+
+SCHEME_LOAD_PATH
+</em>
+ (or '(<em>
+<a name="index-pt:5"></a>
+
+./
+</em>
+ <em>
+<a name="index-pt:6"></a>
+
+/
+</em>
+) if that environment is not
+defined) followed by the built-in load path.
+</p>
+<br>
+<br><p><b><u>Variable</u> <code><a name="scheme-suffixes"></a><a name="index-pt:7"></a>
+scheme-suffixes
+</code></b><br>
+<pre>
+(scheme-suffixes)
+
+</pre>
+<p>A list of filename extensions that designate Scheme
+source code.  Default value:
+</p><pre>
+      '(&quot;.scm&quot; &quot;.ss&quot;))
+
+</pre>
+
+<br>
+<br><p><b><u>Function</u> <code><a name="parse-path"></a><a name="index-pt:8"></a>
+parse-path
+</code></b><br>
+<pre>
+(parse-path path-string)
+
+</pre>
+<p>Convert a string of the form:
+</p><pre>
+             &quot;elt1:elt2:elt3...&quot;
+
+</pre>
+<p>to a list of the form:
+</p><pre>
+             (&quot;elt1&quot; &quot;elt2&quot; &quot;elt3&quot; ...)
+
+</pre>
+
+<br>
+<br><p><b><u>Function</u> <code><a name="try-load"></a><a name="index-pt:9"></a>
+try-load
+</code></b><br>
+<pre>
+(try-load filename)
+
+</pre>
+<p>Try to load the named file from the list of directories
+bound to <code>load-path</code>
+.   If <code>load-path</code>
+ is not defined,
+try to load the named file from the current directory or,
+if <code>filename</code>
+ is absolute, from the root.
+</p><p>Return <code>#f</code>
+ if the file could not be found.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="try-load-with-path"></a><a name="index-pt:10"></a>
+try-load-with-path
+</code></b><br>
+<pre>
+(try-load-with-path filename path)
+
+</pre>
+<p>Try to load the named file from the indicated list of
+directories.   
+</p><p>Return <code>#f</code>
+ if the file could not be found.
+</p>
+<br>
+<br>
+<a name="Low_Level_File_Loading"></a>
+
+
+
+<h3 align=center>Low Level File Loading</h3>
+
+
+
+
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="low-level-try-load"></a><a name="index-pt:11"></a>
+low-level-try-load
+</code></b><br>
+<pre>
+(load-level-try-load filename 
+                     [:optional ignore-case?
+                                sharp-reader])
+
+</pre>
+<p>Attempt to open <code>filename</code>
+, read expressions from that file, and evaluate
+those expressions.
+</p><p><code>ignore-case?</code>
+ means to convert all symbol names to lower case as they 
+are read.
+</p><p><code>sharp-reader</code>
+, if provided and not <code>#f</code>
+, is a procedure to call to read
+expressions that begin <code>#</code>
+ where the <code>#</code>
+ is not followed a recognized 
+character.  (See <code>read</code>
+).
+</p><p>If the file can not be opened this procedure silently returns <code>#f</code>
+.
+</p><p>If any other error occurs, an exception is generated.
+</p><p>If this procedure succeeds, <code>#t</code>
+ is returned.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

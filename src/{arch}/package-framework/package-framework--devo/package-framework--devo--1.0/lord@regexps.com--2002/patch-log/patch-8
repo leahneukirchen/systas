@@ -1,0 +1,14 @@
+Revision: package-framework--devo--1.0--patch-8
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon Feb  4 18:21:48 PST 2002
+Standard-date: 2002-02-04
+Summary: updated =THANKS
+Keywords: 
+New-files: {arch}/package-framework/package-framework--devo/package-framework--devo--1.0/lord@regexps.com--2002/patch-log/patch-8
+Modified-files: =THANKS ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/package-framework--devo--1.0--patch-8
+
+Updated "=THANKS".
+

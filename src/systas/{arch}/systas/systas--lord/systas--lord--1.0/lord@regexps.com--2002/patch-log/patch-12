@@ -1,0 +1,21 @@
+Revision: systas--lord--1.0--patch-12
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Tue Apr 23 03:45:09 PDT 2002
+Standard-date: 2002-04-23 10:45:09 GMT
+Summary: minor milestone
+Keywords: 
+New-files: {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-12
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regepx.com--2002/ChangeLog.lord--1.0
+  scheme-library/cgi/commands.scm scheme-library/cgi/users.scm
+  scheme-library/wiki/auth.scm scheme-library/wiki/cgi.scm
+  scheme-library/wiki/config.scm
+  scheme-library/wiki/transactions.scm
+  scheme-library/wiki/view.scm wiki-cgi/test.ss
+New-patches: lord@regexps.com--2002/systas--lord--1.0--patch-12
+
+
+
+Anonymous viewing via cgi-meta-x command is working.
+

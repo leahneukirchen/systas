@@ -1,0 +1,25 @@
+
+!> 		`package-framework' dependecies
+
+
+Because of its special role in building other software, the
+dependencies of `package-framework' _on_ other software have to be
+kept to an absolute minimum.  Below is a rough list of the
+dependencies there currently are.  Note that, because
+`package-framework' doesn't "compile" a `configure.in' or
+`Makefile.am' file, the dependencies are the same for both developers
+using `package-framework' and end-users building packages that use
+`package-framework'.
+
+
+*) __GNU make__
+
+*) __POSIX-ish sh__
+
+*) __POSIX-ish shell utils__
+   $= cat, chmod, echo, find, grep, ls, printf, touch, tsort, sed =$
+
+*) __POSIX-ish awk__
+
+%%% tag: Tom Lord Thu May  9 12:46:49 2002 (PackageFramework.d/PkgDependencies)
+%%%

@@ -1,0 +1,443 @@
+<html>
+<head>
+<title>Vectors</title>
+</head>
+<body>
+
+<a name="Vectors"></a>
+
+
+
+<h2 align=center>Vectors</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="pairs.html#Cons_Pairs">Cons Pairs</a></br>
+
+<b>prev: </b><a href="kw.html#Keywords">Keywords</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>A vector is an array of objects, addressed by successive integers
+starting with <code>0</code>
+, in which elements can be referenced or set in a
+single, efficient operation.
+</p><p>Vectors are written this way:
+</p><pre>
+     #(a b c)        ; a three element vector
+
+</pre>
+<p>Weak vectors and weak hash tables are special kind of vector
+which interact with the garbage collector in particular ways.
+See x-ref:<em>
+<a name="index-pt:0"></a>
+
+
+</em>
+.
+</p><p><b><u>Function</u> <code><a name="vector?"></a><a name="index-pt:1"></a>
+vector?
+</code></b><br>
+<pre>
+(vector? obj)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is a vector, <code>#f</code>
+ otherwise.
+</p><p><code>#t</code>
+ is returned if <code>obj</code>
+ is a weak vector or weak hash table.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="vector-length"></a><a name="index-pt:2"></a>
+vector-length
+</code></b><br>
+<pre>
+(vector-length vec)
+
+</pre>
+<p>Return the number of elements in the vector <code>vec</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="vector-ref"></a><a name="index-pt:3"></a>
+vector-ref
+</code></b><br>
+<pre>
+(vector-ref vec n)
+
+</pre>
+<p>Return the <code>n</code>
+th element of vector <code>vec</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="vector-set!"></a><a name="index-pt:4"></a>
+vector-set!
+</code></b><br>
+<pre>
+(vector-set! vector n value)
+
+</pre>
+<p>Set the <code>n</code>
+th element of vector <code>vector</code>
+ to <code>value</code>
+.
+</p><p>Return <code>vector</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="vector=?"></a><a name="index-pt:5"></a>
+vector=?
+</code></b><br>
+<pre>
+(vector=? a b :optional =)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>a</code>
+ and <code>b</code>
+ are equal size vectors containing <code>equal?</code>
+
+elements.  If <code>=</code>
+ is specified, it is used to compare elements:
+</p><pre>
+     (= vector-a-elt vector-b-elt)
+
+</pre>
+
+<br>
+<br>
+<a name="Making_Vectors"></a>
+
+
+
+<h3 align=center>Making Vectors</h3>
+
+
+
+
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="make-vector"></a><a name="index-pt:6"></a>
+make-vector
+</code></b><br>
+<pre>
+(make-vector n fill multiple?)
+
+</pre>
+<p>Create a new vector with <code>n</code>
+ elements, initialized with <code>fill</code>
+
+or () if <code>fill</code>
+ is not supplied.
+</p><p>If <code>multiple?</code>
+ is supplied and not <code>#f</code>
+, then <code>fill</code>
+ is interpreted
+as a list of initializers.  If there are too few elements in that
+list, the remaining elements of the vector are initialized to <code>()</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="vector-copy"></a><a name="index-pt:7"></a>
+vector-copy
+</code></b><br>
+<pre>
+(vector-copy v)
+
+</pre>
+<p>Return a copy of vector <code>v</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="vector"></a><a name="index-pt:8"></a>
+vector
+</code></b><br>
+<pre>
+(vector . elts)
+
+</pre>
+<p>Construct a new vector containing <code>elts</code>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<a name="Modifying_Vectors"></a>
+
+
+
+<h3 align=center>Modifying Vectors</h3>
+
+
+
+
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="vector-fill!"></a><a name="index-pt:9"></a>
+vector-fill!
+</code></b><br>
+<pre>
+(vector-fill! vector fill)
+
+</pre>
+<p>Replace all elements of <code>vector</code>
+ with <code>fill</code>
+.
+</p><p>Return <code>vector</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="vector-move-left!"></a><a name="index-pt:10"></a>
+vector-move-left!
+</code></b><br>
+<pre>
+(vector-move-left! from-vector start end to-vector destination)
+
+</pre>
+<p>Copy elements from the <code>from-vector</code>
+ to the <code>to-vector</code>
+.  Return
+<code>to-vector</code>
+.
+</p><p>The <code>start</code>
+ element through the <code>(- end 1)</code>
+ element replace
+elements of the <code>to-vector</code>
+ beginning at position <code>destination</code>
+.
+The <code>start</code>
+ element is copied first and elements are copied in
+order.
+</p><p>It is an error if any of the subscripts are out of range.
+</p><p><code>from-vector</code>
+ and <code>to-vector</code>
+ may be the same.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="vector-move-right!"></a><a name="index-pt:11"></a>
+vector-move-right!
+</code></b><br>
+<pre>
+(vector-move-right! from-vector start end to-vector destination)
+
+</pre>
+<p>Copy elements from the <code>from-vector</code>
+ to the <code>to-vector</code>
+.  Return
+<code>to-vector</code>
+.
+</p><p>The <code>start</code>
+ element through the <code>(- end 1)</code>
+ element replace
+elements of the <code>to-vector</code>
+ beginning at position <code>destination</code>
+.
+The <code>(- end 1)</code>
+ element is copied first and elements are copied
+in reverse order.
+</p><p><code>from-vector</code>
+ and <code>to-vector</code>
+ may be the same.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<a name="Vector_<->_List_Conversions"></a>
+
+
+
+<h3 align=center>Vector <-> List Conversions</h3>
+
+
+
+
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="vector->list"></a><a name="index-pt:12"></a>
+vector->list
+</code></b><br>
+<pre>
+(vector->list vector)
+
+</pre>
+<p>Return a list containing the elements of <code>vector</code>
+, in order.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="list->vector"></a><a name="index-pt:13"></a>
+list->vector
+</code></b><br>
+<pre>
+(list->vector elts)
+
+</pre>
+<p>Construct a new vector containing the members of the list <code>elts</code>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<a name="Vector_Iterators"></a>
+
+
+
+<h3 align=center>Vector Iterators</h3>
+
+
+
+
+
+
+
+
+
+
+<p>These procedures iterate over vector elements.
+</p><p><b><u>Function</u> <code><a name="vector-map"></a><a name="index-pt:14"></a>
+vector-map
+</code></b><br>
+<pre>
+(vector-map proc vec)
+
+</pre>
+<p>Return a new vector with as many elements as <code>vec</code>
+, with each
+element at index <code>n</code>
+ being the value of:
+</p><pre>
+     (proc (vector-ref vec n))
+
+</pre>
+<p>Iteration is guaranteed to be in-order beginning at element <code>0</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="vector-for-each"></a><a name="index-pt:15"></a>
+vector-for-each
+</code></b><br>
+<pre>
+(vector-for-each proc vec)
+
+</pre>
+<p>For each element at index <code>n</code>
+ of <code>vec</code>
+, call:
+</p><pre>
+     (proc (vector-ref vec n))
+
+</pre>
+<p>discarding its return value.
+</p><p>Iteration is guaranteed to be in-order beginning at element <code>0</code>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<a name="Rationale_--_Vectors"></a>
+
+
+
+<h3 align=center>Rationale -- Vectors</h3>
+
+
+
+
+
+
+
+
+
+
+<p>Systas simply follows standard Scheme here.
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

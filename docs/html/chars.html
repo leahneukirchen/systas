@@ -1,0 +1,837 @@
+<html>
+<head>
+<title>Characters</title>
+</head>
+<body>
+
+<a name="Characters"></a>
+
+
+
+<h2 align=center>Characters</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="symbols.html#Symbols">Symbols</a></br>
+
+<b>prev: </b><a href="boolean.html#Booleans">Booleans</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>Individual character constants are written:
+</p><pre>
+     #\&lt;character-name>
+
+</pre>
+<p>For example, uppercase <em>
+<a name="index-pt:0"></a>
+
+A
+</em>
+ is written:
+</p><pre>
+     #\A
+
+</pre>
+<p>lowercase:
+</p><pre>
+     #\a
+
+</pre>
+<p>Characters can be written in terms of their ASCII representation by
+using octal numbers:
+</p><pre>
+     #\101
+      => #\A
+
+</pre>
+<p>Some special characters are given mnemonic names:
+</p><pre>
+     #\space
+     #\newline
+     #\nl
+     #\tab
+     #\backspace
+     #\return
+     #\page
+     #\null
+     #\del
+
+</pre>
+<p>Other special character names (following ASCII) include:
+</p><pre>
+     nul soh stx etx eot enq ack bel bs ht vt np cr so
+     si dle dc1 dc2 dc3 dc4 nak syn etb can em sub esc
+     fs gs rs us
+
+</pre>
+
+<a name="Implicit_Integer->Character_Conversion"></a>
+
+
+
+<h3 align=center>Implicit Integer->Character Conversion</h3>
+
+
+
+
+
+
+
+
+
+
+<p>Most functions that except a character argument also accept an
+immediate integer argument.  The integer <code>x</code>
+ is interpreted as the
+character <code>(integer->char x)</code>
+.
+</p><p><b><u>Function</u> <code><a name="char?"></a><a name="index-pt:1"></a>
+char?
+</code></b><br>
+<pre>
+(char? obj)
+
+</pre>
+<p>Return <code>#t</code>
+ of <code>obj</code>
+ is a character, <code>#f</code>
+ otherwise.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<a name="Case-sensative_Character_Comparisons"></a>
+
+
+
+<h3 align=center>Case-sensative Character Comparisons</h3>
+
+
+
+
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="char=?"></a><a name="index-pt:2"></a>
+char=?
+</code></b><br>
+<pre>
+(char=? . args)
+
+</pre>
+<p>Return <code>#t</code>
+ if all of the arguments are equal when interpreted as
+characters.  Arguments must be characters or integers.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="char<?"></a><a name="index-pt:3"></a>
+char<?
+</code></b><br>
+<pre>
+(char&lt;? . args)
+
+</pre>
+<p>Return <code>#t</code>
+ if each argument is less than the next when interpreted
+as characters.
+</p><p>Arguments must be characters or integers.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="char<=?"></a><a name="index-pt:4"></a>
+char<=?
+</code></b><br>
+<pre>
+(char&lt;=? . args)
+
+</pre>
+<p>Return <code>#t</code>
+ if each argument is less than or equal to the next when
+interpreted as characters.
+</p><p>Arguments must be characters or integers.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="char>?"></a><a name="index-pt:5"></a>
+char>?
+</code></b><br>
+<pre>
+(char>? . args)
+
+</pre>
+<p>Return <code>#t</code>
+ if each argument is greater than the next when
+interpreted as characters.
+</p><p>Arguments must be characters or integers.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="char>=?"></a><a name="index-pt:6"></a>
+char>=?
+</code></b><br>
+<pre>
+(char>=? . args)
+
+</pre>
+<p>Return <code>#t</code>
+ if each argument is greater than or equal to the next
+when interpreted as characters.
+</p><p>Arguments must be characters or integers.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<a name="Case-insensative_Character_Comparisons"></a>
+
+
+
+<h3 align=center>Case-insensative Character Comparisons</h3>
+
+
+
+
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="char-ci=?"></a><a name="index-pt:7"></a>
+char-ci=?
+</code></b><br>
+<pre>
+(char-ci=? . args)
+
+</pre>
+<p>Return <code>#t</code>
+ if each argument is equal to the next when interpreted
+as characters, disregarding the case of alphabetic characters.
+</p><p>Arguments must be characters or integers.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="char-ci<?"></a><a name="index-pt:8"></a>
+char-ci<?
+</code></b><br>
+<pre>
+(char-ci&lt;? . args)
+
+</pre>
+<p>Return <code>#t</code>
+ if each argument is less than the next when interpreted
+as characters, disregarding the case of alphabetic characters.
+</p><p>Arguments must be characters or integers.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="char-ci<=?"></a><a name="index-pt:9"></a>
+char-ci<=?
+</code></b><br>
+<pre>
+(char-ci&lt;=? . args)
+
+</pre>
+<p>Return <code>#t</code>
+ if each argument is less than or equal to the next when
+interpreted as characters, disregarding the case of alphabetic
+characters.
+</p><p>Arguments must be characters or integers.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="char-ci>?"></a><a name="index-pt:10"></a>
+char-ci>?
+</code></b><br>
+<pre>
+(char-ci>? . args)
+
+</pre>
+<p>Return <code>#t</code>
+ if each argument is greater than the next when
+interpreted as characters, disregarding the case of alphabetic
+characters.
+</p><p>Arguments must be characters or integers.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="char-ci>=?"></a><a name="index-pt:11"></a>
+char-ci>=?
+</code></b><br>
+<pre>
+(char-ci>=? . args)
+
+</pre>
+<p>Return <code>#t</code>
+ if each argument is greater than or equal to the next
+when interpreted as characters, disregarding the case of alphabetic
+characters.
+</p><p>Arguments must be characters or integers.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<a name="Character_Classes"></a>
+
+
+
+<h3 align=center>Character Classes</h3>
+
+
+
+
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="char-alpha?"></a><a name="index-pt:12"></a>
+char-alpha?
+</code></b><br>
+<pre>
+(char-alpha? character) 
+(char-alphabetic? character) ; aka
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>character</code>
+ is an alphabetic charater, <code>#f</code>
+
+otherwise.  The alphabetic charaters are <em>
+<a name="index-pt:13"></a>
+
+a-z
+</em>
+ and <em>
+<a name="index-pt:14"></a>
+
+A-Z
+</em>
+.
+</p><p><code>character</code>
+ must be a character or integer.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="char-digit?"></a><a name="index-pt:15"></a>
+char-digit?
+</code></b><br>
+<pre>
+(char-digit? character) 
+(char-numeric? character) ; aka
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>character</code>
+ is a decimal digit, <code>#f</code>
+ otherwise.  The
+decimal digits are <em>
+<a name="index-pt:16"></a>
+
+0-9
+</em>
+.
+</p><p><code>character</code>
+ must be a character or integer.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="char-space?"></a><a name="index-pt:17"></a>
+char-space?
+</code></b><br>
+<pre>
+(char-space? character) 
+(char-whitespace? character) ; aka
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>character</code>
+ is a whitespace character, <code>#f</code>
+
+otherwise.  The whitespace characters are:
+</p><pre>
+     #\ht #\nl #\vt #\np #\cr #\space
+
+</pre>
+<p><code>character</code>
+ must be a character or integer.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="char-upper?"></a><a name="index-pt:18"></a>
+char-upper?
+</code></b><br>
+<pre>
+(char-upper? character) 
+(char-upper-case? character) ; aka
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>character</code>
+ is an uppercase character, <code>#f</code>
+
+otherwise.  The upper case characters are <em>
+<a name="index-pt:19"></a>
+
+A-Z
+</em>
+.
+</p><p><code>character</code>
+ must be a character or integer.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="char-lower?"></a><a name="index-pt:20"></a>
+char-lower?
+</code></b><br>
+<pre>
+(char-lower? character) 
+(char-lower-case? character) ; aka
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>character</code>
+ is a lowercase character, <code>#f</code>
+
+otherwise.  The upper case characters are <em>
+<a name="index-pt:21"></a>
+
+a-z
+</em>
+.
+</p><p><code>character</code>
+ must be a character or integer.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="char-alphanumeric?"></a><a name="index-pt:22"></a>
+char-alphanumeric?
+</code></b><br>
+<pre>
+(char-alphanumeric? character) 
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>character</code>
+ is an alphanumeric character, <code>#f</code>
+
+otherwise.  The alphanumeric characters are <em>
+<a name="index-pt:23"></a>
+
+a-z
+</em>
+, <em>
+<a name="index-pt:24"></a>
+
+A-Z
+</em>
+, and
+<em>
+<a name="index-pt:25"></a>
+
+0-9
+</em>
+.
+</p><p><code>character</code>
+ must be a character or integer.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="char-graph?"></a><a name="index-pt:26"></a>
+char-graph?
+</code></b><br>
+<pre>
+(char-graph? character) 
+(char-graphic? character) ; aka
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>character</code>
+ is a graphic character, <code>#f</code>
+ otherwise.
+The graphic characters are all characters which are not control
+characters, whitespace characters, or delete.
+</p><p><code>character</code>
+ must be a character or integer.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="char-printable?"></a><a name="index-pt:27"></a>
+char-printable?
+</code></b><br>
+<pre>
+(char-printable? character) 
+(char-printing? character) ; aka
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>character</code>
+ is a printable character, <code>#f</code>
+
+otherwise.  The printable characters are all characters which are
+either space characters, or are not control characters, or delete.
+</p><p><code>character</code>
+ must be a character or integer.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="char-blank?"></a><a name="index-pt:28"></a>
+char-blank?
+</code></b><br>
+<pre>
+(char-blank? character) 
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>character</code>
+ is a blankspace character, <code>#f</code>
+
+otherwise.  The blankspace characters are space and tab.
+</p><p><code>character</code>
+ must be a character or integer.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="char-control?"></a><a name="index-pt:29"></a>
+char-control?
+</code></b><br>
+<pre>
+(char-control? character) 
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>character</code>
+ is a control character, <code>#f</code>
+ otherwise.
+The control characters are character codes <code>0</code>
+..31 (inclusive).
+</p><p><code>character</code>
+ must be a character or integer.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="char-punct?"></a><a name="index-pt:30"></a>
+char-punct?
+</code></b><br>
+<pre>
+(char-punct? character) 
+(char-punctuation? character) ; aka
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>character</code>
+ is a punctuation character, <code>#f</code>
+
+otherwise.  The punctuation characters are all graphic characters
+which are not alphanumeric and not whitespace.
+</p><p><code>character</code>
+ must be a character or integer.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="char-xdigit?"></a><a name="index-pt:31"></a>
+char-xdigit?
+</code></b><br>
+<pre>
+(char-xdigit? character) 
+(char-hex-digit? character) ; aka
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>character</code>
+ is a hexidecimal digit character, <code>#f</code>
+
+otherwise.  The hexidecimal digits are <em>
+<a name="index-pt:32"></a>
+
+0..9
+</em>
+, <em>
+<a name="index-pt:33"></a>
+
+a-f
+</em>
+, and <em>
+<a name="index-pt:34"></a>
+
+A-F
+</em>
+.
+</p><p><code>character</code>
+ must be a character or integer.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="char-ascii?"></a><a name="index-pt:35"></a>
+char-ascii?
+</code></b><br>
+<pre>
+(char-ascii? character) 
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>character</code>
+ is a valid ascii character, <code>#f</code>
+
+otherwise.
+</p><p><code>character</code>
+ must be a character or integer.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<a name="Character_Case_Conversions"></a>
+
+
+
+<h3 align=center>Character Case Conversions</h3>
+
+
+
+
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="char-upcase"></a><a name="index-pt:36"></a>
+char-upcase
+</code></b><br>
+<pre>
+(char-upcase character) 
+
+</pre>
+<p>If <code>character</code>
+ is a lowercase letter, return the corresponding
+uppercase letter.  Otherwise, return <code>character</code>
+.
+</p><p><code>character</code>
+ must be a character or integer.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="char-downcase"></a><a name="index-pt:37"></a>
+char-downcase
+</code></b><br>
+<pre>
+(char-downcase character) 
+
+</pre>
+<p>If <code>character</code>
+ is an uppercase letter, return the corresponding
+lowercase letter.  Otherwise, return <code>character</code>
+.
+</p><p><code>character</code>
+ must be a character or integer.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<a name="Character_<->_Integer_Conversions"></a>
+
+
+
+<h3 align=center>Character <-> Integer Conversions</h3>
+
+
+
+
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="char->integer"></a><a name="index-pt:38"></a>
+char->integer
+</code></b><br>
+<pre>
+(char->integer character) 
+
+</pre>
+<p>Return a number which is the integer character code of <code>character</code>
+.
+</p><p><code>character</code>
+ must be a character or integer.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="integer->char"></a><a name="index-pt:39"></a>
+integer->char
+</code></b><br>
+<pre>
+(integer->char integer) 
+
+</pre>
+<p>Return the character whose integer character code is <code>integer</code>
+.
+</p><p><code>integer</code>
+ is interpreted as a <code>32</code>
+ bit unsigned integer and masked to
+<code>24</code>
+ bits.
+</p><p><code>character</code>
+ must be a character or integer.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<a name="Printing_Characters"></a>
+
+
+
+<h3 align=center>Printing Characters</h3>
+
+
+
+
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="write-char"></a><a name="index-pt:40"></a>
+write-char
+</code></b><br>
+<pre>
+(write-char char :optional port)
+
+</pre>
+<p>Write the character <code>char</code>
+ to the given port and return an
+unspecified value.  This procedure writes the character itself, not
+an external representation of the character, for example:
+</p><pre>
+     a
+not
+     #\a
+
+</pre>
+<p><code>port</code>
+ defaults to <code>(current-output-port)</code>
+
+</p><p>If an I/O error occurs, an exception is thrown.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<a name="Rationale_--_Characters"></a>
+
+
+
+<h3 align=center>Rationale -- Characters</h3>
+
+
+
+
+
+
+
+
+
+
+<p>The eventual plan is to support Unicode, not just ASCII.
+</p><p>Mostly, Systas simply follows standard Scheme.
+</p><p>Accepting integers as characters is convenient and aids in
+exchanging data with Emacs lisp.
+</p><p>For convenience, several procedures are given both the standard
+scheme name and a name based on standard C libraries
+(e.g. <code>char-upper-case?</code>
+ and <code>char-upper?</code>
+).
+</p><p>For convenience, several characters are given both the standard
+scheme read name and a name based on ASCII (e.g. <code>#\newline</code>
+ and
+<code>#\nl</code>
+).
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

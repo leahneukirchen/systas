@@ -1,0 +1,541 @@
+<html>
+<head>
+<title>Symbols</title>
+</head>
+<body>
+
+<a name="Symbols"></a>
+
+
+
+<h2 align=center>Symbols</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="strings.html#Strings">Strings</a></br>
+
+<b>prev: </b><a href="chars.html#Characters">Characters</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>Symbols are a kind of read-only string.  Symbols are used as
+variable names and for other purposes.
+</p><p>Normally symbol names are made from only these characters:
+</p><pre>
+     a-z
+     A-Z,
+     0-9
+     -_!@$%^~&amp;*=+|:/?>&lt;,.
+
+</pre>
+<p>For example:
+</p><pre>
+     abc
+     2much
+     set!
+     +
+
+</pre>
+<p>A symbol name must not begin with the character <code>:</code>
+ (unless the
+<code>#s</code>
+ syntax describe below is used).  If you write what appears to
+be a symbol name but it begins with a <code>:</code>
+, you'll get a keyword,
+not a symbol (see <a href="kw.html#Keywords">Keywords</a>).
+</p><pre>
+     (symbol? 'this-is-a-symbol)     => #t
+     (symbol? ':this-is-not)         => ()
+
+</pre>
+<p>Except in obscure cases, the same name always names the same
+symbol (see <a href="symbols.html#Symbol_Hash-tables">Symbol Hash-tables</a>).
+</p><pre>
+     (eq? 'abc
+          'abc
+          (string->symbol &quot;abc&quot;)
+          (symbol-append &quot;a&quot; 'bc))
+
+</pre>
+<pre>
+     => #t
+
+</pre>
+<p>Symbols are read in a case sensitive manner:
+</p><pre>
+     (eq? 'ABC 'abc) => ()
+
+</pre>
+<p><b><u>Function</u> <code><a name="symbol?"></a><a name="index-pt:0"></a>
+symbol?
+</code></b><br>
+<pre>
+(symbol? obj)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is a symbol, <code>#f</code>
+ otherwise.
+</p><ul>
+<li><a href="symbols.html#Converting_Between_Strings_and_Symbols">Converting Between Strings and Symbols</a></li>
+<li><a href="symbols.html#Symbol_Constructors">Symbol Constructors</a></li>
+<li><a href="symbols.html#Syntax_for_Unusual_Symbol_Names">Syntax for Unusual Symbol Names</a></li>
+<li><a href="symbols.html#Symbol_Hash-tables">Symbol Hash-tables</a></li>
+<li><a href="symbols.html#Rationale_--_Symbols">Rationale -- Symbols</a></li>
+</ul>
+
+
+<br>
+<br><hr>
+
+<a name="Converting_Between_Strings_and_Symbols"></a>
+
+
+
+<h3 align=center>Converting Between Strings and Symbols</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="symbols.html#Symbols">Symbols</a></br>
+<b>next: </b><a href="symbols.html#Symbol_Constructors">Symbol Constructors</a></br>
+
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="symbol->string"></a><a name="index-pt:1"></a>
+symbol->string
+</code></b><br>
+<pre>
+(symbol->string symbol)
+
+</pre>
+<p>Return a new string which is <code>string=?</code>
+ to <code>symbol</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="string->symbol"></a><a name="index-pt:2"></a>
+string->symbol
+</code></b><br>
+<pre>
+(string->symbol string)
+
+</pre>
+<p>Return a symbol which is <code>string=?</code>
+ to <code>string</code>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Symbol_Constructors"></a>
+
+
+
+<h3 align=center>Symbol Constructors</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="symbols.html#Symbols">Symbols</a></br>
+<b>next: </b><a href="symbols.html#Syntax_for_Unusual_Symbol_Names">Syntax for Unusual Symbol Names</a></br>
+
+<b>prev: </b><a href="symbols.html#Converting_Between_Strings_and_Symbols">Converting Between Strings and Symbols</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>These procedures construct symbols.
+</p><p><b><u>Function</u> <code><a name="symbol"></a><a name="index-pt:3"></a>
+symbol
+</code></b><br>
+<pre>
+(symbol . args)
+
+</pre>
+<p>Simply:
+</p><pre>
+     (string->symbol (apply string args))
+
+</pre>
+
+<br>
+<br><p><b><u>Function</u> <code><a name="symbol-append"></a><a name="index-pt:4"></a>
+symbol-append
+</code></b><br>
+<pre>
+(symbol-append . args)
+
+</pre>
+<p>Simply:
+</p><pre>
+     (string->symbol (apply string-append args))
+
+</pre>
+
+<br>
+<br><p><b><u>Function</u> <code><a name="list->symbol"></a><a name="index-pt:5"></a>
+list->symbol
+</code></b><br>
+<pre>
+(list->symbol . args)
+
+</pre>
+<p>Simply:
+</p><pre>
+     (string->symbol (apply list->string args))
+
+</pre>
+
+<br>
+<br><p><b><u>Function</u> <code><a name="gensym"></a><a name="index-pt:6"></a>
+gensym
+</code></b><br>
+<pre>
+(gensym . name-parts)
+
+</pre>
+<p>Construct a new, ordinary symbol.
+</p><p>If any <code>name-parts</code>
+ are specified, concatenate them 
+using <code>string-append</code>
+ to form the root of the name of
+the new symbol, adding additional characters as necessary
+to generate a new symbol name.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Syntax_for_Unusual_Symbol_Names"></a>
+
+
+
+<h3 align=center>Syntax for Unusual Symbol Names</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="symbols.html#Symbols">Symbols</a></br>
+<b>next: </b><a href="symbols.html#Symbol_Hash-tables">Symbol Hash-tables</a></br>
+
+<b>prev: </b><a href="symbols.html#Symbol_Constructors">Symbol Constructors</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>Symbol names containing unusual characters can be written as <em>
+<a name="index-pt:7"></a>
+
+#s
+</em>
+,
+followed by a quoted string.
+</p><pre>
+     '#s&quot;this is one
+         really unusual
+         symbol name.&quot;
+     => #s&quot;this is one\n    really unusual\n    symbol name.&quot;
+
+</pre>
+<pre>
+     (symbol->string '#s&quot;strange symbol&quot;) 
+     => &quot;strange symbol&quot;
+
+</pre>
+<pre>
+     (string->symbol &quot;strange symbol&quot;)
+     => #s&quot;strange symbol&quot;
+
+</pre>
+<pre>
+     (symbol? '#s&quot;:not-a-keyword&quot;)
+     => #t
+
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Symbol_Hash-tables"></a>
+
+
+
+<h3 align=center>Symbol Hash-tables</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="symbols.html#Symbols">Symbols</a></br>
+<b>next: </b><a href="symbols.html#Rationale_--_Symbols">Rationale -- Symbols</a></br>
+
+<b>prev: </b><a href="symbols.html#Syntax_for_Unusual_Symbol_Names">Syntax for Unusual Symbol Names</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>At the time they are created, symbols are ordinarily recorded in a
+built-in hash-table that is used to hold top-level definitions.
+This process is called <em>
+<a name="index-pt:8"></a>
+
+interning
+</em>
+ the symbol and the built-in
+hash-table is called the <em>
+<a name="index-pt:9"></a>
+
+symhash
+</em>
+ table.  If the same name s
+interned in the symhash table more than once, the same symbol is
+returned each time.
+</p><p>Using the procedures in this section, it is possible to create
+symbols that are interned in an aribtrary hash-table.  By using a
+hash table which is not the symhash table, distinct symbols can be
+created which have the same name.  No two symbols interned in the
+same hash-table have the same name, but different symbols, in
+different hash-tables, can have the same name.
+</p><p>It is also possible to create symbols which are not interned in any
+hash table.  This is another way in which distinct but same-named
+symbols can arise.
+</p><p><b><u>Function</u> <code><a name="string->hash-table-symbol"></a><a name="index-pt:10"></a>
+string->hash-table-symbol
+</code></b><br>
+<pre>
+(string->hash-table-symbol hash-table string :optional soft?)
+
+</pre>
+<p>Return a symbol which is <code>string=?</code>
+ to <code>string</code>
+ and is interned in
+<code>hash-table</code>
+.  By default, create such a symbol if none already
+exists.
+</p><p>If <code>soft?</code>
+ is true, then do not create a new symbol -- instead,
+return <code>#f</code>
+ if the symbol does not already exist.
+</p><p>If <code>hash-table</code>
+ is <code>#t</code>
+, create an uninterned symbol regardless of
+the value of <code>soft?</code>
+.
+</p><p>If <code>hash-table</code>
+ is <code>#f</code>
+, use the built-in hash-table.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="hash-table-symbol-append"></a><a name="index-pt:11"></a>
+hash-table-symbol-append
+</code></b><br>
+<pre>
+(hash-table-symbol-append hash-table . args)
+
+</pre>
+<p>Simply:
+</p><pre>
+    (define (hash-table-symbol-append ob . args)
+      (string->hash-table-symbol ob (apply string-append args)))
+
+</pre>
+
+<br>
+<br><p><b><u>Function</u> <code><a name="hash-table-gensym"></a><a name="index-pt:12"></a>
+hash-table-gensym
+</code></b><br>
+<pre>
+(hash-table-gensym hash-table . name-parts)
+
+</pre>
+<p>Construct a new symbol in the specified <code>hash-table</code>
+.
+</p><p>If any <code>name-parts</code>
+ are specified, concatenate them 
+using <code>string-append</code>
+ to form the root of the name of
+the new symbol.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="intern-symbol"></a><a name="index-pt:13"></a>
+intern-symbol
+</code></b><br>
+<pre>
+(intern-symbol hash-table symbol)
+
+</pre>
+<p>Add <code>symbol</code>
+ to the symbols in <code>hash-table</code>
+, if it is not already
+among them.
+</p><p>Using this procedure, it is possible to create a single symbol
+which is interned in multiple hash tables.
+</p><p>If <code>hash-table</code>
+ is <code>#f</code>
+, use the system's default hash-table.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="unintern-symbol"></a><a name="index-pt:14"></a>
+unintern-symbol
+</code></b><br>
+<pre>
+(unintern-symbol hash-table symbol)
+
+</pre>
+<p>Remove <code>symbol</code>
+ from <code>hash-table</code>
+.
+</p><p>If <code>hash-table</code>
+ is <code>#f</code>
+, use the built-in top-level hash-table.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="symbol-interned?"></a><a name="index-pt:15"></a>
+symbol-interned?
+</code></b><br>
+<pre>
+(symbol-interned? hash-table symbol)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>symbol</code>
+ occurs in <code>hash-table</code>
+.
+</p><p>If <code>hash-table</code>
+ is <code>#f</code>
+, the built-in hash table is searched.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Rationale_--_Symbols"></a>
+
+
+
+<h3 align=center>Rationale -- Symbols</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="symbols.html#Symbols">Symbols</a></br>
+
+<b>prev: </b><a href="symbols.html#Symbol_Hash-tables">Symbol Hash-tables</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>Standard Scheme does not provide same-named symbols which are not
+<code>eq?</code>
+.  We provide them because they are a natural (and useful)
+generalization
+</p><p>We regard symbols as immutable strings.  See <a href="strings.html#Strings">Strings</a>.
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

@@ -1,0 +1,74 @@
+
+!			    systas Scheme
+
+
+	  
+		   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+						+++
+						bg: #d5ffff
+
+
+		   *`systas', an implementation of Scheme*
+
+ 		   *project home page*: http://www.regexps.com/systas.html
+
+		   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Systas Scheme is a Scheme interpreter with many features for unix
+systems programming and text processing.  It is a fork of [GNU Guile],
+which is itself a fork of [SCM].
+
+
+v================================
+					+++
+					bg: #ffd5ff
+					headers: no
+
+			 + __project info__ +
+
++ [systas Scheme]	:::	the project home page
+
++ [downloading]		:::	the FTP area
+
++ ReleaseNews		:::	what's new?
+
++ [manual]		:::	an on-line copy of the reference
+				manual
+
+			+ __developer info__ +
+
++ TodoList		:::	It's a steep hill.
+
+			 + __propoganda__ +
+
++ WhySystas		:::	why should you choose systas rather
+				than some other implementation?
+
++ WhyNotSystas		:::	things you might not like about 
+				systas Scheme
+
++ HiddenFeatures	:::	what is there that isn't covered
+				in the reference manual?
+
+
+
+^================================
+
+
+
+*references*
+
+[downloading]:: ftp://ftp.regexps.com/pub/src/systas
+
+[GNU Guile]:: http://www.gnu.org/software/guile
+
+[manual]:: http://www.regexps.com/src/docs.d/systas/html/systas.html
+
+[SCM]:: http://www-swiss.ai.mit.edu/~jaffer
+
+[systas Scheme]:: http://www.regexps.com/systas.html
+
+
+---
+%%% tag: Tom Lord Tue May 14 13:08:41 2002 (SystasScheme.d/IntroTopic)
+%%%

@@ -1,0 +1,44 @@
+@need 3200
+
+@node Promises
+@chapter Promises
+
+A @geindex promise
+@dfn{promise} represents a lazily-computed value that is cached once
+it has been computed.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{promise?}@fuindex promise?
+@*
+@example
+@group
+promise? obj
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is a promise, @code{#f} otherwise.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{make-promise}@fuindex make-promise
+@*
+@example
+@group
+(make-promise thunk)
+@end group
+@group
+@end group
+@end example
+
+Return a new promise whose forced value is computed by @code{(thunk)}.
+See also @emph{xref}:@geindex delay
+@dfn{delay}.
+
+
+
+

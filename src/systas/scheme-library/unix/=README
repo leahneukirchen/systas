@@ -1,0 +1,66 @@
+
+These modules provide high-level interfaces to unix.
+
+There is still some work to do to make them really good
+implementations of proposed "100% solutions", but they are well on the
+way.
+
+These files are heavily commented.
+
+	directories 	--	utilities operating on directories
+				including a Scheme procedure similar
+				in functionality to unix `find(1)'.
+
+	file-utils	-- 	utilities operating on files, 
+				such as `file-is-directory?'
+				`file->string', `fd->string',
+				and `copy-fd'.
+
+	filenames	-- 	Syntatic filename manipulators.
+				Everything you need to eliminate
+				double slashes, simplify "/./" paths,
+				and tilde-expand filenames.
+
+	options		-- 	table-driven parsing of command-line
+				options.  Low-level option grinding
+				facilities are provided.  A facility
+				is provided for automatically
+				generating the output of "--help".
+
+	output-files	-- 	`with-' procedures, such as:
+				`with-new-output-file' and
+				`with-overwriting-output-file'.
+				There is some support here for
+				numbered backup files.
+
+	safe-directory-find --	A directory walker, similar to
+				the one in `directories', but
+				with a twist:  instead of 
+				permitting arbitrary Scheme code
+				to implement tests, this version
+				permits only a small set of 
+				"safe" primitives.
+
+	safe-directory-find-expressions.scm --
+				support for safe-directory-find.
+
+
+	shell		     -- A very thorough interface for 
+				running subprocesses.  
+				This is quite similar to SCSH,
+				but nicer in its details.
+
+
+	temp-files	     -- SCSH-inspired utilities for
+				creating temp files.
+
+	untabify	     -- tools for converting tabs
+			        to spaces in strings, and
+				while copying file contents.
+
+	user		     -- simple password file utilities.
+
+
+
+# tag: Tom Lord Tue Dec  4 15:06:37 2001 (unix/=README)
+#

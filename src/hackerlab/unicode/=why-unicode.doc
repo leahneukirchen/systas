@@ -1,0 +1,37 @@
+/* tag: Tom Lord Tue Dec  4 14:57:16 2001 (=why-unicode.doc)
+ */
+/************************************************************************
+ *(h0 "Why Unicode?"
+ *    :unnumbered)
+ * 
+ * 
+
+Why do we believe that "everyone will use Unicode"?  Here are some of
+our reasons:
+
+\A global character set is needed./ As the internet grows in
+importance, and as software and data increasingly crosses linguistic
+boundaries, a global character set is needed to simplify software and
+the integration of multi-linguistic data.
+
+\A single, good, global character set is sufficient./ Some systems,
+notably the Posix Standard C library, are designed with the idea of
+supporting multiple character sets, selectable at run time.  We
+believe that such systems will, in the long run, prove to be
+needlessly complex.  A single global character set is simpler.
+
+\Unicode is a good design./ The design of a global character set must
+address thousands of obscure issues ultimately encorporating expert
+knowledge of every human language.  While the minutiae may seem
+overwhelming, the design work must be based on a simple, well-chosen
+set of principles so that the resulting character set is easy to use
+in programs.  The design of Unicode appears to be well along this
+path.
+
+\Unicode is popular./ Unicode has begun appearing in proposed
+standards, particularly, proposed Internet standards.  Open-source
+software with Unicode support is becoming more common.
+
+
+ * 
+ */

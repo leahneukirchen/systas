@@ -1,0 +1,50 @@
+@need 3200
+
+@node Credits
+@chapter Credits
+
+I'm not even going to try and get this right, just now.
+
+
+Properly speaking, everyone who worked on SCM until around @code{1995} gets 
+some credit.  Everyone who worked on Guile until around @code{1997} gets
+some credit.
+
+
+Frankly, I lost track of all the names.
+
+
+If you'd like your name to be recorded here, send me some email
+describing what you did.  Hopefully I'll remember events well enough
+to confirm your claim.
+
+
+Here's the credit list for now:
+
+@example
+@group
+        Aubrey Jaffer is the principle author and maintainer
+        of SCM, from which Systas Scheme ultimately derives.
+@end group
+@group
+@end group
+@end example
+@example
+@group
+        Tom Lord did a heck of a lot of work on nearly every
+        aspect of Systas Scheme.
+@end group
+@group
+@end group
+@end example
+@example
+@group
+        Several other people who almost certainly deserve 
+        credit aren't listed here, for no good reason.
+@end group
+@group
+@end group
+@end example
+
+
+

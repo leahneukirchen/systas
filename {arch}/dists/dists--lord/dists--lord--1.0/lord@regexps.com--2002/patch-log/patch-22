@@ -1,0 +1,16 @@
+Revision: dists--lord--1.0--patch-22
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Feb 14 14:47:52 PST 2002
+Standard-date: 2002-02-14
+Summary: updated release ids
+Keywords: 
+New-files: {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-22
+Modified-files: =RELEASE-ID.d/=RELEASE-ID.arch
+  =RELEASE-ID.d/=RELEASE-ID.ftp-utils
+  =RELEASE-ID.d/=RELEASE-ID.hackerlab ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/dists--lord--1.0--patch-22
+
+Updated release ids.
+

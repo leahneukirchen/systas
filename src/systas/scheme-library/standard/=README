@@ -1,0 +1,32 @@
+
+Fundamental libraries, nicely designed and implemented.
+
+	char-set-lib	--	SRFI-14, Character-Set Library
+
+	define-record-type --	Convenient syntax for defining
+				record types, their constructor,
+				predicate, modifiers and accessors.
+
+	let-values	--	S48-style let-values and let*-values.
+
+	list-lib	--	SRFI-1, List Library, with some
+				minor extensions
+
+	list-sorting	-- 	`merge', `sort' and friends for lists.
+
+	regexps		-- 	A fancy structured-regular-expression
+				library -- similar to the one
+				in SCSH, but nicer in its details.
+
+	string-lib	-- 	This is a place-holder for a future
+				module.
+
+	string-parsing	--	Lots of ways to carve up strings.
+				If you find yourself using any
+				combination of `string-index' and
+				`substring' (or anything vaguely
+				similar) look here first.
+
+
+# tag: Tom Lord Tue Dec  4 15:06:40 2001 (standard/=README)
+#

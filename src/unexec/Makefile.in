@@ -1,0 +1,13 @@
+# Makefile.in - How to compile the unexec package
+#
+################################################################
+# Copyright (C) 2002 Tom Lord
+# 
+# See the file "COPYING" for further information about
+# the copyright and warranty status of this work.
+# 
+
+include $(makefiles)/dirs.mk
+
+# tag: Tom Lord Thu May  9 23:32:59 2002 (unexec/Makefile.in)
+#

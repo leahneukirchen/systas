@@ -1,0 +1,43 @@
+* General Clean-up
+
+These files have been cleaned up:
+
+		rules.mk
+
+		library-objects.mk
+		library.mk
+		install-library.mk
+
+		install-includes.mk
+
+		top-level.mk
+		dirs.mk
+
+		programs.mk
+		install-programs.mk
+		config-info.mk
+		unit-tests.mk
+
+		shell-scripts.mk
+		install-shell-scripts.mk
+		shell-subcommands.mk
+		install-shell-subcommands.mk
+
+
+
+These files are still a mess:
+
+install-scm-scripts.mk
+install-scm-subdirs.mk
+install-scm.mk
+scm-library.mk
+scm-scripts.mk
+
+library-html.mk
+library-pdml.mk
+library-ps.mk
+library-texi.mk
+pdml-index.mk
+
+# tag: Tom Lord Sat Jan 19 18:38:05 2002 (Makefiles/=TODO)
+#

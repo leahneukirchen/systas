@@ -1,0 +1,30 @@
+@need 3200
+
+@node Networking Procedures
+@chapter Networking Procedures
+
+These procedures need to be documented in a future releae:
+
+@example
+@group
+ %socket %socketpair %getsockopt %setsockopt %shutdown %connect %bind
+ %listen %accept %getsockname %getpeername %recv %send %recvfrom
+ %sendto
+@end group
+@group
+@end group
+@end example
+@example
+@group
+ inet-aton inet-ntoa inet-netof inet-lnaof inet-makeaddr gethostent
+ gethostbyname gethostbyaddr getnetent getnetbyname getnetbyaddr
+ getprotoent getprotobyname protobynumber getservent getservbyname
+ getservbyport sethostent endhostent setnetent endnetent setservent
+ endservent setprotoent endprotoent gethostname
+@end group
+@group
+@end group
+@end example
+
+
+

@@ -1,0 +1,174 @@
+@need 3200
+
+@node Simple Record Types
+@chapter Simple Record Types
+
+Simple records are one type of structure (see @ref{Structures}).
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{make-record-type}@fuindex make-record-type
+@*
+@example
+@group
+(make-record-type type-name field-names)
+@end group
+@group
+@end group
+@end example
+
+Make a new record type object with the name @code{type-name} (a symbol)
+and fields @code{field-names} (a list of symbols).
+
+
+Record type names are not necessarily unique -- they are
+a debugging aid only.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{record-type?}@fuindex record-type?
+@*
+@example
+@group
+(record-type? obj)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is a record type, @code{#f} otherwise.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{record-type-name}@fuindex record-type-name
+@*
+@example
+@group
+(record-type-name rt)
+@end group
+@group
+@end group
+@end example
+
+Return the type name of record type @code{rt}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{record-type-fields}@fuindex record-type-fields
+@*
+@example
+@group
+(record-type-fields rt)
+@end group
+@group
+@end group
+@end example
+
+Return the list of fields of record type @code{rt}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{record-constructor}@fuindex record-constructor
+@*
+@example
+@group
+(record-constructor rt :optional fields)
+@end group
+@group
+@end group
+@end example
+
+Return a procedure that build a new record object of type @code{rt}.
+
+
+Normally, the constructor accepts one argument per field 
+in the record type (in the order specified @code{make-record-type}).
+If the optional argument @code{fields} is a list of field names,
+the constructor takes just those fields, in that order.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{record?}@fuindex record?
+@*
+@example
+@group
+(record? obj)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is a record, @code{#f} otherwise.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{record-predicate}@fuindex record-predicate
+@*
+@example
+@group
+(record-predicate rt)
+@end group
+@group
+@end group
+@end example
+
+Return a procedure of one argument that returns @code{#t} is a record
+of type @code{rt}, @code{#f} otherwise.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{record-type-descriptor}@fuindex record-type-descriptor
+@*
+@example
+@group
+(record-type-descriptor record)
+@end group
+@group
+@end group
+@end example
+
+Return the record type object describing @code{record}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{record-accessor}@fuindex record-accessor
+@*
+@example
+@group
+(record-accessor rt field-name)
+@end group
+@group
+@end group
+@end example
+
+Return a procedure of one argument (a record of type @code{rt}) that
+returns the value of the named field.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{record-modifier}@fuindex record-modifier
+@*
+@example
+@group
+(record-modifier rt field-name)
+@end group
+@group
+@end group
+@end example
+
+Return a procedure of two arguments (a record of type @code{rt} and an
+arbitrary value) that modifies the value of the named field.
+
+
+
+

@@ -1,0 +1,14 @@
+Revision: unexec--lord--1.0--patch-2
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon May 13 05:14:19 PDT 2002
+Standard-date: 2002-05-13 12:14:19 GMT
+Summary: be careful with exported symbols in malloc.c
+Keywords: 
+New-files: {arch}/unexec/unexec--lord/unexec--lord--1.0/lord@regexps.com--2002/patch-log/patch-2
+Modified-files: libunexec/malloc.c libunexec/malloc.h
+New-patches: lord@regexps.com--2002/unexec--lord--1.0--patch-2
+
+`malloc.c' was exporting symbols that I fear were botching the link 
+on linux.
+

@@ -1,0 +1,15 @@
+Revision: systas--lord--1.0--patch-17
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon May  6 17:05:02 PDT 2002
+Standard-date: 2002-05-07 00:05:02 GMT
+Summary: fixed compile bugs
+Keywords: 
+New-files: {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-17
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regepx.com--2002/ChangeLog.lord--1.0
+  libsystas/unexec-impls/unexelf.c systas/systas.c
+New-patches: lord@regexps.com--2002/systas--lord--1.0--patch-17
+
+Nothing important.
+

@@ -1,0 +1,17 @@
+# tag: Tom Lord Tue Dec  4 14:52:05 2001 (os/Makefile.in)
+#
+
+include-subdirs		:=	sys netinet arpa
+generated-includes	:=	exit-status.h
+
+include $(makefiles)/library-objects.mk
+include $(makefiles)/install-includes.mk
+
+exit-status.h: exit-status.gen
+	cp $(srcdir)/exit-status.gen  ,es.c
+	$(CC) -o ,es -g ,es.c
+	./,es > exit-status.h
+	rm -f ,es ,es.c
+
+exit.o: exit-status.h
+

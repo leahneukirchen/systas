@@ -1,0 +1,36 @@
+#!/bin/sh
+# tag: Tom Lord Tue Dec  4 15:08:02 2001 (scripts/configure-autoconf)
+#
+
+# set on entry:
+# 
+# 	all the usual configure variables (see configure-top)
+# 
+# 
+
+if test x$objroot = x; then
+  echo "ERROR: objroot not set in `pwd`" 1>&2
+  exit 1
+fi
+
+if test x$srcdir = x; then
+  echo "ERROR: srcdir not set in `pwd`" 1>&2
+  exit 1
+fi
+
+if test x$config_shell = x; then
+  echo "ERROR: config_shell not set in `pwd`" 1>&2
+  exit 1
+fi
+
+if test $# -ne 0 ; then
+  echo "ERROR: wrong number of arguments" 1>&2
+  echo "usage: configure-autoconf" 1>&2
+  exit 1
+fi
+
+PATH="$srcdir/build-tools/scripts:$PATH"
+export PATH
+
+"$config_shell" "$srcdir/PLUGIN/AUTOCONF" "$srcdir/configure"
+

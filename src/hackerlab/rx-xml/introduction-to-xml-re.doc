@@ -1,0 +1,582 @@
+/* tag: Tom Lord Tue Dec  4 14:57:17 2001 (introduction-to-xml-re.doc)
+ */
+/************************************************************************
+ *(h0 "An Introduction to XML Regular Expressions"
+ *    :appendix)
+ * 
+
+|XML regular expression|
+|regular expression (XML)|
+
+This chapter informally describes ``XML regular expressions'' as
+supported by Rx.
+
+A "regular expression" describes a textual pattern: a string of
+characters either matches (fits the pattern) or does not match (does
+not fit the pattern).  Regular expressions have many applications
+associated with searching, editing, and parsing text.  Typically, a
+program allows users to specify a regular expression, then it searches
+for text that matches that expression.  In XML Schema, regular
+expressions are used to define ``lexical spaces'' (the set of valid
+literals for a datatype).
+
+|XML|
+|W3C|
+|Schema (XML)|
+|XML Schema|
+
+The syntax and semantics of XML regular expressions is defined in the
+W3C document *XML Schema Part 2: Datatypes*
+(url:"http://www.w3.org/TR/xmlschema-2").
+
+*/
+
+/*(menu)
+ */
+
+
+/*(h1 "Literal and Special Characters")
+
+|literal characters (in XML regexps)|
+|special characters (in XML regexps)|
+
+In the simplest cases, a regular expression is just a literal string
+that must match exactly.  For example, the pattern:
+
+     regular expression
+
+matches the string ``regular expression'' and no others.
+
+Some characters have a special meaning when they occur in a regular
+expression.  They aren't matched literally as in the previous example,
+but instead denote a more general pattern.  For example, the character
+`*' is used to indicate that the preceding element of a regular
+expression may be repeated 0, 1, or more times.  In the pattern:
+
+     smooo*th
+
+the `*' indicates that the preceding `o' can be repeated 0 or more
+times.  So the pattern matches:
+
+     smooth
+     smoooth
+     smooooth
+     smoooooth
+     ...
+
+The same pattern does not match these examples:
+
+     smoth	-- The pattern requires at least two o's
+     smoo*th	-- The pattern doesn't match the *
+
+
+Suppose you want to write a pattern that literally matches a special
+character like `*'; in other words, you don't want to `*' to indicate
+a permissible repetition, but to match `*' literally.  This is
+accomplished by quoting |quoting (in XML regexps)| the special character with a backslash.  The
+pattern:
+
+     smoo\*th
+
+matches the string:
+
+     smoo*th
+
+and no other strings.
+
+These characters are special (their meaning is described in this
+chapter):
+
+     . \ | ? * + { } ( ) [ ]
+
+The remaining sections of this chapter introduce and explain the
+various special characters that can occur in regular expressions.
+*/
+
+
+/************************************************************************
+ *(h1 "Single Character Escapes")
+ * 
+
+|single character escapes (in XML regular expressions)|
+|\t (in XML regular expressions)|
+|\n (in XML regular expressions)|
+|\r (in XML regular expressions)|
+
+These three expressions each match a single, literal character:
+
+	\t	-- matches tab (U+0008)
+	\n	-- matches newline (U+000A)
+	\r	-- matches carriage return (U+000D)
+
+ * 
+ */
+
+
+
+/*(h1 "Dot")
+
+|dot operator (in XML regular expressions)|
+|. (in XML regular expressions)|
+
+`.' ordinarily matches nearly any character.
+
+     p.ck
+
+matches
+
+     pick
+     pack
+     puck
+     pbck
+     pcck
+     p.ck
+
+etc.
+
+To be more specific, `.' matches any character which is valid in an
+XML document except for newline (U+000A) and carriage return (U+000D).
+*/
+
+
+
+/************************************************************************
+ *(h1 "Multi-character Escapes")
+ * 
+
+|multi-character escapes (in XML regular expressions)|
+|\s  (in XML regular expressions)|
+|\i (in XML regular expressions)|
+|\c (in XML regular expressions)|
+|\d (in XML regular expressions)|
+|\w (in XML regular expressions)|
+|\S (in XML regular expressions)|
+|\I (in XML regular expressions)|
+|\C (in XML regular expressions)|
+|\D (in XML regular expressions)|
+|\W (in XML regular expressions)|
+|name characters (in XML regular expressions)|
+|digits (in XML regular expressions)|
+|spaces (in XML regular expressions)|
+|word characters (in XML regular expressions)|
+
+Literal characters match a specific character.  Multi-character
+escapes match any of a set of characters.  The multi-character escapes
+understood by Rx are:
+
+	\s	-- spaces
+	\i	-- first character of a "name"
+	\c	-- subsequent character of a "name"
+	\d	-- digits
+	\w	-- word characters
+
+
+`\s' matches a single space, tab, newline, or carriage return.
+
+The set of characters valid as the first or subsequent characters in a
+name (matched by `\i' and `\c' respectively) are as defined in XML.
+
+The set of characters matched by `\d' is as defined in XML and
+includes most Unicode characters with general category `Nd'.
+
+The set of characters matched by `\w' includes all characters which
+are valid in an XML document except those with a general category in
+class `P' (punctuation), `Z' (separators), and `C' (other, such as
+control characters and unassigned code points).
+
+Each of the multi-character escapes can be negated by writing it
+as a capital letter:
+
+	\S	-- non-spaces
+	\I	-- not the first character of a "name"
+	\C	-- not a subsequent character of a "name"
+	\D	-- non-digits
+	\W	-- non-word characters
+
+ */
+
+/************************************************************************
+ *(h1 "Category Escapes")
+
+|category escapes (in XML regular expressions)|
+|Unicode categories (in XML regular expressions)|
+|categories (Unicode categories in XML regular expressions)|
+|Unicode blocks (in XML regular expressions)|
+|\p{} (in XML regular expressions)|
+|\P{} (in XML regular expressions)|
+
+Category escapes are similar to multi-character escapes: they match
+any of a set of characters.  The default set of category escapes refer
+to the character categories and block names of Unicode.  (For
+information about categories and blocks, see a recent version of *The
+Unicode Standard* or visit url:"http://www.unicode.org").
+
+A category escape based on a Unicode category is be written:
+
+	\p{<category name>}
+
+for example:
+
+	\p{L}		-- letters
+	\p{Lu}		-- upper case letters
+	\p{Nd}		-- digits
+
+
+A category escape based on a Unicode block name can is written:
+
+	\p{is<block name>}
+
+for example:
+
+	\p{isBasicLatin}
+	\p{isCherokee}
+	\p{isUnifiedCanadianAboriginalSyllabics}
+
+Any category can be negated by use '\P' instead of '\p':
+
+	\P{L}		-- non-Letters
+	\P{isCherokee}	-- characters which are not in
+			   the Cherokee block
+
+In all cases, the set of characters is further restricted to include
+only characters that are valid in XML documents.
+
+ */
+
+
+/*(h1 "Character Sets")
+
+|character set operator (in XML regular expressions)|
+|[...] (in XML regular expressions)|
+
+`[' begins a ``character set''.  A character set matches any of a set
+of characters which are explicitly enumerated in the regular
+expression.
+
+There are two basic forms a character set can take.
+
+The first form is a plain character set:
+
+     [<cset-spec>]	-- every character in <cset-spec> is in the set.
+
+the second form is a negated character set: 
+
+|negated character set (in XML regular expressions)|
+
+     [^<cset-spec>]	-- every character *not* in <cset-spec>
+     			   is in the set.
+
+A `<cset-spec>' is a more or less an explicit enumeration of a set of
+characters.  It can be written as a string of individual characters:
+
+     [ABC]		-- matches 'A', 'B', or 'C'
+
+|character ranges (in XML regular expressions)|
+|range of characters (in XML regular expressions)|
+
+or as a range of characters:
+
+     [0-9]		-- matches any decimal digit
+
+These two forms can be mixed:
+
+
+     [A-za-z0-9_$]	-- any Basic Latin letter (either case), 
+     			   any Basic Latin digit, `_' or `$'
+
+
+Negation allows you to specify which characters are not in the set:
+
+
+     [^0-9]		-- match any character which is not a 
+			   Basic Latin digit
+
+Special characters can be included within a character set, in the
+usual way, by quoting them with `\':
+
+     [\-abc]		-- match '-', 'a', 'b', or 'c'
+
+
+Single character escapes, multi-character escapes, and category
+escapes can all be used in a `<cset-spec>':
+
+    [\t\n\r]		-- match tab, newline, or return 
+
+    [\s\d]		-- match any space character or digit
+
+    [^\p{Nd}\p{Ll}]	-- match all but digits and lowercase 
+    			   letters
+
+
+|character set subtraction (in XML regular expressions)|
+|subtraction (character set subtraction in XML regular expressions)|
+
+From the two basic forms of character set, two additional forms
+of character set can be formed, called ``character set subtractions'':
+
+
+     [<cset-spec>-<character set>]
+			-- every character in <cset-spec> except
+			   those in in <character set>
+
+     [^<cset-spec>-<character set>]
+			-- every character not in <cset-spec> 
+			   except those in <character set>
+
+
+For example:
+
+     [\p{L}-[\p{isBasicLatin}\p{isGreek}]]
+			-- match any letter except for letters
+			   in the Basic Latin or Greek blocks
+
+     [^\p{L}-[\p{isBasicLatin}\p{isGreek}]]
+			-- match any non-letter except for
+			   non-letters in the Basic Latin or
+			   Greek blocks
+
+*/
+
+
+/*(h1 "Parenthesized Expressions")
+
+|parenthesized subexpression (in XML regular expressions)|
+|(...) (in XML regular expressions)|
+
+A subexpression is a regular expression enclosed in `(' and `)'.  A
+subexpression can be used anywhere a single character or character set
+can be used.
+
+Subexpressions are useful for grouping regular expression constructs.  For
+example, the repeat operator, `*', usually applies to just the
+preceding character.  Recall that:
+
+     smooo*th
+
+matches
+
+     smooth
+     smoooth
+     ...
+
+Using a subexpression, we can apply `*' to a longer string:
+
+     banan(an)*a
+
+matches
+
+     banana
+     bananana
+     banananana
+     ...
+*/
+
+
+/*(h1 "Repeated Expressions")
+
+|repeated subexpression (in XML regular expressions)|
+|~* (in XML regular expressions)|
+
+As previously explained, `*' is the repeat operator.  It applies to
+the preceding character, character set, or subexpression.  It
+indicates that the preceding element can be matched 0 or more times:
+
+     bana(na)*
+
+matches
+
+     bana
+     banana
+     bananana
+     banananana
+     ...
+
+|+ (in XML regular expressions)|
+`+' is similar to `*' except that `+' requires the preceding element
+to be matched at least once.  So on the one hand:
+
+     bana(na)*
+
+matches
+
+     bana
+
+but
+
+     bana(na)+
+
+does not.   Both match
+
+     banana
+     bananana
+     banananana
+     ...
+
+*/
+
+
+/*(h1 "Optional Expressions")
+
+|optional subexpression (in XML regular expressions)|
+|? (in XML regular expressions)|
+
+`?' indicates that the preceding character, character set, or
+subexpression is optional.  It is permitted to match, or to be
+skipped:
+
+     CSNY?
+
+matches both
+
+     CSN
+
+and
+
+     CSNY
+
+*/
+
+/*(h1 "Counted Iteration")
+
+|counted iteration (in XML regular expressions)|
+|interval expression (in XML regular expressions)|
+|{...} (in XML regular expressions)|
+
+The interval operator, `{m,n}' (where `m' and `n' are decimal integers
+and `0 <= m <= n') indicates that the preceding character, character
+set, or subexpression must match at least `m' times and may match as
+many as `n' times.
+
+For example:
+
+     c([ad]){1,4}r
+
+matches
+
+     car
+     cdr
+     caar
+     cdar
+     ...
+     caaar
+     cdaar
+     ...
+     cadddr
+     cddddr
+
+but it doesn't match:
+
+     cdddddr
+
+because that has five d's, and the pattern only permits four, and it
+doesn't match
+
+     cr
+
+because the pattern requires at least one `a' or `d'.
+
+A pattern of the form:
+
+	R{M,}
+
+matches `M' or more iterations of `R'.
+
+A pattern of the form:
+
+	R{M}
+
+matches exactly 'M' iterations of 'R'.
+
+*/
+
+/*(h1 "Alternative Expressions")
+
+|alternative subexpressions (in XML regular expressions)|
+|| (in XML regular expressions)|
+
+An alternative is written:
+
+     regular expression-1|regular expression-2|regular expression-3|...
+
+It matches anything matched by some `regular expression-n'.  For example:
+
+     Crosby, Stills, (and Nash|Nash, and Young)
+
+matches
+
+     Crosby, Stills, and Nash
+
+and also
+
+     Crosby, Stills, Nash, and Young
+
+*/
+
+
+/*(h1 "A Summary of Regular Expression Syntax")
+
+|regular expression syntax summary (XML)|
+
+In summary, regular expressions can be:
+
+   `abcd' 		- a string literal
+
+   `\*'			- an escaped special character
+
+   `\n'			- a single character escape
+
+   `\s'			- a multi-character escape
+
+   `\p{isCherokee}'	- a category escape
+
+   `.' 			- the universal character set.
+
+   `[a-z_?]'		- a character set
+
+   `[^abz_?]'		- an negated character set
+
+   `[\p{L}-[\p{isBasicLatin}\p{isGreek}]]' -
+			  character set subtraction
+
+   `(subexp)' 		- an expression grouped to form a
+			  parenthesized subexpression. 
+
+
+The following special characters and sequences can be applied to a
+character, character set, or subexpression:
+
+   `*'			- repeat the preceding element 0 
+			  or more times.
+
+   `+' 			- repeat the preceding element 1 
+			  or more times.
+
+   `?' 			- match the preceding element 0 
+			  or 1 time.
+
+   `{m,n}' 		- match the preceding element at 
+			  least `m', and as many as `n' times,
+			  where 0 <= m <= n
+
+   `{m,}' 		- match the preceding element at 
+			  least `m' times, where 0 <= m 
+
+
+   `{m}' 		- match the preceding element exactly
+			  `m' times, where 0 <= m 
+
+
+Finally, a list of patterns built from the preceeding operators can be
+combined using `|':
+
+
+   `regular expression-1|regular expression-2|..' 
+   			- match regular expression-1 or regex-2 or ...
+
+A special character, like `.' or `*' can be made into a literal by
+prefixing it with `\'.
+
+A special sequence, like `+' or `?' can be made into a literal
+character by dropping the `\'.
+
+*/

@@ -1,0 +1,26 @@
+Revision: hackerlab--devo--1.0--patch-12
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Wed Feb 27 06:36:09 PST 2002
+Standard-date: 2002-02-27 14:36:09 GMT
+Summary: merge with `lord'
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--2002/patch-log/patch-12
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-27
+  sort/PLUGIN/.arch-ids/=dont-care fs/cwd.c sort/qsort.c
+  sort/Makefile.in fs/tmp-files.c fs/cwd.h sort/qsort.h
+  fs/tmp-files.h sort/PLUGIN/REQ
+New-directories: sort sort/PLUGIN sort/PLUGIN/.arch-ids
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  Makefile.in bugs/panic-exit.c fs/file-names.c
+New-patches: lord@regexps.com--2002/hackerlab--devo--1.0--patch-12
+  lord@regexps.com--2002/hackerlab--lord--1.0--patch-27
+
+Patches applied:
+
+  * lord@regexps.com--2002/hackerlab--lord--1.0--patch-27
+     minor `panic_exit' bug fix,
+     	 new-functions: `quicksort', `tmp_open', `tmp_open_anonymous', 
+     			`current_working_directory'
+

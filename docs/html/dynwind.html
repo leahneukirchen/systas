@@ -1,0 +1,257 @@
+<html>
+<head>
+<title>Dynamic Wind</title>
+</head>
+<body>
+
+<a name="Dynamic_Wind"></a>
+
+
+
+<h2 align=center>Dynamic Wind</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="throw.html#Catch_and_Throw">Catch and Throw</a></br>
+
+
+</small>
+<br>
+
+
+
+
+
+
+<p>Dynamic wind is provided to help you write robust programs.
+Sometimes it is desirable to write a program in three parts:
+</p><pre>
+     (let ((answer #f))
+        (do-this-going-in)
+        (set! answer (do-the-main-thing))
+        (do-this-on-the-way-out)
+        answer)
+
+</pre>
+<p>A program written like that is not robust because if
+<code>do-the-main-thing</code>
+ encounters an error or exits non-locally,
+<code>do-this-on-the-way-out</code>
+ is never reached.  <code>dynamic-wind</code>
+ is for
+writing programs like that in a robust manner:
+</p><pre>
+     (dynamic-wind do-this-going-in do-the-main-thing do-this-going-out) 
+
+</pre>
+<p>Using <code>dynamic-wind</code>
+, if execution of <code>(do-this-going-in)</code>
+
+completes, <code>(do-this-going-out)</code>
+ will be invoked when
+<code>(do-the-main-thing)</code>
+ exits, whether it exits normally, or because
+of an exception, or by calling a continuation captured outside of
+<code>(do-the-main-thing)</code>
+. 
+</p><p><b><u>Function</u> <code><a name="dynamic-wind"></a><a name="index-pt:0"></a>
+dynamic-wind
+</code></b><br>
+<pre>
+(dynamic-wind in-guard thunk out-guard)
+
+</pre>
+<p>All three arguments must be 0-argument procedures.
+</p><p><code>in-guard</code>
+ is called, then <code>thunk</code>
+, then <code>out-guard</code>
+.
+</p><p>If, at any time during the execution of <code>thunk</code>
+, the continuation
+of the <code>dynamic-wind</code>
+ expression is escaped non-locally (because of
+an exception or a call to a continuation), <code>out-guard</code>
+ is called.
+If that same continuation is re-entered, <code>in-guard</code>
+ is called.
+</p><p>Thus it is possible that <code>in-guard</code>
+ and <code>out-guard</code>
+ may each be
+called more than once.  If several calls to <code>dynamic-wind</code>
+ are
+nested, the out-guards for the inner-most call occurs first, and
+out-guards are called in order with the outer-most guard called
+last.  If the continuation of the dynamic-wind is re-entered,
+<code>in-guard</code>
+ is called.  In this case, the outermost in-guard is
+called first, followed by successively nested in-guards.
+</p><p>Here is an example that illustrates the use of <code>dynamic-wind</code>
+ to
+implement a kind of dynamic binding.  This example also shows how
+<code>dynamic-wind</code>
+ and <code>call-with-current-continuation</code>
+ interact.
+<code>dynamic-wind</code>
+ interacts similarly with <code>throw</code>
+, <code>handle</code>
+, and
+<code>error</code>
+.
+</p><pre>
+     (define x 'normal-binding)
+     => x
+
+</pre>
+<pre>
+     (define a-cont #f)
+
+</pre>
+<pre>
+     (set! a-cont
+       (call-with-current-continuation
+        (lambda (escape)
+          (let ((old-x x))
+            (dynamic-wind
+             ;; in-guard:
+             ;;
+             (lambda () (set! x 'special-binding))
+
+</pre>
+<pre>
+             ;; thunk
+             ;;
+             (lambda ()
+                (display x) (newline)
+                (let ((ret-val
+                         (call-with-current-continuation escape)))
+                  (display x) (newline)
+                  ret-val))
+
+</pre>
+<pre>
+             ;; out-guard:
+             ;;
+             (lambda () (set! x old-x)))))))
+
+</pre>
+<pre>
+     ;; Prints:
+     ;;
+     special-binding
+
+</pre>
+<pre>
+     ;; Evaluates to:
+     ;;
+     => #&lt;continuation ...>
+
+</pre>
+<pre>
+     ;; After evaluation, x is back to its original value:
+     ;;
+     x
+     => normal-binding
+
+</pre>
+<pre>
+     ;; We captured a continuation inside of the dynamic wind.
+     ;; Calling that continuation will cause the in-guard
+     ;; to be re-executed, and leaving it a second time will
+     ;; cause the out-guard to be re-executed.
+     ;;
+     (a-cont 'foo)
+
+</pre>
+<pre>
+     ;; Prints:
+     ;;
+     special-binding
+
+</pre>
+<pre>
+     ;; Evaluates to:
+     ;;
+     => foo
+
+</pre>
+<p>The guard procedures are called outside of the scope of the
+<code>dynamic-wind</code>
+.  For example, if the <code>in-guard</code>
+ exits non-locally,
+this does not cause the <code>out-guard</code>
+ to be called.
+</p><p>Dynamic wind guard procedures are called with interrupts masked.
+That way they are protected from non-local exits from async
+handlers.  Were this not the case, an ill-timed interrupt could
+exit non-locally causing the in-guard to run without ever running
+the out-guard, or causing the in-guard to run without running to
+completion, or causing the out-guard to run twice without running
+the in-guard in between.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="symmetric-wind"></a><a name="index-pt:1"></a>
+symmetric-wind
+</code></b><br>
+<pre>
+(symmetric-wind protect thunk)
+
+</pre>
+<p>This is simply:
+</p><pre>
+     (define (symmetric-wind protect thunk)
+       (dynamic-wind protect thunk protect))
+
+</pre>
+
+<br>
+<br>
+<a name="Rationale_--_Dynamic_Wind"></a>
+
+
+
+<h3 align=center>Rationale -- Dynamic Wind</h3>
+
+
+
+
+
+
+
+
+
+
+<p>Systas follows R5RS for <code>dynamic-wind</code>
+.
+</p><p>There is some (justified) controversy over this feature and its
+interaction with continuations in standard Scheme.
+</p><p>Very likely, this function will be modified in future releases.
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

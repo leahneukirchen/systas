@@ -1,0 +1,112 @@
+
+!>				How to Write `Makefile.in'
+
+
+
+
+  Instead of writing a `Makefile', when using the `package-framework'
+  you write a `Makefile.in'.  The `configure' script processes
+  `Makefile.in' to produce a `Makefile'.
+
+  Typically, your `Makefile.in' will be only a few lines long.
+  It might set some make variables;  it almost certainly will
+  contain one or more `include' directives to include standard 
+  `Makefile' fragments that are included with the `package-framework'.
+  
+  The standard `Makefile' fragments do most of their work
+  automatically based on a high-level understanding of how to 
+  compile your source.  For example, to build a library from *C*
+  source files, you just `include' the fragment
+  `$(makefiles)/library.mk'.   That fragment knows to compile all of
+  the *C* source files to produce `.o' files and to create a library
+  (`.a' file) from those objects.
+
+
+* Processing by `configure'
+
+  When `configure' turns a `Makefile.in' into a `Makefile', what
+  does it do?  Very little, actually.  In fact, it only adds a
+  few new lines at the top of the file.  The added lines have
+  the form:
+
+<<<
+        srcroot = <<SOURCE TREE>>
+        thispath = <<REL SUBDIR PATH>>
+        objroot = <<BUILD TREE>>
+        srcdir = $(srcroot)/$(thispath)
+        prefix = <<INSTALL ROOT>>
+        makefiles = $(srcroot)/build-tools/Makefiles
+        vpath % $(thispath)
+        include $(objroot)/Makefile-config.mk
+>>>
+
+  Hopefully, most of those variables have an obvious meaning.
+
+  The variable `makefiles' is used with the include directive.  For
+  example, when building a library, your `Makefile.in' might contain:
+
+<<<
+  	include $(makefiles)/library.mk
+>>>
+
+  The list of available `include' files is given below.
+
+  `vpath' tells `make' to look in that directory for the source files.
+  For more information about how `vpath' works, see the documentation
+  for *GNU* `make'.
+
+  `Makefile-config.mk' defines the variables exported by the
+  `configure' script.
+
+  If your source subdirectory contains the file `PLUGIN/DIRS', then
+  one additional variable declaration is added to the `Makefile':
+
+
+<<<
+        make-dirs = <<<LIST OF SUB-SUBDIRS>>>
+>>>
+
+  The list of `make-dirs' is determined by looking in the `PLUGIN/REQ'
+  and `PLUGIN/OPT' files in subdirectories of your subdirectory.  For
+  more information, see TreeLayout:{Ordering Compilation}.
+
+
+
+* Standard `include' Fragments
+
+  `package-framework' is distributed with some standard makefiles
+  for the most common situations encountered by *C* programmers,
+  *sh* programmers, and programmers using *Systas Scheme*.  In the
+  future, the plan is to expand on this to include makefile fragments
+  for essentially _every_ common situation.
+
+  All of the makefile fragments can be found in
+  `src/build-tools/Makefiles'.  Each file has a length comment that
+  explains how to use it (these will eventually be turned into
+  complete documentation).   Here is a quick tour of the most
+  important makefile fragments.
+
+
+  + BuildingLibraries :::  Some fragments are for compiling `.a' 
+			   files from program source, optionally
+			   installing them, and optionally installing
+			   the associated header files.
+
+  + BuildingPrograms  :::  Fragments for compiling programs from
+			   source.
+
+
+  + NestedMakefiles   :::  What kind of `Makefile.in' do you use in a 
+			   directory containing subdirectories of
+			   source? 
+
+  + RunningTests      :::  How do you write a `Makefile.in' that 
+			   does something useful for `make test'?
+
+
+  There are some other makefile fragments which aren't documented yet,
+  but you can read the comments for those in
+  `src/build-tools/Makefiles'.
+
+%%% tag: Tom Lord Thu May  9 12:47:18 2002 (PackageFramework.d/WritingMakefiles)
+%%%

@@ -1,0 +1,47 @@
+
+		      INSTALLATION INSTRUCTIONS
+
+
+These are generic installation instructions.  For additional 
+advice for this specific package, see "=README".
+
+In the directory `src' (a subdirectory of this directory) use the
+following commands (or similar) to build, test, and install this
+software:
+
+
+	% mkdir =build			# [0]
+	% cd =build
+	% ../configure --prefix INSTALL-DIRECTORY # [1], [2]
+	...
+	% make				# [3]
+	...
+	% make test			# [4]
+	...
+	% make install
+
+
+NOTES: 
+
+[0] You must use a build directory which is separate from the 
+    source tree.
+
+[1] If /bin/sh on your system is not Posixly enough to handle
+    the configure script, but "$SHELL" is, then run 
+    configure this way:
+
+	"$SHELL" ../configure --prefix PREFIX --config-shell "$SHELL"
+
+[2] Run "../configure --help" for information about setting 
+    parameters other than "--prefix".
+
+[3] You must use a recent version of GNU make.  For now, do not
+    use the "-j" option to make or otherwise arrange for a 
+    parallel make.
+
+[4] To run the tests, on some systems, you must "unlimit datasize".
+
+
+
+# tag: Tom Lord Thu Jan 31 16:00:34 2002 (arch/=INSTALL)
+#

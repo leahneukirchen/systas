@@ -1,0 +1,41 @@
+
+!> 	Hidden Features of systas Scheme
+
+
+`systas' has an (undocumented) `unexec' feature that can be
+used to produce a fast-starting version of the interpreter
+from a running process.
+
+Also noteworthy are some of the `scheme-library' modules.
+Documentation is mostly in comments in the source files.
+
+
+*`(standard list-lib)'*
+
+  SRFI-1 (the list library).
+
+*`(standard regexps)'*
+
+  Structured regexps -- essentially like those in SCSH, but taking
+  advantage of Systas binding for the Rx regexp library.
+
+
+*`(standard string-lib)' and `(standard string-parsing)'*
+  
+  Lots of handy string functions -- eventually to become a SRFI
+
+
+*`(unix directories)', `(unix file-utils)', and `(unix filenames)'*
+  
+  Lots of handy utilities for unix filesystem hacking
+
+*`(unix shell)'*
+
+  An interpreter for SCSH process notation. Complete support for
+  job-controlled processes.
+
+
+
+
+%%% tag: Tom Lord Tue May 14 13:35:02 2002 (SystasScheme.d/HiddenFeatures)
+%%%

@@ -1,0 +1,430 @@
+/* tag: Tom Lord Tue Dec  4 14:57:17 2001 (rx-xml-data-sheet.doc)
+ */
+/************************************************************************
+ *(h0 "Data Sheet for the Hackerlab Rx XML Regular Expression Matcher"
+ *    :appendix)
+ * 
+ insert*/
+
+Package:
+        Hackerlab Rx-XML (an XML/Unicode regular expression matcher)
+
+Supplier:
+	regexps.com
+
+Function:        
+
+	Hackerlab Rx-XML is a regular expression pattern matcher for
+	Schema-capable validating XML processors.  It is also a 
+	general purpose Unicode regular expression matcher.
+
+        
+Key Features:
+                
+	Rx-XML is fast and accurate.
+
+	Supports the regular expression language specified
+	in the W3C document "XML Schema Part 2" 
+	(http://www.w3.org/TR/xmlschema-2).
+
+	Supports alternative regular expression syntaxes.
+
+	Clean and simple "classic C" interface.
+
+	Patterns may use UTF-8 or UTF-16.
+
+	Strings compared to compiled patterns may use UTF-8 or UTF-16.
+
+	Provides protection against encoding-based illegal data
+	attacks: Ill-formed encoding sequences (e.g. non-shortest form
+	UTF-8) are detected and rejected during regular expression
+	compilation and matching.
+
+	Configurable space/time trade-offs.
+
+	Ready for Unicode 3.1: Designed for a character set with 2^21
+	code points.
+
+        Validation tests are included.
+
+        Postscript and HTML documentation is included.
+
+
+Licensing:
+
+	Hackerlab Rx-XML is part of the Hackerlab C Library
+	which is distributed under the terms of the
+	GNU General Public License, Version 2, as published
+	by the Free Software Foundation.  
+	
+	Alternative licenses (such as licenses permitting
+	binary-only re-distribution) can be purchased from
+	regexps.com.  
+
+
+Prerequisites:
+
+        standard C compiler
+        Posix libc.a (standard C library)
+        GNU Make
+
+
+Recommended and Disrecommended Applications:
+
+	Rx-XML is recommended for any Unicode application
+	in need of regular expression pattern matching.
+
+	Rx-XML is recommended for use in high-performance
+	Schema-capable XML processors (e.g., a XML-based
+	transaction server).
+
+
+Limitations:
+
+	This is the first public (non-prototype) release.  Rx-XML has
+	been carefully tested but is not yet in widespread use.  Test
+	coverage is extensive, but not exhaustive.  Thus, prudence
+	suggests that minor bugs are likely to remain.
+
+	Rx-XML protects applications against an important class of
+	regular-expression-based denial-of-service attacks: those
+	where a trusted source provides regular expressions, but an
+	untrusted source provides strings to compare to those
+	expressions.  The current release does *not* protect
+	applications against another class of attacks: those where an
+	untrusted source provides the regular expressions.  (This is
+	likely to be fixed in future releases.)
+
+        Rx-XML is single threaded.  In multi-threaded applications,
+	programs must ensure that Rx-XML is active in only one thread
+	at a time.  (This is likely to be fixed in future releases.)
+
+	The set of error codes returned from functions that compile
+	and match regular expressions is likely to change in
+	future releases.
+
+	
+Contribution to Executable Size:
+
+        On a Pentium based machine, running gcc (egcs version
+        2.91.66) we compiled this simple (nonsense) program and 
+	linked it against the Hackerlab C Library:
+
+
+	    int
+	    main (int argc, char * argv[])
+	    {
+	      rx_xml_recomp ();
+	      rx_xml_is_match ();
+	      rx_xml_free_re ();
+	    }
+
+        Both the library and the program were compiled with the "-g"
+        option.
+
+        Total executable size:
+
+	   text	   data	
+	  91745	  58740
+
+        The following list of object files from the Hackerlab
+	C library were linked into the executable:
+
+	    alloc-limits.o bits-tree-rules.o bits.o bitset-lookup.o
+	    bitset-tree.o bitset.o bitsets.o blocks.o char-class.o
+	    charsets.o coding-inlines.o coding.o cvt.o dfa-cache.o
+	    dfa-iso8859-1.o dfa-utf16.o dfa-utf8.o dfa.o escape.o
+	    hashtree.o mem.o must-malloc.o nfa-cache.o nfa.o
+	    panic-exit.o panic.o re.o str.o super.o tree.o uni-bits.o
+	    unidata.o
+
+        
+        The contribution of those files to the executable size is:
+
+           text    data
+	  90472	  58548
+
+        Sizes may differ slightly from the latest release
+        of Rx-XML.  Sizes will obviously vary with platform
+        compiler, and compiler options.
+	    
+
+External Linkage Dependencies:
+
+	When compiled under FreeBSD 3.0, the simple program used to
+        test executable sizes depends on the following symbols
+        defined in "libc":
+
+	    _exit
+	    free
+	    longjmp
+	    malloc
+	    realloc
+	    setjmp
+
+
+Accuracy:
+
+	Rx-XML is distributed with a test suite that consists of 334
+	test cases that systematically exercise every feature of the
+	regular expression language.  Of those, 319 test cases involve
+	legal expressions and a string that may or may not match.
+	Fifteen test cases involve illegal expressions, expected to
+	return an error.
+
+	During validation, expressions are compiled from both UTF-8
+	and UTF-16 source.  Each time a legal expression is compiled,
+	it is compared to both a UTF-8 and UTF-16 string.  A total of
+	1276 match tests are performed.
+
+	Rx-xml permits programs to make a space/time trade-off --
+	trading memory available to the matcher for matcher
+	throughput.  The validation tests are run in small, default,
+	and large memory configurations.
+
+	The validation test are also run in "stress test" mode.  In
+	that mode, each legal expression is compiled only once, but
+	the list of match tests is repeated 500 times (a total
+	of 638,000) matches.
+
+	(Rx-XML passes all of the tests described above.)
+
+	We repeat the caveat from the section "Limitations":
+
+		This is the first public (non-prototype) release.
+		Rx-XML has been carefully tested but is not yet in
+		widespread use.  Test coverage is extensive, but not
+		exhaustive.  Thus, prudence suggests that minor bugs
+		are likely to remain.
+		
+	
+Execution Speed:
+
+	*Qualitative Analysis*
+
+	Rx-XML converts regular expressions to deterministic finite
+	automata (DFA) and compares strings to expressions in a single
+	pass.  Subject to memory limitations, comparing a length `N'
+	string to an expression requires `O(N)' (very inexpensive)
+	steps.  
+
+	When there is not enough memory to hold a complete
+	deterministic automata, Rx-XML discards and rebuilds
+	DFA states as needed.  In the worst case, comparing a string
+	of length `N' to an expression of length `K' requires
+	`O(K * N)' (somewhat expensive) steps.
+
+
+	*Quantitative Analysis*
+
+	There are no agreed upon standards for measuring the
+	performance of Unicode regular expression pattern matchers.
+	We know of no other comparable regular expression matchers.
+	For these reasons, comparative performance measurements are
+	not available.
+
+	The primary target applications for Rx-XML are
+	high-performance, Schema-capable, validating XML processors.
+	
+	Consider, for example, an XML-based transaction processor.
+	Our hypothetical processor is configured by reading a 
+	set of schema definitions, including some which use `pattern'
+	constraints,  at start-up time.  It then reads a succession of
+	XML documents, each specifying a proposed transaction,
+	from untrusted sources.  Among other validations, the
+	processor must check to see that each proposed transaction
+	is an XML document that conforms to the schema definitions.
+	Part of that validation process involves comparing data
+	to regular expressions specified for pattern schema.
+
+	What, then, is the impact of pattern matching on transaction
+	processing speed?
+
+	We made measurements designed to test the best and worst case
+	scenarios.  In the best case, there is sufficient memory that
+	all of the relevant DFA states are cached in memory and
+	matching is performed with O(N) steps.  In the worst case,
+	memory is too limited, almost no DFA states are successfully
+	cached, and matching requires O(K*N) steps.
+
+	Our measurements use the regular expression:
+	
+	    \p{Ll}{4}-\p{Nd}{5}
+
+	which matches a string of four lowercase letters (in any
+	script), followed by "-", followed by five decimal digits
+	(in any script).
+
+	To simulate a sequence of transaction requests, we constructed
+	5 matching strings and 1 non-matching string.  To avoid
+	skewing test results by exercising only optimizations that
+	apply to the Basic Latin script, our test strings use
+	characters from six Unicode Blocks: Armenian, Basic Latin,
+	Greek, IPA Extensions, Latin-1 Supplement, and Devanagari.
+
+	In an inner loop, we successively test each of those strings
+	for a match.  An outer loop repeats those tests either 
+	50000 or 5000 times.
+	
+	We performed two sets of measurements: one for strings encoded
+	using UTF-16, and one for strings encoded using UTF-8.
+
+	For each encoding form, we made two measurements: once where
+	Rx-XML is granted enough memory to cache the entire DFA for
+	the test expression, and once where its allocation is
+	drastically limited, forcing it to re-construct a DFA state at
+	almost every step (these are the ample memory and limited
+	memory scenarios).  For the ample memory scenario, 50000
+	iterations of the outer loop were performed.  For the
+	limited memory scenario, 5000 iterations were performed.
+
+	To compute the number of code points processed per second, we
+	divided the sum of system and user CPU time taken for all
+	iterations by the number of Unicode code points scanned by the
+	matcher.  That number of code points is the number of
+	iterations multiplied by the sum of the lengths of the
+	matching expressions and the length of the non-matching
+	expression up to and including the first non-matching
+	character.
+
+	Both the library and test program were compiled by gcc (egcs
+	version 2.91.66), *without* optimization.  Tests were
+	conducted on a 400 Mhz Pentium II running FreeBSD 3.0.
+	Profiling reports that 96% of the run-time of the
+	test program was spent in `rx_xml_is_match':
+
+				ample 		limited
+				memory		memory
+	
+		UTF-16	     3,604,194		7,298
+
+		UTF-8        3,395,061		4,642
+
+	  			  code-points-per-second
+				processed by rx_xml_is_match
+
+	For information about the amount of memory used by theses
+	tests, see the next section "Run-time Allocation Requirements"
+
+	To gain further perspective on matcher throughput, we ran the
+	test suite described in the section "Accuracy" in stress test
+	mode (compiling each expression only once), limiting the list
+	of test cases to 42 representative tests, iterating 500 times.
+	Each test case performs both UTF-8 UTF-16 matches.  Cache
+	sizes were sufficiently large for an "ample memory" test.
+	This test performed 84,000 separate matches totalling 730,000
+	code points at a rate of 2,033,426 code points per second.  In
+	this test `rx_xml_is_match' accounted for 72% of the run time
+	(for comparison with the preceeding table, (96 / 72) *
+	2,033,426 == 2,711,235).
+	
+	Our performance test has limitations: Performance is likely to
+	vary with the choice of regular expression and with the
+	strings being matched.  While almost all conceivable
+	expressions should have substantially similar performance, it
+	is theoretically possible to construct expressions whose DFA
+	is too large to ever cache; such expressions will always have
+	"limited memory" performance.  Performance (especially memory
+	allocation, discussed in the next section) is likely to vary
+	with the strings being matched; by using a variety of scripts
+	in our test cases, we tried to achieve realistic results --
+	but a much larger set of test cases would presumably be a more
+	realistic simulation.
+
+	Nevertheless, we conclude that with "ample memory", rx-xml is
+	fast enough for quite heavy workloads (millions of code points
+	per second).  In (worst case) "limited memory" configurations,
+	rx-xml is suitable for very light workloads (thousands of code
+	points per second).
+
+	Exact performance will, obviously, vary with choice of
+	compiler, compiler options, and platform.
+
+
+Run-time Allocation Requirements:
+
+        The amount of memory allocated by Rx at run-time is
+        dominated by the size of two caches: the "nfa cache" and
+        the "dfa cache".  Roughly speaking, the "nfa cache"
+        limits the quantity of compiled regexps that are re-used
+        across calls to "regcomp"; the size of the "dfa cache"
+        limits the number of DFA transition tables dynamically
+        constructed by "regexec".
+
+        The sizes of these caches are independent and under
+        application control.  They may be varied, trading space
+        for time.
+
+        By default, both cache sizes are set to an advisory
+        limit of 1MB.  (This is an "advisory limit" because it
+        may be exceeded when necessary for correct operation.
+        Except in rare circumstances, actual cache sizes closely
+        approximate the advisory limit.)
+
+	We ran the test suite discussed in the section "Accuracy" with
+	advisory limits of 10K, 1MB, and 8MB (for each cache).  The
+	relation between the advisory limits, the amount of memory
+	actually used, the combined user and system execution times,
+	and the number of DFA-state cache misses is displayed in the
+	following table:
+
+	
+	  NFA/DFA cache	  NFA/DFA cache		time	   DFA misses
+	  advisory limit  actual usage		(seconds)
+	  (bytes)	  (bytes)
+
+	  10K / 10K	  10,514 / 12,744	0.61	   3908
+	  1MB / 1MB	  299,948 / 1,048,576	0.27	   890
+	  8MB / 8MB	  299,796 / 3,139,536	0.32       890
+
+	(Note that 10K vs. 1MB is an effective space/time trade-off.
+	8MB did not improve the cache-hit rate compared to 1MB,
+	and caused a slight performance loss -- presumably due to
+	virtual memory effects.)
+
+	The "ample memory" and "limited memory" tests described
+	in the section "Execution Speed" were conducted by varying
+	the advisory cache limits.  The memory used in those
+	tests is displayed in the following table:
+
+
+		NFA/DFA cache		NFA/DFA cache
+		advisory limit		actual usage
+		(bytes)			(bytes)
+	
+			   UTF-16 matching
+	
+	limited   1024 / 1024		10,513 / 3,604
+	memory
+
+	ample 	   1MB / 1MB		10,513 / 37,388
+	memory
+
+	
+			    UTF-8 matching
+
+	limited   1024 / 1024		10,513 / 10,900
+	memory
+
+	ample 	   1MB / 1MB		10,513 / 75,724
+	memory
+
+	(The section "Execution Speed" describes the dramatic
+	performance differences between the two cache limits.)
+
+
+
+Support:
+
+	To purchase an alternative license, request additional
+	features, or for any kind of support assistance, you can
+	contact us at "hackerlab@regexps.com" or via our web site
+	"www.regexps.com".  We can also be reached at (412) 401-5204.
+	We are currently in the midst of relocating from Pennsylvania
+	to California, so at this time, we have no reliable postal
+	address.
+
+/*end-insert
+ */
+
+

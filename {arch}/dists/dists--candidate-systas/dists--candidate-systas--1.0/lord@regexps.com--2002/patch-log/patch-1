@@ -1,0 +1,30 @@
+Revision: dists--candidate-systas--1.0--patch-1
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon Jan 14 23:20:57 PST 2002
+Standard-date: 2002-01-14
+Summary: from generic to specific
+Keywords: 
+New-files: {arch}/dists/dists--candidate-systas/dists--candidate-systas--1.0/lord@regexps.com--2002/patch-log/patch-1
+Removed-files: =NEWS.d/.arch-ids/=NEWS.arch.id
+  =NEWS.d/.arch-ids/=NEWS.ftp-utils.id
+  =NEWS.d/.arch-ids/=NEWS.hackerlab.id
+  =README.d/=README.ftp-utils =README.d/=README.hackerlab
+  =README.d/=README.arch =RELEASE-ID.d/=RELEASE-ID.arch
+  =RELEASE-ID.d/=RELEASE-ID.ftp-utils
+  =RELEASE-ID.d/=RELEASE-ID.hackerlab =RELEASE-ID
+  =NEWS.d/=NEWS.arch =NEWS.d/=NEWS.ftp-utils
+  =NEWS.d/=NEWS.hackerlab
+Removed-directories: =NEWS.d =README.d =RELEASE-ID.d =NEWS.d/.arch-ids
+Renamed-files: =NEWS.d/.arch-ids/=NEWS.systas.id .arch-ids/=NEWS.id
+  =README.d/=README.systas =README
+  =RELEASE-ID.d/=RELEASE-ID.systas =RELEASE-ID
+  =NEWS.d/=NEWS.systas =NEWS
+Modified-files: =NEWS ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/dists--candidate-systas--1.0--patch-1
+
+
+Rearranged the generic config directory for this particular
+project.
+

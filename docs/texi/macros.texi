@@ -1,0 +1,158 @@
+@need 3200
+
+@node Low Level Macros
+@chapter Low Level Macros
+
+Normally when you define a function, arguments passed to that function
+are evaluated and the function itself has no access to the lexical
+environment of the caller.
+
+
+Three low-level hooks provide a way to define functions that violate
+these rules, taking arguments unevaluated, and gaining access to the
+lexical environment of the caller.  This is quite a powerful facility
+that allows programs to extend the evaluator in many ways.  It's also an
+extremely non-standard feature.
+
+
+Caution should be taken when using these functions.  They can easily 
+lead to programs that are hard to read and understand.  There may eventually
+be a compiler for this implementation and some macros can complicate or prevent
+effective compilation.
+
+@menu
+* Macro Procedures::
+* Macros Rationale::
+@end menu
+
+@need 3200
+
+@node Macro Procedures
+@section Macro Procedures
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{procedure->syntax}@fuindex procedure->syntax
+@*
+@example
+@group
+(procedure->syntax procedure)
+@end group
+@group
+@end group
+@end example
+
+Convert @code{procedure} into @geindex syntax
+@dfn{syntax}.
+
+
+@code{procedure} should take an expression and an environment:
+
+@example
+@group
+     (procedure expression environment)
+@end group
+@group
+@end group
+@end example
+
+When the syntax object is applied, the expression containing it
+and the active environment are passed to @code{procedure}.  The value returned
+from @code{procedure} becomes the value of the expression.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{procedure->macro}@fuindex procedure->macro
+@*
+@example
+@group
+(procedure->macro procedure)
+@end group
+@group
+@end group
+@end example
+
+Convert @code{procedure} into a @geindex macro
+@dfn{macro}.
+
+
+@code{procedure} should take an expression and an environment:
+
+@example
+@group
+             (procedure expression environment)
+@end group
+@group
+@end group
+@end example
+
+When the macro object is applied, the expression containing it and
+the active environment are passed to @code{procedure}.  The value returned from
+@code{procedure} is then evaluated in the caller's lexical environment
+(the same environement passed to @code{procedure}) and the value returned
+from that expression is returned from the macro.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{procedure->memoizing-macro}@fuindex procedure->memoizing-macro
+@*
+@example
+@group
+(procedure->memoizing-macro procedure)
+@end group
+@group
+@end group
+@end example
+
+Convert @code{procedure} into a @geindex memoizing macro
+@dfn{memoizing macro}.
+
+
+@code{procedure} should take an expression and an environment:
+
+@example
+@group
+             (procedure expression environment)
+@end group
+@group
+@end group
+@end example
+
+When the memoizing-macro is applied, the expression containing it and
+the active environment are passed to @code{procedure}.
+
+
+The first time that occurs, the value returned from @code{procedure} replaces
+the source-expression that called the macro.
+
+
+Then and thereafter the new expression is evaluated normally.  The 
+memoizing-macro procedure is never again called at that point in 
+the program.  (A memoizing macro is a kind of @geindex self-modifying code
+@dfn{self-modifying code}).
+
+
+
+
+@need 3200
+
+@node Macros Rationale
+@section Macros Rationale
+
+These three styles of macro originated in SCM by Aubrey Jaffer.
+
+
+Memoizing macros are useful for incremental code generation from high-level
+code.
+
+
+Hygenic macros systems can be built on these primitives.
+
+
+
+
+
+
+

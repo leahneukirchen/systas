@@ -1,0 +1,871 @@
+@need 3200
+
+@node Lists
+@chapter Lists
+
+A @geindex list
+@dfn{list}, or @geindex proper list
+@dfn{proper list} is considered to be any chain of
+cons-pairs, the cdr of each pair pointing to the next pair in the
+chain, and the cdr of the last pair containing @code{()}.
+
+
+A list is written as a left-parenthesis, followed by a white-space
+separated enumeration of the car slots of the cells in the list,
+followed by a right-parenthesis.
+
+@example
+@group
+     ;; Note that lists typed-in have to be quoted or else
+     ;; they will be interpreted as an expression and
+     ;; evaluated accordingly:
+     ;;
+     '(a b c) => (a b c)     ; a three element list
+@end group
+@group
+@end group
+@end example
+
+An @geindex improper list
+@dfn{improper list} is similar, except that the cdr slot of the last
+pair is filled with some object other than @code{()}.  Dotted-pair notation
+is used to write an improper list (see @ref{Cons Pairs}):
+
+@example
+@group
+     '(a b . c) => (a b . c)     ; a two element improper list
+                                 ; with the symbol c in the last cdr
+                                 ; slot.  It is the c that makes
+                                 ; the list "improper"
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{null?}@fuindex null?
+@*
+@example
+@group
+(null? obj)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is the empty list, @code{#f} otherwise.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{list?}@fuindex list?
+@*
+@example
+@group
+(list? obj)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is a proper list, @code{#f} otherwise.
+
+@need 3200
+
+@section Constructing Lists
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{list}@fuindex list
+@*
+@example
+@group
+(list . args)
+@end group
+@group
+@end group
+@end example
+
+Return a newly constructed list of the arguments.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{make-list}@fuindex make-list
+@*
+@example
+@group
+(make-list n :optional init)
+@end group
+@group
+@end group
+@end example
+
+Construct a new list of @code{n} elements, initially @code{#f} or @code{init}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{range}@fuindex range
+@*
+@example
+@group
+(range x :optional y)
+@end group
+@group
+@end group
+@end example
+
+Return a new @code{x} element list of the integers @code{0 .. x-1}.
+With two arguments, return a list @code{x..y-1}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{reverse-range}@fuindex reverse-range
+@*
+@example
+@group
+(reverse-range x :optional y)
+@end group
+@group
+@end group
+@end example
+
+Return a new @code{x} element list of the integers @code{x-1 .. 0}.
+With two arguments, return a list @code{y-1..x}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{list-append}@fuindex list-append
+@*
+@example
+@group
+(list-append . arguments)
+@end group
+@group
+@end group
+@end example
+
+Append the elements of the argument lists to form a mostly new
+list.  The new list may share state with the last argument.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{append}@fuindex append
+@*
+@example
+@group
+(append . arguments)
+@end group
+@group
+@end group
+@end example
+
+A synonym for @code{list-append}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{list-append!}@fuindex list-append!
+@*
+@example
+@group
+(list-append! . arguments)
+@end group
+@group
+@end group
+@end example
+
+Append the elements of the argument lists to form a list.  The
+arguments are modified: the cdr of the last cons pair of each
+argument but the last is modified to point to the next argument.
+
+
+The arguments may be improper lists.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{append!}@fuindex append!
+@*
+@example
+@group
+(append! . arguments)
+@end group
+@group
+@end group
+@end example
+
+A synonym for @code{list-append!}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{list-copy}@fuindex list-copy
+@*
+@example
+@group
+(list-copy list)
+@end group
+@group
+@end group
+@end example
+
+Return a new list with the same elements as @code{list}.
+
+
+If @code{list} is an improper list, the new list and @code{list}
+have the same element in the cdr of the last pair.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{copy-tree}@fuindex copy-tree
+@*
+@example
+@group
+(copy-tree obj)
+@end group
+@group
+@end group
+@end example
+
+Recursively copy the list and vector structure of @code{obj}.  Return
+the copy.
+
+
+
+
+@need 3200
+
+@section List Length
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{list-length}@fuindex list-length
+@*
+@example
+@group
+(list-length obj)
+@end group
+@group
+@end group
+@end example
+
+Return the length of @code{obj} if it is a list, otherwise
+signal an error.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{list-length+}@fuindex list-length+
+@*
+@example
+@group
+(list-length+ obj)
+@end group
+@group
+@end group
+@end example
+
+Like @code{list-length}, but return @code{#f} for circular lists and the
+number of elements for improper lists.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{soft-list-length}@fuindex soft-list-length
+@*
+@example
+@group
+(soft-list-length obj)
+@end group
+@group
+@end group
+@end example
+
+Return the length of @code{obj} if it is a proper list, otherwise
+return @code{#f}.
+
+
+
+
+@need 3200
+
+@section Reversing Lists
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{list-reverse}@fuindex list-reverse
+@*
+@example
+@group
+(list-reverse list :optional new-tail)
+@end group
+@group
+@end group
+@end example
+
+Return a list having the same elements as @code{list}, but 
+in reverse order.
+
+
+If @code{new-tail} is provided, it is stored in the cdr of the
+last pair of the returned list.  If @code{list} is @code{()}, @code{new-tail}
+is returned.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{list-reverse!}@fuindex list-reverse!
+@*
+@example
+@group
+(list-reverse! list :optional new-tail)
+@end group
+@group
+@end group
+@end example
+
+Return a list having the same elements as @code{list}, but 
+in reverse order. @code{list} is modified -- pairs form @code{list}
+are re-used to form the new list.
+
+
+If @code{new-tail} is provided, it is stored in the cdr of the
+last pair of the returned list.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{reverse!}@fuindex reverse!
+@*
+@example
+@group
+(reverse! list :optional new-tail)
+@end group
+@group
+@end group
+@end example
+
+A synonym for @code{list-reverse!}.
+
+
+
+
+@need 3200
+
+@section Partitioning Lists
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{list-head}@fuindex list-head
+@*
+@example
+@group
+(list-head list n)
+@end group
+@group
+@end group
+@end example
+
+Return a new list containing the first @code{n} elements of @code{list}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{list-tail}@fuindex list-tail
+@*
+@example
+@group
+(list-tail list n)
+@end group
+@group
+@end group
+@end example
+
+Return the cdr of pair @code{n} (counting from @code{0}) of @code{list}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{last-pair}@fuindex last-pair
+@*
+@example
+@group
+(last-pair list)
+@end group
+@group
+@end group
+@end example
+
+Return the last pair in a (possibly improper) list.
+
+
+
+
+@need 3200
+
+@section Indexed Access to Lists
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{list-ref}@fuindex list-ref
+@*
+@example
+@group
+(list-ref list n)
+@end group
+@group
+@end group
+@end example
+
+Return element @code{n} (counting from @code{0}) of @code{list}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{list-set!}@fuindex list-set!
+@*
+@example
+@group
+(list-set! list n value)
+@end group
+@group
+@end group
+@end example
+
+Set element @code{n} (counting from @code{0}) of @code{list}.  Return @code{list}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{list-cdr-ref}@fuindex list-cdr-ref
+@*
+@example
+@group
+(list-cdr-ref list n)
+@end group
+@group
+@end group
+@end example
+
+Return the cdr of pair @code{n} (counting from @code{0}) of @code{list}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{list-cdr-set!}@fuindex list-cdr-set!
+@*
+@example
+@group
+(list-cdr-set! list n value)
+@end group
+@group
+@end group
+@end example
+
+Set the cdr of pair @code{n} (counting from @code{0}) of @code{list}.  Return
+@code{list}.
+
+
+
+
+@need 3200
+
+@section Searching for List Elements
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{memq}@fuindex memq
+@*
+@example
+@group
+(memq obj list)
+@end group
+@group
+@end group
+@end example
+
+If @code{obj} occurs in @code{list}, return the first sublist whose car is
+@code{eq?} to @code{obj}.
+
+
+@code{list} may be an improper list.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{memv}@fuindex memv
+@*
+@example
+@group
+(memv obj list)
+@end group
+@group
+@end group
+@end example
+
+If @code{obj} occurs in @code{list}, return the first sublist whose car is
+@code{eqv?} to @code{obj}.
+
+
+@code{list} may be an improper list.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{member}@fuindex member
+@*
+@example
+@group
+(member obj list :optional =)
+@end group
+@group
+@end group
+@end example
+
+If @code{obj} occurs in @code{list}, return the first sublist whose car is
+@code{equal?} to @code{obj}.
+
+
+@code{list} may be an improper list.
+
+
+If @code{=} is supplied, it is used to compare @code{obj} to elements of
+@code{list} in this way:
+
+@example
+@group
+     (compare obj elt-of-list)
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{list-elt-indexq}@fuindex list-elt-indexq
+@*
+@example
+@group
+(list-elt-indexq l k)
+@end group
+@group
+@end group
+@end example
+
+Return the index @code{(0 }based) of the first element in list @code{l}
+that matches (@code{eq?}) the value @code{k}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{list-elt-indexv}@fuindex list-elt-indexv
+@*
+@example
+@group
+(list-elt-indexv l k)
+@end group
+@group
+@end group
+@end example
+
+Return the index @code{(0 }based) of the first element in list @code{l}
+that matches (@code{eqv?}) the value @code{k}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{list-elt-index}@fuindex list-elt-index
+@*
+@example
+@group
+(list-elt-index l k)
+@end group
+@group
+@end group
+@end example
+
+Return the index @code{(0 }based) of the first element in list @code{l}
+that matches (@code{equal?}) the value @code{k}.
+
+
+
+
+@need 3200
+
+@section Removing List Elements
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{delq!}@fuindex delq!
+@*
+@example
+@group
+(delq! obj list)
+@end group
+@group
+@end group
+@end example
+
+Modify @code{list} by removing the all pairs whose car is @code{eq?} to obj.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{delq}@fuindex delq
+@*
+@example
+@group
+(delq obj list)
+@end group
+@group
+@end group
+@end example
+
+Return a new copy of @code{list} omitting all pairs whose car is @code{eq?}
+to @code{obj}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{delv!}@fuindex delv!
+@*
+@example
+@group
+(delv! obj list)
+@end group
+@group
+@end group
+@end example
+
+Modify @code{list} by removing the all pairs whose car is @code{eqv?} to obj.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{delv}@fuindex delv
+@*
+@example
+@group
+(delv obj list)
+@end group
+@group
+@end group
+@end example
+
+Return a new copy of @code{list} omitting all pairs whose car is @code{eqv?}
+to obj.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{delete!}@fuindex delete!
+@*
+@example
+@group
+(delete! obj list :optional =)
+@end group
+@group
+@end group
+@end example
+
+Modify @code{list} by removing the all pairs whose car is @code{equal?} to
+obj.
+
+
+If @code{=} is supplied, it is used to compare @code{obj} to elements of
+@code{list} in this way:
+
+@example
+@group
+     (compare obj elt-of-list)
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{delete}@fuindex delete
+@*
+@example
+@group
+(delete obj list :optional =)
+@end group
+@group
+@end group
+@end example
+
+Return a new copy of @code{list} omitting all pairs whose car is
+@code{equal?} to obj.
+
+
+If @code{=} is supplied, it is used to compare @code{obj} to elements of
+@code{list} in this way:
+
+@example
+@group
+     (compare obj elt-of-list)
+@end group
+@group
+@end group
+@end example
+
+
+
+@need 3200
+
+@section List-based Iterators
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{map}@fuindex map
+@*
+@example
+@group
+(map procedure . arguments)
+@end group
+@group
+@end group
+@end example
+
+Construct a new list by applying @code{procedure} to each element of the
+list arguments.
+
+
+For example:
+
+@example
+@group
+     (map - '(1 2 3)) => (-1 -2 -3)
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     (map + '(1 2 3) '(10 10 11))
+      => (11 12 14)
+@end group
+@group
+@end group
+@end example
+
+The list arguments to map need not be proper lists, but if they
+improper, the contents of the last cdr are ignored.
+
+
+The list elements may differ in length, but @code{map} stops when the
+shortest list is exhausted.
+
+
+@code{map} is applied to the elements of its arguments in order.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{for-each}@fuindex for-each
+@*
+@example
+@group
+(for-each procedure . arguments)
+@end group
+@group
+@end group
+@end example
+
+Apply function to the list arguments, element-wise, for side
+effects.
+
+
+@code{for-each} is similar to @code{map}, but @code{for-each} does not return a
+useful value - the results of applying @code{function} are ignored.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{filter}@fuindex filter
+@*
+@example
+@group
+(filter pred list)
+@end group
+@group
+@end group
+@end example
+
+Return all the elements of list that satisfy predicate @code{pred}. The
+list is not disordered -- elements that appear in the result list
+occur in the same order as they occur in the argument list. The
+returned list may share a common tail with the argument list. The
+dynamic order in which the various applications of pred are made is
+not specified.
+
+@example
+@group
+     (filter even? '(0 7 8 8 43 -4)) => (0 8 8 -4)
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{and-map}@fuindex and-map
+@*
+@example
+@group
+(and-map f l)
+@end group
+@group
+@end group
+@end example
+
+Apply @code{f} to successive elements of @code{l} until the end of list or @code{f} 
+returns @code{#f}.
+
+
+If returning early, return @code{#f}.  Otherwise, return the last value returned
+by @code{f}.  If @code{f} has never been called because @code{l} is empty, return @code{#t}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{or-map}@fuindex or-map
+@*
+@example
+@group
+(or-map f l)
+@end group
+@group
+@end group
+@end example
+
+Apply @code{f} to successive elements of @code{l} until end of list or until @code{f}
+returns a value other than @code{#f}.
+
+
+If returning early, return the return value of the last call to @code{f}.
+Otherwise, return @code{#f}.
+
+
+
+
+@need 3200
+
+@section Rationale -- Lists
+
+Systas follows the Scheme standard with a few obvious extensions.
+
+
+
+
+
+
+

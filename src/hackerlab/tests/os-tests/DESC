@@ -1,0 +1,28 @@
+# tag: Tom Lord Tue Dec  4 15:05:19 2001 (os-tests/DESC)
+#
+
+flux/os contains trivial wrappers for standard header files.
+
+The wrappers perform three functions:
+
+	1. They simplify porting.
+
+	2. They record the dependencies of flux on the host
+	   system.
+
+	3. They automatically include pre-requisit headers.
+	   For example, "flux/os/dirent.h" includes
+	   "flux/os/sys/types.h" (which includes <sys/types.h>)
+	   as well as <dirent.h>.
+
+There is only one function to test in this directory: errno_to_string.
+Since that function is trivial (it wraps `strerror' so that programs
+don't have to include "<string.h>") no test is provided.
+
+We test to make sure each of the header files compiles correctly.
+
+We don't directly test the definitions in these header files.  For
+completeness, such tests should be added, specifically testing for the
+features used by flux.  As a practical matter, if these header files
+break, other directories will fail to compile.
+

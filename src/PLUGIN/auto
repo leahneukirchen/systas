@@ -1,0 +1,12 @@
+
+;; On some systems, programs that use socket functions
+;; need to link with a library "-lsocket".  We presume that
+;; if such a library exists, it should be used.
+;; 
+
+library-test socket-library -lsocket
+
+gcc-test gcc-version
+
+
+

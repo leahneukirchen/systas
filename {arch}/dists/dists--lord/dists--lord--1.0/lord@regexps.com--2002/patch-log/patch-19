@@ -1,0 +1,74 @@
+Revision: dists--lord--1.0--patch-19
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sat Feb  9 08:09:59 PST 2002
+Standard-date: 2002-02-09
+Summary: updated arch documentation
+Keywords: 
+New-files: {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-19
+  docs.d/arch/examples/README.025.branching-advice
+Modified-files: =RELEASE-ID.d/=RELEASE-ID.arch ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  docs.d/arch/html/arbitrary-patching.html
+  docs.d/arch/html/archives.html
+  docs.d/arch/html/automatic-triggers.html
+  docs.d/arch/html/basic-branching-and-merging.html
+  docs.d/arch/html/basic-rc.html
+  docs.d/arch/html/configurations.html
+  docs.d/arch/html/data-sheet.html
+  docs.d/arch/html/development-paths.html
+  docs.d/arch/html/getting-started.html
+  docs.d/arch/html/idempotent-merging.html
+  docs.d/arch/html/implementing-policies.html
+  docs.d/arch/html/in-general.html
+  docs.d/arch/html/indexes.html
+  docs.d/arch/html/introduction.html
+  docs.d/arch/html/inventory.html
+  docs.d/arch/html/logs-after-merging.html
+  docs.d/arch/html/multi-tree-projects.html
+  docs.d/arch/html/overview.html
+  docs.d/arch/html/patch-logs.html
+  docs.d/arch/html/pristine-cache.html
+  docs.d/arch/html/project-names.html
+  docs.d/arch/html/project-trees.html
+  docs.d/arch/html/reconciling.html
+  docs.d/arch/html/revision-lib.html
+  docs.d/arch/html/star-topology.html
+  docs.d/arch/html/system-requirements.html
+  docs.d/arch/html/triggers.html
+  docs.d/arch/html/user-names.html
+  docs.d/arch/html/using-triggers.html
+  docs.d/arch/html/web-site.html docs.d/arch/ps/arch.ps
+  docs.d/arch/texi/arbitrary-patching.texi
+  docs.d/arch/texi/archives.texi
+  docs.d/arch/texi/automatic-triggers.texi
+  docs.d/arch/texi/basic-branching-and-merging.texi
+  docs.d/arch/texi/basic-rc.texi
+  docs.d/arch/texi/configurations.texi
+  docs.d/arch/texi/data-sheet.texi
+  docs.d/arch/texi/development-paths.texi
+  docs.d/arch/texi/getting-started.texi
+  docs.d/arch/texi/idempotent-merging.texi
+  docs.d/arch/texi/implementing-policies.texi
+  docs.d/arch/texi/in-general.texi
+  docs.d/arch/texi/introduction.texi
+  docs.d/arch/texi/inventory.texi
+  docs.d/arch/texi/logs-after-merging.texi
+  docs.d/arch/texi/multi-tree-projects.texi
+  docs.d/arch/texi/overview.texi
+  docs.d/arch/texi/patch-logs.texi
+  docs.d/arch/texi/pristine-cache.texi
+  docs.d/arch/texi/project-names.texi
+  docs.d/arch/texi/project-trees.texi
+  docs.d/arch/texi/reconciling.texi
+  docs.d/arch/texi/revision-lib.texi
+  docs.d/arch/texi/star-topology.texi
+  docs.d/arch/texi/system-requirements.texi
+  docs.d/arch/texi/triggers.texi
+  docs.d/arch/texi/user-names.texi
+  docs.d/arch/texi/using-triggers.texi
+  docs.d/arch/texi/web-site.texi
+New-patches: lord@regexps.com--2002/dists--lord--1.0--patch-19
+
+Updated arch documentation.
+

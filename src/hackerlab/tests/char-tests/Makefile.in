@@ -1,0 +1,10 @@
+# tag: Tom Lord Tue Dec  4 14:52:18 2001 (char-tests/Makefile.in)
+#
+
+tested-headers		:=	char-class.h char-name.h str.h
+tested-prefix		:=	hackerlab/char
+
+libs			:=	$(objroot)/hackerlab/libhackerlab/libhackerlab.a -lm
+
+include $(makefiles)/unit-tests.mk
+

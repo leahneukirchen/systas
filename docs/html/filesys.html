@@ -1,0 +1,1603 @@
+<html>
+<head>
+<title>File System and Descriptor Procedures</title>
+</head>
+<body>
+
+<a name="File_System_and_Descriptor_Procedures"></a>
+
+
+
+<h2 align=center>File System and Descriptor Procedures</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="fdsocket.html#Networking_Procedures">Networking Procedures</a></br>
+
+<b>prev: </b><a href="system.html#System_Calls_and_C_Library_Functions">System Calls and C Library Functions</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>The procedures in this section are a complete interface to the unix
+file system system-calls and related functions.
+</p><p>File descriptors are referred to by <em>
+<a name="index-pt:0"></a>
+
+file descriptor objects
+</em>
+
+A file descriptor object has two parts: an integer descriptor number,
+and a flag that says whether or not the file should be automatically
+closed when the descriptor object is garbage collected.  In most
+cases (everywhere it makes sense) an integer may be passed in place
+of a descriptor object.
+</p><p>In Systas Scheme, file descriptor objects and ports are the same
+thing.  Some descriptors may have an associated buffer.  Only
+buffered descriptors are suitable for use with <code>read</code>
+.
+</p><p>The procedure <code>integer->fd</code>
+ is provided to facilitate the handling
+of descriptors inherited from the exec'ing process.
+</p><p>The procedure <code>all-file-descriptors</code>
+ is provided to facilitate closing
+unwanted descriptors before calling one of the variants of <code>%exec</code>
+.
+</p><p>Opened directories are represented by <em>
+<a name="index-pt:1"></a>
+
+directory objects
+</em>
+.
+</p><p>File statistics (from <code>%stat</code>
+, <code>%lstat</code>
+, and <code>%fstat</code>
+) and directory
+entries (from <code>%readdir</code>
+) are returned in keyword/argument lists.
+</p><p>Functions whose name begins with <em>
+<a name="index-pt:2"></a>
+
+%
+</em>
+ report system errors by
+returning a symbol (the CPP macro name of the errno number).  Other
+kinds of error, such as passing a parameter of the wrong type,
+cause exceptions.
+</p><p>The documentation for these functions frequently refer to unix man
+pages.  When a man page refers to a constant bound to a CPP macro,
+you should use a symbol having that same name (e.g. the symbol
+<code>O_RDWR</code>
+ may be passed to the Scheme procedure <code>%open</code>
+.)  is
+usually a Scheme variable bound to the same value.  For example,
+<code>O_RDWR</code>
+, is defined for use with <code>%open</code>
+.
+</p><ul>
+<li><a href="filesys.html#File_Permissions">File Permissions</a></li>
+<li><a href="filesys.html#File_Descriptor_Objects">File Descriptor Objects</a></li>
+<li><a href="filesys.html#File_Statistics">File Statistics</a></li>
+<li><a href="filesys.html#Modifying_Directories">Modifying Directories</a></li>
+<li><a href="filesys.html#Examining_Directories">Examining Directories</a></li>
+<li><a href="filesys.html#The_Current_Directory">The Current Directory</a></li>
+<li><a href="filesys.html#The_Interface_to_select">The Interface to select</a></li>
+<li><a href="filesys.html#Symbolic_Links">Symbolic Links</a></li>
+<li><a href="filesys.html#Pseudo-Descriptors">Pseudo-Descriptors</a></li>
+<li><a href="filesys.html#Rationale_--_Unix_File_System_Procedures">Rationale -- Unix File System Procedures</a></li>
+</ul>
+
+<hr>
+
+<a name="File_Permissions"></a>
+
+
+
+<h3 align=center>File Permissions</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="filesys.html#File_System_and_Descriptor_Procedures">File System and Descriptor Procedures</a></br>
+<b>next: </b><a href="filesys.html#File_Descriptor_Objects">File Descriptor Objects</a></br>
+
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="%chown"></a><a name="index-pt:3"></a>
+%chown
+</code></b><br>
+<pre>
+(%chown path owner group)
+SCM scm_sys_chown (SCM path, SCM owner, SCM group);
+
+</pre>
+<p>Change the owner and group of a file.  
+</p><p><code>path</code>
+ must be a read-only string.
+</p><p><code>owner</code>
+ and <code>group</code>
+ are integer ids.  If either is <code>-1</code>
+, that
+id is not changed.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="file-mode->integer"></a><a name="index-pt:4"></a>
+file-mode->integer
+</code></b><br>
+<pre>
+(file-mode->integer mode)
+
+</pre>
+<p>Convert to an integer flags for system calls that accept a <code>mode</code>
+ parameter.
+</p><p><code>flags</code>
+ may be an integer, symbol, or list of integers and symbols.
+</p><p>Symbols must have the names of CPP macros used with the C functions such as <code>chmod</code>
+,
+e.g.: <code>S_IRUSR</code>
+, or <code>S_IRGRP</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="integer->file-mode"></a><a name="index-pt:5"></a>
+integer->file-mode
+</code></b><br>
+<pre>
+(integer->file-mode mode)
+
+</pre>
+<p>Return a symbolic form of an integer file mode.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%chmod"></a><a name="index-pt:6"></a>
+%chmod
+</code></b><br>
+<pre>
+(%chmod path mode)
+
+</pre>
+<p>Change the permissions of a file.  
+See the manual page <em>
+<a name="index-pt:7"></a>
+
+chmod
+</em>
+.
+</p><p><code>path</code>
+ must be a read-only string.
+<code>mode</code>
+ must be an integer.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="numeric-permissions"></a><a name="index-pt:8"></a>
+numeric-permissions
+</code></b><br>
+<pre>
+(numeric-permissions permissions)
+
+</pre>
+<p>Convert the file mode specification <code>permissions</code>
+ to an integer
+file mode specification.
+</p><p>If <code>permissions</code>
+ is an integer, it is simply returned.
+</p><p>If <code>permissions</code>
+ is a symbol or list of symbols, they are interpreted
+as file mode constants from the set:
+</p><pre>
+     !!! be more precise?
+
+</pre>
+
+<br>
+<br><p><b><u>Function</u> <code><a name="%fchmod"></a><a name="index-pt:9"></a>
+%fchmod
+</code></b><br>
+<pre>
+(%fchmod fd mode)
+
+</pre>
+<p>Change the permissions of an open file.
+See the manual page <em>
+<a name="index-pt:10"></a>
+
+fchmod
+</em>
+.
+</p><p><code>fd</code>
+ must be a file descriptor object or integer.
+<code>mode</code>
+ must be an integer.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="umask"></a><a name="index-pt:11"></a>
+umask
+</code></b><br>
+<pre>
+(umask (:optional mode))
+
+</pre>
+<p>Set the current umask.
+See the manual page <em>
+<a name="index-pt:12"></a>
+
+umask
+</em>
+.
+</p><p><code>mode</code>
+ must be an integer.  If <code>mode</code>
+ is not supplied, 
+the umask is set to <code>0</code>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="File_Descriptor_Objects"></a>
+
+
+
+<h3 align=center>File Descriptor Objects</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="filesys.html#File_System_and_Descriptor_Procedures">File System and Descriptor Procedures</a></br>
+<b>next: </b><a href="filesys.html#File_Statistics">File Statistics</a></br>
+
+<b>prev: </b><a href="filesys.html#File_Permissions">File Permissions</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="file-descriptor?"></a><a name="index-pt:13"></a>
+file-descriptor?
+</code></b><br>
+<pre>
+(file-descriptor? obj)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is a file descriptor object, <code>#f</code>
+ otherwise.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="integer->file-descriptor"></a><a name="index-pt:14"></a>
+integer->file-descriptor
+</code></b><br>
+<pre>
+(integer->file-descriptor n)
+
+</pre>
+<p>If <code>n</code>
+ is an integer, return a file descriptor object for 
+file descriptor <code>n</code>
+. If a descriptor already exists for <code>n</code>
+, 
+return that.
+</p><p>If <code>n</code>
+ is already a file descriptor object, return <code>n</code>
+.
+</p><p>If this descriptor is later garbage collected, file <code>n</code>
+ will
+be automatically closed.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="integer->existing-file-descriptor"></a><a name="index-pt:15"></a>
+integer->existing-file-descriptor
+</code></b><br>
+<pre>
+(integer->existing-file-descriptor n)
+
+</pre>
+<p>If <code>n</code>
+ is an integer, return an existing file descriptor object for
+file descriptor <code>n</code>
+. If no descriptor already exists for <code>n</code>
+, return
+<code>#f</code>
+.
+</p><p>If <code>n</code>
+ is already a file descriptor object, return <code>n</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="file-descriptor->integer"></a><a name="index-pt:16"></a>
+file-descriptor->integer
+</code></b><br>
+<pre>
+(file-descriptor->integer fd)
+
+</pre>
+<p>Return the numeric descriptor associated with file descriptor object <code>fd</code>
+.
+</p><p>If <code>fd</code>
+ is already an integer, return <code>fd</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="all-file-descriptors"></a><a name="index-pt:17"></a>
+all-file-descriptors
+</code></b><br>
+<pre>
+(all-file-descriptors)
+
+</pre>
+<p>Return a newly constructed list of all file live file descriptor objects.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="autoclose-file-descriptor?"></a><a name="index-pt:18"></a>
+autoclose-file-descriptor?
+</code></b><br>
+<pre>
+(autoclose-file-descriptor? fd)
+
+</pre>
+<p>Return <code>#t</code>
+ if the file associated with descriptor object <code>fd</code>
+ will
+be automatically closed when <code>fd</code>
+ is garbage collected, <code>#f</code>
+ otherwise.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="set-autoclose-file-descriptor!"></a><a name="index-pt:19"></a>
+set-autoclose-file-descriptor!
+</code></b><br>
+<pre>
+(set-autoclose-file-descriptor! fd value)
+
+</pre>
+<p>Set the flag that determines whether the file associated with descriptor 
+object <code>fd</code>
+ will be automatically closed when <code>fd</code>
+ is garbage collected.
+<code>#f</code>
+ means that file will not be closed; all other values mean that the file
+will be closed.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="fd-is-open?"></a><a name="index-pt:20"></a>
+fd-is-open?
+</code></b><br>
+<pre>
+(fd-is-open? fd)
+
+</pre>
+<p>Return <code>#t</code>
+ if the descriptor <code>fd</code>
+ is currently open, 
+<code>#f</code>
+ if it has been closed.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%pipe"></a><a name="index-pt:21"></a>
+%pipe
+</code></b><br>
+<pre>
+(%pipe)
+
+</pre>
+<p>Return a list containing two file descriptor objects that are
+ends of a newly constructed pipe.
+</p><p>See the manual page <em>
+<a name="index-pt:22"></a>
+
+pipe
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="open-flags->integer"></a><a name="index-pt:23"></a>
+open-flags->integer
+</code></b><br>
+<pre>
+(open-flags->integer flags)
+
+</pre>
+<p>Convert flags for the <code>%open</code>
+ system call to an integer.
+</p><p><code>flags</code>
+ may be an integer, symbol, or list of integers and symbols.
+</p><p>Symbols must have the names of CPP macros used with the C function <code>open()</code>
+,
+e.g.: <code>O_RDONLY</code>
+ or <code>O_CREAT</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%open"></a><a name="index-pt:24"></a>
+%open
+</code></b><br>
+<pre>
+(%open path :optional flags mode)
+
+</pre>
+<p>Open a file; return a file descriptor object.
+See the manual page <em>
+<a name="index-pt:25"></a>
+
+open
+</em>
+.
+</p><p><code>path</code>
+ must be a read-only string.
+</p><p><code>flags</code>
+ and <code>mode</code>
+ must be integers.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%create"></a><a name="index-pt:26"></a>
+%create
+</code></b><br>
+<pre>
+(%create path mode)
+
+</pre>
+<p>Create a new file.
+See the manual page <em>
+<a name="index-pt:27"></a>
+
+creat
+</em>
+.
+</p><p><code>path</code>
+ must be a read-only string.
+<code>mode</code>
+ must be an integer.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%close"></a><a name="index-pt:28"></a>
+%close
+</code></b><br>
+<pre>
+(%close fd)
+
+</pre>
+<p>Close an open file.
+See the manual page <em>
+<a name="index-pt:29"></a>
+
+close
+</em>
+.
+</p><p><code>fd</code>
+ must be a file descriptor object or integer.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%write"></a><a name="index-pt:30"></a>
+%write
+</code></b><br>
+<pre>
+(%write fd string)
+
+</pre>
+<p>Write the contents of <code>string</code>
+ on descriptor <code>fd</code>
+.
+See the manual page <em>
+<a name="index-pt:31"></a>
+
+write
+</em>
+.
+</p><p><code>fd</code>
+ must be a file descriptor object or integer.
+<code>string</code>
+ must be a read-only string.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%write-retry"></a><a name="index-pt:32"></a>
+%write-retry
+</code></b><br>
+<pre>
+(%write-retry fd string)
+
+</pre>
+<p>Write the contents of <code>string</code>
+ on descriptor <code>fd</code>
+.
+See the manual page <code>vu_write_retry</code>
+.
+</p><p><code>fd</code>
+ must be a file descriptor object or integer.
+<code>string</code>
+ must be a read-only string.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%read"></a><a name="index-pt:33"></a>
+%read
+</code></b><br>
+<pre>
+(%read fd string)
+
+</pre>
+<p>Read data from a file into a string.
+See the manual page <em>
+<a name="index-pt:34"></a>
+
+read
+</em>
+.
+</p><p><code>fd</code>
+ must be a file descriptor object or integer.
+<code>string</code>
+ must be a writable string.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%read-retry"></a><a name="index-pt:35"></a>
+%read-retry
+</code></b><br>
+<pre>
+(%read-retry fd string)
+
+</pre>
+<p>Read data from a file into a string.
+See the manual page <em>
+<a name="index-pt:36"></a>
+
+vu_read_retry
+</em>
+.
+</p><p><code>fd</code>
+ must be a file descriptor object or integer.
+<code>string</code>
+ must be a writable string.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%fsync"></a><a name="index-pt:37"></a>
+%fsync
+</code></b><br>
+<pre>
+(%fsync fd)
+
+</pre>
+<p>Flush changes to an open file to disk.
+See the manual page <em>
+<a name="index-pt:38"></a>
+
+fsync
+</em>
+.
+</p><p><code>fd</code>
+ must be a file descriptor object or integer.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%ftruncate"></a><a name="index-pt:39"></a>
+%ftruncate
+</code></b><br>
+<pre>
+(%ftruncate fd where)
+
+</pre>
+<p>Modify the size of a file open for writing.
+See the manual page <em>
+<a name="index-pt:40"></a>
+
+ftruncate
+</em>
+.
+</p><p><code>fd</code>
+ must be a file descriptor object or integer.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="lseek-flag->integer"></a><a name="index-pt:41"></a>
+lseek-flag->integer
+</code></b><br>
+<pre>
+(lseek-flag->integer flag)
+
+</pre>
+<p>Convert a flag for the <code>%lseek</code>
+ system call to an integer.
+</p><p><code>flag</code>
+ may be an integer or symbol.
+</p><p>Symbols must have the names of CPP macros used with the C function <code>lseek()</code>
+,
+e.g.: <code>SEEK_CUR</code>
+ or <code>SEEK_SET</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%lseek"></a><a name="index-pt:42"></a>
+%lseek
+</code></b><br>
+<pre>
+(%lseek fd offset :optional whence)
+
+</pre>
+<p>Reposition the offset of the file descriptor <code>fd</code>
+.
+See the manual page <em>
+<a name="index-pt:43"></a>
+
+leek
+</em>
+.
+</p><p><code>fd</code>
+ must be a file descriptor object or integer.
+<code>offset</code>
+ must be an integer.
+<code>whence</code>
+, if provided, must be an integer.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%dup"></a><a name="index-pt:44"></a>
+%dup
+</code></b><br>
+<pre>
+(%dup fd)
+
+</pre>
+<p>Create a new file descriptor which is a copy of <code>fd</code>
+.
+See the manual page <em>
+<a name="index-pt:45"></a>
+
+dup
+</em>
+.
+</p><p><code>fd</code>
+ must be a file descriptor object or integer.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%dup2"></a><a name="index-pt:46"></a>
+%dup2
+</code></b><br>
+<pre>
+(%dup2 oldfd newfd)
+
+</pre>
+<p>Copy file descriptor <code>oldfd</code>
+ to descriptor <code>newfd</code>
+.
+See the manual page <em>
+<a name="index-pt:47"></a>
+
+dup2
+</em>
+.
+</p><p><code>oldfd</code>
+ and <code>newfd</code>
+ must be a file descriptor objects or integers.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%move-fd"></a><a name="index-pt:48"></a>
+%move-fd
+</code></b><br>
+<pre>
+(%move-fd oldfd newfd)
+
+</pre>
+<p>Move descriptor <code>oldfd</code>
+ to descriptor <code>newfd</code>
+.  This moves all I/O
+system state for <code>oldfd</code>
+ to <code>newfd</code>
+.  For example, if <code>oldfd</code>
+ is
+buffered, the buffer is moved to <code>newfd</code>
+.  Return the new
+descriptor.
+</p><p>If <code>oldfd</code>
+ and <code>newfd</code>
+ are the same, return <code>oldfd</code>
+ with
+no side effects.
+</p><p>If <code>newfd</code>
+ is <code>-1</code>
+ or <code>#f</code>
+, allocate a new descriptor.
+</p><p>If an fd object exists for <code>oldfd</code>
+, its descriptor number is changed
+to the target descriptor.
+</p><p>If an fd object exists for <code>newfd</code>
+, its descriptor number is changed
+to the source descriptor, which when this procedure returns, will have
+have been closed.
+</p><p>Return a descriptor object for the target descriptor.  If <code>oldfd</code>
+ is
+a descriptor object, or if a descriptor object previously existed for <code>oldfd</code>
+,
+that object is returned.  Otherwise, a new descriptor object is returned
+with the <code>close-on-gc</code>
+ flag set <code>#t</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%fstat"></a><a name="index-pt:49"></a>
+%fstat
+</code></b><br>
+<pre>
+(%fstat fd)
+
+</pre>
+<p>Return statistics about a file.
+</p><p>This function returns a vector.  The function
+<code>statbuf-ref</code>
+ in the module <code>(unix structures)</code>
+ can
+be used to access statistics by name.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%fcntl"></a><a name="index-pt:50"></a>
+%fcntl
+</code></b><br>
+<pre>
+(%fcntl fd cmd :optional arg)
+
+</pre>
+<p><code>fcntl</code>
+ is pretty random.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%isatty?"></a><a name="index-pt:51"></a>
+%isatty?
+</code></b><br>
+<pre>
+(%isatty? fd)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>fd</code>
+ is a descriptor for a tty device.
+See the manual page <em>
+<a name="index-pt:52"></a>
+
+isatty
+</em>
+.
+</p><p><code>fd</code>
+ must be a file descriptor object or integer.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%ttyname"></a><a name="index-pt:53"></a>
+%ttyname
+</code></b><br>
+<pre>
+(%ttyname descriptor)
+
+</pre>
+<p>Return the name of the terminal device of the indicated file.
+<code>descriptor</code>
+ may be an integer file descriptor, a file descriptor
+object, or a port.
+</p><p>See the manual page <em>
+<a name="index-pt:54"></a>
+
+ttyname
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%ctermid"></a><a name="index-pt:55"></a>
+%ctermid
+</code></b><br>
+<pre>
+(%ctermid)
+
+</pre>
+<p>Return the name of the device of the controlling terminal.
+See the manual page <em>
+<a name="index-pt:56"></a>
+
+ctermid
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%tcgetpgrp"></a><a name="index-pt:57"></a>
+%tcgetpgrp
+</code></b><br>
+<pre>
+(%tcgetpgrp descriptor)
+
+</pre>
+<p>Return the process group id of the foreground process of
+the indicated device.
+</p><p><code>descriptor</code>
+ may be an integer file descriptor, a file descriptor
+object, or a port.
+</p><p>See the manual page <em>
+<a name="index-pt:58"></a>
+
+tcgetpgrp
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%tcsetpgrp"></a><a name="index-pt:59"></a>
+%tcsetpgrp
+</code></b><br>
+<pre>
+(%tcsetpgrp descriptor process-group-id)
+
+</pre>
+<p>Set the foreground process group id of the indicated device.
+</p><p><code>descriptor</code>
+ may be an integer file descriptor, a file descriptor
+object, or a port.
+</p><p><code>process-group-id</code>
+ must be an integer.
+</p><p>See the manual page <em>
+<a name="index-pt:60"></a>
+
+tcsetpgrp
+</em>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="File_Statistics"></a>
+
+
+
+<h3 align=center>File Statistics</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="filesys.html#File_System_and_Descriptor_Procedures">File System and Descriptor Procedures</a></br>
+<b>next: </b><a href="filesys.html#Modifying_Directories">Modifying Directories</a></br>
+
+<b>prev: </b><a href="filesys.html#File_Descriptor_Objects">File Descriptor Objects</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="%stat"></a><a name="index-pt:61"></a>
+%stat
+</code></b><br>
+<pre>
+(%stat path)
+
+</pre>
+<p>Return statistics about a file.
+See the manual page <em>
+<a name="index-pt:62"></a>
+
+stat
+</em>
+.
+</p><p><code>path</code>
+ must be a read-only string.
+</p><p>This function returns a list of keywords and arguments to 
+keywords.  E.g.:
+</p><pre>
+     (%stat &quot;/etc/passwd&quot;)
+     =>
+     (:permissions (S_IROTH S_IRGRP S_IWUSR S_IRUSR)
+      :permission-bits 420
+      :type S_IFREG
+      :dev 131072
+      :ino 378
+      :nlink 1
+      :uid 0
+      :gid 0
+      :size 1010
+      :atime 995807934
+      :mtime 963714308
+      :ctime 963714308)
+
+</pre>
+
+<br>
+<br><p><b><u>Function</u> <code><a name="file-exists?"></a><a name="index-pt:63"></a>
+file-exists?
+</code></b><br>
+<pre>
+(file-exists? f)
+
+</pre>
+<p>Using <code>%stat</code>
+, return <code>#t</code>
+ if the named file exits.
+</p><p>This function returns <code>#f</code>
+ if the file exists as a symbolic
+link, but the link points to a non-existent file.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="file-is-directory?"></a><a name="index-pt:64"></a>
+file-is-directory?
+</code></b><br>
+<pre>
+(file-is-directory? filename)
+
+</pre>
+<p>Using <code>%stat</code>
+, return <code>#t</code>
+ if <code>filename</code>
+ is the name of an existing
+directory.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%utime"></a><a name="index-pt:65"></a>
+%utime
+</code></b><br>
+<pre>
+(%utime pathname :optional accesstime modtime)
+
+</pre>
+<p>Set the access and modification times for a file.
+<code>accesstime</code>
+ and <code>modtime</code>
+ should be integers or SCM_BOOL_F, 
+if provided.  If either is ommitted, the current time is
+used.
+</p><p>See the manual page <em>
+<a name="index-pt:66"></a>
+
+utime
+</em>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Modifying_Directories"></a>
+
+
+
+<h3 align=center>Modifying Directories</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="filesys.html#File_System_and_Descriptor_Procedures">File System and Descriptor Procedures</a></br>
+<b>next: </b><a href="filesys.html#Examining_Directories">Examining Directories</a></br>
+
+<b>prev: </b><a href="filesys.html#File_Statistics">File Statistics</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="%link"></a><a name="index-pt:67"></a>
+%link
+</code></b><br>
+<pre>
+(%link oldpath newpath)
+
+</pre>
+<p>Create a new link to an existing file.
+See the manual page <em>
+<a name="index-pt:68"></a>
+
+link
+</em>
+.
+</p><p><code>oldpath</code>
+ and <code>newpath</code>
+ must be read-only strings.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%unlink"></a><a name="index-pt:69"></a>
+%unlink
+</code></b><br>
+<pre>
+(%unlink path)
+
+</pre>
+<p>Remove a link to a file.
+See the manual page <em>
+<a name="index-pt:70"></a>
+
+unlink
+</em>
+.
+</p><p><code>path</code>
+ must be a read-only string.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%rename"></a><a name="index-pt:71"></a>
+%rename
+</code></b><br>
+<pre>
+(%rename oldpath newpath)
+
+</pre>
+<p>Rename a file.
+See the manual page <em>
+<a name="index-pt:72"></a>
+
+rename
+</em>
+.
+</p><p><code>oldpath</code>
+ and <code>newpath</code>
+ must be read-only strings.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%mkdir"></a><a name="index-pt:73"></a>
+%mkdir
+</code></b><br>
+<pre>
+(%mkdir path :optional mode)
+
+</pre>
+<p>Create a new directory.
+See the manual page <em>
+<a name="index-pt:74"></a>
+
+mkdir
+</em>
+.
+</p><p><code>path</code>
+ must be a read-only string.
+<code>mode</code>
+, if provided, must be an integer.
+</p><p>If <code>mode</code>
+ is not provided, the mode #o777 is used.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%rmdir"></a><a name="index-pt:75"></a>
+%rmdir
+</code></b><br>
+<pre>
+(%rmdir path)
+
+</pre>
+<p>Remove a directory.
+See the manual page <em>
+<a name="index-pt:76"></a>
+
+rmdir
+</em>
+.
+</p><p><code>path</code>
+ must be a read-only string.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Examining_Directories"></a>
+
+
+
+<h3 align=center>Examining Directories</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="filesys.html#File_System_and_Descriptor_Procedures">File System and Descriptor Procedures</a></br>
+<b>next: </b><a href="filesys.html#The_Current_Directory">The Current Directory</a></br>
+
+<b>prev: </b><a href="filesys.html#Modifying_Directories">Modifying Directories</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="%opendir"></a><a name="index-pt:77"></a>
+%opendir
+</code></b><br>
+<pre>
+(%opendir path)
+
+</pre>
+<p>Open a directory.
+See the manual page <em>
+<a name="index-pt:78"></a>
+
+opendir
+</em>
+.
+</p><p><code>path</code>
+ must be a read-only string.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%readdirname"></a><a name="index-pt:79"></a>
+%readdirname
+</code></b><br>
+<pre>
+(%readdirname directory)
+
+</pre>
+<p>Return the next file name from a directory.
+</p><p><code>directory</code>
+ must be a directory object (see <code>%opendir</code>
+).
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%closedir"></a><a name="index-pt:80"></a>
+%closedir
+</code></b><br>
+<pre>
+(%closedir directory)
+
+</pre>
+<p>Close a directory stream.
+See the manual page <em>
+<a name="index-pt:81"></a>
+
+closedir
+</em>
+.
+</p><p><code>directory</code>
+ must be a directory object (see <code>%opendir</code>
+).
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="The_Current_Directory"></a>
+
+
+
+<h3 align=center>The Current Directory</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="filesys.html#File_System_and_Descriptor_Procedures">File System and Descriptor Procedures</a></br>
+<b>next: </b><a href="filesys.html#The_Interface_to_select">The Interface to select</a></br>
+
+<b>prev: </b><a href="filesys.html#Examining_Directories">Examining Directories</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="%chdir"></a><a name="index-pt:82"></a>
+%chdir
+</code></b><br>
+<pre>
+(%chdir path)
+
+</pre>
+<p>Change the current working directory.
+See the manual page <em>
+<a name="index-pt:83"></a>
+
+chdir
+</em>
+.
+</p><p><code>path</code>
+ must be a read-only string.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%fchdir"></a><a name="index-pt:84"></a>
+%fchdir
+</code></b><br>
+<pre>
+(%fchdir fd)
+
+</pre>
+<p>Change directory to the directory open as descriptor <code>fd</code>
+.
+See the manual page <em>
+<a name="index-pt:85"></a>
+
+fchdir
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%getcwd"></a><a name="index-pt:86"></a>
+%getcwd
+</code></b><br>
+<pre>
+(%getcwd)
+
+</pre>
+<p>Return the current working directory.
+See the manual page <em>
+<a name="index-pt:87"></a>
+
+getcwd
+</em>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="The_Interface_to_select"></a>
+
+
+
+<h3 align=center>The Interface to select</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="filesys.html#File_System_and_Descriptor_Procedures">File System and Descriptor Procedures</a></br>
+<b>next: </b><a href="filesys.html#Symbolic_Links">Symbolic Links</a></br>
+
+<b>prev: </b><a href="filesys.html#The_Current_Directory">The Current Directory</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="%select"></a><a name="index-pt:88"></a>
+%select
+</code></b><br>
+<pre>
+(%select reads writes exceptions :optional seconds milliseconds)
+
+</pre>
+<p>Return a list of three lists: descriptors ready to be read,
+descriptors ready to be written, and descriptors in exceptional
+states.
+</p><p>See the manual page <em>
+<a name="index-pt:89"></a>
+
+select
+</em>
+.
+</p><p><code>reads</code>
+, <code>writes</code>
+, and <code>exceptions</code>
+ must be lists of descriptor
+objects or integers.
+</p><p><code>seconds</code>
+ and <code>milliseconds</code>
+, if provided, must be integers.
+If not provided, those parameters default to <code>0</code>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Symbolic_Links"></a>
+
+
+
+<h3 align=center>Symbolic Links</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="filesys.html#File_System_and_Descriptor_Procedures">File System and Descriptor Procedures</a></br>
+<b>next: </b><a href="filesys.html#Pseudo-Descriptors">Pseudo-Descriptors</a></br>
+
+<b>prev: </b><a href="filesys.html#The_Interface_to_select">The Interface to select</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="%symlink"></a><a name="index-pt:90"></a>
+%symlink
+</code></b><br>
+<pre>
+(%symlink oldpath newpath)
+
+</pre>
+<p>Create a symbolic link.
+See the manual page <em>
+<a name="index-pt:91"></a>
+
+symlink
+</em>
+.
+</p><p><code>oldpath</code>
+ and <code>newpath</code>
+ must be read-only strings.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%readlink"></a><a name="index-pt:92"></a>
+%readlink
+</code></b><br>
+<pre>
+(%readlink path)
+
+</pre>
+<p>Return the contents of a symbolic link.
+See the manual page <em>
+<a name="index-pt:93"></a>
+
+readlink
+</em>
+.
+</p><p><code>path</code>
+ must be a read-only string.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%lstat"></a><a name="index-pt:94"></a>
+%lstat
+</code></b><br>
+<pre>
+(%lstat path)
+
+</pre>
+<p>Return file statistics for a symbolic link.
+See the manual page <em>
+<a name="index-pt:95"></a>
+
+lstat
+</em>
+.
+</p><p><code>path</code>
+ must be a read-only string.
+</p><p>This function returns a vector.  The function
+<code>statbuf-ref</code>
+ in the module <code>(unix structures)</code>
+ can
+be used to access statistics by name.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Pseudo-Descriptors"></a>
+
+
+
+<h3 align=center>Pseudo-Descriptors</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="filesys.html#File_System_and_Descriptor_Procedures">File System and Descriptor Procedures</a></br>
+<b>next: </b><a href="filesys.html#Rationale_--_Unix_File_System_Procedures">Rationale -- Unix File System Procedures</a></br>
+
+<b>prev: </b><a href="filesys.html#Symbolic_Links">Symbolic Links</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>Pseudo-descriptors are descriptor objects (ports) that do not 
+correspond to a descriptor maintained by the operating system.
+They are used, for example, to implement string ports.
+</p><p><b><u>Function</u> <code><a name="%reserv"></a><a name="index-pt:96"></a>
+%reserv
+</code></b><br>
+<pre>
+(%reserv flags)
+
+</pre>
+<p>Allocate a file descriptor by using <code>%open</code>
+ to open <code>&quot;/dev/null&quot;</code>
+.
+</p><p><code>flags</code>
+ is as the parameter of the same name to <code>%open</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%reserv-pseudo"></a><a name="index-pt:97"></a>
+%reserv-pseudo
+</code></b><br>
+<pre>
+(%reserv-pseudo flags)
+
+</pre>
+<p>Reserve a pseudo file descriptor suitable for use with
+<code>set-fd-handler</code>
+.
+</p><p><code>flags</code>
+ which may be one of <code>O_RDONLY</code>
+, <code>O_RDWR</code>
+ etc.
+</p><p>A pseudo file descriptor can be used with file system functions and
+is guaranteed not to be the same as any real file descriptor.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Rationale_--_Unix_File_System_Procedures"></a>
+
+
+
+<h3 align=center>Rationale -- Unix File System Procedures</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="filesys.html#File_System_and_Descriptor_Procedures">File System and Descriptor Procedures</a></br>
+
+<b>prev: </b><a href="filesys.html#Pseudo-Descriptors">Pseudo-Descriptors</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>Unix file descriptors are represented as integers in C.
+</p><p>A new Scheme type was introduced for descriptors in order to 
+integrate descriptor handling sanely with garbage collection.
+</p><p>Consider this code:
+</p><pre>
+             (lambda (data)
+               (let ((fd (%open &quot;/tmp/,x&quot; O_WRONLY #o777)))
+                 ...
+                 (%write fd data)
+                 ...
+                 (%close fd)))
+
+</pre>
+<p>If <code>fd</code>
+ were simply an integer, an exception-causing error anywhere
+in the body of the <code>let</code>
+ would cause a descriptor leak.  Descriptor
+objects prevent this.
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

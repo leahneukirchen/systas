@@ -1,0 +1,13 @@
+# tag: Tom Lord Tue Dec  4 14:52:21 2001 (bugs-tests/Makefile.in)
+#
+
+tested-headers		:=	  panic.h \
+				  panic-exit.h \
+				  test-coverage.h
+
+test-headers		:=	$(addprefix hackerlab/bugs/, $(tested-headers))
+
+libs			:=	$(objroot)/hackerlab/libhackerlab/libhackerlab.a -lm
+
+include $(makefiles)/unit-tests.mk
+

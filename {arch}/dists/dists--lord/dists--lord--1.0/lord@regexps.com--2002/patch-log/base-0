@@ -1,0 +1,20 @@
+Revision: dists--lord--1.0--base-0
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sat Jan 12 00:15:18 PST 2002
+Standard-date: 2002-01-12
+New-files: {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/base-0
+New-patches: lord@regexps.com--2001Q4/dists--devo--1.0--base-0
+  lord@regexps.com--2002/dists--devo--1.0--base-0
+  lord@regexps.com--public-2001Q4/dists--devo--1.0--base-0
+  lord@regexps.com--2001Q4/dists--devo--1.0--patch-1
+  lord@regexps.com--2001Q4/dists--devo--1.0--patch-2
+  lord@regexps.com--2001Q4/dists--devo--1.0--patch-3
+  lord@regexps.com--2001Q4/dists--devo--1.0--patch-4
+  lord@regexps.com--2002/dists--lord--1.0--base-0
+Continuation-of: lord@regexps.com--2002/dists--devo--1.0--base-0
+Summary: tag of lord@regexps.com--2002/dists--devo--1.0--base-0
+Keywords: 
+
+(automatically generated log message)
+

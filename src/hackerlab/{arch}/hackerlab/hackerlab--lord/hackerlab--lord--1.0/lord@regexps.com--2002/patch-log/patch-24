@@ -1,0 +1,31 @@
+Revision: hackerlab--lord--1.0--patch-24
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sat Feb 16 21:09:43 PST 2002
+Standard-date: 2002-02-16
+Summary: portability improvements
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-24
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  os/char-class-locale.c os/char-class-locale.h os/unistd.h
+  uni/coding-inlines.h vu-network/url-socket.c vu/vu-sys.c
+New-patches: lord@regexps.com--2002/hackerlab--lord--1.0--patch-24
+
+
+`vu-sys': don't declare `rename'.  On Posix systems, it is already
+declared in "unistd.h".  On other systems, we get a "-Wall" warning
+about an undeclared function, but I'll live with that.
+
+`url-socket': don't use `inet_aton' since not all systems have it.
+Instead, use `inet_addr' (a trick glommed from `wu-ftp') and 64-bit
+IP addresses be damned (for now).
+
+`coding-inlines': don't forget to define the macro "__attribute__(X)"
+if GCC is not the compiler.
+
+`unistd.h': removed an ancient, out-of-date comment.
+
+`char-class-local.[ch]': `isblank' is not POSIX and I don't use it, so
+it's gone.
+

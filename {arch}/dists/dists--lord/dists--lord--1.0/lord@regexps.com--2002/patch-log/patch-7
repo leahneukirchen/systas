@@ -1,0 +1,31 @@
+Revision: dists--lord--1.0--patch-7
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Jan 17 19:21:59 PST 2002
+Standard-date: 2002-01-17
+Summary: updated release IDs, merge from `devo'
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-4
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-5
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-7
+Modified-files: =RELEASE-ID.d/=RELEASE-ID.arch
+  =RELEASE-ID.d/=RELEASE-ID.ftp-utils
+  =RELEASE-ID.d/=RELEASE-ID.hackerlab
+  =RELEASE-ID.d/=RELEASE-ID.systas ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-4
+  lord@regexps.com--2002/dists--devo--1.0--patch-5
+  lord@regexps.com--2002/dists--lord--1.0--patch-7
+
+Updated release IDs.
+
+Merge from `devo':
+
+Patches applied:
+
+  * lord@regexps.com--2002/dists--devo--1.0--patch-5
+     updated release IDS
+
+  * lord@regexps.com--2002/dists--devo--1.0--patch-4
+     merge from `lord': --version support
+

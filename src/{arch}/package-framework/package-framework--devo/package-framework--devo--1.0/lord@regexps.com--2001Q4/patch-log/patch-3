@@ -1,0 +1,16 @@
+Revision: package-framework--devo--1.0--patch-3
+Archive: lord@regexps.com--2001Q4
+Creator: Tom Lord <lord@regexps.com>
+Date: Sun Jan  6 16:45:41 PST 2002
+Standard-date: 2002-01-06
+Summary: doc changes, final check-in
+Keywords: 
+New-files: {arch}/package-framework/package-framework--devo/package-framework--devo--1.0/lord@regexps.com--2001Q4/patch-log/patch-3
+Modified-files: ChangeLog
+  build-tools/package-framework/system-requirements.doc
+New-patches: lord@regexps.com--2001Q4/package-framework--devo--1.0--patch-3
+
+
+Final check-in to the --2001Q4 archive, prior to setting up
+the archive structure I'll use for a public release.
+

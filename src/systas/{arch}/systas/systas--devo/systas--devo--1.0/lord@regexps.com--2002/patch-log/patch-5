@@ -1,0 +1,20 @@
+Revision: systas--devo--1.0--patch-5
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Feb 14 15:46:46 PST 2002
+Standard-date: 2002-02-14
+Summary: merge from `lord'
+Keywords: 
+New-files: {arch}/systas/systas--devo/systas--devo--1.0/lord@regexps.com--2002/patch-log/patch-5
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-8
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regepx.com--2002/ChangeLog.lord--1.0
+  libsystas/filesys.c
+New-patches: lord@regexps.com--2002/systas--devo--1.0--patch-5
+  lord@regexps.com--2002/systas--lord--1.0--patch-8
+
+Patches applied:
+
+  * lord@regexps.com--2002/systas--lord--1.0--patch-8
+     adjust for vu_readdir interface change
+

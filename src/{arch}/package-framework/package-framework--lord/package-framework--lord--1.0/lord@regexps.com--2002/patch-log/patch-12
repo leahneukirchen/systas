@@ -1,0 +1,32 @@
+Revision: package-framework--lord--1.0--patch-12
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Tue Jan 22 18:33:05 PST 2002
+Standard-date: 2002-01-22
+Summary: new config option: sendmail
+	awk subcommand helpers
+	bug fixes
+Keywords: 
+New-files: {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-12
+  =THANKS =TODO build-tools/Makefiles/cpp-to-includes.sed
+Removed-files: =TODO build-tools/Makefiles/cpp-to-includes.sed
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  PLUGIN/options build-tools/Makefiles/=TODO
+  build-tools/Makefiles/install-shell-subcommands.mk
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-12
+
+
+`PLUGIN/options': added `configure' option:
+
+		configure --with sendmail PROG
+
+	for help in locating the sendmail program, if it is 
+	to be used to implement a `mailx'-style mail sending
+	program.
+
+`install-shell-subcommands.mk': added support for installing `awk' 
+				helper scripts.
+
+`cpp-to-includes.sed': tweaked the script for greater portability.
+

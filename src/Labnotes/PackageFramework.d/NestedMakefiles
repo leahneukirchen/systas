@@ -1,0 +1,57 @@
+!>	Makefiles for Nested Subdirectories
+
+
+  When using `package-framework', the directory `./src' is the root
+  of the source directory and all of your source files go in 
+  subdirectories of `./src'.
+
+  But what if you want to create a subdirectory of subdirectories?
+  An example of this is the `ftp-utils' package that is included 
+  as part of [arch].
+
+  The source tree for `ftp-utils' looks roughly like this:
+
+<<<
+	src/
+	  src/ftp-utils/
+	    src/ftp-utils/Makefile.in
+	    src/ftp-utils/PLUGIN/
+	      src/ftp-utils/PLUGIN/REQ
+	      src/ftp-utils/PLUGIN/DIRS
+	    src/ftp-utils/libftp/
+	    src/ftp-utils/tests/
+	    src/ftp-utils/with-ftp/
+	    src/ftp-utils/with-ftp-lib/
+>>>
+
+  Each of those second-level subdirectories (`client', etc.) has
+  to be built.
+
+  The `PLUGIN/REQ' files in each of the second-level subdirectories
+  control the order of compilation within `src/ftp-utils'.  
+
+  The directory `src/ftp-utils' must itself have an (empty) file
+  called `PLUGIN/DIRS' (in addition to the usual `REQ' and/or `OPT'
+  file).  The presence of that file tells the configure process to
+  operate recursively on subdirectories of `src/ftp-utils', and to
+  define `make-dirs' in the `Makefile' generated for `src/ftp-utils'
+  (see WritingMakefiles:{Processing by `configure'}).
+
+  Finally, the file `src/ftp-utils/Makefile.in' is quite simple:
+
+<<<
+	include $(makefiles)/dirs.mk
+>>>
+
+  Note that when you nest subdirectories like this, all of the
+  actual source files should go in sub-subdirectories.  Things get
+  a bit messy and confusing if you try to mix source files and nested
+  subdirectories in a single directory.
+
+
+* References
+
+[arch]:: http://www.regexps.com/arch.html
+
+%%% tag: Tom Lord Thu May  9 12:46:44 2002 (PackageFramework.d/NestedMakefiles)
+%%%

@@ -1,0 +1,91 @@
+Revision: systas--lord--1.0--patch-18
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri May 10 01:47:32 PDT 2002
+Standard-date: 2002-05-10 08:47:32 GMT
+Summary: unexec related hacking
+Keywords: 
+New-files: {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-18
+Removed-files: libsystas/=junk/dump-impl.c wiki-cgi/=later/fast-cgi.scm
+  libsystas/.arch-ids/unexec-impl.c.id
+  wiki-cgi/PLUGIN/.arch-ids/REQ.id
+  wiki-cgi/=bitrot/edit-topic.ss
+  scheme-library/wiki/=bitrot/users.scm libsystas/=junk/dump.c
+  libsystas/=junk/dump-impls/dump-fail.c
+  libsystas/=junk/dump-impls/dump-elf32.c
+  scheme-library/cgi/users.scm scheme-library/cgi/session.scm
+  wiki-cgi/meta-x.ss wiki-cgi/=make.scm wiki-cgi/time2.sh
+  wiki-cgi/time.sh libsystas/unexec-impls/unexnope.c
+  libsystas/unexec-impls/unexelf.c
+  scheme-library/wiki/=bitrot/local-server.ss
+  wiki-cgi/=bitrot/login.ss scheme-library/wiki/config.scm
+  scheme-library/wiki/site-config.scm
+  scheme-library/wiki/auth.scm libsystas/=junk/dump-impl.h
+  libsystas/=junk/dump.h libsystas/unexec-impl.h
+  scheme-library/wiki/edit.scm
+  scheme-library/cgi/=bitrot/utils.scm wiki-cgi/Makefile.in
+  scheme-library/wiki/view.scm wiki-cgi/=bitrot/view-topic.ss
+  scheme-library/wiki/transactions.scm
+  scheme-library/wiki/cgi.scm scheme-library/cgi/commands.scm
+  wiki-cgi/=bitrot/logout.ss scheme-library/wiki/=MAP
+  scheme-library/wiki/=bitrot/accounts.scm
+  scheme-library/wiki/library.scm scheme-library/cgi/=README
+  scheme-library/wiki/=README libsystas/unexec-impl.c
+  wiki-cgi/PLUGIN/REQ
+Removed-directories: libsystas/=junk libsystas/=junk/dump-impls
+  libsystas/unexec-impls scheme-library/cgi
+  scheme-library/cgi/=bitrot scheme-library/wiki
+  scheme-library/wiki/=bitrot wiki-cgi wiki-cgi/=bitrot
+  wiki-cgi/=later wiki-cgi/PLUGIN wiki-cgi/PLUGIN/.arch-ids
+Modified-files: =NEWS ChangeLog
+  ChangeLog.d/lord@regepx.com--2002/ChangeLog.lord--1.0
+  PLUGIN/REQ libsystas/eval.c libsystas/gc.c libsystas/systas.h
+  libsystas/unexec.c systas/Makefile.in systas/systas.c
+New-patches: lord@regexps.com--2002/systas--lord--1.0--patch-18
+
+*** removed files
+
+    Moved the cgi and wiki modules to their own package.
+
+    Moved the `unexec' implementations to their own package.
+ 
+
+*** patched regular files
+ 
+**** ./=NEWS
+
+    Started to update this.
+ 
+**** ./PLUGIN/REQ
+
+    Must build the unexec library first.
+ 
+**** ./libsystas/eval.c
+ 
+    `#if 0'ed some old debugger code.
+
+**** ./libsystas/gc.c
+
+    Fucked randomly with GC parameters.
+ 
+**** ./libsystas/systas.h
+
+    Added `unexec.h'.
+ 
+**** ./libsystas/unexec.c
+
+    Updated for the new unexec library.
+ 
+**** ./systas/Makefile.in
+
+    Updated for the new unexec library and package-framework
+    support for unexec-able programs.
+
+**** ./systas/systas.c
+
+    Don't call `rx__init_dfa_alloc_limits'.
+ 
+    Do set the scheme variable `development-version?' at start-up time
+    if we're restarting an unexeced process.
+      
+    Added a new parameter to the `unexec' call.

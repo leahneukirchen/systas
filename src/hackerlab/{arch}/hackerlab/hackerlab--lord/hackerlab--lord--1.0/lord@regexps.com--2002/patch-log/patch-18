@@ -1,0 +1,21 @@
+Revision: hackerlab--lord--1.0--patch-18
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri Feb  8 18:20:35 PST 2002
+Standard-date: 2002-02-08
+Summary: unplugged sb
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-18
+  sb/UNPLUGGED/REQ
+New-directories: sb/UNPLUGGED sb/UNPLUGGED/.arch-ids
+Removed-files: sb/PLUGIN/REQ
+Removed-directories: sb/PLUGIN sb/PLUGIN/.arch-ids
+Renamed-files: sb/PLUGIN/.arch-ids/=dont-care sb/UNPLUGGED/.arch-ids/=dont-care
+Modified-files: =README =THANKS ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/hackerlab--lord--1.0--patch-18
+
+The unecessary `sb' program in `src/hackerlab' has been unplugged --
+it is no longer built or installed by default.  `sb' can act as a
+promiscuous inet server and is a nameclash on some systems.
+

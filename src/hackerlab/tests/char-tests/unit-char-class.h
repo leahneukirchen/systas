@@ -1,0 +1,15 @@
+static t_uchar test_char_is_ascii[] = "\000\001\002\003\004\005\006\007\010\t\n\013\f\015\016\017\020\021\022\023\024\025\026\027\030\031\032\033\034\035\036\037 !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\177";
+static t_uchar test_char_is_upper[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+static t_uchar test_char_is_lower[] = "abcdefghijklmnopqrstuvwxyz";
+static t_uchar test_char_is_alpha[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+static t_uchar test_char_is_digit[] = "0123456789";
+static t_uchar test_char_is_alnum[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+static t_uchar test_char_is_control[] = "\000\001\002\003\004\005\006\007\010\t\n\013\f\015\016\017\020\021\022\023\024\025\026\027\030\031\032\033\034\035\036\037";
+static t_uchar test_char_is_printable[] = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+static t_uchar test_char_is_space[] = "\t\n\013\f\015 ";
+static t_uchar test_char_is_graph[] = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+static t_uchar test_char_is_c_id[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz";
+static t_uchar test_char_is_xdigit[] = "0123456789ABCDEFabcdef";
+static t_uchar test_char_is_odigit[] = "01234567";
+static t_uchar test_char_is_punct[] = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+static t_uchar test_char_is_blank[] = "\t ";

@@ -1,0 +1,229 @@
+<html>
+<head>
+<title>Low Level Macros</title>
+</head>
+<body>
+
+<a name="Low_Level_Macros"></a>
+
+
+
+<h2 align=center>Low Level Macros</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="syntax.html#Syntax_Rules">Syntax Rules</a></br>
+
+<b>prev: </b><a href="values.html#Multiple_Return_Values">Multiple Return Values</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>Normally when you define a function, arguments passed to that function
+are evaluated and the function itself has no access to the lexical
+environment of the caller.
+</p><p>Three low-level hooks provide a way to define functions that violate
+these rules, taking arguments unevaluated, and gaining access to the
+lexical environment of the caller.  This is quite a powerful facility
+that allows programs to extend the evaluator in many ways.  It's also an
+extremely non-standard feature.
+</p><p>Caution should be taken when using these functions.  They can easily 
+lead to programs that are hard to read and understand.  There may eventually
+be a compiler for this implementation and some macros can complicate or prevent
+effective compilation.
+</p><ul>
+<li><a href="macros.html#Macro_Procedures">Macro Procedures</a></li>
+<li><a href="macros.html#Macros_Rationale">Macros Rationale</a></li>
+</ul>
+
+<hr>
+
+<a name="Macro_Procedures"></a>
+
+
+
+<h3 align=center>Macro Procedures</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="macros.html#Low_Level_Macros">Low Level Macros</a></br>
+<b>next: </b><a href="macros.html#Macros_Rationale">Macros Rationale</a></br>
+
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="procedure->syntax"></a><a name="index-pt:0"></a>
+procedure->syntax
+</code></b><br>
+<pre>
+(procedure->syntax procedure)
+
+</pre>
+<p>Convert <code>procedure</code>
+ into <em>
+<a name="index-pt:1"></a>
+
+syntax
+</em>
+.
+</p><p><code>procedure</code>
+ should take an expression and an environment:
+</p><pre>
+     (procedure expression environment)
+
+</pre>
+<p>When the syntax object is applied, the expression containing it
+and the active environment are passed to <code>procedure</code>
+.  The value returned
+from <code>procedure</code>
+ becomes the value of the expression.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="procedure->macro"></a><a name="index-pt:2"></a>
+procedure->macro
+</code></b><br>
+<pre>
+(procedure->macro procedure)
+
+</pre>
+<p>Convert <code>procedure</code>
+ into a <em>
+<a name="index-pt:3"></a>
+
+macro
+</em>
+.
+</p><p><code>procedure</code>
+ should take an expression and an environment:
+</p><pre>
+             (procedure expression environment)
+
+</pre>
+<p>When the macro object is applied, the expression containing it and
+the active environment are passed to <code>procedure</code>
+.  The value returned from
+<code>procedure</code>
+ is then evaluated in the caller's lexical environment
+(the same environement passed to <code>procedure</code>
+) and the value returned
+from that expression is returned from the macro.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="procedure->memoizing-macro"></a><a name="index-pt:4"></a>
+procedure->memoizing-macro
+</code></b><br>
+<pre>
+(procedure->memoizing-macro procedure)
+
+</pre>
+<p>Convert <code>procedure</code>
+ into a <em>
+<a name="index-pt:5"></a>
+
+memoizing macro
+</em>
+.
+</p><p><code>procedure</code>
+ should take an expression and an environment:
+</p><pre>
+             (procedure expression environment)
+
+</pre>
+<p>When the memoizing-macro is applied, the expression containing it and
+the active environment are passed to <code>procedure</code>
+.
+</p><p>The first time that occurs, the value returned from <code>procedure</code>
+ replaces
+the source-expression that called the macro.
+</p><p>Then and thereafter the new expression is evaluated normally.  The 
+memoizing-macro procedure is never again called at that point in 
+the program.  (A memoizing macro is a kind of <em>
+<a name="index-pt:6"></a>
+
+self-modifying code
+</em>
+).
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Macros_Rationale"></a>
+
+
+
+<h3 align=center>Macros Rationale</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="macros.html#Low_Level_Macros">Low Level Macros</a></br>
+
+<b>prev: </b><a href="macros.html#Macro_Procedures">Macro Procedures</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>These three styles of macro originated in SCM by Aubrey Jaffer.
+</p><p>Memoizing macros are useful for incremental code generation from high-level
+code.
+</p><p>Hygenic macros systems can be built on these primitives.
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

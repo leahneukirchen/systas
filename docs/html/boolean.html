@@ -1,0 +1,226 @@
+<html>
+<head>
+<title>Booleans</title>
+</head>
+<body>
+
+<a name="Booleans"></a>
+
+
+
+<h2 align=center>Booleans</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="chars.html#Characters">Characters</a></br>
+
+<b>prev: </b><a href="eq.html#Equality">Equality</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>There are two values which are called booleans, written:
+</p><pre>
+     `#t'    ;; used to represent &quot;true&quot;
+     `()'    ;; used to represent &quot;false&quot;
+     `#f'    ;; another way to write &quot;false&quot;
+
+</pre>
+<p>Only one value in the system, <code>()</code>
+, represents <em>
+<a name="index-pt:0"></a>
+
+false
+</em>
+.  All other
+values, including <code>#t</code>
+, are interpreted as <em>
+<a name="index-pt:1"></a>
+
+true
+</em>
+.  <code>#f</code>
+ is just
+another way to write <code>()</code>
+.
+</p><p>In the text of a program, <code>()</code>
+ typically represents &quot;nil&quot; or
+&quot;nothing&quot;, &quot;emptiness&quot;, &quot;void&quot;.  <code>()</code>
+ is commonly used to
+represent &quot;the empty list&quot;, though it has other uses as well.
+</p><p>There are two important ways that Systas Scheme diverges from
+standard Scheme, and this is one of them.  (The other is that
+symbols and identifiers in Systas are guaranteed to be case
+sensative.)
+</p><p><b><u>Function</u> <code><a name="not"></a><a name="index-pt:2"></a>
+not
+</code></b><br>
+<pre>
+(not x)
+
+</pre>
+<p>If <code>x</code>
+ is <code>#f</code>
+, return <code>#t</code>
+, otherwise return <code>#f</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="boolean?"></a><a name="index-pt:3"></a>
+boolean?
+</code></b><br>
+<pre>
+(boolean? obj)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is either <code>#t</code>
+ or <code>#f</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="->bool"></a><a name="index-pt:4"></a>
+->bool
+</code></b><br>
+<pre>
+(->bool obj)
+
+</pre>
+<p>Return <code>#f</code>
+ if <code>obj</code>
+ is <code>#f</code>
+, otherwise return <code>#t</code>
+.
+</p>
+<br>
+<br>
+<a name="Rationale_--_Booleans"></a>
+
+
+
+<h3 align=center>Rationale -- Booleans</h3>
+
+
+
+
+
+
+
+
+
+
+<p>Standard Scheme demands that nil (<code>()</code>
+) and false (<code>#f</code>
+) be
+distinct values, and that nil be a true value.  This is one of the
+ways Systas Scheme is non-standard: nil and false are the same
+value; nil is false.
+</p><p>We have a handy mnemonic for remembering the situation with <code>()</code>
+ and <code>#f</code>
+
+in Systas Scheme:
+</p><pre>
+             In Systas Scheme, nothing is false.
+
+</pre>
+<p>Systas deviates from the standard that way for many reasons, 
+including:
+</p><p><strong><u>0. Compact coding idioms.</u></strong>
+</p><p>For example, I really like being able to write:
+</p><pre>
+             (and x (cdr x)) => &lt;list>
+
+</pre>
+<p><strong><u>1. Aesthetic consistency with the design of various control operators
+(`and' and `or' especially).</u></strong>
+</p><p>For example, <code>and</code>
+, applied to homogenously typed arguments, returns
+a value of the same type iff that type includes boolean false.
+That encourages the use of boolean false as a member of
+non-primitive types to represent the default distinguished case,
+when there is just one distinguished case.
+</p><p>(So, applying that aesthetic: <code>#f</code>
+ is good as end-of-list, because
+EOL is the natural and unique distinguished case of lists.  But <code>#f</code>
+
+is not good as the number <code>0</code>
+, because while <code>0</code>
+ is <em>sometimes</em> the
+natural distinguished case for a particular use of numbers, often
+the distinguished case is <code>1</code>
+ or some other number.)
+</p><p><strong><u>2. Better type isomorphism of a subset of Scheme types and a subset of
+Common Lisp types.  A step in the direction of a universal standard
+for basic s-expressions.</u></strong>
+</p><p>This would simplify both the exchange of data between CL and
+Scheme, and the possibility of a single implementation supporting
+both languages.  Similarly for Scheme and Emacs Lisp.
+</p><p>It would be a step in the direction of making basic s-expression
+types a fundamental unit of exchange between programs in all
+languages.
+</p><p>I find it irksome, for example, the way XML has evolved.  A very
+simple idea -- recursively structured data over simple primitive
+types -- is mixed up with some arbitrary restrictions (e.g. each
+node has a keyword-parameterized header followed by a list of
+sub-nodes).  If the Scheme designers had thought of the basic types
+as something that could be usefully standardized across languages,
+we might have general s-expressions instead of XML, and Scheme or
+another simple Lisp as the language in which to express and
+exchange (operational) standards for various kinds of type
+checking, transformations, etc.  
+</p><p>Consider XML Schema.  A type system of superior power and greater
+simplicity could have been specified precisely and operationally 
+as a few pages of Scheme code (start with something like Wright's
+pattern matcher, for example).  Instead, we have a huge and fairly
+complex specification, rarely implemented or implemented correctly
+in the public code base, and offering further evidence for the old
+adage about sufficiently complex programs and common lisp.
+</p><p>Using s-expression types as the data exchange format would lead
+naturally to using Emacs, Emacs-compatible, and Emacs-like programs
+as extensible front-ends.  Instead, we have absurdly complex web
+browsers fronting for programs exchanging XML data.  Maybe we need
+a new adage: any sufficiently complex web browser is condemned to
+re-implement most of Emacs -- poorly and with <code>10</code>
+ times as much
+code.
+</p><p><strong><u>3. Accumulated experience and programming idioms from the larger lisp
+world.</u></strong>
+</p><p>We should give a lot of weight to the accumulated history and
+experience represented by CL.  We should avoid diverging from it
+except where there are very clear reasons for doing so.
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

@@ -1,0 +1,1204 @@
+<html>
+<head>
+<title>Strings</title>
+</head>
+<body>
+
+<a name="Strings"></a>
+
+
+
+<h2 align=center>Strings</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="kw.html#Keywords">Keywords</a></br>
+
+<b>prev: </b><a href="symbols.html#Symbols">Symbols</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>Strings are sequences of characters.  Ordinary strings are written
+using double-quotes:
+</p><pre>
+     &quot;Strings are used for many purposes in Emacs&quot;
+
+</pre>
+<p>Strings can include newlines:
+</p><pre>
+     &quot;Strings are used for many purposes in Emacs, as can be
+     expected in a text editor;...&quot;
+
+</pre>
+<p>Strings can include special <em>
+<a name="index-pt:0"></a>
+
+escape sequences
+</em>
+ that represent
+individual characters:
+</p><pre>
+     &quot;as can be\nexpected in a text editor;...&quot;
+
+</pre>
+<p>The supported escape seqences are:
+</p><pre>
+     Escape sequence:                        Character:
+
+</pre>
+<pre>
+     \0                                      #\null
+     \f                                      #\ack
+     \n                                      #\newline
+     \r                                      #\return
+     \t                                      #\tab
+     \a                                      #\bel
+     \v                                      #\vt
+
+</pre>
+<p>The characters within a string are addressed by integers, 
+starting with <code>0</code>
+.  For example:
+</p><pre>
+     (string-ref &quot;abc&quot; 1) => #\b
+
+</pre>
+<p>Characters are also addressed by negative integers, counting
+backwards from the last character in the string, starting with <code>-1</code>
+:
+</p><pre>
+     (string-ref &quot;abc&quot; -1) => #\c
+
+</pre>
+<p>Several string functions address substrings of a string.  This is
+always done with a starting and ending position.  All characters
+from <code>[start...end-1]</code>
+ are included in the substring.  If <code>end &lt;=
+start</code>
+, the substring is empty.
+</p><p><b><u>Function</u> <code><a name="string?"></a><a name="index-pt:1"></a>
+string?
+</code></b><br>
+<pre>
+(string? obj)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is a string, <code>#f</code>
+ otherwise.
+</p><ul>
+<li><a href="strings.html#Symbols:_Read-only_Strings">Symbols: Read-only Strings</a></li>
+<li><a href="strings.html#Constructing_Strings">Constructing Strings</a></li>
+<li><a href="strings.html#Shared_Substrings">Shared Substrings</a></li>
+<li><a href="strings.html#The_String_Lattice">The String Lattice</a></li>
+<li><a href="strings.html#Strings_as_Arrays_of_Characters">Strings as Arrays of Characters</a></li>
+<li><a href="strings.html#Searching_for_Characters_Within_Strings">Searching for Characters Within Strings</a></li>
+<li><a href="strings.html#Moving_Substrings">Moving Substrings</a></li>
+<li><a href="strings.html#String_Filling">String Filling</a></li>
+<li><a href="strings.html#String_Comparison_Functions">String Comparison Functions</a></li>
+<li><a href="strings.html#String_Case_Conversions">String Case Conversions</a></li>
+<li><a href="strings.html#Converting_Between_Strings_and_Lists">Converting Between Strings and Lists</a></li>
+<li><a href="strings.html#Strings_Rationale">Strings Rationale</a></li>
+</ul>
+
+
+<br>
+<br><hr>
+
+<a name="Symbols:_Read-only_Strings"></a>
+
+
+
+<h3 align=center>Symbols: Read-only Strings</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="strings.html#Strings">Strings</a></br>
+<b>next: </b><a href="strings.html#Constructing_Strings">Constructing Strings</a></br>
+
+
+</small>
+<br>
+
+
+
+
+
+
+<p>If a string function does not modify a string argument, generally a
+symbol may be passed for that argument.  The print name of the
+symbol is used as the string.
+</p><p>When the documentation for a particular function says that an
+argument may be a <em>
+<a name="index-pt:2"></a>
+
+read-only string
+</em>
+, that means that the argument
+may be an ordinary string, a symbol, or a shared substring of a
+string or symbol.
+</p>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Constructing_Strings"></a>
+
+
+
+<h3 align=center>Constructing Strings</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="strings.html#Strings">Strings</a></br>
+<b>next: </b><a href="strings.html#Shared_Substrings">Shared Substrings</a></br>
+
+<b>prev: </b><a href="strings.html#Symbols:_Read-only_Strings">Symbols: Read-only Strings</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="string"></a><a name="index-pt:3"></a>
+string
+</code></b><br>
+<pre>
+(string . args)
+
+</pre>
+<p>Combine the arguments into a string.
+</p><p>The arguments may be characters or read-only strings.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="string-copy"></a><a name="index-pt:4"></a>
+string-copy
+</code></b><br>
+<pre>
+(string-copy str)
+
+</pre>
+<p>Construct a new copy of <code>str</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="make-string"></a><a name="index-pt:5"></a>
+make-string
+</code></b><br>
+<pre>
+(make-string n :optional char)
+
+</pre>
+<p>Return a new string with <code>n</code>
+ characters, optionally all initialized
+to be equal to <code>char</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="substring"></a><a name="index-pt:6"></a>
+substring
+</code></b><br>
+<pre>
+(substring string :optional from to)
+
+</pre>
+<p>Return a new string which is a substring of <code>string</code>
+.  The new
+string is <code>(- to from)</code>
+ characters long and contains characters
+from <code>string</code>
+ beginning at <code>from</code>
+.
+</p><p>If <code>from</code>
+ is omitted, it defaults to <code>0</code>
+.
+</p><p>If <code>to</code>
+ is omitted, it defaults to <code>(string-length string)</code>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Shared_Substrings"></a>
+
+
+
+<h3 align=center>Shared Substrings</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="strings.html#Strings">Strings</a></br>
+<b>next: </b><a href="strings.html#The_String_Lattice">The String Lattice</a></br>
+
+<b>prev: </b><a href="strings.html#Constructing_Strings">Constructing Strings</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>Whenever you extract a substring using the procedure <code>substring</code>
+, a
+new string is allocated and substring data is copied from the old
+string to the new string.
+</p><p>Sometimes, in order avoid the expense of copying or in order to
+specify mutations on just part of a larger string, programmers will
+write programs that pass around three values at a time: a string, a
+starting position within the string, and an ending position.  This
+convention is awkward, especially because many useful string
+primitives operate only on full strings, not a string with
+substring indexes.  To make matters worse, when programmers use
+this convention, all too often some functions wind up operating on
+string-start-end and other functions operate on
+string-start-length.
+</p><p>Systas Scheme offers a bettter way: shared substrings.  A shared
+substring is a string-like object built from an older string
+without copying any data.  A shared substring is not a copy of the
+older string, but shares the older string's data directly.
+Compared to copied substrings, shared substrings are cheap to
+allocate.
+</p><p>On the other hand, holding on to a small shared substring of a
+large string prevents the large string from being garbage collected
+and so may result in wasted space.
+</p><p>It may be helpful to describe the internal representation of shared
+substrings.  An ordinary string in Systas Scheme is represented by
+two values: an integer that records the number of characters allocated
+to the string, and a pointer that points to the null-terminated
+string data.  A shared substring consists of an integer length, an
+integer offset, and a pointer to an ordinary string.  There is not
+much difference between passing shared substrings and passing three
+parameters (string, offset, end-pos) except that using shared
+substrings simplifies programming by keeping track of two of the
+three parameters automatically.
+</p><p>Since a symbol is a kind of read-only string, a shared substring of
+a symbol is another kind of read-only string.
+</p><p><b><u>Function</u> <code><a name="shared-substring?"></a><a name="index-pt:7"></a>
+shared-substring?
+</code></b><br>
+<pre>
+(shared-substring? string)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>string</code>
+ is a shared substring, <code>#f</code>
+ otherwise.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="make-shared-substring"></a><a name="index-pt:8"></a>
+make-shared-substring
+</code></b><br>
+<pre>
+(make-shared-substring string :optional from to)
+
+</pre>
+<p>Return a new shared substring of read-only string, <code>string</code>
+.  The
+substring will span from <code>from</code>
+ (or <code>0</code>
+) to <code>to</code>
+ (or <code>(string-length
+string)</code>
+).
+</p><p>The shared substring and <code>string</code>
+ share data -- modifications to
+one can effect the other.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="shared-substring-parts"></a><a name="index-pt:9"></a>
+shared-substring-parts
+</code></b><br>
+<pre>
+(shared-substring-parts string)
+
+</pre>
+<p>If <code>string</code>
+ is a shared substring, return a list:
+</p><pre>
+     (original-string from to)
+
+</pre>
+<p>which describes what <code>string</code>
+ is a substring of.
+</p><p>If <code>string</code>
+ is not a shared substring, return a list:
+</p><pre>
+     (string 0 ,(string-length string))
+
+</pre>
+
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="The_String_Lattice"></a>
+
+
+
+<h3 align=center>The String Lattice</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="strings.html#Strings">Strings</a></br>
+<b>next: </b><a href="strings.html#Strings_as_Arrays_of_Characters">Strings as Arrays of Characters</a></br>
+
+<b>prev: </b><a href="strings.html#Shared_Substrings">Shared Substrings</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>There are, in fact, three string-like types in Systas Scheme,
+described by these three predicates:
+</p><pre>
+     read-only-string?
+     string? (aka writable-string?)
+     basic-string?
+
+</pre>
+<p>Each successive line in the list includes the preceeding types:
+every writable-string or string is also a read-only-string; every
+basic-string is also a writable-string, string and
+read-only-string.
+</p><p>The reverse is not true: some read-only-strings are <em>not</em>
+writable-strings.  Some writable-strings are not basic-strings.
+</p><p>A basic-string is an object created by a procedure such as
+<code>list->string</code>
+ or <code>string</code>
+.  A string (or writable-string) is any
+of those object, or any shared substring of a string.  A read-only
+string is any string, or a symbol, or a shared substring of a
+symbol.
+</p><p>As a general rule, if a string procedure does not modify its
+argument, then it will accept any read-only string.  If a string
+procedure does modify its argument, then it won't accept some
+read-only strings (e.g. symbols), but may accept writable-strings
+which are not basic-strings.
+</p><p>For example, this code works in Systas Scheme because symbols are
+read-only-strings:
+</p><pre>
+     (string-append 'hello &quot; &quot; 'world) => &quot;hello world&quot;
+
+</pre>
+<p><b><u>Function</u> <code><a name="read-only-string?"></a><a name="index-pt:10"></a>
+read-only-string?
+</code></b><br>
+<pre>
+(read-only-string? obj)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is a read-only string, <code>#f</code>
+ otherwise.
+</p><p>All string-like types are read-only strings: symbols, strings, and
+shared substrings of both symbols and strings.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="writable-string?"></a><a name="index-pt:11"></a>
+writable-string?
+</code></b><br>
+<pre>
+(writable-string? obj)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is a writable string, <code>#f</code>
+ otherwise.
+</p><p>Writable strings are either ordinary strings or shared substrings
+of ordinary strings.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="basic-string?"></a><a name="index-pt:12"></a>
+basic-string?
+</code></b><br>
+<pre>
+(basic-string? obj)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is a writable string which is not a shared
+substring, <code>#f</code>
+ otherwise.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Strings_as_Arrays_of_Characters"></a>
+
+
+
+<h3 align=center>Strings as Arrays of Characters</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="strings.html#Strings">Strings</a></br>
+<b>next: </b><a href="strings.html#Searching_for_Characters_Within_Strings">Searching for Characters Within Strings</a></br>
+
+<b>prev: </b><a href="strings.html#The_String_Lattice">The String Lattice</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="string-length"></a><a name="index-pt:13"></a>
+string-length
+</code></b><br>
+<pre>
+(string-length string)
+
+</pre>
+<p>Return the number of characters in a read-only string.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="string-null?"></a><a name="index-pt:14"></a>
+string-null?
+</code></b><br>
+<pre>
+(string-null? obj)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is a read-only string of <code>0</code>
+ length.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="string-ref"></a><a name="index-pt:15"></a>
+string-ref
+</code></b><br>
+<pre>
+(string-ref string (:optional n))
+
+</pre>
+<p>Return the character at position <code>n</code>
+ in a read-only string.  If
+omitted, <code>n</code>
+ defaults to <code>0</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="string-set!"></a><a name="index-pt:16"></a>
+string-set!
+</code></b><br>
+<pre>
+(string-set! string n char)
+
+</pre>
+<p>Set the character at position <code>n</code>
+ of a writable string.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="string-for-each"></a><a name="index-pt:17"></a>
+string-for-each
+</code></b><br>
+<pre>
+(string-for-each proc str)
+
+</pre>
+<p>In order, beginning at index <code>0</code>
+, for each character <code>c</code>
+ in <code>str</code>
+,
+invoke:
+</p><pre>
+     (proc c)
+
+</pre>
+<p>and discard the result.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Searching_for_Characters_Within_Strings"></a>
+
+
+
+<h3 align=center>Searching for Characters Within Strings</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="strings.html#Strings">Strings</a></br>
+<b>next: </b><a href="strings.html#Moving_Substrings">Moving Substrings</a></br>
+
+<b>prev: </b><a href="strings.html#Strings_as_Arrays_of_Characters">Strings as Arrays of Characters</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="string-index"></a><a name="index-pt:18"></a>
+string-index
+</code></b><br>
+<pre>
+(string-index string char from to)
+
+</pre>
+<p>Return the offset of the first occurence of <code>char</code>
+ in <code>string</code>
+
+searching <code>(- to from)</code>
+ characters beginning at <code>from</code>
+.
+</p><p>The offset returned is relative to the beginning of <code>string</code>
+.
+</p><p>Return <code>#f</code>
+ if the character is not found.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="string-rindex"></a><a name="index-pt:19"></a>
+string-rindex
+</code></b><br>
+<pre>
+(string-rindex string char from to)
+
+</pre>
+<p>Return the offset of the last occurence of <code>char</code>
+ in <code>string</code>
+
+searching <code>(- to from)</code>
+ characters beginning at <code>from</code>
+.
+</p><p>The offset returned is relative to the beginning of <code>string</code>
+.
+</p><p>Return <code>#f</code>
+ if the character is not found.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Moving_Substrings"></a>
+
+
+
+<h3 align=center>Moving Substrings</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="strings.html#Strings">Strings</a></br>
+<b>next: </b><a href="strings.html#String_Filling">String Filling</a></br>
+
+<b>prev: </b><a href="strings.html#Searching_for_Characters_Within_Strings">Searching for Characters Within Strings</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="substring-move-left!"></a><a name="index-pt:20"></a>
+substring-move-left!
+</code></b><br>
+<pre>
+(substring-move-left! source start end dest dest-start)
+
+</pre>
+<p>Copy characters from the read-only string <code>source</code>
+ to the writable
+string <code>dest</code>
+.  <code>(- end start)</code>
+ characters are copied taken from
+<code>source</code>
+ beginning at <code>start</code>
+ and moved to <code>dest</code>
+ beginning at
+<code>dest-start</code>
+.
+</p><p>Characters are moved in order (from <code>start</code>
+ to <code>end-1</code>
+) which is
+important in the case the <code>source</code>
+ and <code>dest</code>
+ are the same and the
+source and destination regions overlap.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="substring-move-right!"></a><a name="index-pt:21"></a>
+substring-move-right!
+</code></b><br>
+<pre>
+(substring-move-right! source start end dest dest-start)
+
+</pre>
+<p>Copy characters from the read-only string <code>source</code>
+ to the writable
+string <code>dest</code>
+.  <code>(- end start)</code>
+ characters are copied taken from
+<code>source</code>
+ beginning at <code>start</code>
+ and moved to <code>dest</code>
+ beginning at
+<code>dest-start</code>
+.
+</p><p>Characters are moved in reverse order (from <code>end-1</code>
+ to <code>start</code>
+)
+which is important in the case the <code>source</code>
+ and <code>dest</code>
+ are the same
+and the source and destination regions overlap.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="String_Filling"></a>
+
+
+
+<h3 align=center>String Filling</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="strings.html#Strings">Strings</a></br>
+<b>next: </b><a href="strings.html#String_Comparison_Functions">String Comparison Functions</a></br>
+
+<b>prev: </b><a href="strings.html#Moving_Substrings">Moving Substrings</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="substring-fill!"></a><a name="index-pt:22"></a>
+substring-fill!
+</code></b><br>
+<pre>
+(substring-fill! string start end char)
+
+</pre>
+<p>Fill <code>(- end start)</code>
+ characters of <code>string</code>
+ with <code>char</code>
+ beginning
+at position <code>start</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="string-fill!"></a><a name="index-pt:23"></a>
+string-fill!
+</code></b><br>
+<pre>
+(string-fill! string character)
+
+</pre>
+<p>Fill all of <code>string</code>
+ which <code>character</code>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="String_Comparison_Functions"></a>
+
+
+
+<h3 align=center>String Comparison Functions</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="strings.html#Strings">Strings</a></br>
+<b>next: </b><a href="strings.html#String_Case_Conversions">String Case Conversions</a></br>
+
+<b>prev: </b><a href="strings.html#String_Filling">String Filling</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>String comparison functions define a lexical ordering of strings
+based on the character comparison functions (see
+<a href="chars.html#Characters">Characters</a>).
+</p><p>There are two flavors of comparison functions: the case dependent
+functions whose names begin <code>string</code>
+ and the case independent
+functions whose names begin <code>string-ci</code>
+.
+</p><p>All of these functions operate on all read-only types of strings:
+regular strings, substrings, and symbols.
+</p><p><b><u>Function</u> <code><a name="string=?"></a><a name="index-pt:24"></a>
+string=?
+</code></b><br>
+<pre>
+(string=? . args)
+
+</pre>
+<p>Return <code>#t</code>
+ if all of the arguments are read-only strings
+containing exactly the same characters in the same order.
+</p><p>Given no arguments, this procedure returns <code>#t</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="string<?"></a><a name="index-pt:25"></a>
+string<?
+</code></b><br>
+<pre>
+(string&lt;? . args)
+
+</pre>
+<p>Return <code>#t</code>
+ if all of the arguments are read-only strings, each
+lexically less than the next.
+</p><p>Given no arguments, this procedure returns <code>#t</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="string<=?"></a><a name="index-pt:26"></a>
+string<=?
+</code></b><br>
+<pre>
+(string&lt;=? . args)
+
+</pre>
+<p>Return <code>#t</code>
+ if all of the arguments are read-only strings, each
+lexically less than or equal to the next.
+</p><p>Given no arguments, this procedure returns <code>#t</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="string>?"></a><a name="index-pt:27"></a>
+string>?
+</code></b><br>
+<pre>
+(string>? . args)
+
+</pre>
+<p>Return <code>#t</code>
+ if all of the arguments are read-only strings, each
+lexically greater than the next.
+</p><p>Given no arguments, this procedure returns <code>#t</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="string>=?"></a><a name="index-pt:28"></a>
+string>=?
+</code></b><br>
+<pre>
+(string>=? . args)
+
+</pre>
+<p>Return <code>#t</code>
+ if all of the arguments are read-only strings, each
+lexically greater than or equal to the next.
+</p><p>Given no arguments, this procedure returns <code>#t</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="string-ci=?"></a><a name="index-pt:29"></a>
+string-ci=?
+</code></b><br>
+<pre>
+(string-ci=? . args)
+
+</pre>
+<p>Return <code>#t</code>
+ if all of the arguments are read-only strings, each
+lexically equal to the next, disregarding the case of alphabetic
+characters.
+</p><p>Given no arguments, this procedure returns <code>#t</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="string-ci<?"></a><a name="index-pt:30"></a>
+string-ci<?
+</code></b><br>
+<pre>
+(string-ci&lt;? . args)
+
+</pre>
+<p>Return <code>#t</code>
+ if all of the arguments are read-only strings, each
+lexically less than the next, disregarding the case of alphabetic
+characters.
+</p><p>Given no arguments, this procedure returns <code>#t</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="string-ci<=?"></a><a name="index-pt:31"></a>
+string-ci<=?
+</code></b><br>
+<pre>
+(string-ci&lt;=? . args)
+
+</pre>
+<p>Return <code>#t</code>
+ if all of the arguments are read-only strings, each
+lexically less than or equal to the next, disregarding the case of
+alphabetic characters.
+</p><p>Given no arguments, this procedure returns <code>#t</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="string-ci>?"></a><a name="index-pt:32"></a>
+string-ci>?
+</code></b><br>
+<pre>
+(string-ci>? . args)
+
+</pre>
+<p>Return <code>#t</code>
+ if all of the arguments are read-only strings, each
+lexically greater than the next, disregarding the case of
+alphabetic characters.
+</p><p>Given no arguments, this procedure returns <code>#t</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="string-ci>=?"></a><a name="index-pt:33"></a>
+string-ci>=?
+</code></b><br>
+<pre>
+(string-ci>=? . args)
+
+</pre>
+<p>Return <code>#t</code>
+ if all of the arguments are read-only strings, each
+lexically greater than or equal to the next, disregarding the case
+of alphabetic characters.
+</p><p>Given no arguments, this procedure returns <code>#t</code>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="String_Case_Conversions"></a>
+
+
+
+<h3 align=center>String Case Conversions</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="strings.html#Strings">Strings</a></br>
+<b>next: </b><a href="strings.html#Converting_Between_Strings_and_Lists">Converting Between Strings and Lists</a></br>
+
+<b>prev: </b><a href="strings.html#String_Comparison_Functions">String Comparison Functions</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="string-upcase!"></a><a name="index-pt:34"></a>
+string-upcase!
+</code></b><br>
+<pre>
+(string-upcase! string)
+
+</pre>
+<p>Replace all lowercase alphabetic characters in <code>string</code>
+ with
+uppercase characters.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="string-downcase!"></a><a name="index-pt:35"></a>
+string-downcase!
+</code></b><br>
+<pre>
+(string-downcase!)
+
+</pre>
+<p>Replace all uppercase alphabetic characters in <code>string</code>
+ with
+lowercase characters.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Converting_Between_Strings_and_Lists"></a>
+
+
+
+<h3 align=center>Converting Between Strings and Lists</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="strings.html#Strings">Strings</a></br>
+<b>next: </b><a href="strings.html#Strings_Rationale">Strings Rationale</a></br>
+
+<b>prev: </b><a href="strings.html#String_Case_Conversions">String Case Conversions</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="list->string"></a><a name="index-pt:36"></a>
+list->string
+</code></b><br>
+<pre>
+(list->string l)
+
+</pre>
+<p>Combine the elements of list <code>l</code>
+ into a string.
+</p><p>The elements may be characters or read-only strings.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="string-append"></a><a name="index-pt:37"></a>
+string-append
+</code></b><br>
+<pre>
+(string-append . args)
+
+</pre>
+<p>Combine the arguments into a string.
+</p><p>The arguments may be characters or read-only strings.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="string->list"></a><a name="index-pt:38"></a>
+string->list
+</code></b><br>
+<pre>
+(string->list s)
+
+</pre>
+<p>Return a list of characters in the read-only string <code>s</code>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Strings_Rationale"></a>
+
+
+
+<h3 align=center>Strings Rationale</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="strings.html#Strings">Strings</a></br>
+
+<b>prev: </b><a href="strings.html#Converting_Between_Strings_and_Lists">Converting Between Strings and Lists</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>Shared substrings make possible efficient string manipulation without
+having to rely on the gymnastics of passing around <code>start end</code>
+ 
+arguments everywhere.
+</p><p>Read-only strings make formal the obvious similarity between symbols
+and strings.
+</p><p>Together, these extensions to standard Scheme result in concise
+idioms.
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

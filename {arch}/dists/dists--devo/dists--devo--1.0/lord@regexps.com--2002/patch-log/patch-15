@@ -1,0 +1,33 @@
+Revision: dists--devo--1.0--patch-15
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Feb  7 02:02:39 PST 2002
+Standard-date: 2002-02-07
+Summary: merge from lord
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-15
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-14
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-15
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-16
+Modified-files: =RELEASE-ID.d/=RELEASE-ID.arch ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  docs.d/arch/examples/README.020.branching-arch
+  docs.d/arch/html/getting-started.html
+  docs.d/arch/html/indexes.html docs.d/arch/ps/arch.ps
+  docs.d/arch/texi/getting-started.texi
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-15
+  lord@regexps.com--2002/dists--lord--1.0--patch-14
+  lord@regexps.com--2002/dists--lord--1.0--patch-15
+  lord@regexps.com--2002/dists--lord--1.0--patch-16
+
+Patches applied:
+
+  * lord@regexps.com--2002/dists--lord--1.0--patch-16
+     rebuilt arch documentation
+
+  * lord@regexps.com--2002/dists--lord--1.0--patch-15
+     fixed a typo in the arch examples documentation
+
+  * lord@regexps.com--2002/dists--lord--1.0--patch-14
+     updated the arch release id
+

@@ -1,0 +1,18 @@
+Revision: dists--candidate-systas--1.0--patch-3
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Tue Jan 15 03:48:32 PST 2002
+Standard-date: 2002-01-15
+Summary: test release
+Keywords: 
+New-files: configs/regexps.com/release.systas
+  {arch}/dists/dists--candidate-systas/dists--candidate-systas--1.0/lord@regexps.com--2002/patch-log/patch-3
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/dists--candidate-systas--1.0--patch-3
+
+Committing with a new `release' configuration.
+
+This isn't a real release yet -- just test data for the FTP-site
+builder.
+

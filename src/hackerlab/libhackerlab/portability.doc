@@ -1,0 +1,72 @@
+/* tag: Tom Lord Tue Dec  4 14:57:13 2001 (portability.doc)
+ */
+/************************************************************************
+ *(h0 "Portability Assumptions in the Hackerlab C Library"
+ *    :appendix)
+ * 
+ * 
+
+The `makefiles' used to compile the library are specific to *GNU
+Make*, available from the Free Software Foundation
+(url:"http://www.gnu.org").
+
+The implementation of the Hackerlab C Library is written to make
+conservative use of standard C and Posix and opportunistic use of the
+advanced features of GNU C.  It should compile cleanly using nearly
+any ANSI C compiler in nearly any environment that claims to be
+(substantially) conformant to the *Posix.2* standard (*ISO/IEC 994502:
+1993 (ANSI/IEEE Std 1003.2 - 1992*).  If compiled with a GNU C
+compiler, the implementation will take advantage of some non-portable
+features such as function in-lining -- but this is strictly optional.
+
+The Hackerlab C library is written with a few assumptions that are
+true in many but not all implementations of C:
+
+\0./ Values of type `char' and of type `unsigned char' are 8-bit
+values.
+
+\1./ All character code points refer to Unicode characters.  For code
+points in the range {0..255} (including character constants in C
+programs), this is compatible with ISO 8859-1.  For code points in the
+range {0..127}, this is compatible with ASCII.
+
+There is one exception to this rule.  The library exports regexp
+matching functions which are compatible with the Posix.2
+specification.  Those functions should operate correctly with any
+character encoding in the ISO 8859 family. (However, only ISO-8859-1
+is used in our test suite.)
+
+\2./ {sizeof (long) == 4 or 8}
+
+\3./ {sizeof (void *) == 4 or 8}
+
+\4./ It is safe to cast between pointers and long integers.  In 
+other words, after this code:
+
+	unsigned long x;
+	unsigned long y;
+	void * p;
+	void * r;
+	...
+	x = (unsigned long)p;
+	r = (void *)x;
+
+this is true:
+
+	r == p
+
+and similarly, after:
+
+	p = (void *)x;
+	y = (unsigned long)p;
+
+this is true:
+
+	x == y
+
+Strictly speaking, this is a stronger requirement than simply:
+
+	sizeof (long) == sizeof (void *)
+
+ * 
+ */

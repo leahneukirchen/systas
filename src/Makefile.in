@@ -1,0 +1,18 @@
+# tag: Tom Lord Tue Dec  4 14:46:27 2001 (Makefile.in)
+#
+# Makefile.in -
+#
+################################################################
+# Copyright (C) 2001 Tom Lord
+# 
+# See the file "COPYING" for further information about
+# the copyright and warranty status of this work.
+# 
+
+################################################################
+# This is a generic top-level makefile for Hackerlab packages.
+# It should never be necessary to edit this file.
+# 
+
+include $(makefiles)/top-level.mk
+

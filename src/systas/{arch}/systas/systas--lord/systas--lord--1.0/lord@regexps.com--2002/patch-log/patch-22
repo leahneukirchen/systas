@@ -1,0 +1,29 @@
+Revision: systas--lord--1.0--patch-22
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri May 17 13:30:17 PDT 2002
+Standard-date: 2002-05-17 20:30:17 GMT
+Summary: fixed a GC bug in libsystas/rgx.c
+Keywords: 
+New-files: {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-22
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regepx.com--2002/ChangeLog.lord--1.0
+  libsystas/rgx.c
+New-patches: lord@regexps.com--2002/systas--lord--1.0--patch-22
+
+Fixed a GC bug in `libsystas/rgx.c'.  `scm_low_level_regexec' used
+the local variable `malloc_protect' to guard some allocated
+data (and cause it to be latter collected by GC) but didn't
+call `scm_remember' to protect that variable from being optimized
+away.  So, for example, with a  `-O4' compilation with (some random 
+version of) GCC, the variable went away and an ill-timed GC caused
+a bug.
+
+This is a real world example of the reason that conservative GC is
+not really any better than even the groddiest implementation of
+precise GC -- the burden on the programmer is _not_ actually reduced
+by conservative GC.  (Even Boehm wants compiler writers to help hack
+around this problem with conservative GC.)
+
+
+

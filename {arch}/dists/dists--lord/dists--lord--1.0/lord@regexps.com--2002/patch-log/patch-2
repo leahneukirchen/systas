@@ -1,0 +1,15 @@
+Revision: dists--lord--1.0--patch-2
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon Jan  7 16:14:03 PST 2002
+Standard-date: 2002-01-07
+Summary: Added ChangeLogs
+Keywords: 
+New-files: {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-2
+  ChangeLog.d/=README ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-directories: ChangeLog.d ChangeLog.d/lord@regexps.com--2002
+New-patches: lord@regexps.com--2002/dists--lord--1.0--patch-2
+
+Added changelogs for this directory.
+

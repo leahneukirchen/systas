@@ -1,0 +1,14 @@
+Revision: dists--devo--1.0--patch-2
+Archive: lord@regexps.com--2001Q4
+Creator: Tom Lord <lord@regexps.com>
+Date: Wed Jan  2 13:39:56 PST 2002
+Standard-date: 2002-01-02
+Summary: fixed `arch' config
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2001Q4/patch-log/patch-2
+Modified-files: configs/arch
+New-patches: lord@regexps.com--2001Q4/dists--devo--1.0--patch-2
+
+
+`systas' doesn't go in the `arch' config.
+

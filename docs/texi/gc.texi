@@ -1,0 +1,107 @@
+@need 3200
+
+@node Garbage Collection
+@chapter Garbage Collection
+
+The garbage collector in Systas Scheme is a simple mark-sweeep collector
+that conservatively scans the C stack for GC roots.
+
+
+@strong{Note:} Conservative stack scanning is highly problematic for applications
+requiring rock-solid reliability and performance.  Some future release
+of Systas will use a different GC strategy.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{gc-stats}@fuindex gc-stats
+@*
+@example
+@group
+(gc-stats)
+@end group
+@group
+@end group
+@end example
+
+Return a list of information from the garbage collector.
+The format of the list is currently "unspecified" and
+is likely to change in some future release.  Currently,
+a typical list of gc stats looks like this:
+
+@example
+@group
+     ((gc-time-taken . 4)
+      (cells-allocated . 25093)
+      (cell-heap-size . 32768)
+      (bytes-malloced . 26866)
+      (gc-malloc-threshold . 100000)
+      (cell-heap-segments (135348224 . 135086080)))
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{object-address}@fuindex object-address
+@*
+@example
+@group
+(object-address obj)
+@end group
+@group
+@end group
+@end example
+
+Return the address in memory or binary representation of @code{obj}.
+
+
+This function is mostly useful for debugging.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{gc}@fuindex gc
+@*
+@example
+@group
+(gc)
+@end group
+@group
+@end group
+@end example
+
+Invoke the garbage collector.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{unhash-names}@fuindex unhash-names
+@*
+@example
+@group
+(unhash-names names)
+@end group
+@group
+@end group
+@end example
+
+@code{names} is a list of symbols.
+
+
+This function searches for instances of code compiled by @code{eval}
+containing references to top-level variables whose names are
+included in the @code{names}.   All such references are "uncompiled",
+meaning that when next evaluated, those variables will be 
+re-resolved by the module system.
+
+
+This is mostly useful for robustly re-loading modules.
+
+
+See @ref{Understanding How Evaluation Works in Systas Scheme}.
+
+
+
+

@@ -1,0 +1,33 @@
+# tag: Tom Lord Tue Dec  4 15:05:27 2001 (arrays-tests/DESC)
+#
+
+We test the installed header files to make sure they compile.
+
+unit-ar
+	Perform a random sequence of calls to the functions in 
+	"flux/arrays/ar.h" creating a number of test arrays
+	and operating on them.
+
+	Elements of test arrays are initialized with hash values 
+	based on their index.  These values are checked whenever
+	the array is operated on, to look for signs of overwrite.
+
+	The alignment of arrays is also checked (it should
+	agree with FLUX_ALIGNMENT defined in
+	"flux/machine/alignment.h")
+
+
+
+
+unit-pow2-array
+	Perform a series of random updates to a number of test 
+	arrays, each of which uses a different `pow2_array_rules'
+	(tree structure).  Perform the same updates on a flat 
+	array.  Periodically compare all of the arrays to make
+	sure they are equal.
+
+
+Note that pow2_array_print is not tested.  However, if that
+function breaks, other tests (e.g. unicode database tests)
+will fail.
+

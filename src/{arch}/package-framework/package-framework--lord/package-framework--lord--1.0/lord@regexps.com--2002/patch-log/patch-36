@@ -1,0 +1,16 @@
+Revision: package-framework--lord--1.0--patch-36
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu May 16 14:32:26 PDT 2002
+Standard-date: 2002-05-16 21:32:26 GMT
+Summary: =Labnotes -> Labnotes
+Keywords: 
+New-files: {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-36
+New-directories: Labnotes/.arch-ids
+Removed-directories: =Labnotes/.arch-ids
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-36
+
+Renamed =Labnotes -> Labnotes.
+

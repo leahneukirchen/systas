@@ -1,0 +1,23 @@
+Revision: dists--lord--1.0--patch-3
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri Jan 11 20:01:36 PST 2002
+Standard-date: 2002-01-11
+Summary: rearranged config files
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-1
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-3
+New-directories: configs/regexps.com
+Removed-directories: configs/lord@regexps.com--2002
+Renamed-files: configs/lord@regexps.com--2002/lord configs/regexps.com/lord
+  configs/lord@regexps.com--2002/lord.arch configs/regexps.com/lord.arch
+  configs/lord@regexps.com--2002/devo.arch configs/regexps.com/devo.arch
+  configs/lord@regexps.com--2002/devo configs/regexps.com/devo
+Modified-files: =README ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-1
+  lord@regexps.com--2002/dists--lord--1.0--patch-3
+
+
+Named the config files more reasonably.
+

@@ -1,0 +1,25 @@
+Revision: hackerlab--devo--1.0--patch-6
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Jan 24 02:17:46 PST 2002
+Standard-date: 2002-01-24
+Summary: merge from lord
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--2002/patch-log/patch-6
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-12
+  os/time.h
+Modified-files: =NEWS ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  tests/arrays-tests/unit-ar.sh
+  tests/arrays-tests/unit-pow2-array.sh
+  tests/bitset-tests/unit-bits.sh vu/vu.c
+New-patches: lord@regexps.com--2002/hackerlab--devo--1.0--patch-6
+  lord@regexps.com--2002/hackerlab--lord--1.0--patch-12
+
+Patches applied:
+
+  * lord@regexps.com--2002/hackerlab--lord--1.0--patch-12
+     new header file `hackerlab/os/time.h,
+     	 added some missing tags
+     	 fixed a trivial bug in `vu.c'
+

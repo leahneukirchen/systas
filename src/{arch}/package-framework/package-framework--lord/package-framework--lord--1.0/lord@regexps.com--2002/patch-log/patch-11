@@ -1,0 +1,52 @@
+Revision: package-framework--lord--1.0--patch-11
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sat Jan 19 19:22:50 PST 2002
+Standard-date: 2002-01-19
+Summary: makefile and configure changes
+Keywords: 
+New-files: =TODO
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-11
+  build-tools/Makefiles/=TODO
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  PLUGIN/options build-tools/Makefiles/column.sed
+  build-tools/Makefiles/config-info.mk
+  build-tools/Makefiles/cpp-to-includes.sed
+  build-tools/Makefiles/dirs.mk
+  build-tools/Makefiles/install-includes.mk
+  build-tools/Makefiles/install-library.mk
+  build-tools/Makefiles/install-programs.mk
+  build-tools/Makefiles/install-shell-scripts.mk
+  build-tools/Makefiles/install-shell-subcommands.mk
+  build-tools/Makefiles/library-objects.mk
+  build-tools/Makefiles/library-pdml.mk
+  build-tools/Makefiles/library.mk
+  build-tools/Makefiles/programs.mk
+  build-tools/Makefiles/rules.mk
+  build-tools/Makefiles/shell-scripts.mk
+  build-tools/Makefiles/shell-subcommands.mk
+  build-tools/Makefiles/top-level.mk
+  build-tools/Makefiles/unit-tests.mk
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-11
+
+Added a configuration option:
+
+      --with posix-mailx PROG
+
+to specify a program that can be used to send email.
+
+Added an =TODO file for package-framework.
+
+`build-tools/Makefiles/column.sed': delete blank lines.
+
+`cpp-to-includes.sed': escape Makefile meta-characters in prereq
+lists.
+
+Most files matching `build-tools/Makefiles/*.mk': generally cleaned
+things up, fixed `clean' targets, fixed comments, got rid of vestigial
+code, protected against actions with possibly empty `for' loops, only 
+store build logging files (e.g. "Programs") *after* the targets they
+describe have been built, use "-include" to include depfiles.
+
+

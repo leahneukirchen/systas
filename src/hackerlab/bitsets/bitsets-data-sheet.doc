@@ -1,0 +1,296 @@
+/* tag: Tom Lord Tue Dec  4 14:57:15 2001 (bitsets-data-sheet.doc)
+ */
+/************************************************************************
+ *(h0 "Data Sheet for the Hackerlab Bitsets Functions"
+ *    :appendix)
+ * 
+ insert*/
+
+Package:
+        Hackerlab Bitsets (bitset data structures)
+
+Supplier:
+	regexps.com
+
+Function:        
+
+	Hackerlab Bitsets provides functions for manipulating ordinary
+	bitsets, and bitset trees (very large, sparsely populated
+	bitsets).
+
+        
+Key Features:
+                
+	Fast and accurate.
+
+	Clean and simple "classic C" interface.
+
+	Extensive test suite included.
+
+	Postscript and HTML documentation included.
+
+	A complete set of bitset functions.  These operations are
+	provided for both ordinary bitsets and bitset trees:
+
+	    alloc
+	    free
+	    dup
+	    is_member
+	    is_equal
+	    is_subset
+	    is_empty
+	    is_empty_range
+	    is_full
+	    is_full_range
+	    adjoin
+	    remove
+	    toggle
+	    clear
+	    clear_range
+	    fill
+	    fill_range
+	    complement
+	    assign
+	    union
+	    intersection
+	    difference
+	    revdifference
+	    xor
+	    population
+	    population_range
+	    ffs			("find first set")
+	    ffs_range
+	    ffc			("find first clear")
+	    ffc_range
+
+
+
+Licensing:
+
+	Hackerlab Bitsets is part of the Hackerlab C Library which is
+	distributed under the terms of the GNU General Public License,
+	Version 2, as published by the Free Software Foundation.
+	
+	Alternative licenses (such as licenses permitting binary-only
+	re-distribution) can be purchased from regexps.com.
+
+
+Prerequisites:
+
+        standard C compiler
+        Posix libc.a (standard C library)
+        GNU Make
+
+
+Recommended and Disrecommended Applications:
+
+	Recommended for any application needing a fast and complete
+	implementation of the "standard" bitset operations.
+
+	Sparse bitset support is ideal for representing sets
+	of Unicode code points.
+
+
+Limitations:
+
+	This is the first public (non-prototype) release.  
+
+
+Contribution to Executable Size:
+
+	Ordinary Bitsets
+	----------------
+
+        On a Pentium based machine, running gcc (egcs version
+        2.91.66) we compiled this simple (nonsense) program and 
+	linked it against the Hackerlab C Library:
+
+
+	    int
+	    main (int argc, char * argv[])
+	    {
+	      bitset_alloc (); bitset_free (); bitset_dup ();
+	      bitset_is_member (); bitset_is_equal ();
+	      bitset_is_subset (); bitset_is_empty ();
+	      bitset_is_empty_range (); bitset_is_full ();
+	      bitset_is_full_range (); bitset_adjoin ();
+	      bitset_remove (); bitset_toggle (); bitset_clear ();
+	      bitset_clear_range (); bitset_fill ();
+	      bitset_fill_range (); bitset_complement ();
+	      bitset_assign (); bitset_union ();
+	      bitset_intersection (); bitset_difference ();
+	      bitset_revdifference (); bitset_xor ();
+	      bitset_population (); bitset_population_range ();
+	      bitset_ffs (); bitset_ffs_range ();
+	      bitset_ffc (); bitset_ffc_range ();
+	    }
+
+        Both the library and the program were compiled with the "-g"
+        option.
+
+        Total executable size:
+
+	   text	   data	
+	  16681	   4864
+
+        The following list of object files from the Hackerlab
+	C library were linked into the executable:
+	
+	    bitset.o alloc-limits.o mem.o must-malloc.o panic.o 
+	    str.o cvt.o panic-exit.o char-class.o
+
+        The contribution of those files to the executable size is:
+
+           text    data
+	  15405    4672
+
+
+
+	Bitset Trees (Large Sparsely Populated Bitsets)
+	-----------------------------------------------
+
+	For these, we used the (nonsense) program:
+
+	    int
+	    main (int argc, char * argv[])
+	    {
+	      bits_alloc (); bits_free (); bits_dup ();
+	      bits_is_member (); bits_is_equal ();
+	      bits_is_subset (); bits_is_empty ();
+	      bits_is_empty_range (); bits_is_full ();
+	      bits_is_full_range (); bits_adjoin ();
+	      bits_remove (); bits_toggle (); bits_clear ();
+	      bits_clear_range (); bits_fill ();
+	      bits_fill_range (); bits_complement ();
+	      bits_assign (); bits_union ();
+	      bits_intersection (); bits_difference ();
+	      bits_revdifference (); bits_xor ();
+	      bits_population (); bits_population_range ();
+	      bits_ffs (); bits_ffs_range ();
+	      bits_ffc (); bits_ffc_range ();
+	    }
+
+        Total executable size:
+
+	   text	   data	
+	  39097    4864
+
+        The following list of object files from the Hackerlab
+	C library were linked into the executable:
+	
+	    bits.o bitset-tree.o bitset.o alloc-limits.o mem.o
+	    must-malloc.o panic.o str.o cvt.o panic-exit.o
+	    char-class.o
+
+        The contribution of those files to the executable size is:
+
+           text    data
+	  37814	   4672
+
+
+External Linkage Dependencies:
+
+
+	When compiled under FreeBSD 3.0, the simple programs used to
+        test executable sizes depends on the following symbols
+        defined in "libc":
+
+	    _exit
+	    free
+	    malloc
+	    realloc
+	    write
+
+
+Accuracy:
+
+	The Hackerlab Bitsets library passes all of the tests
+	described here:
+
+	To test the ordinary bitset functions, we wrote a Scheme
+	program to automatically generate test cases.  The tests
+	generated exercise all of the bitset functions, testing a
+	variety of bitset sizes and boundary conditions.  The Scheme
+	program uses a list-based set library to compute the expected
+	results of these tests and generates an answer key.  Over
+	32,000 tests are generated.
+
+	To test bitset trees, we wrote a program that performs a
+	randomly selected sequence of bitset operations on both an
+	ordinary bitset and on an equivalent bitset tree.  Parameters
+	are randomly selected to exercise a variety of special cases
+	such as boundary conditions.  All bitset operations are
+	tested.  The ordinary and bitset tree results of each
+	operation are compared for equality.
+
+	The totality of Hackerlab C Library tests, including the tests
+	described here and tests of other subsystems that use the
+	bitset library, achieve 98.9% test coverage (measured in lines
+	of source executed) for the ordinary bitset functions, 86.8%
+	coverage for bitset tree functions.  The code not tested is
+	primarily code concerned with cleanly returning error codes in
+	the (presumably unlikely) case of memory allocation failure.
+
+
+Execution Speed:
+
+	There are no industry-wide standards for measuring the
+	performance of bitset operations and we know of similar
+	library against which to make comparative measurements.
+
+	The implementation is conceptually straightforward, and
+	its performance characteristics can be accurately inferred
+	from a description of the implementation.
+
+	The ordinary bitset functions perform straightforward bit
+	manipulations using C operators.  Bitsets are represented as
+	an array of subsets, each subset containing (up to) the number
+	of bits in a machine word.  Most functions which operate on a
+	sequence of contiguous bits contain a loop which operates on
+	an entire word at a time, with special cases for the
+	boundaries of the loop.
+
+	Bitset trees are recursively represented as a tree of bitset
+	trees, with ordinary bitsets as leaf nodes.  Subtrees
+	which are all 0 or all 1 are (in most circumstances) replaced
+	by a NULL or -1 pointer (which speeds up operations on those
+	subtrees).
+
+
+Run-time Allocation Requirements:
+
+	Ordinary bitsets are stored as a contiguous array of bits.
+
+	Bitset trees afford programmers to make explicit space/time
+	trade-offs by determining the depth and branching structure
+	of the trees.
+
+
+Support:
+
+	To purchase an alternative license, request additional
+	features, or for any kind of support assistance, you can
+	contact us at "hackerlab@regexps.com" or via our web site
+	"www.regexps.com".  We can also be reached at (412) 401-5204
+	or at:
+
+		regexps.com
+		1717 Murray Ave. P.M.B. #10
+		Pittsburgh, PA 15217
+
+        Available support includes (but is not limited to):
+
+                - porting assistance
+                - customized extensions
+                - consultation concerning regexp-intensive applications
+                - help with undocumented interfaces
+                - bug fixing
+
+        In most cases, support is offered as a commercial
+        service.
+
+
+/*end-insert
+ */
+
+

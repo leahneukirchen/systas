@@ -1,0 +1,547 @@
+Revision: dists--lord--1.0--patch-11
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Tue Feb  5 01:35:26 PST 2002
+Standard-date: 2002-02-05
+Summary: merge from devo
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-10
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-11
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-12
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-13
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-7
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-8
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-9
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-11
+  docs.d/arch/texi/.arch-ids/arbitrary-patching.texi.id
+  docs.d/arch/texi/.arch-ids/arch.texi.id
+  docs.d/arch/texi/.arch-ids/archive-format.texi.id
+  docs.d/arch/texi/.arch-ids/archives.texi.id
+  docs.d/arch/texi/.arch-ids/automatic-triggers.texi.id
+  docs.d/arch/texi/.arch-ids/basic-branching-and-merging.texi.id
+  docs.d/arch/texi/.arch-ids/basic-rc.texi.id
+  docs.d/arch/texi/.arch-ids/configurations.texi.id
+  docs.d/arch/texi/.arch-ids/data-sheet.texi.id
+  docs.d/arch/texi/.arch-ids/development-paths.texi.id
+  docs.d/arch/texi/.arch-ids/document-license.texi.id
+  docs.d/arch/texi/.arch-ids/getting-started.texi.id
+  docs.d/arch/texi/.arch-ids/idempotent-merging.texi.id
+  docs.d/arch/texi/.arch-ids/implementing-policies.texi.id
+  docs.d/arch/texi/.arch-ids/in-general.texi.id
+  docs.d/arch/texi/.arch-ids/indexes.texi.id
+  docs.d/arch/texi/.arch-ids/introduction.texi.id
+  docs.d/arch/texi/.arch-ids/inventory.texi.id
+  docs.d/arch/texi/.arch-ids/logs-after-merging.texi.id
+  docs.d/arch/texi/.arch-ids/multi-tree-projects.texi.id
+  docs.d/arch/texi/.arch-ids/on-hacking.texi.id
+  docs.d/arch/texi/.arch-ids/overview.texi.id
+  docs.d/arch/texi/.arch-ids/patch-logs.texi.id
+  docs.d/arch/texi/.arch-ids/patch-set-format.texi.id
+  docs.d/arch/texi/.arch-ids/patches.texi.id
+  docs.d/arch/texi/.arch-ids/preparing-to-merge.texi.id
+  docs.d/arch/texi/.arch-ids/pristine-cache.texi.id
+  docs.d/arch/texi/.arch-ids/project-names.texi.id
+  docs.d/arch/texi/.arch-ids/project-trees.texi.id
+  docs.d/arch/texi/.arch-ids/reconciling.texi.id
+  docs.d/arch/texi/.arch-ids/revision-lib.texi.id
+  docs.d/arch/texi/.arch-ids/source-license.texi.id
+  docs.d/arch/texi/.arch-ids/star-topology.texi.id
+  docs.d/arch/texi/.arch-ids/system-requirements.texi.id
+  docs.d/arch/texi/.arch-ids/theory-of-patches.texi.id
+  docs.d/arch/texi/.arch-ids/triggers.texi.id
+  docs.d/arch/texi/.arch-ids/user-names.texi.id
+  docs.d/arch/texi/.arch-ids/using-triggers.texi.id
+  docs.d/arch/texi/.arch-ids/web-site.texi.id
+  docs.d/arch/ps/.arch-ids/arch.ps.id
+  docs.d/arch/html/.arch-ids/arbitrary-patching.html.id
+  docs.d/arch/html/.arch-ids/arch.html.id
+  docs.d/arch/html/.arch-ids/archive-format.html.id
+  docs.d/arch/html/.arch-ids/archives.html.id
+  docs.d/arch/html/.arch-ids/automatic-triggers.html.id
+  docs.d/arch/html/.arch-ids/document-license.html.id
+  docs.d/arch/html/.arch-ids/getting-started.html.id
+  docs.d/arch/html/.arch-ids/idempotent-merging.html.id
+  docs.d/arch/html/.arch-ids/implementing-policies.html.id
+  docs.d/arch/html/.arch-ids/basic-branching-and-merging.html.id
+  docs.d/arch/html/.arch-ids/basic-rc.html.id
+  docs.d/arch/html/.arch-ids/configurations.html.id
+  docs.d/arch/html/.arch-ids/data-sheet.html.id
+  docs.d/arch/html/.arch-ids/development-paths.html.id
+  docs.d/arch/html/.arch-ids/in-general.html.id
+  docs.d/arch/html/.arch-ids/indexes.html.id
+  docs.d/arch/html/.arch-ids/introduction.html.id
+  docs.d/arch/html/.arch-ids/inventory.html.id
+  docs.d/arch/html/.arch-ids/logs-after-merging.html.id
+  docs.d/arch/html/.arch-ids/multi-tree-projects.html.id
+  docs.d/arch/html/.arch-ids/on-hacking.html.id
+  docs.d/arch/html/.arch-ids/overview.html.id
+  docs.d/arch/html/.arch-ids/patch-logs.html.id
+  docs.d/arch/html/.arch-ids/patch-set-format.html.id
+  docs.d/arch/html/.arch-ids/patches.html.id
+  docs.d/arch/html/.arch-ids/preparing-to-merge.html.id
+  docs.d/arch/html/.arch-ids/pristine-cache.html.id
+  docs.d/arch/html/.arch-ids/project-names.html.id
+  docs.d/arch/html/.arch-ids/project-trees.html.id
+  docs.d/arch/html/.arch-ids/reconciling.html.id
+  docs.d/arch/html/.arch-ids/revision-lib.html.id
+  docs.d/arch/html/.arch-ids/source-license.html.id
+  docs.d/arch/html/.arch-ids/star-topology.html.id
+  docs.d/arch/html/.arch-ids/system-requirements.html.id
+  docs.d/arch/html/.arch-ids/theory-of-patches.html.id
+  docs.d/arch/html/.arch-ids/triggers.html.id
+  docs.d/arch/html/.arch-ids/user-names.html.id
+  docs.d/arch/html/.arch-ids/using-triggers.html.id
+  docs.d/arch/html/.arch-ids/web-site.html.id
+  docs.d/arch/html/.arch-ids/=id docs.d/arch/ps/.arch-ids/=id
+  docs.d/arch/texi/.arch-ids/=id
+  docs.d/hackerlab/texi/.arch-ids/=id
+  docs.d/hackerlab/ps/.arch-ids/=id
+  docs.d/hackerlab/html/.arch-ids/=id
+  docs.d/systas/html/.arch-ids/=id
+  docs.d/systas/ps/.arch-ids/=id
+  docs.d/systas/texi/.arch-ids/=id configs/local/devo.arch
+  =INSTALL docs.d/arch/texi/arbitrary-patching.texi
+  docs.d/arch/texi/arch.texi
+  docs.d/arch/texi/archive-format.texi
+  docs.d/arch/texi/archives.texi
+  docs.d/arch/texi/automatic-triggers.texi
+  docs.d/arch/texi/basic-branching-and-merging.texi
+  docs.d/arch/texi/basic-rc.texi
+  docs.d/arch/texi/configurations.texi
+  docs.d/arch/texi/data-sheet.texi
+  docs.d/arch/texi/development-paths.texi
+  docs.d/arch/texi/document-license.texi
+  docs.d/arch/texi/getting-started.texi
+  docs.d/arch/texi/idempotent-merging.texi
+  docs.d/arch/texi/implementing-policies.texi
+  docs.d/arch/texi/in-general.texi
+  docs.d/arch/texi/indexes.texi
+  docs.d/arch/texi/introduction.texi
+  docs.d/arch/texi/inventory.texi
+  docs.d/arch/texi/logs-after-merging.texi
+  docs.d/arch/texi/multi-tree-projects.texi
+  docs.d/arch/texi/on-hacking.texi
+  docs.d/arch/texi/overview.texi
+  docs.d/arch/texi/patch-logs.texi
+  docs.d/arch/texi/patch-set-format.texi
+  docs.d/arch/texi/patches.texi
+  docs.d/arch/texi/preparing-to-merge.texi
+  docs.d/arch/texi/pristine-cache.texi
+  docs.d/arch/texi/project-names.texi
+  docs.d/arch/texi/project-trees.texi
+  docs.d/arch/texi/reconciling.texi
+  docs.d/arch/texi/revision-lib.texi
+  docs.d/arch/texi/source-license.texi
+  docs.d/arch/texi/star-topology.texi
+  docs.d/arch/texi/system-requirements.texi
+  docs.d/arch/texi/theory-of-patches.texi
+  docs.d/arch/texi/triggers.texi
+  docs.d/arch/texi/user-names.texi
+  docs.d/arch/texi/using-triggers.texi
+  docs.d/arch/texi/web-site.texi docs.d/arch/ps/arch.ps
+  docs.d/arch/html/arbitrary-patching.html
+  docs.d/arch/html/arch.html
+  docs.d/arch/html/archive-format.html
+  docs.d/arch/html/archives.html
+  docs.d/arch/html/automatic-triggers.html
+  docs.d/arch/html/document-license.html
+  docs.d/arch/html/getting-started.html
+  docs.d/arch/html/idempotent-merging.html
+  docs.d/arch/html/implementing-policies.html
+  docs.d/arch/html/basic-branching-and-merging.html
+  docs.d/arch/html/basic-rc.html
+  docs.d/arch/html/configurations.html
+  docs.d/arch/html/data-sheet.html
+  docs.d/arch/html/development-paths.html
+  docs.d/arch/html/in-general.html
+  docs.d/arch/html/indexes.html
+  docs.d/arch/html/introduction.html
+  docs.d/arch/html/inventory.html
+  docs.d/arch/html/logs-after-merging.html
+  docs.d/arch/html/multi-tree-projects.html
+  docs.d/arch/html/on-hacking.html
+  docs.d/arch/html/overview.html
+  docs.d/arch/html/patch-logs.html
+  docs.d/arch/html/patch-set-format.html
+  docs.d/arch/html/patches.html
+  docs.d/arch/html/preparing-to-merge.html
+  docs.d/arch/html/pristine-cache.html
+  docs.d/arch/html/project-names.html
+  docs.d/arch/html/project-trees.html
+  docs.d/arch/html/reconciling.html
+  docs.d/arch/html/revision-lib.html
+  docs.d/arch/html/source-license.html
+  docs.d/arch/html/star-topology.html
+  docs.d/arch/html/system-requirements.html
+  docs.d/arch/html/theory-of-patches.html
+  docs.d/arch/html/triggers.html
+  docs.d/arch/html/user-names.html
+  docs.d/arch/html/using-triggers.html
+  docs.d/arch/html/web-site.html
+New-directories: configs/local docs.d/arch/html docs.d/arch/ps docs.d/arch/texi
+  docs.d/hackerlab/texi docs.d/hackerlab/ps
+  docs.d/hackerlab/html docs.d/systas/html docs.d/systas/ps
+  docs.d/systas/texi
+Removed-files: docs.d/arch/texi/.arch-ids/arbitrary-patching.texi.id
+  docs.d/arch/texi/.arch-ids/arch.texi.id
+  docs.d/arch/texi/.arch-ids/archive-format.texi.id
+  docs.d/arch/texi/.arch-ids/archives.texi.id
+  docs.d/arch/texi/.arch-ids/basic-branching-and-merging.texi.id
+  docs.d/arch/texi/.arch-ids/basic-rc.texi.id
+  docs.d/arch/texi/.arch-ids/configurations.texi.id
+  docs.d/arch/texi/.arch-ids/data-sheet.texi.id
+  docs.d/arch/texi/.arch-ids/document-license.texi.id
+  docs.d/arch/texi/.arch-ids/implementing-policies.texi.id
+  docs.d/arch/texi/.arch-ids/in-general.texi.id
+  docs.d/arch/texi/.arch-ids/indexes.texi.id
+  docs.d/arch/texi/.arch-ids/introduction.texi.id
+  docs.d/arch/texi/.arch-ids/inventory.texi.id
+  docs.d/arch/texi/.arch-ids/lines-of-development.texi.id
+  docs.d/arch/texi/.arch-ids/logs-after-merging.texi.id
+  docs.d/arch/texi/.arch-ids/multi-tree-projects.texi.id
+  docs.d/arch/texi/.arch-ids/idempotent-merging.texi.id
+  docs.d/arch/texi/.arch-ids/on-hacking.texi.id
+  docs.d/arch/texi/.arch-ids/overview.texi.id
+  docs.d/arch/texi/.arch-ids/patch-logs.texi.id
+  docs.d/arch/texi/.arch-ids/patch-set-format.texi.id
+  docs.d/arch/texi/.arch-ids/patches.texi.id
+  docs.d/arch/texi/.arch-ids/preparing-to-merge.texi.id
+  docs.d/arch/texi/.arch-ids/pristine-cache.texi.id
+  docs.d/arch/texi/.arch-ids/project-names.texi.id
+  docs.d/arch/texi/.arch-ids/project-trees.texi.id
+  docs.d/arch/texi/.arch-ids/reconciling.texi.id
+  docs.d/arch/texi/.arch-ids/source-license.texi.id
+  docs.d/arch/texi/.arch-ids/star-topology.texi.id
+  docs.d/arch/texi/.arch-ids/system-requirements.texi.id
+  docs.d/arch/texi/.arch-ids/theory-of-patches.texi.id
+  docs.d/arch/texi/.arch-ids/user-names.texi.id
+  docs.d/arch/texi/.arch-ids/web-site.texi.id
+  docs.d/arch/ps/.arch-ids/arch.ps.id
+  docs.d/arch/html/.arch-ids/arbitrary-patching.html.id
+  docs.d/arch/html/.arch-ids/arch.html.id
+  docs.d/arch/html/.arch-ids/archive-format.html.id
+  docs.d/arch/html/.arch-ids/archives.html.id
+  docs.d/arch/html/.arch-ids/basic-branching-and-merging.html.id
+  docs.d/arch/html/.arch-ids/basic-rc.html.id
+  docs.d/arch/html/.arch-ids/configurations.html.id
+  docs.d/arch/html/.arch-ids/data-sheet.html.id
+  docs.d/arch/html/.arch-ids/document-license.html.id
+  docs.d/arch/html/.arch-ids/idempotent-merging.html.id
+  docs.d/arch/html/.arch-ids/implementing-policies.html.id
+  docs.d/arch/html/.arch-ids/in-general.html.id
+  docs.d/arch/html/.arch-ids/indexes.html.id
+  docs.d/arch/html/.arch-ids/introduction.html.id
+  docs.d/arch/html/.arch-ids/inventory.html.id
+  docs.d/arch/html/.arch-ids/lines-of-development.html.id
+  docs.d/arch/html/.arch-ids/logs-after-merging.html.id
+  docs.d/arch/html/.arch-ids/multi-tree-projects.html.id
+  docs.d/arch/html/.arch-ids/on-hacking.html.id
+  docs.d/arch/html/.arch-ids/overview.html.id
+  docs.d/arch/html/.arch-ids/patch-logs.html.id
+  docs.d/arch/html/.arch-ids/patch-set-format.html.id
+  docs.d/arch/html/.arch-ids/patches.html.id
+  docs.d/arch/html/.arch-ids/preparing-to-merge.html.id
+  docs.d/arch/html/.arch-ids/pristine-cache.html.id
+  docs.d/arch/html/.arch-ids/project-names.html.id
+  docs.d/arch/html/.arch-ids/project-trees.html.id
+  docs.d/arch/html/.arch-ids/reconciling.html.id
+  docs.d/arch/html/.arch-ids/source-license.html.id
+  docs.d/arch/html/.arch-ids/star-topology.html.id
+  docs.d/arch/html/.arch-ids/system-requirements.html.id
+  docs.d/arch/html/.arch-ids/theory-of-patches.html.id
+  docs.d/arch/html/.arch-ids/user-names.html.id
+  docs.d/arch/html/.arch-ids/web-site.html.id INSTALL
+  docs.d/arch/texi/arbitrary-patching.texi
+  docs.d/arch/texi/arch.texi
+  docs.d/arch/texi/archive-format.texi
+  docs.d/arch/texi/archives.texi
+  docs.d/arch/texi/basic-branching-and-merging.texi
+  docs.d/arch/texi/basic-rc.texi
+  docs.d/arch/texi/configurations.texi
+  docs.d/arch/texi/data-sheet.texi
+  docs.d/arch/texi/document-license.texi
+  docs.d/arch/texi/implementing-policies.texi
+  docs.d/arch/texi/in-general.texi
+  docs.d/arch/texi/indexes.texi
+  docs.d/arch/texi/introduction.texi
+  docs.d/arch/texi/inventory.texi
+  docs.d/arch/texi/lines-of-development.texi
+  docs.d/arch/texi/logs-after-merging.texi
+  docs.d/arch/texi/multi-tree-projects.texi
+  docs.d/arch/texi/idempotent-merging.texi
+  docs.d/arch/texi/on-hacking.texi
+  docs.d/arch/texi/overview.texi
+  docs.d/arch/texi/patch-logs.texi
+  docs.d/arch/texi/patch-set-format.texi
+  docs.d/arch/texi/patches.texi
+  docs.d/arch/texi/preparing-to-merge.texi
+  docs.d/arch/texi/pristine-cache.texi
+  docs.d/arch/texi/project-names.texi
+  docs.d/arch/texi/project-trees.texi
+  docs.d/arch/texi/reconciling.texi
+  docs.d/arch/texi/source-license.texi
+  docs.d/arch/texi/star-topology.texi
+  docs.d/arch/texi/system-requirements.texi
+  docs.d/arch/texi/theory-of-patches.texi
+  docs.d/arch/texi/user-names.texi
+  docs.d/arch/texi/web-site.texi docs.d/arch/ps/arch.ps
+  docs.d/arch/html/arbitrary-patching.html
+  docs.d/arch/html/arch.html
+  docs.d/arch/html/archive-format.html
+  docs.d/arch/html/archives.html
+  docs.d/arch/html/basic-branching-and-merging.html
+  docs.d/arch/html/basic-rc.html
+  docs.d/arch/html/configurations.html
+  docs.d/arch/html/data-sheet.html
+  docs.d/arch/html/document-license.html
+  docs.d/arch/html/idempotent-merging.html
+  docs.d/arch/html/implementing-policies.html
+  docs.d/arch/html/in-general.html
+  docs.d/arch/html/indexes.html
+  docs.d/arch/html/introduction.html
+  docs.d/arch/html/inventory.html
+  docs.d/arch/html/lines-of-development.html
+  docs.d/arch/html/logs-after-merging.html
+  docs.d/arch/html/multi-tree-projects.html
+  docs.d/arch/html/on-hacking.html
+  docs.d/arch/html/overview.html
+  docs.d/arch/html/patch-logs.html
+  docs.d/arch/html/patch-set-format.html
+  docs.d/arch/html/patches.html
+  docs.d/arch/html/preparing-to-merge.html
+  docs.d/arch/html/pristine-cache.html
+  docs.d/arch/html/project-names.html
+  docs.d/arch/html/project-trees.html
+  docs.d/arch/html/reconciling.html
+  docs.d/arch/html/source-license.html
+  docs.d/arch/html/star-topology.html
+  docs.d/arch/html/system-requirements.html
+  docs.d/arch/html/theory-of-patches.html
+  docs.d/arch/html/user-names.html
+  docs.d/arch/html/web-site.html
+Removed-directories: docs.d/arch/html docs.d/arch/ps docs.d/arch/texi
+  docs.d/hackerlab/html docs.d/hackerlab/ps
+  docs.d/hackerlab/texi docs.d/systas/html docs.d/systas/ps
+  docs.d/systas/texi
+Renamed-files: docs.d/systas/texi/alist.texi docs.d/systas/texi/alist.texi
+  docs.d/systas/texi/async.texi docs.d/systas/texi/async.texi
+  docs.d/systas/texi/boolean.texi docs.d/systas/texi/boolean.texi
+  docs.d/systas/texi/chars.texi docs.d/systas/texi/chars.texi
+  docs.d/systas/texi/eq.texi docs.d/systas/texi/eq.texi
+  docs.d/systas/texi/error.texi docs.d/systas/texi/error.texi
+  docs.d/systas/texi/eval.texi docs.d/systas/texi/eval.texi
+  docs.d/systas/texi/continuations.texi docs.d/systas/texi/continuations.texi
+  docs.d/systas/texi/credits.texi docs.d/systas/texi/credits.texi
+  docs.d/systas/texi/debug.texi docs.d/systas/texi/debug.texi
+  docs.d/systas/texi/dictionaries.texi docs.d/systas/texi/dictionaries.texi
+  docs.d/systas/texi/dynwind.texi docs.d/systas/texi/dynwind.texi
+  docs.d/systas/texi/emacs.texi docs.d/systas/texi/emacs.texi
+  docs.d/systas/texi/fdsocket.texi docs.d/systas/texi/fdsocket.texi
+  docs.d/systas/texi/filesys.texi docs.d/systas/texi/filesys.texi
+  docs.d/systas/texi/gc.texi docs.d/systas/texi/gc.texi
+  docs.d/systas/texi/hash.texi docs.d/systas/texi/hash.texi
+  docs.d/systas/texi/hashtab.texi docs.d/systas/texi/hashtab.texi
+  docs.d/systas/texi/identifier-index.texi docs.d/systas/texi/identifier-index.texi
+  docs.d/systas/texi/introduction.texi docs.d/systas/texi/introduction.texi
+  docs.d/systas/texi/invocation.texi docs.d/systas/texi/invocation.texi
+  docs.d/systas/texi/kw.texi docs.d/systas/texi/kw.texi
+  docs.d/systas/texi/list.texi docs.d/systas/texi/list.texi
+  docs.d/systas/texi/load.texi docs.d/systas/texi/load.texi
+  docs.d/systas/texi/macros.texi docs.d/systas/texi/macros.texi
+  docs.d/systas/texi/modules.texi docs.d/systas/texi/modules.texi
+  docs.d/systas/texi/numbers.texi docs.d/systas/texi/numbers.texi
+  docs.d/systas/texi/pairs.texi docs.d/systas/texi/pairs.texi
+  docs.d/systas/texi/ports.texi docs.d/systas/texi/ports.texi
+  docs.d/systas/texi/procs.texi docs.d/systas/texi/procs.texi
+  docs.d/systas/texi/promise.texi docs.d/systas/texi/promise.texi
+  docs.d/systas/texi/read-print.texi docs.d/systas/texi/read-print.texi
+  docs.d/systas/texi/records.texi docs.d/systas/texi/records.texi
+  docs.d/systas/texi/rgx.texi docs.d/systas/texi/rgx.texi
+  docs.d/systas/texi/scheme.texi docs.d/systas/texi/scheme.texi
+  docs.d/systas/texi/stime.texi docs.d/systas/texi/stime.texi
+  docs.d/systas/texi/strings.texi docs.d/systas/texi/strings.texi
+  docs.d/systas/texi/struct.texi docs.d/systas/texi/struct.texi
+  docs.d/systas/texi/symbols.texi docs.d/systas/texi/symbols.texi
+  docs.d/systas/texi/syntax.texi docs.d/systas/texi/syntax.texi
+  docs.d/systas/texi/systas.texi docs.d/systas/texi/systas.texi
+  docs.d/systas/texi/system.texi docs.d/systas/texi/system.texi
+  docs.d/systas/texi/throw.texi docs.d/systas/texi/throw.texi
+  docs.d/systas/texi/values.texi docs.d/systas/texi/values.texi
+  docs.d/systas/texi/variable.texi docs.d/systas/texi/variable.texi
+  docs.d/systas/texi/vectors.texi docs.d/systas/texi/vectors.texi
+  docs.d/systas/texi/weaks.texi docs.d/systas/texi/weaks.texi
+  docs.d/systas/ps/systas.ps docs.d/systas/ps/systas.ps
+  docs.d/systas/html/alist.html docs.d/systas/html/alist.html
+  docs.d/systas/html/async.html docs.d/systas/html/async.html
+  docs.d/systas/html/boolean.html docs.d/systas/html/boolean.html
+  docs.d/systas/html/chars.html docs.d/systas/html/chars.html
+  docs.d/systas/html/continuations.html docs.d/systas/html/continuations.html
+  docs.d/systas/html/eq.html docs.d/systas/html/eq.html
+  docs.d/systas/html/error.html docs.d/systas/html/error.html
+  docs.d/systas/html/eval.html docs.d/systas/html/eval.html
+  docs.d/systas/html/credits.html docs.d/systas/html/credits.html
+  docs.d/systas/html/debug.html docs.d/systas/html/debug.html
+  docs.d/systas/html/dictionaries.html docs.d/systas/html/dictionaries.html
+  docs.d/systas/html/dynwind.html docs.d/systas/html/dynwind.html
+  docs.d/systas/html/emacs.html docs.d/systas/html/emacs.html
+  docs.d/systas/html/fdsocket.html docs.d/systas/html/fdsocket.html
+  docs.d/systas/html/filesys.html docs.d/systas/html/filesys.html
+  docs.d/systas/html/gc.html docs.d/systas/html/gc.html
+  docs.d/systas/html/hash.html docs.d/systas/html/hash.html
+  docs.d/systas/html/hashtab.html docs.d/systas/html/hashtab.html
+  docs.d/systas/html/identifier-index.html docs.d/systas/html/identifier-index.html
+  docs.d/systas/html/introduction.html docs.d/systas/html/introduction.html
+  docs.d/systas/html/invocation.html docs.d/systas/html/invocation.html
+  docs.d/systas/html/kw.html docs.d/systas/html/kw.html
+  docs.d/systas/html/list.html docs.d/systas/html/list.html
+  docs.d/systas/html/load.html docs.d/systas/html/load.html
+  docs.d/systas/html/macros.html docs.d/systas/html/macros.html
+  docs.d/systas/html/modules.html docs.d/systas/html/modules.html
+  docs.d/systas/html/numbers.html docs.d/systas/html/numbers.html
+  docs.d/systas/html/pairs.html docs.d/systas/html/pairs.html
+  docs.d/systas/html/ports.html docs.d/systas/html/ports.html
+  docs.d/systas/html/procs.html docs.d/systas/html/procs.html
+  docs.d/systas/html/promise.html docs.d/systas/html/promise.html
+  docs.d/systas/html/read-print.html docs.d/systas/html/read-print.html
+  docs.d/systas/html/records.html docs.d/systas/html/records.html
+  docs.d/systas/html/rgx.html docs.d/systas/html/rgx.html
+  docs.d/systas/html/scheme.html docs.d/systas/html/scheme.html
+  docs.d/systas/html/stime.html docs.d/systas/html/stime.html
+  docs.d/systas/html/strings.html docs.d/systas/html/strings.html
+  docs.d/systas/html/struct.html docs.d/systas/html/struct.html
+  docs.d/systas/html/symbols.html docs.d/systas/html/symbols.html
+  docs.d/systas/html/syntax.html docs.d/systas/html/syntax.html
+  docs.d/systas/html/systas.html docs.d/systas/html/systas.html
+  docs.d/systas/html/system.html docs.d/systas/html/system.html
+  docs.d/systas/html/throw.html docs.d/systas/html/throw.html
+  docs.d/systas/html/values.html docs.d/systas/html/values.html
+  docs.d/systas/html/variable.html docs.d/systas/html/variable.html
+  docs.d/systas/html/vectors.html docs.d/systas/html/vectors.html
+  docs.d/systas/html/weaks.html docs.d/systas/html/weaks.html
+  docs.d/hackerlab/texi/arrays.texi docs.d/hackerlab/texi/arrays.texi
+  docs.d/hackerlab/texi/bigpic.texi docs.d/hackerlab/texi/bigpic.texi
+  docs.d/hackerlab/texi/bitsets.texi docs.d/hackerlab/texi/bitsets.texi
+  docs.d/hackerlab/texi/bugs.texi docs.d/hackerlab/texi/bugs.texi
+  docs.d/hackerlab/texi/character-and-string.texi docs.d/hackerlab/texi/character-and-string.texi
+  docs.d/hackerlab/texi/comments.texi docs.d/hackerlab/texi/comments.texi
+  docs.d/hackerlab/texi/conversions.texi docs.d/hackerlab/texi/conversions.texi
+  docs.d/hackerlab/texi/indexes.texi docs.d/hackerlab/texi/indexes.texi
+  docs.d/hackerlab/texi/introduction-to-regexps.texi docs.d/hackerlab/texi/introduction-to-regexps.texi
+  docs.d/hackerlab/texi/introduction-to-unicode.texi docs.d/hackerlab/texi/introduction-to-unicode.texi
+  docs.d/hackerlab/texi/introduction-to-xml-re.texi docs.d/hackerlab/texi/introduction-to-xml-re.texi
+  docs.d/hackerlab/texi/introduction.texi docs.d/hackerlab/texi/introduction.texi
+  docs.d/hackerlab/texi/libhackerlab.texi docs.d/hackerlab/texi/libhackerlab.texi
+  docs.d/hackerlab/texi/document-license.texi docs.d/hackerlab/texi/document-license.texi
+  docs.d/hackerlab/texi/file-names.texi docs.d/hackerlab/texi/file-names.texi
+  docs.d/hackerlab/texi/hashing.texi docs.d/hackerlab/texi/hashing.texi
+  docs.d/hackerlab/texi/machine.texi docs.d/hackerlab/texi/machine.texi
+  docs.d/hackerlab/texi/memory.texi docs.d/hackerlab/texi/memory.texi
+  docs.d/hackerlab/texi/on-hacking.texi docs.d/hackerlab/texi/on-hacking.texi
+  docs.d/hackerlab/texi/opt.texi docs.d/hackerlab/texi/opt.texi
+  docs.d/hackerlab/texi/portability.texi docs.d/hackerlab/texi/portability.texi
+  docs.d/hackerlab/texi/posix-regexps.texi docs.d/hackerlab/texi/posix-regexps.texi
+  docs.d/hackerlab/texi/prefixes.texi docs.d/hackerlab/texi/prefixes.texi
+  docs.d/hackerlab/texi/printfmt.texi docs.d/hackerlab/texi/printfmt.texi
+  docs.d/hackerlab/texi/reserv.texi docs.d/hackerlab/texi/reserv.texi
+  docs.d/hackerlab/texi/rx-posix-data-sheet.texi docs.d/hackerlab/texi/rx-posix-data-sheet.texi
+  docs.d/hackerlab/texi/rx-xml-data-sheet.texi docs.d/hackerlab/texi/rx-xml-data-sheet.texi
+  docs.d/hackerlab/texi/safe.texi docs.d/hackerlab/texi/safe.texi
+  docs.d/hackerlab/texi/source-license.texi docs.d/hackerlab/texi/source-license.texi
+  docs.d/hackerlab/texi/tuning.texi docs.d/hackerlab/texi/tuning.texi
+  docs.d/hackerlab/texi/unicode.texi docs.d/hackerlab/texi/unicode.texi
+  docs.d/hackerlab/texi/unidata-data-sheet.texi docs.d/hackerlab/texi/unidata-data-sheet.texi
+  docs.d/hackerlab/texi/url-fd.texi docs.d/hackerlab/texi/url-fd.texi
+  docs.d/hackerlab/texi/url-socket.texi docs.d/hackerlab/texi/url-socket.texi
+  docs.d/hackerlab/texi/vfdbuf.texi docs.d/hackerlab/texi/vfdbuf.texi
+  docs.d/hackerlab/texi/vu-dash.texi docs.d/hackerlab/texi/vu-dash.texi
+  docs.d/hackerlab/texi/vu-sys.texi docs.d/hackerlab/texi/vu-sys.texi
+  docs.d/hackerlab/texi/vu-utils.texi docs.d/hackerlab/texi/vu-utils.texi
+  docs.d/hackerlab/texi/vu-virtual-null.texi docs.d/hackerlab/texi/vu-virtual-null.texi
+  docs.d/hackerlab/texi/vu.texi docs.d/hackerlab/texi/vu.texi
+  docs.d/hackerlab/texi/xml-re.texi docs.d/hackerlab/texi/xml-re.texi
+  docs.d/hackerlab/ps/libhackerlab.ps docs.d/hackerlab/ps/libhackerlab.ps
+  docs.d/hackerlab/html/arrays.html docs.d/hackerlab/html/arrays.html
+  docs.d/hackerlab/html/bigpic.html docs.d/hackerlab/html/bigpic.html
+  docs.d/hackerlab/html/bitsets.html docs.d/hackerlab/html/bitsets.html
+  docs.d/hackerlab/html/bugs.html docs.d/hackerlab/html/bugs.html
+  docs.d/hackerlab/html/character-and-string.html docs.d/hackerlab/html/character-and-string.html
+  docs.d/hackerlab/html/comments.html docs.d/hackerlab/html/comments.html
+  docs.d/hackerlab/html/conversions.html docs.d/hackerlab/html/conversions.html
+  docs.d/hackerlab/html/document-license.html docs.d/hackerlab/html/document-license.html
+  docs.d/hackerlab/html/file-names.html docs.d/hackerlab/html/file-names.html
+  docs.d/hackerlab/html/indexes.html docs.d/hackerlab/html/indexes.html
+  docs.d/hackerlab/html/introduction-to-regexps.html docs.d/hackerlab/html/introduction-to-regexps.html
+  docs.d/hackerlab/html/introduction-to-unicode.html docs.d/hackerlab/html/introduction-to-unicode.html
+  docs.d/hackerlab/html/introduction-to-xml-re.html docs.d/hackerlab/html/introduction-to-xml-re.html
+  docs.d/hackerlab/html/introduction.html docs.d/hackerlab/html/introduction.html
+  docs.d/hackerlab/html/libhackerlab.html docs.d/hackerlab/html/libhackerlab.html
+  docs.d/hackerlab/html/machine.html docs.d/hackerlab/html/machine.html
+  docs.d/hackerlab/html/memory.html docs.d/hackerlab/html/memory.html
+  docs.d/hackerlab/html/hashing.html docs.d/hackerlab/html/hashing.html
+  docs.d/hackerlab/html/on-hacking.html docs.d/hackerlab/html/on-hacking.html
+  docs.d/hackerlab/html/opt.html docs.d/hackerlab/html/opt.html
+  docs.d/hackerlab/html/portability.html docs.d/hackerlab/html/portability.html
+  docs.d/hackerlab/html/posix-regexps.html docs.d/hackerlab/html/posix-regexps.html
+  docs.d/hackerlab/html/prefixes.html docs.d/hackerlab/html/prefixes.html
+  docs.d/hackerlab/html/printfmt.html docs.d/hackerlab/html/printfmt.html
+  docs.d/hackerlab/html/reserv.html docs.d/hackerlab/html/reserv.html
+  docs.d/hackerlab/html/rx-posix-data-sheet.html docs.d/hackerlab/html/rx-posix-data-sheet.html
+  docs.d/hackerlab/html/rx-xml-data-sheet.html docs.d/hackerlab/html/rx-xml-data-sheet.html
+  docs.d/hackerlab/html/safe.html docs.d/hackerlab/html/safe.html
+  docs.d/hackerlab/html/source-license.html docs.d/hackerlab/html/source-license.html
+  docs.d/hackerlab/html/tuning.html docs.d/hackerlab/html/tuning.html
+  docs.d/hackerlab/html/unicode.html docs.d/hackerlab/html/unicode.html
+  docs.d/hackerlab/html/unidata-data-sheet.html docs.d/hackerlab/html/unidata-data-sheet.html
+  docs.d/hackerlab/html/url-fd.html docs.d/hackerlab/html/url-fd.html
+  docs.d/hackerlab/html/url-socket.html docs.d/hackerlab/html/url-socket.html
+  docs.d/hackerlab/html/vfdbuf.html docs.d/hackerlab/html/vfdbuf.html
+  docs.d/hackerlab/html/vu-dash.html docs.d/hackerlab/html/vu-dash.html
+  docs.d/hackerlab/html/vu-sys.html docs.d/hackerlab/html/vu-sys.html
+  docs.d/hackerlab/html/vu-utils.html docs.d/hackerlab/html/vu-utils.html
+  docs.d/hackerlab/html/vu-virtual-null.html docs.d/hackerlab/html/vu-virtual-null.html
+  docs.d/hackerlab/html/vu.html docs.d/hackerlab/html/vu.html
+  docs.d/hackerlab/html/xml-re.html docs.d/hackerlab/html/xml-re.html
+Renamed-directories: docs.d/arch/html/.arch-ids docs.d/arch/html/.arch-ids
+  docs.d/arch/ps/.arch-ids docs.d/arch/ps/.arch-ids
+  docs.d/arch/texi/.arch-ids docs.d/arch/texi/.arch-ids
+  docs.d/hackerlab/html/.arch-ids docs.d/hackerlab/html/.arch-ids
+  docs.d/hackerlab/ps/.arch-ids docs.d/hackerlab/ps/.arch-ids
+  docs.d/hackerlab/texi/.arch-ids docs.d/hackerlab/texi/.arch-ids
+  docs.d/systas/html/.arch-ids docs.d/systas/html/.arch-ids
+  docs.d/systas/ps/.arch-ids docs.d/systas/ps/.arch-ids
+  docs.d/systas/texi/.arch-ids docs.d/systas/texi/.arch-ids
+Modified-files: =RELEASE-ID.d/=RELEASE-ID.arch
+  =RELEASE-ID.d/=RELEASE-ID.ftp-utils ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-10
+  lord@regexps.com--2002/dists--devo--1.0--patch-11
+  lord@regexps.com--2002/dists--devo--1.0--patch-12
+  lord@regexps.com--2002/dists--devo--1.0--patch-13
+  lord@regexps.com--2002/dists--devo--1.0--patch-7
+  lord@regexps.com--2002/dists--devo--1.0--patch-8
+  lord@regexps.com--2002/dists--devo--1.0--patch-9
+  lord@regexps.com--2002/dists--lord--1.0--patch-11
+
+Patches applied:
+
+  * lord@regexps.com--2002/dists--devo--1.0--patch-13
+     added a generic config file for arch
+
+  * lord@regexps.com--2002/dists--devo--1.0--patch-12
+     updated release id
+
+  * lord@regexps.com--2002/dists--devo--1.0--patch-11
+     added doc file dir tags
+
+  * lord@regexps.com--2002/dists--devo--1.0--patch-10
+     updated release ids
+
+  * lord@regexps.com--2002/dists--devo--1.0--patch-9
+     updated the `arch' documentation
+
+  * lord@regexps.com--2002/dists--devo--1.0--patch-8
+     update the installation instructions
+
+  * lord@regexps.com--2002/dists--devo--1.0--patch-7
+     merge from lord
+

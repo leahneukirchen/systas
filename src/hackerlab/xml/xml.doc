@@ -1,0 +1,20 @@
+/* tag: Tom Lord Tue Dec  4 14:57:17 2001 (xml.doc)
+ */
+/************************************************************************
+ *(h0 "XML Support")
+ * 
+ * The Hackerlab C Library contains tools for processing XML
+ * documents.  XML is defined in the specification *Extensible
+ * Markup Language (XML) 1.0 (Second Edition)* published by
+ * W3C (url:"http://www.w3.org/TR/REC-xml").  Within this
+ * document, that specification is refered to *XML 1.0*.
+ * 
+ * In addition to the functions described here, the library
+ * contains a regular expression pattern matcher for 
+ * a pattern langauge described by W3C.  See xref:"XML Regular
+ * Expressions".
+ * 
+ */
+/*(include-documentation "charsets.h")
+ */
+

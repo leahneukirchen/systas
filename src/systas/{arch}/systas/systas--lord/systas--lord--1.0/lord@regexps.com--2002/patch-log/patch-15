@@ -1,0 +1,21 @@
+Revision: systas--lord--1.0--patch-15
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri May  3 14:01:14 PDT 2002
+Standard-date: 2002-05-03 21:01:14 GMT
+Summary: Fixed a `listify' bug and signal name bug.
+Keywords: 
+New-files: {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-15
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regepx.com--2002/ChangeLog.lord--1.0
+  libsystas/scheme.c libsystas/system.c
+New-patches: lord@regexps.com--2002/systas--lord--1.0--patch-15
+
+
+system.c
+	On some systems, EDEADLOCK and EDEADLK are the same, so don't
+	always have two `case's of a `switch' for those.
+
+
+scheme.c
+	When calling `listify', don't forget the final SCM_UNDEFINED.

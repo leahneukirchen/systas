@@ -1,0 +1,218 @@
+<html>
+<head>
+<title>Reading and Writing Data Structures</title>
+</head>
+<body>
+
+<a name="Reading_and_Writing_Data_Structures"></a>
+
+
+
+<h2 align=center>Reading and Writing Data Structures</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="load.html#Evaluating_Expressions_in_Files">Evaluating Expressions in Files</a></br>
+
+<b>prev: </b><a href="ports.html#Ports">Ports</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>These functions are used to read or write Scheme data structures.
+Every data structure has a printed representation, but not every data
+structure can be read back in.  For example, an structure might be
+printed as:
+</p><pre>
+     #&lt;structure 80ddf20>
+
+</pre>
+<p>but trying to read that syntax will cause an error.
+</p><p>Lists, numbers, strings, and vectors are examples of data types that
+can be both read and written.  Documentation for each type explains the
+read syntax of that type, if it has one.
+</p><p><b><u>Function</u> <code><a name="read"></a><a name="index-pt:0"></a>
+read
+</code></b><br>
+<pre>
+(read :optional port case? sharp :rest kws)
+
+</pre>
+<p>Read an object from <code>port</code>
+ or <code>(current-input-port)</code>
+.
+If <code>port</code>
+ is a string or read-only string, read from that string.
+</p><p>If <code>case?</code>
+ is specified and not <code>#f</code>
+, symbols are read in a case
+insensative manner (symbol names are converted to lower case).
+</p><p><code>sharp_reader_proc</code>
+ is <code>#f</code>
+ or a procedure to use to read values that
+begin with <em>
+<a name="index-pt:1"></a>
+
+#
+</em>
+ if the character following the <em>
+<a name="index-pt:2"></a>
+
+#
+</em>
+ has no built-in
+meaning. Examples of <em>
+<a name="index-pt:3"></a>
+
+#
+</em>
+ syntax that is built-in are:
+</p><pre>
+     #(a b c)        ;; a vector
+     #t              ;; true
+     #f              ;; false
+     #b11010         ;; a binary number
+     #o777           ;; an octal number
+     #d1313          ;; a decimal number
+     #xceded         ;; a hexadecimal number
+     #i3.1           ;; an inexact number
+     #e69            ;; an exact number
+     #s&quot;odd symbol&quot;  ;; a symbol with an odd name
+     #\space         ;; a character
+
+</pre>
+<p>If <code>sharp</code>
+ is needed, it is called:
+</p><pre>
+     (sharp port case-insensitive? first-character)
+
+</pre>
+<p><code>case-insensitive?</code>
+ and <code>port</code>
+ are as passed to <code>read</code>
+;
+<code>first-character</code>
+ is the character that followed the <code>#</code>
+.
+</p><p>Supported keyword arguments are:
+</p><pre>
+     :cycles         -- permit circular structures
+                        to be read.
+
+</pre>
+<p><strong><u>WARNING:</u></strong> Support for <code>:cycles</code>
+ seems to be broken
+in this release.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="write"></a><a name="index-pt:4"></a>
+write
+</code></b><br>
+<pre>
+(write obj :optional port :rest kw-arguments)
+
+</pre>
+<pre>
+ Write a printed representation of `obj' on `port' or
+ `(current-output-port)'.
+
+</pre>
+<pre>
+ For all objects that can be read, `write' prints using that
+ syntax.
+
+</pre>
+<p><strong><u>WARNING:</u></strong> Keyword arguments control the printing of circular
+structures, but seem not to work correctly in the current release.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="display"></a><a name="index-pt:5"></a>
+display
+</code></b><br>
+<pre>
+(display obj :optional port)
+
+</pre>
+<pre>
+ Write a printed representation of `obj' on `port' or
+ `(current-output-port)'.
+
+</pre>
+<p><code>display</code>
+ is similar to <code>write</code>
+, except that strings are printed
+without quotes, characters are printed without <em>
+<a name="index-pt:6"></a>
+
+#\
+</em>
+ and so forth.
+</p><p><strong><u>WARNING:</u></strong> Keyword arguments control the printing of circular
+structures, but seem not to work correctly in the current release.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="display*"></a><a name="index-pt:7"></a>
+display*
+</code></b><br>
+<pre>
+(display* . args)
+
+</pre>
+<p>This is simply:
+     (define (display* . args) (for-each display args))
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="display*-port"></a><a name="index-pt:8"></a>
+display*-port
+</code></b><br>
+<pre>
+(display*-port port . args)
+
+</pre>
+<p>This is simply:
+</p><pre>
+  (define (display*-port port . args)
+    (if port
+        (with-output-to-port port (lambda () (apply display* args)))
+        (apply display* args)))
+
+</pre>
+
+<br>
+<br><p><b><u>Function</u> <code><a name="newline"></a><a name="index-pt:9"></a>
+newline
+</code></b><br>
+<pre>
+(newline :optional port)
+
+</pre>
+<p>Write the character <code>#\nl</code>
+ to <code>port</code>
+ or to <code>(current-output-port)</code>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

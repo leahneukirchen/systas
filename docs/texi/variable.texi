@@ -1,0 +1,190 @@
+@need 3200
+
+@node First-Class Variables
+@chapter First-Class Variables
+
+All bindings are stored in locations called @geindex variables
+@dfn{variables}.  Variables
+are first-class objects.
+
+
+A variable has two parts: a @geindex name hint
+@dfn{name hint} and a @geindex value
+@dfn{value}.
+
+
+The name hint is usually (but not necessarily) the symbol whose
+name denotes this variable in the lexical scope of the variables
+definition.  It is possible to create a variable whose name hint is
+different from the name that denotes the variable.
+
+
+The value may be uninitialized in which case the variable is
+@geindex undefined
+@dfn{undefined}.  It is an error to try to access the value of an
+undefined variable.
+
+
+Two variables may represent the same binding, yet not be equal in 
+the sense of @code{eq?}.  Variables should ordinarily be compared using
+@code{eqv?}
+
+@menu
+* First Class Variable Procedures::
+* First-Class Variables Rationale::
+@end menu
+
+@need 3200
+
+@node First Class Variable Procedures
+@section First Class Variable Procedures
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{make-variable}@fuindex make-variable
+@*
+@example
+@group
+(make-variable initial-value :optional name-hint)
+@end group
+@group
+@end group
+@end example
+
+Create a new, initialized variable.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{make-undefined-variable}@fuindex make-undefined-variable
+@*
+@example
+@group
+(make-undefined-variable :optional name-hint)
+@end group
+@group
+@end group
+@end example
+
+Create a new uninitialized variable.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{variable?}@fuindex variable?
+@*
+@example
+@group
+(variable? obj)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is a variable, @code{#f} otherwise.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{variable-ref}@fuindex variable-ref
+@*
+@example
+@group
+(variable-ref var)
+@end group
+@group
+@end group
+@end example
+
+Return the value of the variable @code{var}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{variable-name}@fuindex variable-name
+@*
+@example
+@group
+(variable-name var)
+@end group
+@group
+@end group
+@end example
+
+Return the name of the variable @code{var}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{variable-set!}@fuindex variable-set!
+@*
+@example
+@group
+(variable-set! var val)
+@end group
+@group
+@end group
+@end example
+
+Modify the value of a variable.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{builtin-variable}@fuindex builtin-variable
+@*
+@example
+@group
+(builtin-variable name)
+@end group
+@group
+@end group
+@end example
+
+Return the variable denoted by @code{name} in the built-in 
+top-level.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{variable-bound?}@fuindex variable-bound?
+@*
+@example
+@group
+(variable-bound? var)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if the variable @code{var} has a value, @code{#f} if
+it is undefined.
+
+
+
+
+@need 3200
+
+@node First-Class Variables Rationale
+@section First-Class Variables Rationale
+
+We exposed top-level variables to Scheme to make it possible
+to implement the module system in Scheme in a conceptually
+straightforward way (a hook in eval permits Scheme programs
+to define the mapping between variable names (represented
+by symbols) and variables (represented by first-class variables).
+
+
+It is a historical accident that our first-class variables
+have a @geindex name hint
+@dfn{name hint} -- that is simply a consequence of how
+variables were represented in SCM, the predecessor implementation.
+Programs are free to ignore this feature, although it does make
+the printed representation of a variable easier to understand.
+
+
+
+
+
+
+

@@ -1,0 +1,18 @@
+
+
+These ChangeLogs are for the package infrastructure (generic
+makefiles, configure scripts, etc.)
+
+
+The ChangeLogs for particular packages are in their respective
+subdirectories.  For example, the `arch' ChangeLogs are:
+
+
+	arch/ChangeLog		# master ChangeLog
+
+	arc/ChangeLog.d/	# branch ChangeLogs
+
+
+
+# tag: Tom Lord Mon Jan  7 16:23:27 2002 (ChangeLog.d/=README)
+#

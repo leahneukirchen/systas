@@ -1,0 +1,463 @@
+@need 3200
+
+@node Association Lists
+@chapter Association Lists
+
+Lists of the form:
+
+@example
+@group
+     ((k1 . v1) (k2 . v2) (k3 . v3) ...)
+@end group
+@group
+@end group
+@end example
+
+@noindent
+are considered @geindex association lists
+@dfn{association lists}.  They represent a mapping from the
+values @code{k1 k2 k3...} to the values @code{v1 v2 v3...}.
+
+
+In an association, @code{(k1 . v1)} is called the @geindex value cell
+@dfn{value cell} for @code{k1}.
+@code{v1} is called the @geindex binding
+@dfn{binding} of @code{k1}.  @code{k1} is a @geindex key
+@dfn{key} and @code{v1} a
+@geindex value
+@dfn{value}.
+
+
+An association list may contain more than one binding for a
+particular key, but generally, only the first occuring binding
+matters.
+
+@need 3200
+
+@section Constructing Association Lists
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{acons}@fuindex acons
+@*
+@example
+@group
+(acons key value alist)
+@end group
+@group
+@end group
+@end example
+
+Construct an association list whose car is @code{(key . value)} and
+whose cdr is @code{alist}.  In other words, return:
+
+@example
+@group
+     (cons (cons key value) alist)
+@end group
+@group
+@end group
+@end example
+
+
+
+@need 3200
+
+@section Finding Value Cells in Association Lists-- assq assv assoc
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{assq}@fuindex assq
+@*
+@example
+@group
+(assq key alist)
+@end group
+@group
+@end group
+@end example
+
+Return the value cell for @code{key} from the association list @code{alist}.
+Keys are compared using @code{eq?}. If there is no such cell, return
+@code{#f}.
+
+
+@code{alist} is searched from beginning to end.  If a matching key is
+found, that value cell is immediately returned.  If no matching key
+is found, @code{#f} is returned.
+
+
+If @code{alist} is found to be an improper list before a matching key is
+found, @code{#f} is returned.
+
+
+If @code{alist} contains an element which is not a pair (not a proper
+value cell), that element is ignored.  
+
+
+If @code{alist} is a circular list, @code{assq} is not guaranteed to
+terminate.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{assv}@fuindex assv
+@*
+@example
+@group
+(assv key alist)
+@end group
+@group
+@end group
+@end example
+
+Return the value cell for @code{key} from the association list @code{alist}.
+Keys are compared using @code{eqv?}. If there is no such cell, return
+@code{#f}.
+
+
+@code{alist} is searched from beginning to end.  If a matching key is
+found, that value cell is immediately returned.  If not matching
+key is found, @code{#f} is returned.
+
+
+If @code{alist} is found to be an improper list before a matching key is
+found, @code{#f} is returned. 
+
+
+If @code{alist} contains an element which is not a pair (not a proper
+value cell), that element is ignored.  
+
+
+If @code{alist} is a circular list, @code{assq} is not guaranteed to
+terminate.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{assoc}@fuindex assoc
+@*
+@example
+@group
+(assoc key alist :optional compare)
+@end group
+@group
+@end group
+@end example
+
+Return the value cell for @code{key} from the association list @code{alist}.
+Keys are compared using @code{equal?} unless @code{compare} is specified. If
+there is no such cell, return @code{#f}.
+
+
+If @code{compare} is specified, it is invoked:
+
+@example
+@group
+     (compare key key-from-alist)
+@end group
+@group
+@end group
+@end example
+
+@noindent
+and should return true if the @code{key-from-alist} should be considered
+a match for @code{key}.
+
+
+@code{alist} is searched from beginning to end.  If a matching key is
+found, that value cell is immediately returned.  If not matching
+key is found, @code{#f} is returned.
+
+
+If @code{alist} is found to be an improper list before a matching key is
+found, @code{#f} is returned.
+
+
+If @code{alist} contains an element which is not a pair (not a proper
+value cell), that element is ignored.  
+
+
+If @code{alist} is a circular list, @code{assq} is not guaranteed to
+terminate.
+
+
+
+
+@need 3200
+
+@section Finding Values in Association Lists-- assq-ref assv-ref assoc-ref
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{assq-ref}@fuindex assq-ref
+@*
+@example
+@group
+(assq-ref alist key)
+@end group
+@group
+@end group
+@end example
+
+Equivalent to:
+
+@example
+@group
+     (and=> (assq key alist) cdr)
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{assv-ref}@fuindex assv-ref
+@*
+@example
+@group
+(assv-ref alist key)
+@end group
+@group
+@end group
+@end example
+
+Equivalent to:
+
+@example
+@group
+     (and=> (assv key alist) cdr)
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{assoc-ref}@fuindex assoc-ref
+@*
+@example
+@group
+(assoc-ref alist key :optional compare)
+@end group
+@group
+@end group
+@end example
+
+Equivalent to:
+
+@example
+@group
+     (and=> (assoc key alist compare) cdr)
+@end group
+@group
+@end group
+@end example
+
+
+
+@need 3200
+
+@section Changing Values in Association Lists-- assq-set! assv-set! assoc-set!
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{assq-set!}@fuindex assq-set!
+@*
+@example
+@group
+(assq-set! alist key value)
+@end group
+@group
+@end group
+@end example
+
+Equivalent to:
+
+@example
+@group
+     (let ((value-cell (assq key alist)))
+       (if (not value-cell)
+           (acons key value alist)
+           (begin
+              (set-cdr! value-cell value)
+              alist)))
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{assv-set!}@fuindex assv-set!
+@*
+@example
+@group
+(assv-set! alist key value)
+@end group
+@group
+@end group
+@end example
+
+Equivalent to:
+
+@example
+@group
+     (let ((value-cell (assv key alist)))
+       (if (not value-cell)
+           (acons key value alist)
+           (begin
+              (set-cdr! value-cell value)
+              alist)))
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{assoc-set!}@fuindex assoc-set!
+@*
+@example
+@group
+(assoc-set! alist key value :optional compare)
+@end group
+@group
+@end group
+@end example
+
+Equivalent to:
+
+@example
+@group
+     (let ((value-cell (assoc key alist compare)))
+       (if (not value-cell)
+           (acons key value alist)
+           (begin
+              (set-cdr! value-cell value)
+              alist)))
+@end group
+@group
+@end group
+@end example
+
+
+
+@need 3200
+
+@section Removing Values from Association Lists-- assq-remove! assv-remove! assoc-remove!
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{assq-remove!}@fuindex assq-remove!
+@*
+@example
+@group
+(assq-remove! alist key)
+@end group
+@group
+@end group
+@end example
+
+Equivalent to:
+
+@example
+@group
+     (let ((value-cell (assq key alist)))
+       (if (not value-cell)
+           alist
+           (delq! value-cell alist)))
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{assv-remove!}@fuindex assv-remove!
+@*
+@example
+@group
+(assv-remove! alist key)
+@end group
+@group
+@end group
+@end example
+
+Equivalent to:
+
+@example
+@group
+     (let ((value-cell (assq key alist)))
+       (if (not value-cell)
+           alist
+           (delq! value-cell alist)))
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{assoc-remove!}@fuindex assoc-remove!
+@*
+@example
+@group
+(assoc-remove! alist key :optional compare)
+@end group
+@group
+@end group
+@end example
+
+Equivalent to:
+
+@example
+@group
+     (let ((value-cell (assoc key alist compare)))
+       (if (not value-cell)
+           alist
+           (delq! value-cell alist)))
+@end group
+@group
+@end group
+@end example
+
+
+
+@need 3200
+
+@section Rationale -- Association Lists
+
+Mostly, Systas follows the Scheme standard.
+
+
+See @strong{q, v, and generalized} in @ref{Equality}.
+
+
+See @ref{Rationale -- Dictionaries in General}
+
+
+In many procedures that operate on association lists we accept
+lists that contain elements which are not pairs and simply ignore
+those elements.
+
+
+This keeps the implementation slightly smaller and simpler.
+
+
+This makes the procedures useful on a wider range of input values,
+though this increased range doesn't seem to be used often in
+practice.
+
+
+This increases the chance of undetected errors, but errors of this
+sort do not seem to be common in practice.  We believe that in
+programs where such errors are unacceptable, static analysis, not
+run-time detection, is the proper technique for catching them.
+
+
+
+
+
+
+

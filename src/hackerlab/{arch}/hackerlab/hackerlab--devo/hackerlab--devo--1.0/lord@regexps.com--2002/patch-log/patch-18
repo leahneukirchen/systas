@@ -1,0 +1,25 @@
+Revision: hackerlab--devo--1.0--patch-18
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sun Mar 24 01:29:40 PST 2002
+Standard-date: 2002-03-24 09:29:40 GMT
+Summary: merge from `lord'
+Keywords: 
+New-files: tests/rx-posix-tests/posix-test-cases.h
+  tests/rx-posix-tests/test-cases.h
+  {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--2002/patch-log/patch-18
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-33
+Removed-files: tests/rx-posix-tests/test-cases.h
+  tests/rx-posix-tests/posix-test-cases.h
+Modified-files: =THANKS ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  rx-posix/limits.h rx-posix/match-regexp.c
+  tests/rx-posix-tests/test-rx.scm
+New-patches: lord@regexps.com--2002/hackerlab--devo--1.0--patch-18
+  lord@regexps.com--2002/hackerlab--lord--1.0--patch-33
+
+Patches applied:
+
+  * lord@regexps.com--2002/hackerlab--lord--1.0--patch-33
+     rx-posix bug fixes and new test cases
+

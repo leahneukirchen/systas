@@ -1,0 +1,17 @@
+# tag: Tom Lord Tue Dec  4 14:52:16 2001 (xml/Makefile.in)
+#
+
+libs			:=	$(objroot)/hackerlab/libboot/libboot.a -lm
+
+generated-source	:=	charsets.c
+
+include $(makefiles)/library-objects.mk
+include $(makefiles)/install-includes.mk
+
+$(generated-includes) $(generated-source): ../xml-scaffolding/xml-generate
+	echo
+	echo "================ generating xml character sets ================"
+	echo
+	-rm $(generated-includes) $(generated-source)
+	../xml-scaffolding/xml-generate
+

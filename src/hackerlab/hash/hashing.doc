@@ -1,0 +1,33 @@
+/* tag: Tom Lord Tue Dec  4 14:57:15 2001 (hashing.doc)
+ */
+/************************************************************************
+ *(h0 "Hashing")
+ * 
+
+
+\INTERFACES DESCRIBED IN THIS CHAPTER ARE QUITE UNSTABLE/
+
+Hash values and hash tables are useful in many programs.  The
+Hackerlab C Library provides:
+
+\hash utilities/ -- functions for computing hash values in common
+situations.  Hash functions for strings can be found elsewhere. (For
+strings of 8-bit characters, see xref:"Computing Hash Values From
+Strings".  For Unicode strings, see *XREF*.)
+
+\hash tables/ -- a general-purpose implementation of variably sized
+hash tables.
+
+\NOTE:/ Only one type of hash table is provided in this release.
+Realisticly, several different types of hash table are needed.
+Future releases will contain additional types of hash table.
+
+ */
+/*(menu)
+ */
+/*(include-documentation "hash-utils.c")
+ */
+
+/*(include-documentation "hashtree.c")
+ */
+

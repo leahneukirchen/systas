@@ -1,0 +1,17 @@
+Revision: systas--lord--1.0--patch-3
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri Jan 11 18:47:11 PST 2002
+Standard-date: 2002-01-11
+Summary: added boiler-plate files
+Keywords: 
+New-files: {arch}/systas/systas--devo/systas--devo--1.0/lord@regexps.com--2002/patch-log/patch-1
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-3
+  COPYING =NEWS =README =TODO
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regepx.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/systas--devo--1.0--patch-1
+  lord@regexps.com--2002/systas--lord--1.0--patch-3
+
+=README, =NEWS, etc.
+

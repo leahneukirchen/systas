@@ -1,0 +1,201 @@
+<html>
+<head>
+<title>Time-Related Procedures</title>
+</head>
+<body>
+
+<a name="Time-Related_Procedures"></a>
+
+
+
+<h2 align=center>Time-Related Procedures</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+
+
+</small>
+<br>
+
+
+
+
+
+
+<p>The time functions 
+</p><p><b><u>Function</u> <code><a name="%time"></a><a name="index-pt:0"></a>
+%time
+</code></b><br>
+<pre>
+(%time)
+
+</pre>
+<p>Return the current time of day, measured in seconds beginning at
+<code>00</code>
+:00:00 GMT, January <code>1</code>
+, <code>1970</code>
+.  May return an errrno object.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="time"></a><a name="index-pt:1"></a>
+time
+</code></b><br>
+<pre>
+(timevoid)
+
+</pre>
+<p>Return the current time of day, measured in seconds beginning
+at <code>00</code>
+:00:00 GMT, January <code>1</code>
+, <code>1970</code>
+.
+</p><p>If an error occurs, an exception is signaled.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="localtime"></a><a name="index-pt:2"></a>
+localtime
+</code></b><br>
+<pre>
+(localtime :optional time)
+
+</pre>
+<p>Return the local time (as from <code>localtime(3)</code>
+) in a
+keyword-argument list.
+</p><p>The list includes keyword/arguments: 
+</p><pre>
+     :hour &lt;integer>         the current hour (0..23)
+     :min &lt;integer>          the current minute (0..59)
+     :sec &lt;integer>          the current second (0..59)
+     :mday &lt;integer>         the current day/month (1..31)
+     :mon &lt;integer>          the current month (0..11)
+     :wday &lt;integer>         the current day (0 (sun) .. 6 (sat))
+     :yday &lt;integer>         the current day-or-year (0..365)
+     :isdst &lt;boolean>        are summer hours in effect?
+     :zone &lt;string>          a name for the current timezone
+     :gmtoff &lt;integer>       offset from GMT in hours
+
+</pre>
+
+<br>
+<br><p><b><u>Function</u> <code><a name="%times"></a><a name="index-pt:3"></a>
+%times
+</code></b><br>
+<pre>
+(%times)
+
+</pre>
+<p>Return a list of process and system times:
+</p><pre>
+     (uptime
+      user-time
+      system-time
+      children-user-time
+      children-system-time)
+
+</pre>
+<p>These times are expressed in clock ticks.  The number of clock
+ticks per second is bound to <code>internal-time-units-per-second</code>
+.
+</p><p>See the manual page for <code>times</code>
+.  This function may return
+an errno object.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="times"></a><a name="index-pt:4"></a>
+times
+</code></b><br>
+<pre>
+(times)
+
+</pre>
+<p>Return a list of process and system times:
+</p><pre>
+     (uptime
+      user-time
+      system-time
+      children-user-time
+      children-system-time)
+
+</pre>
+<p>These times are expressed in clock ticks.  The number of clock
+ticks per second is bound to <code>internal-time-units-per-second</code>
+.
+</p><p>See the manual page for <code>times</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="get-internal-run-time"></a><a name="index-pt:5"></a>
+get-internal-run-time
+</code></b><br>
+<pre>
+(get-internal-run-timevoid)
+
+</pre>
+<p>Return the amount of time, in <em>
+<a name="index-pt:6"></a>
+
+clock ticks
+</em>
+, consumed by this
+process (both user and system).
+</p><p>The number of clock ticks per second is bound to
+<code>internal-time-units-per-second</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%gettimeofday"></a><a name="index-pt:7"></a>
+%gettimeofday
+</code></b><br>
+<pre>
+(%gettimeofday)
+
+</pre>
+<p>Return a list:
+</p><pre>
+     ((sec . usec) minuteswest dsttime)
+
+</pre>
+<p>See <code>gettimeofday</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="get-internal-real-time"></a><a name="index-pt:8"></a>
+get-internal-real-time
+</code></b><br>
+<pre>
+(get-internal-real-timevoid)
+
+</pre>
+<p>Return the amount of real time that have elapsed
+since this process was started.  The result is expressed
+in <em>
+<a name="index-pt:9"></a>
+
+clock ticks
+</em>
+.
+</p><p>The number of clock ticks per second is bound to
+<code>internal-time-units-per-second</code>
+
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

@@ -1,0 +1,43 @@
+# tag: Tom Lord Tue Dec  4 14:52:07 2001 (hackerlab/Makefile.in)
+#
+boot_dirs		:=	\
+				arrays \
+				bitsets \
+				bugs \
+				char \
+				cmd \
+				fmt \
+				fs \
+				hash \
+				machine \
+				mem \
+				os \
+				sort \
+				rx \
+				rx-posix \
+				uni \
+				vu \
+				vu-network
+# piw \
+# piw-malloc \
+# piw-glob 
+
+
+boot2_dirs		:=	\
+				unicode \
+				unidata \
+				unidata-scaffolding \
+				$(boot_dirs)
+
+
+hackerlab_dirs		:=	\
+				rx-xml \
+				xml \
+				xml-scaffolding \
+				$(boot2_dirs)
+
+
+export boot_dirs boot2_dirs hackerlab_dirs
+
+include $(makefiles)/dirs.mk
+

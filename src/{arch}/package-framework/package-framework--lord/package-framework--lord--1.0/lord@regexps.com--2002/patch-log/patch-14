@@ -1,0 +1,36 @@
+Revision: package-framework--lord--1.0--patch-14
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Tue Feb  5 01:27:56 PST 2002
+Standard-date: 2002-02-05
+Summary: merge from devo
+Keywords: 
+New-files: {arch}/package-framework/package-framework--devo/package-framework--devo--1.0/lord@regexps.com--2002/patch-log/patch-5
+  {arch}/package-framework/package-framework--devo/package-framework--devo--1.0/lord@regexps.com--2002/patch-log/patch-6
+  {arch}/package-framework/package-framework--devo/package-framework--devo--1.0/lord@regexps.com--2002/patch-log/patch-7
+  {arch}/package-framework/package-framework--devo/package-framework--devo--1.0/lord@regexps.com--2002/patch-log/patch-8
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-14
+Modified-files: =THANKS ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  build-tools/Makefiles/library.mk
+  build-tools/scripts/configure-top build-tools/scripts/option
+New-patches: lord@regexps.com--2002/package-framework--devo--1.0--patch-5
+  lord@regexps.com--2002/package-framework--devo--1.0--patch-6
+  lord@regexps.com--2002/package-framework--devo--1.0--patch-7
+  lord@regexps.com--2002/package-framework--devo--1.0--patch-8
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-14
+
+Patches applied:
+
+  * lord@regexps.com--2002/package-framework--devo--1.0--patch-8
+     updated =THANKS
+
+  * lord@regexps.com--2002/package-framework--devo--1.0--patch-7
+     fixed `configure-top' bugs
+
+  * lord@regexps.com--2002/package-framework--devo--1.0--patch-6
+     portability tweaks
+
+  * lord@regexps.com--2002/package-framework--devo--1.0--patch-5
+     merge from lord
+

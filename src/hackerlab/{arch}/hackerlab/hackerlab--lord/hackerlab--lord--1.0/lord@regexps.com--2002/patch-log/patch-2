@@ -1,0 +1,16 @@
+Revision: hackerlab--lord--1.0--patch-2
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon Jan  7 16:49:01 PST 2002
+Standard-date: 2002-01-07
+Summary: ChangeLog reorg
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-2
+  ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+Removed-files: ChangeLog ChangeLog.d/lord@regexps.com--2002/ChangeLog
+Renamed-files: ChangeLog.d/lord@regexps.com--2001Q4/ChangeLog.devo ChangeLog.d/lord@regexps.com--2001Q4/ChangeLog.devo--1.0
+New-patches: lord@regexps.com--2002/hackerlab--lord--1.0--patch-2
+
+Name ChangeLogs by branch.  Use tagged ChangeLogs.
+

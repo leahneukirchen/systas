@@ -1,0 +1,22 @@
+# tag: Tom Lord Tue Dec  4 14:52:15 2001 (rx-tests/Makefile.in)
+#
+
+tested-headers		:=	tree.h \
+				super.h \
+				nfa.h \
+				nfa-cache.h \
+				escape.h \
+				dfa.h \
+				dfa-utf8.h \
+				dfa-utf16.h \
+				dfa-cache.h \
+				dfa-iso8859-1.h \
+				dbug.h \
+				bits-tree-rules.h
+
+test-headers		:=	$(addprefix hackerlab/rx/, $(tested-headers))
+
+libs			:=	$(objroot)/hackerlab/libhackerlab/libhackerlab.a -lm
+
+include $(makefiles)/unit-tests.mk
+

@@ -1,0 +1,15 @@
+Revision: hackerlab--devo--1.0--patch-3
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon Jan 14 16:19:11 PST 2002
+Standard-date: 2002-01-14
+Summary: minor bug fix
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--2002/patch-log/patch-3
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  sb/sb.c
+New-patches: lord@regexps.com--2002/hackerlab--devo--1.0--patch-3
+
+Added missing "#include" in `sb.c'.
+

@@ -1,0 +1,44 @@
+@need 3200
+
+@node Running Systas from Emacs
+@chapter Running Systas from Emacs
+
+GNU Emacs (and approximately compatible Emacsen) provides
+@code{inferior-scheme-mode} for running a Scheme interpreter
+sub-process, and @code{scheme-mode} for editing Scheme source.
+
+
+These two modes interact nicely, especially via the command
+@code{scheme-send-definition} (usually bound to @code{M-C-x}).  That command
+can be invoked in a @code{scheme-mode} buffer.  It finds the top level
+expression at or nearest the point, and sends it to the Scheme
+subprocess.
+
+
+The Systas Scheme module system complicates things slightly.
+Suppose your are editting two files, each of which defines
+a module: @code{module-a.scm} and @code{module-b.scm}.  If you try to send a
+defintion from @code{module-a.scm}, you want that definition to be
+evaluated in @code{module-a}.  If you send from @code{module-b.scm}, you
+expect evaluation in @code{module-b}.
+
+
+For that reason, systas is distributed with @code{init-guile-scheme.el}
+-- an Emacs lisp file you can load in .emacs.  It defines a new
+command called @code{modular-scheme-send-definition}.
+
+
+When invoked, @code{modular-scheme-send-definition} looks at the top of
+the current source file for a @code{define-module} expression.  If it
+finds one, it sends that expression before sending the expression
+at or near the point.  That will cause the module to be made the
+current module (and autoloaded, if necessary) before evaluating the
+expression at the point.
+
+
+(@code{init-guile-scheme.el} provides other useful definitions as well,
+along with an expanded set of indenting rules for Guile Scheme.)
+
+
+
+

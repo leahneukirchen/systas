@@ -1,0 +1,59 @@
+Revision: systas--lord--1.0--patch-19
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon May 13 02:19:06 PDT 2002
+Standard-date: 2002-05-13 09:19:06 GMT
+Summary: `unexec' work
+Keywords: 
+New-files: {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-19
+  systas/=unexec-script.scm PLUGIN/options
+Renamed-files: systas/systas.c systas/systas-raw.c
+Modified-files: =NEWS =README ChangeLog
+  ChangeLog.d/lord@regepx.com--2002/ChangeLog.lord--1.0
+  libsystas/init.c scheme-library/html/utils.scm
+  scheme-library/ice-9/basic.scm scheme-library/ice-9/user.scm
+  systas/Makefile.in systas/systas-raw.c
+New-patches: lord@regexps.com--2002/systas--lord--1.0--patch-19
+
+*** removed files
+    ./systas/systas.c
+*** added files
+    ./PLUGIN/options
+    ./systas/=unexec-script.scm
+    ./systas/systas-raw.c
+
+	Build `systas-raw', then unexec `systas'.
+ 
+ 
+*** patched regular files
+**** ./=NEWS
+**** ./=README
+
+	Updated those.
+
+**** ./libsystas/init.c
+
+	Call `safe_buffer_fd' to buffer stdin/out/err.
+	The previous call to `scm_sys_vfdbuf_buffer_fd'
+	had a bug.
+ 
+	When rebooting an unexeced interpreter,
+	buffer stdin/out/err again (the old buffers
+	are discarded before unexec in `systas-raw.c')
+ 
+**** ./scheme-library/html/utils.scm
+**** ./scheme-library/ice-9/basic.scm
+
+	Fixed comments.
+ 
+**** ./scheme-library/ice-9/user.scm
+
+	New function: `module-define-public!'.
+
+	Fixed command line argument handling for `unexec'.
+
+
+**** ./systas/Makefile.in
+
+	`unexec' support.
+ 

@@ -1,0 +1,18 @@
+Revision: package-framework--lord--1.0--patch-17
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Wed Feb  6 18:59:10 PST 2002
+Standard-date: 2002-02-06
+Summary: avoid trying to build empty libraries
+Keywords: 
+New-files: {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-17
+Modified-files: =THANKS ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  build-tools/Makefiles/library.mk
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-17
+
+
+On some systems, `ar -rc' fails if no object files are specified.
+The makefiles have been adjusted accordingly.
+
+

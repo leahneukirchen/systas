@@ -1,0 +1,19 @@
+Revision: hackerlab--lord--1.0--patch-30
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Mar 14 09:16:16 PST 2002
+Standard-date: 2002-03-14 17:16:16 GMT
+Summary: fixed type of `rx_analyze_rexp'
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-30
+  rx-posix/=later/regex-utils.c
+New-directories: rx-posix/=later
+Modified-files: =THANKS ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  libhackerlab/libhackerlab.doc rx-posix/match-regexp.c
+  rx-posix/match-regexp.h
+New-patches: lord@regexps.com--2002/hackerlab--lord--1.0--patch-30
+
+The third argument of `rx_analyze_rexp' was `int' but needed
+to be `size_t'.
+

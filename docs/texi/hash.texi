@@ -1,0 +1,70 @@
+@need 3200
+
+@node Hash Values
+@chapter Hash Values
+
+Systas scheme has built-in rules for computing hash values.  There
+are three hash functions, corresponding to the three types of
+equality (@code{eq?}, @code{eqv?}, and @code{equal?}).
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{hashq}@fuindex hashq
+@*
+@example
+@group
+(hashq obj n)
+@end group
+@group
+@end group
+@end example
+
+Compute a hash value modulo @code{n} for @code{obj}.  @code{eq?} objects return
+equal hash values.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{hashv}@fuindex hashv
+@*
+@example
+@group
+(hashv obj n)
+@end group
+@group
+@end group
+@end example
+
+Compute a hash value modulo @code{n} for @code{obj}.  @code{eqv?} objects return
+equal hash values.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{hash}@fuindex hash
+@*
+@example
+@group
+(hash obj n)
+@end group
+@group
+@end group
+@end example
+
+Compute a hash value modulo @code{n} for @code{obj}.  @code{equal?} objects return
+equal hash values.
+
+@need 3200
+
+@section Rationale -- Hash Values
+
+For obvious reasons, the hash value functions mirror the equality
+functions (see @ref{Equality}).
+
+
+
+
+
+
+

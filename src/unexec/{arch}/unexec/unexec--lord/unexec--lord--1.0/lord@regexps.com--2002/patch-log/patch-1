@@ -1,0 +1,15 @@
+Revision: unexec--lord--1.0--patch-1
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon May 13 02:07:46 PDT 2002
+Standard-date: 2002-05-13 09:07:46 GMT
+Summary: malloc and first-cut GNU/Linux support
+Keywords: 
+New-files: {arch}/unexec/unexec--lord/unexec--lord--1.0/lord@regexps.com--2002/patch-log/patch-1
+  libunexec/malloc.c libunexec/malloc.h
+Modified-files: libunexec/Makefile.in
+New-patches: lord@regexps.com--2002/unexec--lord--1.0--patch-1
+
+Added malloc to the library since native mallocs on systems
+I tried don't mix well with `unexec'.
+

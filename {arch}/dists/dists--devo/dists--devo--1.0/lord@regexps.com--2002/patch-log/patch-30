@@ -1,0 +1,65 @@
+Revision: dists--devo--1.0--patch-30
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sat May 18 12:38:10 PDT 2002
+Standard-date: 2002-05-18 19:38:10 GMT
+Summary: merge with `lord'
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-30
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-29
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-30
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-31
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-32
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-33
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-34
+New-directories: configs/regexps.com/=bitrot
+Renamed-files: configs/regexps.com/lord.arch configs/regexps.com/=bitrot/lord.arch
+  configs/regexps.com/lord.hackerlab configs/regexps.com/=bitrot/lord.hackerlab
+  configs/regexps.com/devo.ftp-utils configs/regexps.com/=bitrot/devo.ftp-utils
+  configs/regexps.com/lord.ftp-utils configs/regexps.com/=bitrot/lord.ftp-utils
+  configs/regexps.com/lord.systas configs/regexps.com/=bitrot/lord.systas
+  configs/regexps.com/release-template.ftp-utils configs/regexps.com/=bitrot/release-template.ftp-utils
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  configs/local/arch-1.1 configs/local/devo.arch
+  configs/regexps.com/=bitrot/devo.ftp-utils
+  configs/regexps.com/=bitrot/lord.arch
+  configs/regexps.com/=bitrot/lord.ftp-utils
+  configs/regexps.com/=bitrot/lord.hackerlab
+  configs/regexps.com/=bitrot/lord.systas
+  configs/regexps.com/=bitrot/release-template.ftp-utils
+  configs/regexps.com/arch-1.1 configs/regexps.com/devo
+  configs/regexps.com/devo.arch
+  configs/regexps.com/devo.hackerlab
+  configs/regexps.com/devo.systas configs/regexps.com/lord
+  configs/regexps.com/release-template.arch
+  configs/regexps.com/release-template.hackerlab
+  configs/regexps.com/release-template.systas
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-30
+  lord@regexps.com--2002/dists--lord--1.0--patch-29
+  lord@regexps.com--2002/dists--lord--1.0--patch-30
+  lord@regexps.com--2002/dists--lord--1.0--patch-31
+  lord@regexps.com--2002/dists--lord--1.0--patch-32
+  lord@regexps.com--2002/dists--lord--1.0--patch-33
+  lord@regexps.com--2002/dists--lord--1.0--patch-34
+
+Patches applied:
+
+  * lord@regexps.com--2002/dists--lord--1.0--patch-34
+     updated configs for Labnotes
+
+  * lord@regexps.com--2002/dists--lord--1.0--patch-33
+     updated the config regexps.com/lord
+
+  * lord@regexps.com--2002/dists--lord--1.0--patch-32
+     updated configs for more labnotes
+
+  * lord@regexps.com--2002/dists--lord--1.0--patch-31
+     fixed config files
+
+  * lord@regexps.com--2002/dists--lord--1.0--patch-30
+     updated configs for labnotes
+
+  * lord@regexps.com--2002/dists--lord--1.0--patch-29
+     merge with `devo'
+

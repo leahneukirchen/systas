@@ -1,0 +1,26 @@
+Revision: dists--devo--1.0--patch-33
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sat May 18 14:39:05 PDT 2002
+Standard-date: 2002-05-18 21:39:05 GMT
+Summary: updated release ids and readmes
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-33
+  =RELEASE-ID.d/=RELEASE-ID.labnotes
+  =RELEASE-ID.d/=RELEASE-ID.unexec
+  =RELEASE-ID.d/=RELEASE-ID.package-framework
+  =README.d/=README.package-framework =README.d/=README.unexec
+  =README.d/=README.labnotes
+New-directories: =README.d/=bitrot =RELEASE-ID.d/=bitrot
+Renamed-files: =README.d/=README.ftp-utils =README.d/=bitrot/=README.ftp-utils
+  =RELEASE-ID.d/=RELEASE-ID.ftp-utils =RELEASE-ID.d/=bitrot/=RELEASE-ID.ftp-utils
+Modified-files: =README.d/=README.arch =README.d/=README.hackerlab
+  =README.d/=README.systas =RELEASE-ID.d/=RELEASE-ID.arch
+  =RELEASE-ID.d/=RELEASE-ID.hackerlab
+  =RELEASE-ID.d/=RELEASE-ID.systas ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-33
+
+
+Updated the release ids and readme files for all distributions.
+

@@ -1,0 +1,221 @@
+@need 3200
+
+@node Structures
+@chapter Structures
+
+@geindex Structures
+@dfn{Structures} are user defined data types.  Using structures,
+programmers can implement types which are disjoint from other
+Scheme types, which have private state, and which have a
+programmer-defined representation.
+
+
+A structure has two parts: its @geindex type
+@dfn{type} and its @geindex data
+@dfn{data}.
+
+
+The data of a structure is an arbitrary value.
+
+
+The type of a structure is a cons pair.  The value stored in the
+car of that pair is called the @geindex public type
+@dfn{public type} of the structure.  The
+value stored in the cdr of the pair is called the @geindex private type
+@dfn{private type}.
+
+
+A structure is created using @code{make-structure} by supplying a type
+and data.
+
+
+Given only a structure, it is impossible to retrieve the private
+type of the structure or the type cons pair.  Only the public type
+may be retrieved by using @code{structure-public-type}.
+
+
+Given only a structure, it is impossible to retrieve the data of
+the the structure, but given a structure and its private type, the
+data can be retrieved using @code{structure-data}.
+
+@menu
+* Structure Procedures::
+* Rationale -- Structures::
+@end menu
+
+@need 3200
+
+@node Structure Procedures
+@section Structure Procedures
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{structure?}@fuindex structure?
+@*
+@example
+@group
+(structure? obj)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is a structure, @code{#f} otherwise.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{make-structure}@fuindex make-structure
+@*
+@example
+@group
+(make-structure type data)
+@end group
+@group
+@end group
+@end example
+
+Construct a new structure of the given type containing the given
+data.
+
+
+@code{type} must be a cons pair.  The car of that pair is the public
+type of the new object; the cdr of that pair is the private type.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{structure-data}@fuindex structure-data
+@*
+@example
+@group
+(structure-data private_type structure)
+@end group
+@group
+@end group
+@end example
+
+If @code{obj} is a structure and @code{private-type} is its private type,
+return the structure's data.  Otherwise, return @code{#f}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{structure-public-type}@fuindex structure-public-type
+@*
+@example
+@group
+(structure-public-type structure)
+@end group
+@group
+@end group
+@end example
+
+Return the public type of @code{structure}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{set-structure-print-function}@fuindex set-structure-print-function
+@*
+@example
+@group
+(set-structure-print-function type print_function)
+@end group
+@group
+@end group
+@end example
+
+Establish @code{print-function} as the way of printing structures having
+the given type.
+
+
+@code{type} is the cons-pair passed to @code{make-struct}.
+
+
+@code{print-function} is called:
+
+@example
+@group
+             (print-function structure port writing?)
+@end group
+@group
+@end group
+@end example
+
+@noindent
+where @code{writing?} is @code{#f} if the structure should be printed in the
+manner of @code{display}, and @code{#t} otherwise.
+
+
+@code{print-function} may be @code{#f} in which case the default printing
+rule is used.
+
+
+
+
+@need 3200
+
+@node Rationale -- Structures
+@section Rationale -- Structures
+
+Structures are a lightweight and simple mechanism that is nevertheless
+adequate for implementing more complex forms of user-defined type.
+
+
+Implementations of user-defined types require four basic facilities
+from the underlying language implementation:
+
+@example
+@group
+     1. A facility for creating types that are disjoint from all
+        other types.  All our structures satisfy `structure?', but
+        no other built-in type predicate.
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     2. A facility for dispatching genericly on the type of an 
+        object of user defined type.  The "public type" of our 
+        structures provides this.
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     3. A facility for specifying the internal representation of 
+        objects of user defined types.  The "data" of our structures
+        is nearly arbitrary: programmers can choose its representation
+        freely.  ("data" should not be #f, but that is the only 
+        restriction).
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     4. A facility for protecting the internal representation of
+        objects of user defined types from malicious or incorrect
+        code.   The "private type" of our structures and its use
+        as an "access key" for a structures data provides this.
+@end group
+@group
+@end group
+@end example
+
+From these four basic facilities, any of the familiar record or
+object systems can easily be synthesized.
+
+
+The implementation of structures is thus very simple -- there
+doesn't seem to be anything extraneous.
+
+
+
+
+
+
+

@@ -1,0 +1,14 @@
+Revision: dists--devo--1.0--patch-1
+Archive: lord@regexps.com--2001Q4
+Creator: Tom Lord <lord@regexps.com>
+Date: Wed Jan  2 13:36:17 PST 2002
+Standard-date: 2002-01-02
+Summary: configs update
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2001Q4/patch-log/patch-1
+  configs/devo configs/arch
+Removed-files: configs/devo
+New-patches: lord@regexps.com--2001Q4/dists--devo--1.0--patch-1
+
+Added a tag for `configs/devo' and added a new config (`arch').
+

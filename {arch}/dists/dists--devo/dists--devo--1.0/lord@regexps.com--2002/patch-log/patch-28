@@ -1,0 +1,15 @@
+Revision: dists--devo--1.0--patch-28
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Tue Apr  9 01:36:31 PDT 2002
+Standard-date: 2002-04-09 08:36:31 GMT
+Summary: updated release ids for arch and hackerlab
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-28
+Modified-files: =RELEASE-ID.d/=RELEASE-ID.arch
+  =RELEASE-ID.d/=RELEASE-ID.hackerlab ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-28
+
+Updated the release ids for arch and hackerlab.
+

@@ -1,0 +1,13 @@
+# tag: Tom Lord Tue Dec  4 14:52:13 2001 (hash-tests/Makefile.in)
+#
+
+tested-headers		:=	hashtree.h \
+				hash-utils.h 
+
+test-headers		:=	$(addprefix hackerlab/hash/, $(tested-headers))
+
+libs			:=	$(objroot)/hackerlab/libhackerlab/libhackerlab.a -lm
+
+include $(makefiles)/unit-tests.mk
+
+

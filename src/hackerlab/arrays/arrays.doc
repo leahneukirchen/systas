@@ -1,0 +1,28 @@
+/* tag: Tom Lord Tue Dec  4 14:57:18 2001 (arrays.doc)
+ */
+/************************************************************************
+ *(h0 "Arrays")
+ * 
+ * Dynamically allocated arrays are a common feature of C programs.
+ * The Hackerlab C library provides two array-like data structures:
+ * variable size arrays, and power-of-two size sparse arrays.
+ * 
+ * Variable size arrays are contiguous regions of memory, similar
+ * to memory allocated by malloc.  The size of a variable size array,
+ * measured as the number of elements it contains, can be retrieved
+ * at run-time using the function `ar_size'.
+ * 
+ * Power-of-two size sparse arrays are a tree structure, used to 
+ * represent an array holding a number of elements which is a power
+ * of two.  Access to these arrays is very fast, and they are memory
+ * efficient for very large arrays which are sparsely populated.
+ * 
+ */
+
+/*(menu)
+ */
+
+/*(include-documentation "ar.c")
+ */
+/*(include-documentation "pow2-array.c")
+ */

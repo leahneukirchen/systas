@@ -1,0 +1,33 @@
+
+# 
+# Checkout _everything_ from the `lord' branches.  Latest revisions.
+#
+
+
+./src			lord@regexps.com--2002/package-framework--lord
+./src/arch		lord@regexps.com--2002/arch--lord
+./src/file-utils	lord@regexps.com--2002/file-utils--lord
+./src/ftp-utils		lord@regexps.com--2002/ftp-utils--lord
+./src/hackerlab		lord@regexps.com--2002/hackerlab--lord
+./src/labnotes		lord@regexps.com--2002/labnotes--lord
+./src/piw		lord@regexps.com--2002/piw--lord
+./src/shell-utils	lord@regexps.com--2002/shell-utils--lord
+./src/systas		lord@regexps.com--2002/systas--lord
+./src/text-utils	lord@regexps.com--2002/text-utils--lord
+./src/unexec		lord@regexps.com--2002/unexec--lord
+
+./src/Labnotes/=authdata		lord@regexps.com--2002/AuthData--labnotes
+./src/Labnotes/AboutRegexpsDotCom.d	lord@regexps.com--2002/AboutRegexpsDotCom--labnotes
+./src/Labnotes/AboutThisLibrary.d	lord@regexps.com--2002/AboutThisLibrary--labnotes
+./src/Labnotes/ArchRevCtl.d	lord@regexps.com--2002/ArchRevCtl--labnotes
+./src/Labnotes/LabNotes.d	lord@regexps.com--2002/LabNotes--labnotes
+./src/Labnotes/LabNotesSystem.d	lord@regexps.com--2002/LabNotesSystem--labnotes
+./src/Labnotes/LibHackerlab.d	lord@regexps.com--2002/LibHackerlab--labnotes
+./src/Labnotes/LibUnexec.d	lord@regexps.com--2002/LibUnexec--labnotes
+./src/Labnotes/PackageFramework.d	lord@regexps.com--2002/PackageFramework--labnotes
+./src/Labnotes/SystasScheme.d	lord@regexps.com--2002/SystasScheme--labnotes
+
+
+
+# tag: Tom Lord Mon Jan  7 02:47:22 2002 (lord@regexps.com--2002/lord)
+#

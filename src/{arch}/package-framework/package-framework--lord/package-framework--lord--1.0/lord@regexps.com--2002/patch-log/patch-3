@@ -1,0 +1,43 @@
+Revision: package-framework--lord--1.0--patch-3
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri Jan 11 20:09:46 PST 2002
+Standard-date: 2002-01-11
+Summary: removed vestigial docs
+Keywords: 
+New-files: {arch}/package-framework/package-framework--devo/package-framework--devo--1.0/lord@regexps.com--2002/patch-log/patch-1
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-3
+  COPYING build-tools/=README build-tools/=TODO
+Removed-files: build-tools/package-framework/UNPLUGGED/.arch-ids/=dont-care
+  build-tools/package-framework/Makefile.in
+  build-tools/package-framework/document-license.doc
+  build-tools/package-framework/pit.doc
+  build-tools/package-framework/source-tree.doc
+  build-tools/package-framework/system-requirements.doc
+  build-tools/package-framework/framework.doc
+  build-tools/package-framework/getting-started.doc
+  build-tools/package-framework/index.doc
+  build-tools/package-framework/introduction.doc
+  build-tools/package-framework/soup.doc
+  build-tools/package-framework/source-license.doc
+  build-tools/package-framework/package-tree.doc
+  build-tools/package-framework/recipes.doc
+  build-tools/package-framework/reference.doc
+  build-tools/package-framework/this-manual.doc
+  build-tools/package-framework/configure-and-plugin.doc
+  build-tools/package-framework/makefiles.doc
+  build-tools/package-framework/UNPLUGGED/REQ
+Removed-directories: build-tools/package-framework
+  build-tools/package-framework/UNPLUGGED
+  build-tools/package-framework/UNPLUGGED/.arch-ids
+Modified-files: =project/package ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/package-framework--devo--1.0--patch-1
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-3
+
+
+The package framework won't be ready for independent release
+any time soon, so I removed the badly out of date manual for it.
+
+Added COPYING, and (in a subdir) =README and =TODO.
+

@@ -1,0 +1,20 @@
+Revision: systas--lord--1.0--patch-21
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu May 16 00:37:29 PDT 2002
+Standard-date: 2002-05-16 07:37:29 GMT
+Summary: case independent string prefix comparison functions
+Keywords: 
+New-files: {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-21
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regepx.com--2002/ChangeLog.lord--1.0
+  scheme-library/standard/string-parsing.scm
+New-patches: lord@regexps.com--2002/systas--lord--1.0--patch-21
+
+
+Added case independent string prefix comparison functions such as
+`string-prefix-ci=?' (to
+`scheme-library/standard/string-parsing.scm').
+
+
+

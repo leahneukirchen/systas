@@ -1,0 +1,19 @@
+Revision: hackerlab--lord--1.0--patch-25
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon Feb 18 12:57:29 PST 2002
+Standard-date: 2002-02-18 20:57:29 GMT
+Summary: Fixed the error number convention
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-25
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  vu/reserv.c vu/vu-sys.c
+New-patches: lord@regexps.com--2002/hackerlab--lord--1.0--patch-25
+
+
+Functions which return an error number in an `int *' return parameter
+must not modify the value stored in that integer unless an error
+actually occurs.
+
+

@@ -1,0 +1,15 @@
+
+			The Package Framework
+
+
+This is towards a replacement for `automake' and `autoconf', but it
+isn't nearly done yet.
+
+"replacement" isn't quite right.  For example, I don't care if this
+ever runs on windows or VMS (except in cases where those platforms
+have decent Posix environments) and I don't mind depending on a small
+number of packages that in turn depend on `autoconf' (e.g. GNU Make).
+
+
+# tag: Tom Lord Fri Jan 11 18:42:31 2002 (build-tools/=README)
+#

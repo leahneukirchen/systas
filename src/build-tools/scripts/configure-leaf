@@ -1,0 +1,61 @@
+#!/bin/sh
+# tag: Tom Lord Tue Dec  4 15:07:58 2001 (scripts/configure-leaf)
+#
+
+set -e
+
+if test x$objroot = x; then
+  echo "ERROR: objroot not set in `pwd`" 1>&2
+  exit 1
+fi
+
+if test x$srcroot = x; then
+  echo "ERROR: srcroot not set in `pwd`" 1>&2
+  exit 1
+fi
+
+if test x$srcdir = x; then
+  echo "ERROR: srcdir not set in `pwd`" 1>&2
+  exit 1
+fi
+
+if test x$prefix = x; then
+  echo "ERROR: prefix not set in `pwd`" 1>&2
+  exit 1
+fi
+
+here=`cd $srcdir; pwd`
+base=`cd $srcroot ; pwd`
+
+if test $here = $base; then
+  thispath=
+  export thispath
+elif test x$thispath = x; then
+  thispath=`basename $here`
+else
+  thispath=$thispath/`basename $here`
+fi
+
+printf "#!%s\\n\\n" "$config_shell"  > config.status
+
+cat >> config.status << EOF
+  
+  cat > Makefile <<-EOF2
+        srcroot = $srcroot
+        thispath = $thispath
+        objroot = $objroot
+        srcdir = $srcdir
+        prefix = $prefix
+        makefiles = $srcroot/build-tools/Makefiles
+        vpath % $srcdir
+        include \\\$(objroot)/Makefile-config.mk
+
+EOF2
+
+  cat $srcdir/Makefile.in >> Makefile
+
+EOF
+
+chmod ugo+x config.status
+
+./config.status

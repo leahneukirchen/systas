@@ -1,0 +1,16 @@
+# tag: Tom Lord Tue Dec  4 14:52:14 2001 (rx-posix-tests/Makefile.in)
+#
+
+tested-headers		:=	errnorx.h \
+				limits.h \
+				match-regexp.h \
+				posix.h \
+				re8-parse.h \
+				regexps.h
+
+test-headers		:=	$(addprefix hackerlab/rx-posix/, $(tested-headers))
+
+libs			:=	$(objroot)/hackerlab/libhackerlab/libhackerlab.a -lm
+
+include $(makefiles)/unit-tests.mk
+

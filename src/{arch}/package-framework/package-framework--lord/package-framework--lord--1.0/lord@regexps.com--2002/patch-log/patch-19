@@ -1,0 +1,15 @@
+Revision: package-framework--lord--1.0--patch-19
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri Feb  8 15:22:13 PST 2002
+Standard-date: 2002-02-08
+Summary: updated =TODO
+Keywords: 
+New-files: {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-19
+Modified-files: =THANKS =TODO ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-19
+
+
+Noted a bug regarding parallel makes in "=TODO".
+

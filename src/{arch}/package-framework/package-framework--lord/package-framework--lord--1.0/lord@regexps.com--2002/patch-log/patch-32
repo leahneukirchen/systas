@@ -1,0 +1,27 @@
+Revision: package-framework--lord--1.0--patch-32
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon May 13 15:41:00 PDT 2002
+Standard-date: 2002-05-13 22:41:00 GMT
+Summary: linux unexec tweaks
+Keywords: 
+New-files: {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-32
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  build-tools/Makefiles/unexec-programs.mk
+  build-tools/platforms/configs/gnu-linux
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-32
+
+Trying to figure out what I broke on linux unexec.
+
+
+** patched regular files
+
+*** ./build-tools/Makefiles/unexec-programs.mk
+
+	Pass $(CFLAGS) to link invocation of $(CC)
+
+*** ./build-tools/platforms/configs/gnu-linux
+
+	Use the less-perturbed unexelf
+

@@ -1,0 +1,41 @@
+;; Syntax examples:
+;; 
+;; 
+;; binary	shared-library		no
+;; 	Build a shared library?
+;; 
+;; binary	static-library		yes
+;; 	Build a static library?
+;; 
+;; string  admin-email		root
+;; 	To what email address should administrative
+;; 	notifications be sent?
+;; 
+
+
+string		posix-shell		/bin/sh
+	What program should be used to execute
+	POSIX.2 shell scripts?
+
+
+string		posix-mailx		larch sendmail-mailx
+	What program should be used to send mail?
+	This program must work when invoked:
+
+	  mail -s "subject" recipient < "message body"
+
+
+
+string		sendmail		sendmail
+	If you use "arch sendmail-mailx" as your (limited)
+	implementation of Posix "mailx", then what program
+	should be invoked for "sendmail"?
+
+
+string		cc			cc
+	What command name should be used to invoke the
+	C compiler?
+
+string		bug-mail		bug-arch@regexps.com
+	To what email address should bug reports be sent?
+

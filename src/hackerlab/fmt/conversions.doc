@@ -1,0 +1,19 @@
+/* tag: Tom Lord Tue Dec  4 14:57:14 2001 (conversions.doc)
+ */
+/************************************************************************
+ *(h0 "Converting Between Numbers and Strings")
+ * 
+
+\INTERFACES DESCRIBED IN THIS CHAPTER ARE QUITE UNSTABLE/
+
+The functions in this chapter convert between numbers and ASCII strings.
+
+\NOTE:/ Floating point conversions are not included with this release
+of the Hackerlab C Library.  They will be included in a future
+release.
+
+
+ */
+/*(include-documentation "cvt.c")
+ */
+

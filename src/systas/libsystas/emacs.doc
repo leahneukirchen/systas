@@ -1,0 +1,46 @@
+/* tag: Tom Lord Tue Dec  4 14:57:24 2001 (emacs.doc)
+ */
+/* emacs.doc -
+ *
+ ****************************************************************
+ * Copyright (C) 2001 Thomas Lord
+ * 
+ * See the file "COPYING" for further information about
+ * the copyright and warranty status of this work.
+ */
+
+
+/************************************************************************
+ *(h0 "Running Systas from Emacs")
+ * 
+ * GNU Emacs (and approximately compatible Emacsen) provides
+ * `inferior-scheme-mode' for running a Scheme interpreter
+ * sub-process, and `scheme-mode' for editing Scheme source.
+ * 
+ * These two modes interact nicely, especially via the command
+ * `scheme-send-definition' (usually bound to `M-C-x').  That command
+ * can be invoked in a `scheme-mode' buffer.  It finds the top level
+ * expression at or nearest the point, and sends it to the Scheme
+ * subprocess.
+ * 
+ * The Systas Scheme module system complicates things slightly.
+ * Suppose your are editting two files, each of which defines
+ * a module: `module-a.scm' and `module-b.scm'.  If you try to send a
+ * defintion from `module-a.scm', you want that definition to be
+ * evaluated in `module-a'.  If you send from `module-b.scm', you
+ * expect evaluation in `module-b'.
+ * 
+ * For that reason, systas is distributed with `init-guile-scheme.el'
+ * -- an Emacs lisp file you can load in .emacs.  It defines a new
+ * command called `modular-scheme-send-definition'.
+ * 
+ * When invoked, `modular-scheme-send-definition' looks at the top of
+ * the current source file for a `define-module' expression.  If it
+ * finds one, it sends that expression before sending the expression
+ * at or near the point.  That will cause the module to be made the
+ * current module (and autoloaded, if necessary) before evaluating the
+ * expression at the point.
+ * 
+ * (`init-guile-scheme.el' provides other useful definitions as well,
+ * along with an expanded set of indenting rules for Guile Scheme.)
+ */

@@ -1,0 +1,21 @@
+Revision: package-framework--lord--1.0--patch-21
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sun Feb 17 18:11:35 PST 2002
+Standard-date: 2002-02-17
+Summary: automatic configuration support (specifically for -lsocket)
+Keywords: 
+New-files: build-tools/auto-conf-lib/library-test
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-21
+  build-tools/scripts/auto PLUGIN/auto
+New-directories: build-tools/auto-conf-lib
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  PLUGIN/packages build-tools/scripts/configure-top
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-21
+
+
+Added the beginnings of automatic configuration support to
+configure-top and added a specific test for "-lsocket" for "with-ftp".
+
+

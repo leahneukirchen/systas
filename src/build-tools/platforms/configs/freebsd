@@ -1,0 +1,34 @@
+# freebsd - platform config file for "generic" freebsd
+#
+################################################################
+# Copyright (C) 2002 Tom Lord
+# 
+# See the file "COPYING" for further information about
+# the copyright and warranty status of this work.
+# 
+
+################################################################
+# 
+# 
+# 
+# tested use			tested platform
+# ---------------------------------------------
+# 
+# unexec			FreeBSD 3.0-RELEASE (i386)
+# 
+################################################################
+
+unexec_should_work=yes
+
+unexec_implementation=unexelf.c
+
+unexec_needs_precrt0=yes
+
+unexec_start_files="/usr/lib/crt1.o /usr/lib/crti.o /usr/lib/crtbegin.o"
+
+unexec_ld_switches="%none%"
+
+unexec_libs="/usr/lib/libutil.a"
+
+unexec_libc_substitute="-lgcc -lc -lgcc /usr/lib/crtend.o /usr/lib/crtn.o"
+

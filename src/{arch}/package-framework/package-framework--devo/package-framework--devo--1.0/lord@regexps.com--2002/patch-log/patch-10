@@ -1,0 +1,29 @@
+Revision: package-framework--devo--1.0--patch-10
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Feb 14 15:54:22 PST 2002
+Standard-date: 2002-02-14
+Summary: merge from `lord'
+Keywords: 
+New-files: {arch}/package-framework/package-framework--devo/package-framework--devo--1.0/lord@regexps.com--2002/patch-log/patch-10
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-19
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-20
+Modified-files: =THANKS =TODO ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  build-tools/scripts/configure-autoconf
+  build-tools/scripts/configure-dirs
+  build-tools/scripts/configure-generic
+  build-tools/scripts/configure-leaf
+  build-tools/scripts/configure-top configure
+New-patches: lord@regexps.com--2002/package-framework--devo--1.0--patch-10
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-19
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-20
+
+Patches applied:
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-20
+     permit alternative shells in `configure'
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-19
+     updated =TODO
+

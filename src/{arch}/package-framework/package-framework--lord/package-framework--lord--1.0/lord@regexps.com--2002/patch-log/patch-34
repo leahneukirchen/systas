@@ -1,0 +1,18 @@
+Revision: package-framework--lord--1.0--patch-34
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu May 16 03:22:59 PDT 2002
+Standard-date: 2002-05-16 10:22:59 GMT
+Summary: tagged =LabNotes
+Keywords: 
+New-files: {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-34
+  =Labnotes/.arch-ids/=id
+New-directories: =Labnotes/.arch-ids =Labnotes
+Removed-directories: =Labnotes
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-34
+
+Tagged =LabNotes to (hopefully) work around a minor
+bug in old versions of arch.
+

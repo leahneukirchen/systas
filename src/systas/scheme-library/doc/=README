@@ -1,0 +1,12 @@
+This is the system I use to build texinfo and HTML files from 
+comments in C source code.
+
+It is currently a mess -- undocumented and in mid-transition between
+an old version and a rewritten version.
+
+It will get better in some future release, I hope.
+
+
+# tag: Tom Lord Tue Dec  4 15:06:42 2001 (doc/=README)
+#
+

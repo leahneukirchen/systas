@@ -1,0 +1,52 @@
+Revision: package-framework--lord--1.0--patch-29
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon May 13 02:44:27 PDT 2002
+Standard-date: 2002-05-13 09:44:27 GMT
+Summary: tweaking unexec support / first-cut GNU/linux unexec support /
+	 better output formatting from configure-top
+Keywords: 
+New-files: {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-29
+  build-tools/auto-conf-lib/gcc-test
+  build-tools/platforms/configs/gnu-linux
+Removed-files: build-tools/auto-conf-lib/gcc-test
+Modified-files: =TODO ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  build-tools/Makefiles/unexec-programs.mk
+  build-tools/platforms/configs/freebsd
+  build-tools/platforms/pickconfig build-tools/platforms/vars
+  build-tools/scripts/configure-top
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-29
+
+    ./build-tools/auto-conf-lib/gcc-test
+
+	Added a tag.
+
+*** added files
+    ./build-tools/platforms/configs/gnu-linux
+ 
+	Platform config vars for gnu-linux (unexec support)
+ 
+ 
+**** ./build-tools/Makefiles/unexec-programs.mk
+
+	Use $(shell), not backquotes, to find the gnulib var.
+ 
+**** ./build-tools/platforms/configs/freebsd
+
+	Added `unexec_should_work=yes'.
+
+**** ./build-tools/platforms/pickconfig
+
+	GNU/linux support.
+
+**** ./build-tools/platforms/vars
+
+	New var: `unexec_should_work'
+
+	Comments.
+
+**** ./build-tools/scripts/configure-top
+
+	Prettier output formatting
+ 

@@ -1,0 +1,16 @@
+Revision: dists--lord--1.0--patch-18
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri Feb  8 17:59:54 PST 2002
+Standard-date: 2002-02-08
+Summary: updated =INSTALL
+Keywords: 
+New-files: {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-18
+Modified-files: =INSTALL ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/dists--lord--1.0--patch-18
+
+
+Updated the generic =INSTALL to refer to =README for package-specific
+advice.
+

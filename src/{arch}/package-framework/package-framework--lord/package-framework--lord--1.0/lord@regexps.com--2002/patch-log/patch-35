@@ -1,0 +1,15 @@
+Revision: package-framework--lord--1.0--patch-35
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu May 16 04:27:27 PDT 2002
+Standard-date: 2002-05-16 11:27:27 GMT
+Summary: don't use pax
+Keywords: 
+New-files: {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-35
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  build-tools/Makefiles/install-scm-subdirs.mk
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-35
+
+
+Don't use `pax' in `install-scm-subdirs.mk' since it isn't portable.

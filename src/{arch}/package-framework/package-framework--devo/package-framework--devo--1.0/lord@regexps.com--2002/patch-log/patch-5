@@ -1,0 +1,61 @@
+Revision: package-framework--devo--1.0--patch-5
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Jan 24 02:06:14 PST 2002
+Standard-date: 2002-01-24
+Summary: merge from lord
+Keywords: 
+New-files: {arch}/package-framework/package-framework--devo/package-framework--devo--1.0/lord@regexps.com--2002/patch-log/patch-5
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-10
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-11
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-12
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-13
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-9
+  build-tools/Makefiles/=TODO =THANKS =TODO
+  build-tools/Makefiles/cpp-to-includes.sed
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  PLUGIN/options build-tools/Makefiles/column.sed
+  build-tools/Makefiles/config-info.mk
+  build-tools/Makefiles/dirs.mk
+  build-tools/Makefiles/install-includes.mk
+  build-tools/Makefiles/install-library.mk
+  build-tools/Makefiles/install-programs.mk
+  build-tools/Makefiles/install-shell-scripts.mk
+  build-tools/Makefiles/install-shell-subcommands.mk
+  build-tools/Makefiles/library-objects.mk
+  build-tools/Makefiles/library-pdml.mk
+  build-tools/Makefiles/library.mk
+  build-tools/Makefiles/programs.mk
+  build-tools/Makefiles/rules.mk
+  build-tools/Makefiles/shell-scripts.mk
+  build-tools/Makefiles/shell-subcommands.mk
+  build-tools/Makefiles/top-level.mk
+  build-tools/Makefiles/unit-tests.mk
+  build-tools/scripts/configure-top
+New-patches: lord@regexps.com--2002/package-framework--devo--1.0--patch-5
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-10
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-11
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-12
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-13
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-9
+
+Patches applied:
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-13
+     fixed some typose in *.mk
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-12
+     new config option: sendmail
+     	awk subcommand helpers
+     	bug fixes
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-11
+     makefile and configure changes
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-10
+     add a "--with posix-shell=xyzzy" configuration option
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-9
+     changed the rule for dependency tracking (eliminated GCC-ism)
+

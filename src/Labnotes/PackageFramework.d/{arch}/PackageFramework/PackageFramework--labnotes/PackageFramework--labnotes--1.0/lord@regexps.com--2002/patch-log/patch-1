@@ -1,0 +1,14 @@
+Revision: PackageFramework--labnotes--1.0--patch-1
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu May 16 02:27:36 PDT 2002
+Standard-date: 2002-05-16 09:27:36 GMT
+Summary: misc. changes towards first release
+Keywords: 
+New-files: {arch}/PackageFramework/PackageFramework--labnotes/PackageFramework--labnotes--1.0/lord@regexps.com--2002/patch-log/patch-1
+  BadIdea GoodIdea ReleaseNews
+Modified-files: FrameworkPorting IntroTopic TodoList
+New-patches: lord@regexps.com--2002/PackageFramework--labnotes--1.0--patch-1
+
+Misc. changes towards first release.
+

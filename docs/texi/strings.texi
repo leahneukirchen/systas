@@ -1,0 +1,1024 @@
+@need 3200
+
+@node Strings
+@chapter Strings
+
+Strings are sequences of characters.  Ordinary strings are written
+using double-quotes:
+
+@example
+@group
+     "Strings are used for many purposes in Emacs"
+@end group
+@group
+@end group
+@end example
+
+Strings can include newlines:
+
+@example
+@group
+     "Strings are used for many purposes in Emacs, as can be
+     expected in a text editor;..."
+@end group
+@group
+@end group
+@end example
+
+Strings can include special @geindex escape sequences
+@dfn{escape sequences} that represent
+individual characters:
+
+@example
+@group
+     "as can be\nexpected in a text editor;..."
+@end group
+@group
+@end group
+@end example
+
+The supported escape seqences are:
+
+@example
+@group
+     Escape sequence:                        Character:
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     \0                                      #\null
+     \f                                      #\ack
+     \n                                      #\newline
+     \r                                      #\return
+     \t                                      #\tab
+     \a                                      #\bel
+     \v                                      #\vt
+@end group
+@group
+@end group
+@end example
+
+The characters within a string are addressed by integers, 
+starting with @code{0}.  For example:
+
+@example
+@group
+     (string-ref "abc" 1) => #\b
+@end group
+@group
+@end group
+@end example
+
+Characters are also addressed by negative integers, counting
+backwards from the last character in the string, starting with @code{-1}:
+
+@example
+@group
+     (string-ref "abc" -1) => #\c
+@end group
+@group
+@end group
+@end example
+
+Several string functions address substrings of a string.  This is
+always done with a starting and ending position.  All characters
+from @code{[start...end-1]} are included in the substring.  If @code{end <=
+start}, the substring is empty.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{string?}@fuindex string?
+@*
+@example
+@group
+(string? obj)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is a string, @code{#f} otherwise.
+
+@menu
+* Symbols-- Read-only Strings::
+* Constructing Strings::
+* Shared Substrings::
+* The String Lattice::
+* Strings as Arrays of Characters::
+* Searching for Characters Within Strings::
+* Moving Substrings::
+* String Filling::
+* String Comparison Functions::
+* String Case Conversions::
+* Converting Between Strings and Lists::
+* Strings Rationale::
+@end menu
+
+@need 3200
+
+@node Symbols-- Read-only Strings
+@section Symbols-- Read-only Strings
+
+If a string function does not modify a string argument, generally a
+symbol may be passed for that argument.  The print name of the
+symbol is used as the string.
+
+
+When the documentation for a particular function says that an
+argument may be a @geindex read-only string
+@dfn{read-only string}, that means that the argument
+may be an ordinary string, a symbol, or a shared substring of a
+string or symbol.
+
+
+
+
+@need 3200
+
+@node Constructing Strings
+@section Constructing Strings
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{string}@fuindex string
+@*
+@example
+@group
+(string . args)
+@end group
+@group
+@end group
+@end example
+
+Combine the arguments into a string.
+
+
+The arguments may be characters or read-only strings.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{string-copy}@fuindex string-copy
+@*
+@example
+@group
+(string-copy str)
+@end group
+@group
+@end group
+@end example
+
+Construct a new copy of @code{str}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{make-string}@fuindex make-string
+@*
+@example
+@group
+(make-string n :optional char)
+@end group
+@group
+@end group
+@end example
+
+Return a new string with @code{n} characters, optionally all initialized
+to be equal to @code{char}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{substring}@fuindex substring
+@*
+@example
+@group
+(substring string :optional from to)
+@end group
+@group
+@end group
+@end example
+
+Return a new string which is a substring of @code{string}.  The new
+string is @code{(- to from)} characters long and contains characters
+from @code{string} beginning at @code{from}.
+
+
+If @code{from} is omitted, it defaults to @code{0}.
+
+
+If @code{to} is omitted, it defaults to @code{(string-length string)}.
+
+
+
+
+@need 3200
+
+@node Shared Substrings
+@section Shared Substrings
+
+Whenever you extract a substring using the procedure @code{substring}, a
+new string is allocated and substring data is copied from the old
+string to the new string.
+
+
+Sometimes, in order avoid the expense of copying or in order to
+specify mutations on just part of a larger string, programmers will
+write programs that pass around three values at a time: a string, a
+starting position within the string, and an ending position.  This
+convention is awkward, especially because many useful string
+primitives operate only on full strings, not a string with
+substring indexes.  To make matters worse, when programmers use
+this convention, all too often some functions wind up operating on
+string-start-end and other functions operate on
+string-start-length.
+
+
+Systas Scheme offers a bettter way: shared substrings.  A shared
+substring is a string-like object built from an older string
+without copying any data.  A shared substring is not a copy of the
+older string, but shares the older string's data directly.
+Compared to copied substrings, shared substrings are cheap to
+allocate.
+
+
+On the other hand, holding on to a small shared substring of a
+large string prevents the large string from being garbage collected
+and so may result in wasted space.
+
+
+It may be helpful to describe the internal representation of shared
+substrings.  An ordinary string in Systas Scheme is represented by
+two values: an integer that records the number of characters allocated
+to the string, and a pointer that points to the null-terminated
+string data.  A shared substring consists of an integer length, an
+integer offset, and a pointer to an ordinary string.  There is not
+much difference between passing shared substrings and passing three
+parameters (string, offset, end-pos) except that using shared
+substrings simplifies programming by keeping track of two of the
+three parameters automatically.
+
+
+Since a symbol is a kind of read-only string, a shared substring of
+a symbol is another kind of read-only string.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{shared-substring?}@fuindex shared-substring?
+@*
+@example
+@group
+(shared-substring? string)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{string} is a shared substring, @code{#f} otherwise.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{make-shared-substring}@fuindex make-shared-substring
+@*
+@example
+@group
+(make-shared-substring string :optional from to)
+@end group
+@group
+@end group
+@end example
+
+Return a new shared substring of read-only string, @code{string}.  The
+substring will span from @code{from} (or @code{0}) to @code{to} (or @code{(string-length
+string)}).
+
+
+The shared substring and @code{string} share data -- modifications to
+one can effect the other.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{shared-substring-parts}@fuindex shared-substring-parts
+@*
+@example
+@group
+(shared-substring-parts string)
+@end group
+@group
+@end group
+@end example
+
+If @code{string} is a shared substring, return a list:
+
+@example
+@group
+     (original-string from to)
+@end group
+@group
+@end group
+@end example
+
+@noindent
+which describes what @code{string} is a substring of.
+
+
+If @code{string} is not a shared substring, return a list:
+
+@example
+@group
+     (string 0 ,(string-length string))
+@end group
+@group
+@end group
+@end example
+
+
+
+@need 3200
+
+@node The String Lattice
+@section The String Lattice
+
+There are, in fact, three string-like types in Systas Scheme,
+described by these three predicates:
+
+@example
+@group
+     read-only-string?
+     string? (aka writable-string?)
+     basic-string?
+@end group
+@group
+@end group
+@end example
+
+Each successive line in the list includes the preceeding types:
+every writable-string or string is also a read-only-string; every
+basic-string is also a writable-string, string and
+read-only-string.
+
+
+The reverse is not true: some read-only-strings are @emph{not}
+writable-strings.  Some writable-strings are not basic-strings.
+
+
+A basic-string is an object created by a procedure such as
+@code{list->string} or @code{string}.  A string (or writable-string) is any
+of those object, or any shared substring of a string.  A read-only
+string is any string, or a symbol, or a shared substring of a
+symbol.
+
+
+As a general rule, if a string procedure does not modify its
+argument, then it will accept any read-only string.  If a string
+procedure does modify its argument, then it won't accept some
+read-only strings (e.g. symbols), but may accept writable-strings
+which are not basic-strings.
+
+
+For example, this code works in Systas Scheme because symbols are
+read-only-strings:
+
+@example
+@group
+     (string-append 'hello " " 'world) => "hello world"
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{read-only-string?}@fuindex read-only-string?
+@*
+@example
+@group
+(read-only-string? obj)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is a read-only string, @code{#f} otherwise.
+
+
+All string-like types are read-only strings: symbols, strings, and
+shared substrings of both symbols and strings.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{writable-string?}@fuindex writable-string?
+@*
+@example
+@group
+(writable-string? obj)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is a writable string, @code{#f} otherwise.
+
+
+Writable strings are either ordinary strings or shared substrings
+of ordinary strings.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{basic-string?}@fuindex basic-string?
+@*
+@example
+@group
+(basic-string? obj)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is a writable string which is not a shared
+substring, @code{#f} otherwise.
+
+
+
+
+@need 3200
+
+@node Strings as Arrays of Characters
+@section Strings as Arrays of Characters
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{string-length}@fuindex string-length
+@*
+@example
+@group
+(string-length string)
+@end group
+@group
+@end group
+@end example
+
+Return the number of characters in a read-only string.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{string-null?}@fuindex string-null?
+@*
+@example
+@group
+(string-null? obj)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is a read-only string of @code{0} length.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{string-ref}@fuindex string-ref
+@*
+@example
+@group
+(string-ref string (:optional n))
+@end group
+@group
+@end group
+@end example
+
+Return the character at position @code{n} in a read-only string.  If
+omitted, @code{n} defaults to @code{0}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{string-set!}@fuindex string-set!
+@*
+@example
+@group
+(string-set! string n char)
+@end group
+@group
+@end group
+@end example
+
+Set the character at position @code{n} of a writable string.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{string-for-each}@fuindex string-for-each
+@*
+@example
+@group
+(string-for-each proc str)
+@end group
+@group
+@end group
+@end example
+
+In order, beginning at index @code{0}, for each character @code{c} in @code{str},
+invoke:
+
+@example
+@group
+     (proc c)
+@end group
+@group
+@end group
+@end example
+
+@noindent
+and discard the result.
+
+
+
+
+@need 3200
+
+@node Searching for Characters Within Strings
+@section Searching for Characters Within Strings
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{string-index}@fuindex string-index
+@*
+@example
+@group
+(string-index string char from to)
+@end group
+@group
+@end group
+@end example
+
+Return the offset of the first occurence of @code{char} in @code{string}
+searching @code{(- to from)} characters beginning at @code{from}.
+
+
+The offset returned is relative to the beginning of @code{string}.
+
+
+Return @code{#f} if the character is not found.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{string-rindex}@fuindex string-rindex
+@*
+@example
+@group
+(string-rindex string char from to)
+@end group
+@group
+@end group
+@end example
+
+Return the offset of the last occurence of @code{char} in @code{string}
+searching @code{(- to from)} characters beginning at @code{from}.
+
+
+The offset returned is relative to the beginning of @code{string}.
+
+
+Return @code{#f} if the character is not found.
+
+
+
+
+@need 3200
+
+@node Moving Substrings
+@section Moving Substrings
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{substring-move-left!}@fuindex substring-move-left!
+@*
+@example
+@group
+(substring-move-left! source start end dest dest-start)
+@end group
+@group
+@end group
+@end example
+
+Copy characters from the read-only string @code{source} to the writable
+string @code{dest}.  @code{(- end start)} characters are copied taken from
+@code{source} beginning at @code{start} and moved to @code{dest} beginning at
+@code{dest-start}.
+
+
+Characters are moved in order (from @code{start} to @code{end-1}) which is
+important in the case the @code{source} and @code{dest} are the same and the
+source and destination regions overlap.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{substring-move-right!}@fuindex substring-move-right!
+@*
+@example
+@group
+(substring-move-right! source start end dest dest-start)
+@end group
+@group
+@end group
+@end example
+
+Copy characters from the read-only string @code{source} to the writable
+string @code{dest}.  @code{(- end start)} characters are copied taken from
+@code{source} beginning at @code{start} and moved to @code{dest} beginning at
+@code{dest-start}.
+
+
+Characters are moved in reverse order (from @code{end-1} to @code{start})
+which is important in the case the @code{source} and @code{dest} are the same
+and the source and destination regions overlap.
+
+
+
+
+@need 3200
+
+@node String Filling
+@section String Filling
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{substring-fill!}@fuindex substring-fill!
+@*
+@example
+@group
+(substring-fill! string start end char)
+@end group
+@group
+@end group
+@end example
+
+Fill @code{(- end start)} characters of @code{string} with @code{char} beginning
+at position @code{start}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{string-fill!}@fuindex string-fill!
+@*
+@example
+@group
+(string-fill! string character)
+@end group
+@group
+@end group
+@end example
+
+Fill all of @code{string} which @code{character}.
+
+
+
+
+@need 3200
+
+@node String Comparison Functions
+@section String Comparison Functions
+
+String comparison functions define a lexical ordering of strings
+based on the character comparison functions (see
+@ref{Characters}).
+
+
+There are two flavors of comparison functions: the case dependent
+functions whose names begin @code{string} and the case independent
+functions whose names begin @code{string-ci}.
+
+
+All of these functions operate on all read-only types of strings:
+regular strings, substrings, and symbols.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{string=?}@fuindex string=?
+@*
+@example
+@group
+(string=? . args)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if all of the arguments are read-only strings
+containing exactly the same characters in the same order.
+
+
+Given no arguments, this procedure returns @code{#t}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{string<?}@fuindex string<?
+@*
+@example
+@group
+(string<? . args)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if all of the arguments are read-only strings, each
+lexically less than the next.
+
+
+Given no arguments, this procedure returns @code{#t}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{string<=?}@fuindex string<=?
+@*
+@example
+@group
+(string<=? . args)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if all of the arguments are read-only strings, each
+lexically less than or equal to the next.
+
+
+Given no arguments, this procedure returns @code{#t}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{string>?}@fuindex string>?
+@*
+@example
+@group
+(string>? . args)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if all of the arguments are read-only strings, each
+lexically greater than the next.
+
+
+Given no arguments, this procedure returns @code{#t}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{string>=?}@fuindex string>=?
+@*
+@example
+@group
+(string>=? . args)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if all of the arguments are read-only strings, each
+lexically greater than or equal to the next.
+
+
+Given no arguments, this procedure returns @code{#t}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{string-ci=?}@fuindex string-ci=?
+@*
+@example
+@group
+(string-ci=? . args)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if all of the arguments are read-only strings, each
+lexically equal to the next, disregarding the case of alphabetic
+characters.
+
+
+Given no arguments, this procedure returns @code{#t}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{string-ci<?}@fuindex string-ci<?
+@*
+@example
+@group
+(string-ci<? . args)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if all of the arguments are read-only strings, each
+lexically less than the next, disregarding the case of alphabetic
+characters.
+
+
+Given no arguments, this procedure returns @code{#t}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{string-ci<=?}@fuindex string-ci<=?
+@*
+@example
+@group
+(string-ci<=? . args)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if all of the arguments are read-only strings, each
+lexically less than or equal to the next, disregarding the case of
+alphabetic characters.
+
+
+Given no arguments, this procedure returns @code{#t}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{string-ci>?}@fuindex string-ci>?
+@*
+@example
+@group
+(string-ci>? . args)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if all of the arguments are read-only strings, each
+lexically greater than the next, disregarding the case of
+alphabetic characters.
+
+
+Given no arguments, this procedure returns @code{#t}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{string-ci>=?}@fuindex string-ci>=?
+@*
+@example
+@group
+(string-ci>=? . args)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if all of the arguments are read-only strings, each
+lexically greater than or equal to the next, disregarding the case
+of alphabetic characters.
+
+
+Given no arguments, this procedure returns @code{#t}.
+
+
+
+
+@need 3200
+
+@node String Case Conversions
+@section String Case Conversions
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{string-upcase!}@fuindex string-upcase!
+@*
+@example
+@group
+(string-upcase! string)
+@end group
+@group
+@end group
+@end example
+
+Replace all lowercase alphabetic characters in @code{string} with
+uppercase characters.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{string-downcase!}@fuindex string-downcase!
+@*
+@example
+@group
+(string-downcase!)
+@end group
+@group
+@end group
+@end example
+
+Replace all uppercase alphabetic characters in @code{string} with
+lowercase characters.
+
+
+
+
+@need 3200
+
+@node Converting Between Strings and Lists
+@section Converting Between Strings and Lists
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{list->string}@fuindex list->string
+@*
+@example
+@group
+(list->string l)
+@end group
+@group
+@end group
+@end example
+
+Combine the elements of list @code{l} into a string.
+
+
+The elements may be characters or read-only strings.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{string-append}@fuindex string-append
+@*
+@example
+@group
+(string-append . args)
+@end group
+@group
+@end group
+@end example
+
+Combine the arguments into a string.
+
+
+The arguments may be characters or read-only strings.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{string->list}@fuindex string->list
+@*
+@example
+@group
+(string->list s)
+@end group
+@group
+@end group
+@end example
+
+Return a list of characters in the read-only string @code{s}.
+
+
+
+
+@need 3200
+
+@node Strings Rationale
+@section Strings Rationale
+
+Shared substrings make possible efficient string manipulation without
+having to rely on the gymnastics of passing around @code{start end} 
+arguments everywhere.
+
+
+Read-only strings make formal the obvious similarity between symbols
+and strings.
+
+
+Together, these extensions to standard Scheme result in concise
+idioms.
+
+
+
+
+
+
+

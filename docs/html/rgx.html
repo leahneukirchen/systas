@@ -1,0 +1,464 @@
+<html>
+<head>
+<title>Regexps and Regular Expressions</title>
+</head>
+<body>
+
+<a name="Regexps_and_Regular_Expressions"></a>
+
+
+
+<h2 align=center>Regexps and Regular Expressions</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+
+<b>prev: </b><a href="fdsocket.html#Networking_Procedures">Networking Procedures</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<ul>
+<li><a href="rgx.html#Compiling_Regexps">Compiling Regexps</a></li>
+<li><a href="rgx.html#Comparing_Strings_to_Regexps">Comparing Strings to Regexps</a></li>
+<li><a href="rgx.html#Compiling_Regular_Expressions">Compiling Regular Expressions</a></li>
+<li><a href="rgx.html#DFA_Procedures">DFA Procedures</a></li>
+</ul>
+
+<p><b><u>Function</u> <code><a name="compiled-regexp?"></a><a name="index-pt:0"></a>
+compiled-regexp?
+</code></b><br>
+<pre>
+(compiled-regexp? obj)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is a compiled regular expression <code>#f</code>
+ otherwise.
+</p>
+<br>
+<br><hr>
+
+<a name="Compiling_Regexps"></a>
+
+
+
+<h3 align=center>Compiling Regexps</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="rgx.html#Regexps_and_Regular_Expressions">Regexps and Regular Expressions</a></br>
+<b>next: </b><a href="rgx.html#Comparing_Strings_to_Regexps">Comparing Strings to Regexps</a></br>
+
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="regcomp"></a><a name="index-pt:1"></a>
+regcomp
+</code></b><br>
+<pre>
+(regcomp pattern :optional cflags)
+
+</pre>
+<p>Compile <code>pattern</code>
+ to produce a compiled regular expression.
+</p><p>See the documentation for <code>regcomp</code>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Comparing_Strings_to_Regexps"></a>
+
+
+
+<h3 align=center>Comparing Strings to Regexps</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="rgx.html#Regexps_and_Regular_Expressions">Regexps and Regular Expressions</a></br>
+<b>next: </b><a href="rgx.html#Compiling_Regular_Expressions">Compiling Regular Expressions</a></br>
+
+<b>prev: </b><a href="rgx.html#Compiling_Regexps">Compiling Regexps</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="regexec"></a><a name="index-pt:2"></a>
+regexec
+</code></b><br>
+<pre>
+(regexec rgx str :optional match-pick eflags return error-return)
+
+</pre>
+<p>This is a complex procedure, with many convenience features.  If you
+use regexps, it is worth learning its details.
+</p><p><code>regexec</code>
+ compares <code>str</code>
+ to compiled regular expression <code>rgx</code>
+.
+The argument <code>match-pick</code>
+ describes what values to return if a 
+match occurs.
+</p><p><code>eflags</code>
+ is a list of symbols (such as <code>REG_NOTBOL</code>
+)
+that refine the search done by <code>regexec</code>
+ -- see the documentation
+for <code>regexec</code>
+ in the <em>libhackerlab</em> reference manual, or the <code>man</code>
+
+page on most unix-like systems.
+</p><p>If <code>return</code>
+ is missing, and a match is found, the data specified by
+<code>match-pick</code>
+ is simply returned.  If <code>return</code>
+ is provided, and 
+<code>match-pick</code>
+ specifies that a list should be returned, the <code>return</code>
+
+is applied to the elements of that list.  If <code>match-pick</code>
+ specifies
+a non-list value, <code>return</code>
+ is applied to just that value.
+</p><p>If <code>error-return</code>
+ is missing, and no match is found, <code>#f</code>
+ is returned.
+Otherwise, <code>(error-return)</code>
+ is invoked.
+</p><p>The most complex part of the interface is the parameter <code>match-pick</code>
+.
+If <code>match-pick</code>
+ is:
+</p><p><strong><u>`#f'</u></strong> -- return <code>#t</code>
+ if <code>str</code>
+ contains a match for <code>rgx</code>
+.
+</p><p><strong><u>`#t'</u></strong> -- return a list of three shared substrings of <code>str</code>
+ which are the
+text to the left of the match, the match itself, and the text to the right
+of the match.
+</p><p><strong><u>a vector whose 0 element is `cut'</u></strong> -- If the final state label is <code>N</code>
+, return
+the <code>N</code>
+th element of the vector, or <code>N</code>
+ itself if <code>N</code>
+ is negative or the vector
+has fewer than <code>N</code>
+ elements.
+</p><p><strong><u>a vector</u></strong> -- For each vector element <code>N > 0</code>
+, if subexpression <code>N</code>
+ matched, 
+fill that vector element with a pair of integers <code>(start-offset . end-offset)</code>
+ 
+describing the position of the subexpression match.  Fill vector element <code>0</code>
+ with
+a pair describing the position of the entire match.  Fill other vector elements
+with <code>#f</code>
+.
+</p><p><strong><u>a keyword</u></strong> -- return the keyword.
+</p><p><strong><u>`&lt;'</u></strong> (the symbol) -- return a shared substring of <code>str</code>
+ which is the text to 
+the left of the match.
+</p><p><strong><u>`>'</u></strong> (the symbol) -- return a shared substring of <code>str</code>
+ which is the text to 
+the right of the match.
+</p><p><strong><u>`state-label'</u></strong> (the symbol) -- return the integer state label of the final DFA
+state reached during the match.
+</p><p><strong><u>`N'</u></strong> (an integer) -- return a shared substring which is the text matched by
+subexpression <code>N</code>
+ <code>(0 </code>
+for the entire match).
+</p><p><strong><u>a list</u></strong> -- process each list element individually, returning a
+list of the indicated results.  Elements of the list may be <code>&lt;</code>
+,
+<code>></code>
+, <code>state-label</code>
+, a vector whose <code>0</code>
+ element is <code>cut</code>
+, or an
+integer (as above) or a <em>
+<a name="index-pt:3"></a>
+
+complex substring specification
+</em>
+
+(described below).
+</p><p>A <em>
+<a name="index-pt:4"></a>
+
+complex substring specification
+</em>
+ is a two element list:
+</p><pre>
+     (start-position end-position)
+
+</pre>
+<p>which describes the starting and ending positions of a substring of
+<code>str</code>
+.
+</p><p><code>start-position</code>
+ may be:
+</p><p><strong><u>`N'</u></strong> (an integer) -- the beginning of the substring matched by
+subexpression <code>N</code>
+ <code>(0 </code>
+for the beginning of the entire match).
+</p><p><strong><u>`&lt;'</u></strong> -- the beginning of <code>str</code>
+.
+</p><p><strong><u>`>'</u></strong> -- the end of the match.
+</p><p><strong><u>`(part . extreme)'</u></strong> -- this is an <em>
+<a name="index-pt:5"></a>
+
+arbitrary endpoint specifier
+</em>
+,
+described below.
+</p><p><strong><u>`end-position'</u></strong> may be:
+</p><p><strong><u>`N'</u></strong> (an integer) -- the end of the substring matched by
+subexpression <code>N</code>
+ <code>(0 </code>
+for the beginning of the entire match).
+</p><p><strong><u>`&lt;'</u></strong> -- the beginning of the match.
+</p><p><strong><u>`>'</u></strong> -- the end of <code>str</code>
+.
+</p><p><strong><u>`(part . extreme)'</u></strong> -- this is an <em>
+<a name="index-pt:6"></a>
+
+arbitrary endpoint specifier
+</em>
+,
+described below.
+</p><p>An <em>
+<a name="index-pt:7"></a>
+
+arbitrary endpoint specifier
+</em>
+ is of the form <code>(part
+. extreme)</code>
+.  <code>extreme</code>
+ may be either <code>0</code>
+ (meaning &quot;starting point
+of&quot;) or <code>1</code>
+ (meaning &quot;end point of&quot;) and <code>part</code>
+ may be either an
+integer subexpression number <code>(0 </code>
+for the entire match), <code>&lt;</code>
+ (text to
+the left of the match), or '>' (text to the right of the match).
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="set-rx-dfa-cache-threshold"></a><a name="index-pt:8"></a>
+set-rx-dfa-cache-threshold
+</code></b><br>
+<pre>
+(set-rx-dfa-cache-threshold n)
+
+</pre>
+<p>Set the goal threshold (in bytes) of the Rx superstate cache.  <em>xref</em>.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Compiling_Regular_Expressions"></a>
+
+
+
+<h3 align=center>Compiling Regular Expressions</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="rgx.html#Regexps_and_Regular_Expressions">Regexps and Regular Expressions</a></br>
+<b>next: </b><a href="rgx.html#DFA_Procedures">DFA Procedures</a></br>
+
+<b>prev: </b><a href="rgx.html#Comparing_Strings_to_Regexps">Comparing Strings to Regexps</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="regexp->dfa"></a><a name="index-pt:9"></a>
+regexp->dfa
+</code></b><br>
+<pre>
+(regexp->dfa regexp cflags)
+
+</pre>
+<p>Compile <code>regexp</code>
+ to produce a DFA.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="DFA_Procedures"></a>
+
+
+
+<h3 align=center>DFA Procedures</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="rgx.html#Regexps_and_Regular_Expressions">Regexps and Regular Expressions</a></br>
+
+<b>prev: </b><a href="rgx.html#Compiling_Regular_Expressions">Compiling Regular Expressions</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="dfa-fork"></a><a name="index-pt:10"></a>
+dfa-fork
+</code></b><br>
+<pre>
+(dfa-fork dfa)
+
+</pre>
+<p>Create a copy of <code>dfa</code>
+.  The copy is initially in the same state as <code>dfa</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="reset-dfa!"></a><a name="index-pt:11"></a>
+reset-dfa!
+</code></b><br>
+<pre>
+(reset-dfa! dfa)
+
+</pre>
+<p>Return <code>dfa</code>
+ to its starting state.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="dfa-final-tag"></a><a name="index-pt:12"></a>
+dfa-final-tag
+</code></b><br>
+<pre>
+(dfa-final-tag dfa)
+
+</pre>
+<p>Return the integer state label of the current state of <code>dfa</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="dfa-continuable?"></a><a name="index-pt:13"></a>
+dfa-continuable?
+</code></b><br>
+<pre>
+(dfa-continuable? dfa)
+
+</pre>
+<p>Return <code>#t</code>
+ if there are transitions out of the current state of
+<code>dfa</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%advance-dfa-to-final-state!"></a><a name="index-pt:14"></a>
+%advance-dfa-to-final-state!
+</code></b><br>
+<pre>
+(%advance-dfa-to-final-state! dfa str)
+
+</pre>
+<p>Advance <code>dfa</code>
+ using characters from <code>str</code>
+.  Stop when <code>dfa</code>
+ enters
+a final state.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

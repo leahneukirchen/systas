@@ -1,0 +1,15 @@
+Revision: dists--lord--1.0--patch-23
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sun Feb 17 13:02:27 PST 2002
+Standard-date: 2002-02-17
+Summary: fix an error in arch examples
+Keywords: 
+New-files: {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-23
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  docs.d/arch/examples/README.010.first-archive
+New-patches: lord@regexps.com--2002/dists--lord--1.0--patch-23
+
+Fixed a cut and paste error.
+

@@ -1,0 +1,101 @@
+# Makefile.in: build systas
+#
+################################################################
+# Copyright (C) 2002 Tom Lord
+# 
+# See the file "COPYING" for further information about
+# the copyright and warranty status of this work.
+# 
+
+unexec_test		:=	$(shell expr $(cfg__systas_unexec) '&' $(cfg__unexec_should_work))
+
+ifeq (1, $(unexec_test))
+	use_unexec	:=	yes
+	unexec_lib	:=	$(objroot)/unexec/libunexec/libunexec.a
+else
+	use_unexec	:=
+	unexec_lib	:=	
+endif
+
+mains		:=	systas-raw
+
+libs		:=	$(objroot)/systas/libsystas/libsystas.a \
+			$(objroot)/hackerlab/libhackerlab/libhackerlab.a \
+			$(unexec_lib) \
+			-lm
+
+###########################################################################
+# Propogate some config parameters to 
+# scheme:
+# 
+
+hackerlabroot	:=	$(shell cd $(srcdir)/.. ; pwd)
+
+build-dir	:=	$(shell pwd)
+
+BOOT_CMD	:=	"(begin \
+			   (define development-version? (or)) \
+			   (define source-root \"$(hackerlabroot)\") \
+			   (define build-directory \"$(build-dir)\") \
+			   (define install-root \"$(prefix)\") \
+			   (define ice-9-dir \"$(prefix)/share/scheme/ice-9\") \
+			   (low-level-try-load \"$(prefix)/share/scheme/ice-9/rt0.scm\") \
+			   (start))"
+
+DEVO_BOOT_CMD	:=	"(begin \
+			   (define development-version? (and)) \
+			   (define source-root \"$(hackerlabroot)\") \
+			   (define build-directory \"$(build-dir)\") \
+			   (define install-root \"$(prefix)\") \
+			   (define ice-9-dir \"$(hackerlabroot)/scheme-library/ice-9\") \
+			   (low-level-try-load \"$(hackerlabroot)/scheme-library/ice-9/rt0.scm\") \
+			   (start))"
+
+BUILDDIR	:=	"$(build-dir)"
+
+EXTRA_CFLAGS	:=	'-DBOOT_CMD=$(BOOT_CMD)' '-DDEVO_BOOT_CMD=$(DEVO_BOOT_CMD)' '-DBUILDDIR=$(BUILDDIR)'
+
+
+################################################################
+# How to build it:
+# 
+
+ifdef use_unexec
+include $(makefiles)/unexec-programs.mk
+else
+include $(makefiles)/programs.mk
+endif
+
+
+################################################################
+# (Maybe) Using systas-raw to Unexec Systas
+# 
+
+all: systas
+
+ifdef use_unexec
+
+# horrible hack until dependency tracking for 
+# scheme programs works:
+#
+
+systas: systas-raw $(srcdir)/=unexec-script.scm $(wildcard $(srcdir)/../scheme-library/*/*.scm)
+	./systas-raw $(srcdir)/=unexec-script.scm
+
+else
+
+systas: systas-raw
+	cp systas-raw systas
+
+endif
+
+################################################################
+# What to Install: 
+# 
+
+programs	:=	systas systas-raw
+include $(makefiles)/install-programs.mk
+
+# tag: Tom Lord Tue Dec  4 14:52:17 2001 (systas/Makefile.in)
+#
+

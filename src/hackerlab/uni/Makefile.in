@@ -1,0 +1,5 @@
+# tag: Tom Lord Tue Dec  4 14:52:23 2001 (uni/Makefile.in)
+#
+
+include $(makefiles)/library-objects.mk
+include $(makefiles)/install-includes.mk

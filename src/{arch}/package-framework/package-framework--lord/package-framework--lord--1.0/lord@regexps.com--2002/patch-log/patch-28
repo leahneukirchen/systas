@@ -1,0 +1,108 @@
+Revision: package-framework--lord--1.0--patch-28
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri May 10 02:34:23 PDT 2002
+Standard-date: 2002-05-10 09:34:23 GMT
+Summary: `package-framework' extensions and clean-ups.
+Keywords: 
+New-files: {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-28
+  build-tools/platforms/sysconfig
+  build-tools/Makefiles/unexec-programs.mk
+  build-tools/gnu/ChangeLog build-tools/gnu/config.guess
+  build-tools/gnu/config.sub build-tools/platforms/=README
+  build-tools/platforms/vars
+  build-tools/Makefiles/install-library-objects.mk
+  build-tools/platforms/pickconfig
+  build-tools/platforms/configs/freebsd
+  build-tools/auto-conf-lib/library-test
+New-directories: =Labnotes build-tools/gnu build-tools/platforms
+  build-tools/platforms/configs build-tools/platforms/helpers
+Removed-directories: labnotes
+Renamed-files: build-tools/auto-conf-lib/library-test build-tools/auto-conf-lib/gcc-test
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  PLUGIN/auto build-tools/=README
+  build-tools/Makefiles/rules.mk
+  build-tools/auto-conf-lib/gcc-test
+  build-tools/scripts/configure-top configure
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-28
+
+
+*** added files
+ 
+    ./build-tools/Makefiles/install-library-objects.mk
+
+	Support for installing .o files.
+
+    ./build-tools/Makefiles/unexec-programs.mk
+
+	Support for linking programs that call `unexec'.
+
+    ./build-tools/auto-conf-lib/library-test
+
+	Added a tag.
+
+    ./build-tools/gnu/ChangeLog
+    ./build-tools/gnu/config.guess
+    ./build-tools/gnu/config.sub
+
+	Imported from GNU.
+
+    ./build-tools/platforms/=README
+    ./build-tools/platforms/configs/freebsd
+    ./build-tools/platforms/pickconfig
+    ./build-tools/platforms/sysconfig
+    ./build-tools/platforms/vars
+
+	Support for hard-wired, platform-specific 
+	configuration options (e.g. unexec hacks).
+
+    ./build-tools/auto-conf-lib/gcc-test 
+
+	Support for turning the GCC major version
+	number (if any) into a configuration
+	parameter.
+
+*** added dirs
+ 
+    ./=Labnotes
+
+	(used to be `labnotes')
+
+**** ./PLUGIN/auto
+
+	invoke the `gcc-test' to discover if we're using
+	GCC, and if so, what version.
+ 
+ 
+**** ./build-tools/=README
+
+	Whitespace fix.
+ 
+ 
+**** ./build-tools/Makefiles/rules.mk
+
+	Better comments.
+
+	Don't compute `source-files' if it is set on entry.
+
+**** ./build-tools/scripts/configure-top
+
+	Better comments.
+
+	More regular parsing for PLUGIN files.
+
+	Get the package name from the =RELEASE-ID file.
+
+	Make sure that `prefix' is an absolute path.
+
+	Compute the canonical system name.
+
+	Use that to pick a platform configuration file.
+
+	Tweaked the way auto-conf tests are invoked.
+
+
+**** ./configure
+
+	Propogate command line arguments to `configure-top'.

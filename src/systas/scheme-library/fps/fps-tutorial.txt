@@ -1,0 +1,418 @@
+Functional PostScript Tutorial
+Copyright (C) 1996 by Wandy Sae-Tan and Olin Shivers
+
+This documentation is an introduction to Functional PostScript in
+tutorial style. This document does not cover all the topics and
+features available in FPS. My goal is to give you a flavor of what you
+can do with FPS and show you where to look further for more info. Each
+section is a brief overview of a concept with examples, and at the end
+of each section there is a list of related procedures that you can
+look up later in the Procedure Reference Manual.
+
+What you need:
+   know the basics of the Lisp or Scheme language
+   scsh (Scheme Shell)
+   PostScript/GhostScript viewer, or a PostScript printer.
+
+The Idea ========================================================
+
+Idea 1: PostScript is a powerful industry standard, but the language
+is very difficult for the homo sapien brains; we don't think in
+terms of "stacks" like our HP calculators do. We want something that
+is easy to use without sacrificing the quality and portability of
+PostScript.
+
+Idea 2: assemble small simple objects to make a big complex one. To
+draw a face, we draw the eyes, the nose, the mouth, the ears, and the
+head, and assemble them together. This whole-from-parts idea is not
+novel, but it is good: we can easily organize hierarchies structures
+for our pictures and we can reuse simple objects that we created 
+multiple times.
+
+
+
+Getting Started ==================================================
+
+You must run FPS from Scheme Shell (scsh) because FPS depends on scsh
+calls in several places. Please see the README file for information
+about download scsh. 
+
+Once you have scsh fired up, you'll need to load the FPS package. Use
+the config load and open command as follows:
+
+	>,config ,load fps-package.scm
+	>,open fps
+
+If your Scheme interpreter cannot find fps-package.scm, make sure
+that your current directory is where the FPS package resides.
+You may see warnings on invalid arguments of cos and sin calls.
+You can safely ignore these type checking warnings.
+
+
+
+Paths and Pictures ===============================================
+
+We will start by explaining the two basic objects in FPS: paths and
+pictures.  Paths are abstract constructs of geometric points and lines
+Pictures are ink on paper. Together they are the two basic steps to
+drawing in FPS. First you lay out the paths, then you paint the paths
+to get a picture.
+
+Paths are like stencils. A stencil is not a picture, but you can make
+many different pictures out of one stencil.  Imagine you have a
+stencil of a goldfish, you can trace it with a red chalk or you can
+spray it with green spraypaint.  Different tools and colors produce
+different pictures of the same goldfish path.
+
+Here's a simple triangular path:
+
+   (define triangle-path (line (pt 0 0) (pt 100 100) (pt 200 0) (pt 0 0)))
+
+Now we make a picture by stroking, or painting along the path:
+
+   (define triangle-picture (stroke triangle))
+
+Every path and picture has a starting point, and ending point, and
+bounding box.
+
+	(start-pt     <path | picture>)    -> pt
+	(end-pt       <path | picture>)	   -> pt
+	(bounding-box <path | picture>)    -> bbox
+
+You will find these information to be very useful when you are
+tranforming and composing objects.
+
+Now we have a picture of a triangle, but how do we view it? We will
+explain picture showing in the next section.  Please see the reference
+manual for documentation on other path and picture makers.
+
+An important about points in FPS: a point equals to 1/72 inch.
+Therefore (line (pt 0 0) (pt 0 72)) gives you a one-inch long vertical
+line.
+
+	Related procedures in this section:
+	point             - pt, pt:x, pt:y
+	basic path makers - line, rect, arc, tangent-arc, curve, close-path
+	picture makers    - stroke, fill
+	start-pt, end-pt, 
+	bounding-box, bounding-box:max, bounding-box:min
+
+
+
+Show and Channels ===============================================
+
+How does FPS produce viewable graphics from the Scheme interpreter?
+FPS renders graphics through objects called channels. A channel is an
+instance of a particular backend that knows how to turn FPS pictures
+into PostScript graphics. In this particular implementation, a
+PostScript Level 2 text backend is provided. This backend produces
+PostScript Level 2 text which can be saved in a file and sent to
+your printer or viewed with ghostview.
+
+In the future there will be other backends to GhostScript and Display
+PostScript so that you can render directly on your screen.
+
+The process of rendering a picture object is called "show". To show
+a picture, you first create a channel, and then call show on that
+channel and the picture. 
+
+Here we create a channel which will send its output to the file named
+"test.ps":
+
+	(define test-channel (ps2-text-channel "test.ps"))
+
+Now we can render our picture of the triangle:
+
+	(show test-channel triangle-picture)
+
+There can be multiple show to a channel. Each show will render on a
+new page. When you are done showing, you must close the channel when
+you are done to flush all the output to the file and for cleanup.
+
+	(close-channel test-channel)
+
+There exists a short-hand which allows you show a single picture.
+Here's how we can use it to render the triangle-picture:
+
+	(show-w/ps2-text-channel "test.ps" triangle-picture)
+	
+show-w/ps2-text-channel automatically creates the channel, calls show
+on the channel and picture, and then close the channel.
+
+	Related procedures in this section:
+	ps2-text-channel
+	close-channel
+	show-w/ps2-text-channel
+
+
+Transformation ===================================================
+
+We have learned how to create basic paths and picture and how to
+render the pictures. We will spend the rest of the tutorial exploring
+the many different ways to manipulate paths and pictures. Try out
+the examples and call show or show-w/ps2-text-channel to render them.
+
+
+You can scale, rotate, and move your paths and pictures. 
+
+	 (define translate-triangle-picture 
+	    (translate 100 100 triangle-picture))
+
+The effects of transforming a path v.s. that of transforming a picture
+can be very different, especially when you are scaling: when you scale
+up a path, only the shape is enlarged, but when you scale a picture,
+not only is the shape enlarged, the ink is also enlarged, causing the
+lines will also become much thicker (think of what happens when you
+view a thin line through a magnifying glass).
+
+	Related procedures in this section:
+	rotate, scale, translate
+
+
+
+Composition ========================================================
+
+You can compose paths and pictures together so that you can manipuate
+them as one big(ger) object. Here's an example:
+
+	(compose triangle-picture
+		 translated-triangle-picture)
+
+compose collects the two pictures together to make a composition.
+When you call show on the composition, the pictures are rendered in
+sequence: triangle-picture is rendered, and then translated-
+triangle-picture is drawn right over it. The rendering sequence does
+not matter in this example since the two triangle pictures do not
+overlap, but if you have two overlapping pictures that are painted in
+different colors, you will have to think about the order in which 
+you compose them together.
+
+Please see the reference manual for details on other composition
+procedures such as join and link.
+
+By simply knowing how to create lines and how to transform/compose
+them, you can already draw very complicated pictures. Many amazing
+fractals require no more than transforming and composing straight line
+segments together. See the the fractal and fractal-arrow programs in
+fps-examples.scm for more extended examples.
+
+	Related procedures in this section:
+	compose, join, link
+
+
+
+Glyphpaths ========================================================
+
+Glyphpath is a kind of path. It can be transformed and turned into
+pictures just like all other paths. Glyphpaths are pre-drawn paths
+that tell us how characters such as "A", "B", "C" etc in a font are
+be drawn.
+
+Fonts are a set of glyph paths of a specified size. Courier, Times New
+Roman, and Helvetica are examples of some common fonts. Each font has
+four elements: a collection of glyphs, a character map, an integer
+map, and a transformation matrix. Glyphs are data structures that
+associate symbolic names (called glyphnames) to a path (called
+glyphpath).  Character and integer maps are data structures that
+associate characters and integers (such as #\A and 2) to
+glyphnames. The transformation matrix describes a global
+transformation on the glyphpaths in this font (you may want to adjust
+the 'slantedness' of Italics, for example).
+
+To create glyphpahts, we must create a font first:
+
+	(define helv (font "Helvetica" 36))
+
+Once we have the font, we can create some glyphpaths:
+
+	(simple-string->glyphpath helv "Hello, Goldfish!")
+
+You can stroke, fill, transform, and compose this glyphpath just
+as you would with any other paths. Check out the circle-text
+program in fps-examples.scm which puts text around a circle (it involves
+some fairly hairly looking transformations, but it is simply figuring
+out where to put the glyphpaths).
+	   		 
+	Related procedures in this section:
+	font, char->glyphpath, int->glyphpath, glyphname->glyphpath
+	simple-string->glyph, string->glyph, 
+	
+
+Style =============================================================
+
+You can control how the paths get turned into picture by specifying
+the style used by picture makes. A style is a collection of
+attributes, where attribute is a piece of information about the
+picture: color, line width, etc.  
+
+There are several ways to change or specify style and attributes.
+The simplest way is to include the attribute as an argument to
+the picture makers:
+
+	(define thick-triangle-picture
+	   (stroke triangle-path (:line-width 10)
+			         (:color (rgb 1 0 0))))
+	   		
+We have changed the line-width attribute from the default value of 1
+to 5, and the color attribute from the default black to red (rgb creates
+a color in the red/green/blue model. More on color in the next section) 
+so the resulting picture is painted in a thick red line.
+ 
+	Related procedures in this section:
+	build-style, vary-default, with-style, with-attrib,
+	attributes
+
+
+Color ==========================================================
+
+In FPS, color can be specified in four modes:
+	
+		RGB	Red Blue Green
+		HSB	Hue Saturation Brightness
+		CMYK	Cyan Magenta Yellow Black
+		Gray	Just Gray (monocolor)
+
+FPS's view of color is simple: The four modes are equivelant. you can
+create a color in any of the four modes. Once you create a color, you
+can find out its component values in any of the four modes. 
+
+To create a color in FPS, you first select the mode you wish to
+work in, and then specify how much (from 0 to 1) of each component
+in the mode you want. For example, RGB has three color components.
+To create a color in RGB, simply specify how much red, blue, and green
+you want. 1 is the maximum amount, 0 is none.
+
+	(define red (rgb 1 0 0))
+
+We can extract the component value of a color:
+
+	(rgb:r red) --> 1
+
+Once we have created a color, we can make new colors from it in
+other modes. In the following example we reduce the brightness of
+'red' by half by creating another red in the HSB mode:
+
+	(define less-bright-red (hsb (hsb:h red)
+			 	     (hsb:s red)
+				     (/ (hsb:b red) 2)))
+
+Once we have created these colors, we can use them to specify
+how paths are painted to make pictures.
+
+	(stroke triangle-path (:color just-red)))
+	(fill   triangle-path (:color less-bright-red)))
+
+You can do lots of neat color tricks in FPS because it is so easy to
+build new colors from exisiting ones. See the sun program in
+fps-examples.scm for a more extended example.
+
+	Related procedures in this section:
+	rgb, hsb, cmyk, gray.
+
+
+
+Colormap  ==========================================================
+
+Colormap is a way to make pictures from other pictures by "remapping"
+the colors using a color-function. The colormap concept is identical
+to the ordinary "map" function for list in Scheme:
+
+        (map (lambda (n) (+ n 1)) '(1 2 3))
+
+The map function feeds the elements in the list through the mapping
+function to create a new list. Similarly, the colormap function 
+feeds every color in the picture through the colormmap function
+to create a new picture. For example:
+
+	;turn the picture completely green
+	(colormap (lambda (c) (rbg 0 1 0)) <picture>) 
+
+	;reduce the brightness of picture by a quarter
+	(colormap (lambda (c) (hsb (hsb:hue c)
+				   (hsb:sat c)
+				   (* (hsb:bri c) .75)))
+		  <picture>)
+
+Note that a colormap function is any function that takes a color as an
+argument, and returns a color.
+
+You can achieve many interesting effects (fading, darkening, etc) by
+recursively colormap a picture. See the headlines and square-to-circle
+program in fps-examples.scm for more extended examples.
+
+	Related procedures in this section:
+	colormap
+
+
+
+Clipping ==========================================================
+
+Clipping is way to to make new pictures by 'cropping' an existing
+picture with a path.
+
+	(clip (rect (pt 75 25) 100 150)
+	      triangle-picture)
+
+We now have a picture of slightly over half of a triangle.
+
+Clipped pictures are especially interesting when you clip with
+glyphpaths. See the clip-msg program in fps-examples.scm for an
+example.
+
+	Related procedures in this section:
+	clip
+
+
+Glyphnames ======================================================
+
+Glyphnames are pre-determined standard names by Adobe (for example,
+the shape # is "numbersign", the shape ! is "exclam", etc). They are
+unique identifiers of glyphs.
+
+You can use glyphnames to print characters that are not part of 
+your standard keyboard. For example:
+
+	(define helv (font "Helvetica" 36))
+	(glyphname->glyphpath helv "copyright")))
+	   
+This will give you the glyphpath of a copyright symbol (a 'c' in a circle)
+in 36 point Helvetica. 
+
+Glyphnames are case sensitive. See PostScript Reference Manual
+Appendix E for a standard roman charater set and their glyphnames.
+
+Instead of using glyphname->glyphpath, you can also embed glyphnames
+in a string inside an escape sequence of a string:
+
+	(string->glyphpath helv "My Resum %eacute:")))
+
+This gives you a picture that has the words "My Resume" with the
+properly accented 'e'. The % begins the escape sequence and : ends
+it. Glyphnames inside escape sequences are seperated by white spaces.
+
+	Related procedures in this section:
+	glyphname->glyphpath, string->glyphpath.
+
+
+Other Topics ======================================================
+
+What I have presented so far should keep you amused for a while.
+But once you have worked through all the examples, you may want to
+look up the following topics in the reference manual:
+
+	- character map and integer map
+	- bitmap
+	- options
+
+Enjoy.
+		
+The End ============================================================
+
+
+
+
+
+
+
+
+

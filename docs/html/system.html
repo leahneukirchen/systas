@@ -1,0 +1,1027 @@
+<html>
+<head>
+<title>System Calls and C Library Functions</title>
+</head>
+<body>
+
+<a name="System_Calls_and_C_Library_Functions"></a>
+
+
+
+<h2 align=center>System Calls and C Library Functions</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="filesys.html#File_System_and_Descriptor_Procedures">File System and Descriptor Procedures</a></br>
+
+
+</small>
+<br>
+
+
+
+
+
+
+<p>The procedures in this section are a more or less direct interface
+to many of the most important unix system calls and C library
+functions defined by popular unix standards.  Not included in this
+section are the file-system functions. (See <a href="filesys.html#File_System_and_Descriptor_Procedures">File System and Descriptor Procedures</a>.)
+</p><p>Functions whose name begins with <em>
+<a name="index-pt:0"></a>
+
+%
+</em>
+ report system errors by
+returning a symbol (the name of the error, as defined in
+<em>
+<a name="index-pt:1"></a>
+
+errno.h
+</em>
+).  Other kinds of error, such as passing a parameter of
+the wrong type, cause exceptions.  This documentation refers to all
+such functions as <em>
+<a name="index-pt:2"></a>
+
+system calls
+</em>
+, regardless of whether they are
+actually implemented by system calls on the host platform.
+</p><p>The return value of a system call can be checked for error
+conditions using <code>errno?</code>
+.  The error number can be recovered using
+<code>errno->integer</code>
+ and an error message, provided by the host
+platform, can be dervided using <code>strerror</code>
+.
+</p><p>The procedure <code>%%</code>
+ is useful for calling a system call and
+converting error returns into exceptions.  In addition, <code>%%</code>
+ will
+retry system calls that are interrupted by a signal.  (<code>%e</code>
+ can be
+used to convert errors to exceptions without retrying system calls
+and <code>%i</code>
+ can be used to retry system calls without converting
+errors to exceptions).
+</p><p>Some of these procedures return a structure where the corresponding
+C function would return a structure. The module <code>(unix structures)</code>
+
+provides functions which can read and write values from these 
+vectors by name instead of index number. (*Note: Unix Structures.)
+</p><p><b><u>Function</u> <code><a name="errno?"></a><a name="index-pt:3"></a>
+errno?
+</code></b><br>
+<pre>
+(errno? obj)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is an errno object, <code>#f</code>
+ otherwise.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="errno->integer"></a><a name="index-pt:4"></a>
+errno->integer
+</code></b><br>
+<pre>
+(errno->integer errno)
+
+</pre>
+<p>Return the error number associated with an errno object.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%e"></a><a name="index-pt:5"></a>
+%e
+</code></b><br>
+<pre>
+;; %e fn . args
+;; %signal-errors fn . args
+;; 
+;; Apply `fn' to `args'.  If `fn' returns an errno object,
+;; throw a exception whose type is the name of the answer.
+
+</pre>
+
+<br>
+<br><p><b><u>Function</u> <code><a name="%i"></a><a name="index-pt:6"></a>
+%i
+</code></b><br>
+<pre>
+%i fn . args
+%retry-interrupted-calls fn . args
+
+</pre>
+<p>Apply <code>fn</code>
+ to <code>args</code>
+.  If <code>fn</code>
+ returns an errno object,
+and the indicated error is <code>EINTR</code>
+, retry the call to <em>
+<a name="index-pt:7"></a>
+
+fn
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%%"></a><a name="index-pt:8"></a>
+%%
+</code></b><br>
+<pre>
+%% fn . args
+%high-level-system-call fn . args
+
+</pre>
+<p>Apply <code>fn</code>
+ to <code>args</code>
+.  If <code>fn</code>
+ returns an errno object,
+and the indicated error is <code>EINTR</code>
+, retry the call to <em>
+<a name="index-pt:9"></a>
+
+fn
+</em>
+.
+</p><p>If <code>fn</code>
+ returns an errno object for some other error,
+throw an exception whose type is the name of the error
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="errno-exceptions-return"></a><a name="index-pt:10"></a>
+errno-exceptions-return
+</code></b><br>
+<pre>
+errno-exceptions-return thunk
+
+</pre>
+<p>Invoke <code>thunk</code>
+ in the context of <code>catch</code>
+.  If an errno exception
+is caught, return the errno object.  If any other exception is 
+caught, rethrow that exception.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="strerror"></a><a name="index-pt:11"></a>
+strerror
+</code></b><br>
+<pre>
+(strerror error)
+
+</pre>
+<p>Return the system-defined error message for a given 
+error number.  <code>error</code>
+ must be an integer or an errno object.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%getgroups"></a><a name="index-pt:12"></a>
+%getgroups
+</code></b><br>
+<pre>
+(%getgroups)
+
+</pre>
+<p>Return the process group access list (a vector of integer id numbers).
+See the manual page <em>
+<a name="index-pt:13"></a>
+
+getgroups
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="getpwent"></a><a name="index-pt:14"></a>
+getpwent
+</code></b><br>
+<pre>
+(getpwent)
+
+</pre>
+<p>Return the next entry from the password file as a keyword argument
+list or <code>#f</code>
+.
+</p><p>See the manual page <em>
+<a name="index-pt:15"></a>
+
+getpwent
+</em>
+.
+</p><p>This function returns a keyword argument list.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="setpwent"></a><a name="index-pt:16"></a>
+setpwent
+</code></b><br>
+<pre>
+(setpwent)
+
+</pre>
+<p>Rewind the file pointer for the password file.  
+See the manual page <em>
+<a name="index-pt:17"></a>
+
+setpwent
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="endpwent"></a><a name="index-pt:18"></a>
+endpwent
+</code></b><br>
+<pre>
+(endpwent)
+
+</pre>
+<p>Close the password file.
+See the manual page <em>
+<a name="index-pt:19"></a>
+
+endpwent
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="getpwuid"></a><a name="index-pt:20"></a>
+getpwuid
+</code></b><br>
+<pre>
+(getpwuid user-id)
+
+</pre>
+<p>Return the password file entry for a given user id.
+See the manual page <em>
+<a name="index-pt:21"></a>
+
+getpwuid
+</em>
+.
+</p><p>This function returns a keyword argument list.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="getpwnam"></a><a name="index-pt:22"></a>
+getpwnam
+</code></b><br>
+<pre>
+(getpwnam user-name)
+
+</pre>
+<p>Return the password file entry for a given user name.
+See the manual page <em>
+<a name="index-pt:23"></a>
+
+getpwnam
+</em>
+.
+</p><p>This function returns a keyword argument list.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="getgrent"></a><a name="index-pt:24"></a>
+getgrent
+</code></b><br>
+<pre>
+(getgrent)
+
+</pre>
+<p>Return the next entry from the groups file as a keyword-argument
+list.
+</p><p>See the manual page <em>
+<a name="index-pt:25"></a>
+
+getgrent
+</em>
+.
+</p><p>This function returns a keyword argument list.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="getgrgid"></a><a name="index-pt:26"></a>
+getgrgid
+</code></b><br>
+<pre>
+(getgrgid group-id)
+
+</pre>
+<p>Return the groups file entry for a given group id.
+See the manual page <em>
+<a name="index-pt:27"></a>
+
+getgrgid
+</em>
+.
+</p><p>This function returns a keyword argument list.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="getgrnam"></a><a name="index-pt:28"></a>
+getgrnam
+</code></b><br>
+<pre>
+(getgrnam group-name)
+
+</pre>
+<p>Return the groups file entry for a given group name.
+See the manual page <em>
+<a name="index-pt:29"></a>
+
+getgrnam
+</em>
+.  Return <code>#f</code>
+ if no group
+has the given name.
+</p><p>This function returns a keyword argument list.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="setgrent"></a><a name="index-pt:30"></a>
+setgrent
+</code></b><br>
+<pre>
+(setgrent)
+
+</pre>
+<p>Rewind the file pointer for the groups file.  
+See the manual page <em>
+<a name="index-pt:31"></a>
+
+setgrent
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="endgrent"></a><a name="index-pt:32"></a>
+endgrent
+</code></b><br>
+<pre>
+(endgrent)
+
+</pre>
+<p>Close the groups file.
+See the manual page <em>
+<a name="index-pt:33"></a>
+
+endgrent
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="signal-name->integer"></a><a name="index-pt:34"></a>
+signal-name->integer
+</code></b><br>
+<pre>
+(signal-name->integer signal)
+
+</pre>
+<p>Return the signal number of <code>signal</code>
+.  
+</p><p><code>signal</code>
+ may already be a signal number, or it can be a symbol whose name
+is the traditional name in C for a signal (e.g. 'SIGINT)
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%kill"></a><a name="index-pt:35"></a>
+%kill
+</code></b><br>
+<pre>
+(%kill process-id signal)
+
+</pre>
+<p>Send the indicated signal to the indicated process.
+<code>process-id</code>
+ and <code>signal</code>
+ must be integers.
+</p><p>See the manual page <em>
+<a name="index-pt:36"></a>
+
+kill
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%killpg"></a><a name="index-pt:37"></a>
+%killpg
+</code></b><br>
+<pre>
+(%killpg process-group-id signal)
+
+</pre>
+<p>Send the indicated signal to the indicated process group.
+<code>process-group-id</code>
+ and <code>signal</code>
+ must be integers.
+</p><p>See the manual page <em>
+<a name="index-pt:38"></a>
+
+killpg
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="wait-options->integer"></a><a name="index-pt:39"></a>
+wait-options->integer
+</code></b><br>
+<pre>
+(wait-options->integer options)
+
+</pre>
+<p>Return an integer which is the logical or of one or more options to the <code>%wait</code>
+ system call.
+<code>options</code>
+ may be an integer (which is returned), a symbol, or a list of symbols and integers.
+Accepted symbols share names with CPP constants (e.g. <code>WNOHANG</code>
+).
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%waitpid"></a><a name="index-pt:40"></a>
+%waitpid
+</code></b><br>
+<pre>
+(%waitpid process-id options)
+
+</pre>
+<p>Wait for the indicated process to exit and return its status.
+Both arguments must be integers. [!!! out of date]
+</p><p>See the manual page <em>
+<a name="index-pt:41"></a>
+
+waitpid
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="getpid"></a><a name="index-pt:42"></a>
+getpid
+</code></b><br>
+<pre>
+(getpid)
+
+</pre>
+<p>Return the id of the current process.
+See the manual page <em>
+<a name="index-pt:43"></a>
+
+getpid
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="getppid"></a><a name="index-pt:44"></a>
+getppid
+</code></b><br>
+<pre>
+(getppid)
+
+</pre>
+<p>Return the parent process id of the current proces.
+See the manual page <em>
+<a name="index-pt:45"></a>
+
+getppid
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="getuid"></a><a name="index-pt:46"></a>
+getuid
+</code></b><br>
+<pre>
+(getuid)
+
+</pre>
+<p>Return the user id of the current process.
+See the manual page <em>
+<a name="index-pt:47"></a>
+
+getuid
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="getgid"></a><a name="index-pt:48"></a>
+getgid
+</code></b><br>
+<pre>
+(getgid)
+
+</pre>
+<p>Return the group id of the current process.
+See the manual page <em>
+<a name="index-pt:49"></a>
+
+getgid
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="geteuid"></a><a name="index-pt:50"></a>
+geteuid
+</code></b><br>
+<pre>
+(geteuid)
+
+</pre>
+<p>Return the effective user id of the current process.
+See the manual page <em>
+<a name="index-pt:51"></a>
+
+geteuid
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="getegid"></a><a name="index-pt:52"></a>
+getegid
+</code></b><br>
+<pre>
+(getegid)
+
+</pre>
+<p>Return the effective group id of the current process.
+See the manual page <em>
+<a name="index-pt:53"></a>
+
+getegid
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%setuid"></a><a name="index-pt:54"></a>
+%setuid
+</code></b><br>
+<pre>
+(%setuid id)
+
+</pre>
+<p>Set the effective user id of the current process.
+See the manual page <em>
+<a name="index-pt:55"></a>
+
+setuid
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%setgid"></a><a name="index-pt:56"></a>
+%setgid
+</code></b><br>
+<pre>
+(%setgid id)
+
+</pre>
+<p>Set the effective group id of the current process.
+See the manual page <em>
+<a name="index-pt:57"></a>
+
+setgid
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%seteuid"></a><a name="index-pt:58"></a>
+%seteuid
+</code></b><br>
+<pre>
+(%seteuid id)
+
+</pre>
+<p>Set the effective user id of the current process.
+See the manual page <em>
+<a name="index-pt:59"></a>
+
+setuid
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%setegid"></a><a name="index-pt:60"></a>
+%setegid
+</code></b><br>
+<pre>
+(%setegid id)
+
+</pre>
+<p>Set the effective group id of the current process.
+See the manual page <em>
+<a name="index-pt:61"></a>
+
+setegid
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="getpgrp"></a><a name="index-pt:62"></a>
+getpgrp
+</code></b><br>
+<pre>
+(getpgrp)
+
+</pre>
+<p>Return the process group of the current process.
+See the manual page <em>
+<a name="index-pt:63"></a>
+
+getpgrp
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%setpgid"></a><a name="index-pt:64"></a>
+%setpgid
+</code></b><br>
+<pre>
+(%setpgid process-id process-group-id)
+
+</pre>
+<p>Set the process group of the indicated process.
+See the manual page <em>
+<a name="index-pt:65"></a>
+
+setpgid
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%setsid"></a><a name="index-pt:66"></a>
+%setsid
+</code></b><br>
+<pre>
+(%setsid)
+
+</pre>
+<p>See the manual page <em>
+<a name="index-pt:67"></a>
+
+setsid
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%exec"></a><a name="index-pt:68"></a>
+%exec
+</code></b><br>
+<pre>
+(%exec filename args :optional environment)
+
+</pre>
+<p>Exec the indicated program, providing <code>args</code>
+ as
+command line arguments.  If <code>environment</code>
+ is specified,
+make that the environment of program.
+</p><p><code>args</code>
+ must be a list of read-only strings -- other elements of 
+the list are ignored.
+</p><p>See the manual page <em>
+<a name="index-pt:69"></a>
+
+exec
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%fork"></a><a name="index-pt:70"></a>
+%fork
+</code></b><br>
+<pre>
+(%fork)
+
+</pre>
+<p>Create a new (child) process.  In the parent process,
+return the process id of the child.  In the child process,
+return <code>0</code>
+.
+</p><p>See the manual page <em>
+<a name="index-pt:71"></a>
+
+fork
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%exit"></a><a name="index-pt:72"></a>
+%exit
+</code></b><br>
+<pre>
+(%exit status)
+
+</pre>
+<p>Exit the current process with the indicated status.
+See the manual page <em>
+<a name="index-pt:73"></a>
+
+exit
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%uname"></a><a name="index-pt:74"></a>
+%uname
+</code></b><br>
+<pre>
+(%uname)
+
+</pre>
+<p>Return a vector of information about the host system.
+See the manual page <em>
+<a name="index-pt:75"></a>
+
+uname
+</em>
+.
+</p><p>This function returns a keyword-argument list.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="environ"></a><a name="index-pt:76"></a>
+environ
+</code></b><br>
+<pre>
+(environ (:optional new-environment))
+
+</pre>
+<p>Return the process environment variables as a list
+of strings of the form:
+</p><pre>
+     (&quot;VAR=value&quot; ...)
+
+</pre>
+<p>If <code>new-environment</code>
+ is provided, it should be a list
+of the same form.  The process environment variables
+are set to that list.
+</p><p>See the manual page <em>
+<a name="index-pt:77"></a>
+
+environ
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%access?"></a><a name="index-pt:78"></a>
+%access?
+</code></b><br>
+<pre>
+(%access? path mode)
+
+</pre>
+<p>Return <code>#t</code>
+ if the processes real user and group id have the
+authority to access the file  <code>path</code>
+ in the manner specified 
+by <code>mode</code>
+.
+</p><p>See the manual page <em>
+<a name="index-pt:79"></a>
+
+access
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="getenv"></a><a name="index-pt:80"></a>
+getenv
+</code></b><br>
+<pre>
+(getenv variable-name)
+
+</pre>
+<p>Return the value of the indicated environment variable.
+Return <code>#f</code>
+ if the variable has no value.
+</p><p>See the manual page <em>
+<a name="index-pt:81"></a>
+
+getenv
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%setenv"></a><a name="index-pt:82"></a>
+%setenv
+</code></b><br>
+<pre>
+(%setenv variable-name value overwrite?)
+
+</pre>
+<p>Add the indicated variable to the environment with the given 
+value. If overwrite is not provided or is <code>#f</code>
+, and the variable 
+is already defined, this procedure has no effect.
+</p><p>See the manual page <em>
+<a name="index-pt:83"></a>
+
+setenv
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="unsetenv"></a><a name="index-pt:84"></a>
+unsetenv
+</code></b><br>
+<pre>
+(unsetenv variable-name)
+
+</pre>
+<p>Remove the indicated environment variable from the process'
+environment variable settings.
+</p><p>See the manual page <em>
+<a name="index-pt:85"></a>
+
+unsetenv
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%putenv"></a><a name="index-pt:86"></a>
+%putenv
+</code></b><br>
+<pre>
+(%putenv string)
+
+</pre>
+<p>Modify the processes environment variables according
+to <code>string</code>
+.
+</p><p>See the manual page <em>
+<a name="index-pt:87"></a>
+
+putenv
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="ctime"></a><a name="index-pt:88"></a>
+ctime
+</code></b><br>
+<pre>
+(ctime time)
+
+</pre>
+<p>Convert a time, represented in seconds since an epoch, to
+a string such as:
+</p><pre>
+     &quot;Thu Nov 24 18:22:48 1986\n&quot;
+
+</pre>
+<p>Fields in the string returned have constant length.
+</p><p>See also <code>%time</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%nice"></a><a name="index-pt:89"></a>
+%nice
+</code></b><br>
+<pre>
+(%nice increment)
+
+</pre>
+<p>Change the niceness of the current process by <code>increment</code>
+.
+<code>increment</code>
+ must be an integer.
+</p><p>See the manual page <em>
+<a name="index-pt:90"></a>
+
+nice
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%sync"></a><a name="index-pt:91"></a>
+%sync
+</code></b><br>
+<pre>
+(%sync)
+
+</pre>
+<p>Force pending file-system changes to disk.
+</p><p>See the manual page <em>
+<a name="index-pt:92"></a>
+
+fsync
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%truncate"></a><a name="index-pt:93"></a>
+%truncate
+</code></b><br>
+<pre>
+(%truncate path SCM_LENGTH)
+
+</pre>
+<p>Change the length of a file.
+<code>path</code>
+ must be a read-only string.
+<code>length</code>
+ must be an integer.
+</p><p>See the manual page <em>
+<a name="index-pt:94"></a>
+
+truncate
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="alarm"></a><a name="index-pt:95"></a>
+alarm
+</code></b><br>
+<pre>
+(alarm n)
+
+</pre>
+<p>Arrange for a SIGALRM interrupt <code>n</code>
+ seconds into the future.
+</p><p>See the manual page <em>
+<a name="index-pt:96"></a>
+
+alarm
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="pause"></a><a name="index-pt:97"></a>
+pause
+</code></b><br>
+<pre>
+(pause)
+
+</pre>
+<p>Make the current process sleep until a signal is received.
+</p><p>See the manual page <em>
+<a name="index-pt:98"></a>
+
+pause
+</em>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="sleep"></a><a name="index-pt:99"></a>
+sleep
+</code></b><br>
+<pre>
+(sleep n)
+
+</pre>
+<p>Make the current process sleep until <code>n</code>
+ seconds have
+passed or a signal is received.
+</p><p>See the manual page <em>
+<a name="index-pt:100"></a>
+
+sleep
+</em>
+.
+</p>
+<br>
+<br>
+<a name="Rationale_--_Unix_System_Call"></a>
+
+
+
+<h3 align=center>Rationale -- Unix System Call</h3>
+
+
+
+
+
+
+
+
+
+
+<p>Another implementation (SCSH) converts all system call errors to 
+exceptions.  That seems wrong: an error from a system call is
+not necessarily an exception  -- it may be a useful return value.
+Therefore, we use the convention that system call errors return
+a symbol, but make it trivial (via the procedure <code>%%</code>
+) to convert
+error returns to exceptions.
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

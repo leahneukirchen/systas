@@ -1,0 +1,283 @@
+<html>
+<head>
+<title>Structures</title>
+</head>
+<body>
+
+<a name="Structures"></a>
+
+
+
+<h2 align=center>Structures</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="records.html#Simple_Record_Types">Simple Record Types</a></br>
+
+<b>prev: </b><a href="weaks.html#Weak_Vectors_and_Weak_Hash_Tables">Weak Vectors and Weak Hash Tables</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p><em>
+<a name="index-pt:0"></a>
+
+Structures
+</em>
+ are user defined data types.  Using structures,
+programmers can implement types which are disjoint from other
+Scheme types, which have private state, and which have a
+programmer-defined representation.
+</p><p>A structure has two parts: its <em>
+<a name="index-pt:1"></a>
+
+type
+</em>
+ and its <em>
+<a name="index-pt:2"></a>
+
+data
+</em>
+.
+</p><p>The data of a structure is an arbitrary value.
+</p><p>The type of a structure is a cons pair.  The value stored in the
+car of that pair is called the <em>
+<a name="index-pt:3"></a>
+
+public type
+</em>
+ of the structure.  The
+value stored in the cdr of the pair is called the <em>
+<a name="index-pt:4"></a>
+
+private type
+</em>
+.
+</p><p>A structure is created using <code>make-structure</code>
+ by supplying a type
+and data.
+</p><p>Given only a structure, it is impossible to retrieve the private
+type of the structure or the type cons pair.  Only the public type
+may be retrieved by using <code>structure-public-type</code>
+.
+</p><p>Given only a structure, it is impossible to retrieve the data of
+the the structure, but given a structure and its private type, the
+data can be retrieved using <code>structure-data</code>
+.
+</p><ul>
+<li><a href="struct.html#Structure_Procedures">Structure Procedures</a></li>
+<li><a href="struct.html#Rationale_--_Structures">Rationale -- Structures</a></li>
+</ul>
+
+<hr>
+
+<a name="Structure_Procedures"></a>
+
+
+
+<h3 align=center>Structure Procedures</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="struct.html#Structures">Structures</a></br>
+<b>next: </b><a href="struct.html#Rationale_--_Structures">Rationale -- Structures</a></br>
+
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="structure?"></a><a name="index-pt:5"></a>
+structure?
+</code></b><br>
+<pre>
+(structure? obj)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is a structure, <code>#f</code>
+ otherwise.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="make-structure"></a><a name="index-pt:6"></a>
+make-structure
+</code></b><br>
+<pre>
+(make-structure type data)
+
+</pre>
+<p>Construct a new structure of the given type containing the given
+data.
+</p><p><code>type</code>
+ must be a cons pair.  The car of that pair is the public
+type of the new object; the cdr of that pair is the private type.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="structure-data"></a><a name="index-pt:7"></a>
+structure-data
+</code></b><br>
+<pre>
+(structure-data private_type structure)
+
+</pre>
+<p>If <code>obj</code>
+ is a structure and <code>private-type</code>
+ is its private type,
+return the structure's data.  Otherwise, return <code>#f</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="structure-public-type"></a><a name="index-pt:8"></a>
+structure-public-type
+</code></b><br>
+<pre>
+(structure-public-type structure)
+
+</pre>
+<p>Return the public type of <code>structure</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="set-structure-print-function"></a><a name="index-pt:9"></a>
+set-structure-print-function
+</code></b><br>
+<pre>
+(set-structure-print-function type print_function)
+
+</pre>
+<p>Establish <code>print-function</code>
+ as the way of printing structures having
+the given type.
+</p><p><code>type</code>
+ is the cons-pair passed to <code>make-struct</code>
+.
+</p><p><code>print-function</code>
+ is called:
+</p><pre>
+             (print-function structure port writing?)
+
+</pre>
+<p>where <code>writing?</code>
+ is <code>#f</code>
+ if the structure should be printed in the
+manner of <code>display</code>
+, and <code>#t</code>
+ otherwise.
+</p><p><code>print-function</code>
+ may be <code>#f</code>
+ in which case the default printing
+rule is used.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Rationale_--_Structures"></a>
+
+
+
+<h3 align=center>Rationale -- Structures</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="struct.html#Structures">Structures</a></br>
+
+<b>prev: </b><a href="struct.html#Structure_Procedures">Structure Procedures</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>Structures are a lightweight and simple mechanism that is nevertheless
+adequate for implementing more complex forms of user-defined type.
+</p><p>Implementations of user-defined types require four basic facilities
+from the underlying language implementation:
+</p><pre>
+     1. A facility for creating types that are disjoint from all
+        other types.  All our structures satisfy `structure?', but
+        no other built-in type predicate.
+
+</pre>
+<pre>
+     2. A facility for dispatching genericly on the type of an 
+        object of user defined type.  The &quot;public type&quot; of our 
+        structures provides this.
+
+</pre>
+<pre>
+     3. A facility for specifying the internal representation of 
+        objects of user defined types.  The &quot;data&quot; of our structures
+        is nearly arbitrary: programmers can choose its representation
+        freely.  (&quot;data&quot; should not be #f, but that is the only 
+        restriction).
+
+</pre>
+<pre>
+     4. A facility for protecting the internal representation of
+        objects of user defined types from malicious or incorrect
+        code.   The &quot;private type&quot; of our structures and its use
+        as an &quot;access key&quot; for a structures data provides this.
+
+</pre>
+<p>From these four basic facilities, any of the familiar record or
+object systems can easily be synthesized.
+</p><p>The implementation of structures is thus very simple -- there
+doesn't seem to be anything extraneous.
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

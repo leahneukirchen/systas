@@ -1,0 +1,23 @@
+# tag: Tom Lord Tue Dec  4 14:47:24 2001 (Makefile.in)
+#
+
+include $(makefiles)/rules.mk
+
+tests=$(wildcard $(srcdir)/unit-*.scm)
+
+all: 
+
+test: tests-timestamp
+
+tests-timestamp: $(objroot)/systas/systas/systas $(tests)
+	set -e ;\
+	for f in $(tests) ; do \
+	  SCHEME_LOAD_PATH=$(srcroot)/systas/scheme-library:$(srcroot)/systas $(objroot)/systas/systas/systas $$f ; \
+	done
+	touch tests-timestamp
+
+clean: clean-timestamp
+
+clean-timestamp:
+	-rm -f tests-timestamp
+

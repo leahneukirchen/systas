@@ -1,0 +1,188 @@
+/* tag: Tom Lord Tue Dec  4 14:57:16 2001 (introduction-to-unicode.doc)
+ */
+/************************************************************************
+ *(h0 "An Absurdly Brief Introduction to Unicode"
+ *    :appendix)
+
+This chapter is a very succinct introduction to the Unicode character
+set.  It may be useful when trying to read this manual, but it is not
+intended to be a thorough introduction.  One place to learn more about
+Unicode is the web site of the Unicode Consortium:
+url:"http://www.unicode.org".  The current definition of Unicode is published
+as *The Unicode Standard Version 3.0* by the Unicode Consortium.
+
+*/
+
+/************************************************************************
+ *(h1 "Characters")
+ * 
+
+Unicode defines a set of "abstract characters".  Roughly speaking,
+abstract characters represent indivisable marks that people use in
+writing systems to convey information.  In western alphabets, for
+example, ^latin small letter A^ is the name of an abstract character.
+That name doesn't refer to *a* in a particular font, but rather to the
+idea of ^small A^ in general.
+
+Unicode includes a number of abstract characters which are formatting
+marks: they give an indication of how adjacent characters should be
+rendered but do not themselves correspond to what one might ordinarily
+think of as a ``written character''.
+
+Unicode includes a number of abstract characters which are control
+characters: they have traditional (and sometimes standard) meaning in
+computing, but do not correspond to any feature of human writing.
+
+Unicode includes a number of abstract characters which are usually
+combined with other characters (such as diacritical marks and vowel
+marks).
+
+The goal of Unicode is to encode the complete set of abstract
+characters used in human writing, sufficient to describe all written
+text.
+
+The situation is complicated by three factors: the necessarily large
+size of a global character set; the occaisionaly arbitrary decisions
+that must be made about what counts as an abstract character and what
+does not; and the generally acknowledged desirability of supporting
+bijective mappings between a variety of older character sets and
+subsets of Unicode.
+
+ * 
+ * 
+ */
+
+
+/************************************************************************
+ *(h1 "Code Points")
+ * 
+A code point is an integer value which is assigned to an abstract
+character.  Each character receives a unique code point.
+
+By convention, code points are always written in hexadecimal notation,
+prefixed by the string "U+".  Usually, no less than four hexadecimal
+digits are written.
+
+Unicode code points are in the closed range `U+0000 .. U+10FFFF'.
+Thus, it requires at least 21 bits to hold a Unicode code point.
+Sometimes people say that ``Unicode is a 16-bit character set.'': that
+is an error.
+
+|assigned (code point, Unicode)|
+There are (now and for the forseeable future) many more code points
+than abstract characters.  Revisions to Unicode add new characters
+and, sometimes, recommend against using some old characters, but once
+a code point has been ``assigned'', that assignment never changes.
+
+ * 
+ * 
+ */
+
+
+/************************************************************************
+ *(h1 "Some Special Code Points")
+ * 
+Unicode code points `U+0000 .. U+007F' are essentially the same as
+ASCII code points.
+
+Unicode code points `U+0000 .. U+00FF' are essentially the same as ISO
+8859-1 code points (``Latin 1'').
+
+Two code points represent non-characters.  These are `U+FFFE' and
+`U+FFFF'.  Programs are free to give these values special meaning
+internally.
+
+The code point `U+FEFF' is assigned to the formatting character
+``zero-width no-break space''.  This character has a special
+significance when it occurs in certain serialized representations of
+Unicode text.  This is described in the next section.
+
+Code points in the range `U+D800 .. U+DFFF' are called "surrogates".
+They are not assigned to abstract characters.  Instead, they are used
+in pairs as one way to represent a code point in the range `U+10000
+.. U+10FFFF'.  This is also described in the next section.
+
+ * 
+ * 
+ */
+
+
+/************************************************************************
+ *(h1 "Encoding Forms")
+ * 
+
+If Unicode code points occupy 21-bits of storage, how is a string of
+Unicode text represented?  There are two recommended alternatives
+called `UTF-8' and `UTF-16'.  Collectively, systems of representing
+strings are known as "encoding forms".
+
+The definition of an encoding form consists of a "code unit" (an
+unsigned integer with a fixed number of bits, usually fewer than 21)
+and a rule describing a bijective mapping between code points and
+sequences of code units.  UTF-8 uses 8-bit code units.  UTF-16 uses 16
+bit code units.
+
+In UTF-8, code points in the range `U+0000 .. U+007F' are stored in a
+single code unit (one byte).  Other code points are represented by a
+sequence of two or more code units, each byte in the range `80 .. FF'.
+The details of these multi-byte sequences are available in countless
+Unicode reference materials.
+
+In UTF-16, code points in the range `U+0000 .. U+FFFF' are stored in a
+single 16-bit code unit.  Other code points are represented by a pair
+of surrogates, each stored in one code unit.  Again, the details of 
+multi-code-unit sequences are readily available elsewhere.
+
+Not every sequence of 8-bit values is a valid UTF-8 string.  Not
+every sequence of 16-bit values is a valid UTF-16 string.  Strings
+that are not valid are called ``ill-formed''.
+|ill-formed (code sequence, Unicode)|
+
+When stored in the memory of a running program, UTF-16 code units are
+almost certainly stored in the native byte order of the machine.  In
+files and when transmitted, two byte orders are possible.  When byte
+order distinctions are important, the names UTF-16be (big-endian) and
+UTF-16le (little-endian) are used.
+
+When a stream of text has a UTF-16 encoding form, and when its byte
+order is not known in advance, it is marked with a "byte order mark".
+A byte order mark is the formatting character ``zero-width no-break
+space'' (`U+FEFF') occuring as the first character in the stream.  By
+examining the first two bytes of such a stream, and assuming that
+those bytes are a byte order mark, programs can determine the
+byte-order of code units within the stream.  When a byte order mark is
+present, it is not considered to be part of the text which it marks.
+
+Another encoding form has been standardized that may become popular in
+the future: UTF-32.  In UTF-32, code units are 32 bits and each code
+point is stored in a single code unit.
+
+ * 
+ */
+
+
+/************************************************************************
+ *(h1 "Character Properties")
+ * 
+
+In addition to naming a set of abstract characters, and assigning
+those characters to code points, the definition of Unicode assigns
+each character a collection of "character properties".
+
+The possible properties a character may have and their meanings are
+too numerous to list here.  Three examples are:
+
+\general category/ -- such as ``lowercase letter'', ``uppercase letter'',
+``decimal digit'', etc.
+
+\decimal digit value/ -- if the character is used as a decimal digit,
+this property is its numeric value.
+
+\case mappings/ -- the default lowercase character corresponding to an
+uppercase character, and so forth.
+
+The Unicode consortium publishes definitions of various character
+properties and distributes text files listing those properties for
+each code point.  For more information, visit url:"http://www.unicode.org".
+
+ */

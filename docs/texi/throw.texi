@@ -1,0 +1,420 @@
+@need 3200
+
+@node Catch and Throw
+@chapter Catch and Throw
+
+Exceptions are triggered by unusual events such as encountering
+an error.  They interrupt the normal flow of control in a program.
+
+
+Exceptions may be caused deliberately by a programmer as a way
+to organize some aspects of a program.
+
+
+Exceptions are caused by being @geindex thrown
+@dfn{thrown}.  When an exception is
+thrown, an exception @geindex type
+@dfn{type} must be specified, and any number 
+of exception @geindex parameters
+@dfn{parameters} may be specified.  Usually, but not
+necessarily, the @geindex type
+@dfn{type} is represented by a symbol.
+
+@example
+@group
+     (throw 'no-solution)    ; throw an exception of type 'no-solution
+@end group
+@group
+@end group
+@end example
+@example
+@group
+     (throw 'found-one 69)   ; throw an exception of type 'found-one
+                             ; with one parameter.
+@end group
+@group
+@end group
+@end example
+
+A call to @code{throw} does not return.  To throw an exception which
+might (but does not necessarily return), use @code{handle}:
+
+@example
+@group
+     (if (number? x)
+         (compute-the-usual-way x)
+         (handle 'not-a-number x))
+@end group
+@group
+@end group
+@end example
+
+The key passed to @code{throw} or @code{handle} must not be @code{#f} for reasons that
+will be explained below.
+
+
+The procedure @code{catch} is used to handle exceptions which will
+not ever return to the point at which they are thrown.  A call 
+to @code{catch}:
+
+@example
+@group
+     (catch key thunk handler)
+@end group
+@group
+@end group
+@end example
+
+@noindent
+calls @code{thunk}.  If an exception of type @code{key} occurs during
+the call to @code{thunk}, @code{handler} is immediately invoked and passed
+the exception type and parameters as arguments.  When @code{handler}
+returns, @code{catch} immediately returns the value returned from
+@code{handler} -- further execution of @code{thunk} is skipped.
+
+
+To establish a handler that can return to the point at which
+an exception was thrown with @code{handle}, use @code{handles}:
+
+@example
+@group
+     (handles key thunk handler)
+@end group
+@group
+@end group
+@end example
+
+If an exception is thrown with @code{handle}, and a handler was 
+established with @code{handles}, then the value of the handler is
+returned from @code{handle}.
+
+
+When searching for handlers, exception types are compared using @code{eq?}.
+
+
+Finally, for every type of exception, a default handler
+can be established using @code{set-default-handler}.
+
+
+This table describes the interactions between @code{catch}, @code{handles}, @code{throw},
+@code{handle}, and default handlers:
+
+@example
+@group
+   exception       handler         is this         return from handler
+   thrown by:      posted by:      handler used?   causes a return from:
+   =====================================================================
+   throw           catch           yes             catch
+   throw           handles         no              -
+   throw           default         yes             outermost[*]
+@end group
+@group
+@end group
+@end example
+@example
+@group
+   handle          catch           yes             catch
+   handle          handles         yes             handle
+   handle          default         yes             handle
+@end group
+@group
+@end group
+@end example
+@example
+@group
+           [*] If a default handler returns from an exception
+               caused by `throw', that causes a return from the
+               outermost expression being evaluated.  That might
+               mean a return to a top-level repl or an immediate exit
+               from the interpreter.
+@end group
+@group
+@end group
+@end example
+
+If the @code{key} specified for @code{catch} or @code{handles} is @code{#t}, then all
+exceptions are caught, regardless of type.
+
+
+If the @code{key} specified for @code{catch} (but not @code{handles}) is @code{#f}, then
+@code{thunk} is invoked with one argument: a @geindex jump buffer
+@dfn{jump buffer}.  If that
+object is passed to @code{throw}, as the exception type, then the
+exception is caught by this call to @code{catch} and no other.
+That is the reason that @code{#f} can not be a key to @code{throw} or 
+@code{handle} -- because that key has a special meaning when passed
+to @code{catch}.
+
+
+If nested calls to @code{catch} or @code{handle} use the same value for @code{key}
+and that value is not @code{#f}, then exceptions are caught by the
+innermost call.  (Except that the handler supplied to a call to @code{handles} 
+is never used for an excpetion thrown by @code{throw}.)
+
+
+If there is no handler established for a given key, the procedure
+@code{bad-throw} is invoked and passed the exception type and parameters.
+If @code{bad-throw} returns and the exception was caused by @code{throw}, 
+control returns from the outermost expression being evaluated.
+If @code{bad_throw} returns from an expression caused by @code{handle}, its 
+return value is returned  from @code{handle}.
+
+
+The default definition of @code{bad-throw} operates as follows:
+
+
+If the exception type has a default handler, that handler is invoked
+and its value (if it returns) is returned from @code{bad-throw}.  The
+procedure @code{set-default-exception-handler} is used to establish
+a default handler.  @code{default-exception-handler} retrieves default
+handlers.
+
+
+If the exception type has no default handler, then the exception is
+converted to type 'error and re-thrown.  If not caught, the
+exception type 'error does have a default handler which prints a
+message to the current error port and throws an exception of type
+'abort.  Exceptions of type 'abort are caught, if nowhere else, by
+the top-level repl.
+
+
+If no handler can be found for a given exception, for exaple, if @code{bad-throw}
+is not defined as a procedure, that is a fatal condition that stops execution 
+entirely.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{catch}@fuindex catch
+@*
+@example
+@group
+(catch tag thunk handler)
+@end group
+@group
+@end group
+@end example
+
+Invoke @code{thunk} in the dynamic context of @code{handler} for excpetions
+matching @code{key}.  If thunk throws to the exception @code{key}, then @code{handler} is
+invoked this way:
+
+@example
+@group
+     (handler key args ...)
+@end group
+@group
+@end group
+@end example
+
+For most values of @code{key}, @code{thunk} takes no arguments.  If
+@code{thunk} returns normally, that is the return value of @code{catch}.
+
+
+Handler is invoked outside the scope of its own @code{catch}.  If
+@code{handler} again throws to the same key, a new handler from further
+up the call chain is invoked.
+
+
+If the key is @code{#t}, then a throw to @emph{any} value will match this
+call to @code{catch}.
+
+
+Key may also be the value @code{#f}.  In that case, @code{thunk} takes one
+argument which will be passed a @geindex jump buffer object
+@dfn{jump buffer object}.  A jump
+buffer object may be used as the key argument to @code{throw} to throw
+to a specific @code{catch} without an intervening search for a key.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{handles}@fuindex handles
+@*
+@example
+@group
+(handles tag thunk handler)
+@end group
+@group
+@end group
+@end example
+
+Invoke @code{thunk} in the dynamic context of @code{handler} for excpetions
+matching @code{key}.  If thunk invokes @code{handle} for the exception @code{key},
+then @code{handler} is invoked this way:
+
+@example
+@group
+     (handler key args ...)
+@end group
+@group
+@end group
+@end example
+
+For most values of @code{key}, @code{thunk} takes no arguments.  If
+@code{thunk} returns normally, that is the return value of @code{catch}.
+
+
+Handler is invoked directly by @code{handle} and may return control
+to the caller of @code{handle}.
+
+
+If the key is @code{#t}, then @code{handle} for @emph{any} value will match this
+call to @code{handles}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{throw}@fuindex throw
+@*
+@example
+@group
+(throw key . args)
+@end group
+@group
+@end group
+@end example
+
+Invoke the catch form matching @code{key}, passing @code{args} to the 
+handler.
+
+
+@noindent
+key will match catches of the same value or
+of @code{#t}.  If no catch matches but the key has a 
+default exception handler, that handler is invoked:
+
+@example
+@group
+     (handler key args ...)
+@end group
+@group
+@end group
+@end example
+
+If it returns, control returns from the outermost expression
+being evaluated.
+
+
+If there is no handler at all, @code{bad-throw} is used as the default
+handler.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{handle}@fuindex handle
+@*
+@example
+@group
+(handle key . args)
+@end group
+@group
+@end group
+@end example
+
+Invoke the catch form matching @code{key}, passing @code{args} to the 
+handler.
+
+
+@noindent
+key will match catches of the same value or
+of @code{#t}.  If no catch matches but the key has a 
+default exception handler, that handler is invoked:
+
+@example
+@group
+     (handler key args ...)
+@end group
+@group
+@end group
+@end example
+
+If the handler returns, its value is returned from this function.
+
+
+If there is no handler at all, @code{bad-handle} is used as the default
+handler.
+
+@need 3200
+
+@section Rationale -- Catch and Throw
+
+It is well known that functions like @code{catch}, @code{throw}, @code{handle}, and
+@code{handles} can be implemented using the single primitive 
+@code{call-with-current-continuation}.
+
+
+Actually using @code{call-with-current-continuation} for that purpose
+places a heavy burden on the implementation.  @code{Catch} and @code{throw}
+should be relatively fast and that precludes a stack-copying
+implementation of @code{call-with-current-continuation}.
+
+
+Precluding a stack-copying @code{call-with-current-continuation}
+places a heavy burden on the garbage collector and activation
+record allocation strategies.  For example, it makes it 
+impossible for Scheme to share flow of control in any reasonable
+way with programs written in a stack-oriented language like C
+since Scheme activation records must be allocated from the
+heap -- not a stack.  This restriction would, in turn, complicate
+the implementation of primitives in C -- the calling conventions
+would be far more complicated than those we actually use.
+
+
+We wanted to mix fluently with C and therefore like the idea
+of a stack-copying @code{call-with-current-continuation}.  Therefore,
+we find ourselves wanting @code{catch}, @code{throw}, @code{handle} and @code{handles} to be
+language primitives -- not synthesized from continuations.
+We want exception handling to have an implementation like C's 
+@code{setjmp/longjmp}. 
+
+
+We chose our particular calling convention and semantics for
+these functions because they seem to capture the essense of other
+systems of exception handling while not adding much clutter to
+the language.
+
+
+We could have gotten by without introducing the new type @code{jump buffer}
+to the language.  The same effect (of a newly created catch tag) can be
+achieved without that type:
+
+@example
+@group
+     (define (catch-1 procedure handler)
+       (let ((pseudo-jump-buffer (cons #f #f)))
+         (catch pseudo-jump-buffer
+           (lambda () (procedure pseudo-jump-buffer))
+           (handler))))
+@end group
+@group
+@end group
+@end example
+
+Which is effectively the same as this example which uses jump
+buffers:
+
+@example
+@group
+     (define (catch-1 procedure handler)
+       (catch #f procedure handler))
+@end group
+@group
+@end group
+@end example
+
+Conversely, it isn't hard, given our functions, to define @code{catch} and
+@code{throw} which do not treat @code{#f} specially.  So it makes little difference
+either way.
+
+
+It is mostly accidental that we have jump buffer objects, though
+they may be faster than other kinds of exceptions when thrown in
+situations where the wind chain is quite long.
+
+
+
+
+
+
+

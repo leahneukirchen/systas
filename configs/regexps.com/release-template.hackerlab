@@ -1,0 +1,16 @@
+# 
+# This is a template configuration for candidate releases of arch.
+# To define the revision contour of a specific candidate release,
+# pass this template to `arch record-config' in a project tree 
+# containing the desired revisions.
+#
+
+./src                   lord@regexps.com--2002/package-framework--devo
+./src/hackerlab         lord@regexps.com--2002/hackerlab--devo
+
+./src/Labnotes/LibHackerlab.d	lord@regexps.com--2002/LibHackerlab--labnotes
+./src/Labnotes/PackageFramework.d	lord@regexps.com--2002/PackageFramework--labnotes
+
+
+# tag: Tom Lord Sat Jan 12 14:17:52 2002 (regexps.com/release-template.hackerlab)
+#

@@ -1,0 +1,14 @@
+Revision: dists--devo--1.0--patch-27
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri Mar 22 06:02:56 PST 2002
+Standard-date: 2002-03-22 14:02:56 GMT
+Summary: updated the arch release id
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-27
+Modified-files: =RELEASE-ID.d/=RELEASE-ID.arch ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-27
+
+Updated the arch release id.
+

@@ -1,0 +1,15 @@
+Revision: hackerlab--lord--1.0--patch-40
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu May 16 01:11:19 PDT 2002
+Standard-date: 2002-05-16 08:11:19 GMT
+Summary: piw disable
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-40
+Removed-files: piw piw-glob piw-malloc
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  Makefile.in
+New-patches: lord@regexps.com--2002/hackerlab--lord--1.0--patch-40
+
+Disable PIW.

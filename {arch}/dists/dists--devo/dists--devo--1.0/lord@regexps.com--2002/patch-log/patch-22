@@ -1,0 +1,20 @@
+Revision: dists--devo--1.0--patch-22
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Wed Feb 20 00:31:35 PST 2002
+Standard-date: 2002-02-20 08:31:35 GMT
+Summary: updated configs
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-22
+  configs/regexps.com/arch-1.1 configs/local/arch-1.1
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  configs/local/devo.arch configs/regexps.com/devo
+  configs/regexps.com/devo.arch
+  configs/regexps.com/release-template.arch
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-22
+
+
+Added a "regexps/arch-1.1" and "local/arch-1.1" config.  Modified the
+existing arch configs to select from 1.0 specifically.
+

@@ -1,0 +1,136 @@
+
+!>			The `package-framework' Todo List
+
+
+Where are we and what's left to do?
+
+* Status
+
+  The `package-framework' is up and running and working well for
+  *C* programs, and (static) *C* libraries.  It also working for
+  *Systas Scheme* programs and complex libraries of *shell scripts*.
+
+  Most importantly, the _framework_ aspect of `package-framework' is
+  up and running.  In other words, it should be straightforward to 
+  incrementally _extend_ the existing framework to handle other
+  programming languages, and builds of greater complexity.
+
+  Packages using the framework have been fairly widely ported.  Most
+  modern unix-like platforms have been tried and some users have even
+  been more-or-less successful porting packages to *cygwin*.
+
+
+* Todo
+
+  If you want to contribute to `package-framework', visit the [package
+  framework website] and sign up for the developers mailing list.
+
+  + use it!		::: The best source of *Todo* items is trying
+			    to use the `package-framework' for your
+			    favorite project and finding out the hard
+			    way what's still missing.  Once you find
+			    something that's missing, you can either
+			    whine about it (which is occaisionally
+			    helpful) or _help fix it_.
+
+  + C++ support		::: Support for compiling *C++* in addition to
+			    just plain *C*.  This is, actually,
+			    probably quite easy to do (a few hours
+			    work once you find your way around) --
+			    it's just that I don't currently use *C++*
+			    for any of my own projects.
+
+  + doc targets		::: the `Makefiles' don't yet support 
+			    formatting and installing documentation.
+			    Part of the problem here is the
+			    combination of too many (orthogonal or
+			    even conflicting) standards for
+			    documentation.  I think we want to
+			    both support as many of those
+			    competing standards as we can, and pick
+			    the best standards to promote as
+			    recommended practice.
+  
+  + other languages	::: Ada, Fortran, Java, Perl and Python especially.
+
+  + package dependency tracking :::
+			    How do you handle the case of one package
+			    that depends on others, especially if the
+			    specific versions of those other packages
+			    can make a difference?  The `=RELEASE-ID'
+			    is part of the solution;  there's some 
+			    not-yet-active code in `configure-top' to
+			    deal with dependecies; and there's the 
+			    `config-info' program.  This work needs to
+			    be finished.  One tricky part is handling
+			    dependencies on other packages that
+			    _don't_ use the `package-framework'.
+
+
+  + source dependency tracking ::: 
+			    Currently, automatic dependency tracking
+			    (for *C* programs) relies on the *C*
+			    pre-processor. A generalized solution,
+			    capable of handling any language, is needed.
+
+  + shared libraries	::: This is probably the hardest remaining
+			    task.  It will take a bit of effort to 
+			    reverse-engineer `libtool' in order to 
+			    devise our own abstractions for shared
+			    library support.  In contrast to most 
+			    configure/build problems, shared libraries
+			    are plagued by portability difficulties -- 
+			    no two platforms seem to handle them the
+			    same way.
+
+  + auto-config tests	::: `package-framework' has support for 
+			    `autoconf'-style configure-time platform
+			    tests.  While I'd like to keep the use
+			    of this feature down to a minimum, there
+			    are some cases where it's needed.
+			    Currently, the library of available tests 
+			    has just one member -- contributions of
+			    new tests are welcome.
+
+  + platform databases	::: Take a look at a *GNU Emacs* distribution.
+			    In `src/s' and `src/m' you can find little
+			    platform-specific databases of
+			    configuration options that can't reasonably
+			    be handled by `autoconf'.  Instead, those
+			    platform-specific databases have to be
+			    maintained by hand.  `package-framework'
+			    has a cleaned-up version of that mechanism,
+			    so database files are needed for more 
+			    platforms.
+
+  + cross-compilation	::: The auto-config mechanism in
+			    `package-framework' needs to be extended 
+			    so that it can handle the
+			    cross-compilation problem.
+  
+  + a test suite	::: It would be nice to have a test suite
+			    that can be used to help validate 
+			    `package-framework', and help port it  
+			    to (or verify it on) new platforms.
+
+  + doc improvements	::: Hopefully this documentation is pretty
+			    good, but perhaps it can be expanded.
+
+  + bootstrapping path  ::: It would be nice to have some actively
+			    maintained paths to get from a 
+			    cross-compiling environment to a 
+			    complete GNU system, or from a 
+			    vendor unix to a GNU environment,
+			    using in both cases a clearly defined
+			    and minimal set of bootstrapping tools.
+
+
+
+* References
+
+  [libhackerlab]:: http://www.regexps.com/hackerlab.html
+
+  [package framework website]:: http://www.regexps.com/package-framework.html
+
+%%% tag: Tom Lord Thu May  9 12:47:01 2002 (PackageFramework.d/TodoList)
+%%%

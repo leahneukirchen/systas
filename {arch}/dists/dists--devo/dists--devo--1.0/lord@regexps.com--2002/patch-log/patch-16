@@ -1,0 +1,16 @@
+Revision: dists--devo--1.0--patch-16
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Feb  7 03:06:05 PST 2002
+Standard-date: 2002-02-07
+Summary: updated release ids for ftp-utils and hackerlab
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-16
+Modified-files: =RELEASE-ID.d/=RELEASE-ID.ftp-utils
+  =RELEASE-ID.d/=RELEASE-ID.hackerlab ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-16
+
+
+Updated release ids for ftp-utils and hackerlab.
+

@@ -1,0 +1,31 @@
+Revision: dists--devo--1.0--patch-26
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri Mar 22 05:57:44 PST 2002
+Standard-date: 2002-03-22 13:57:44 GMT
+Summary: merge from `lord'
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-26
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-27
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-28
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  docs.d/arch/html/arch.html
+  docs.d/arch/html/star-topology.html docs.d/arch/ps/arch.ps
+  docs.d/arch/texi/arch.texi
+  docs.d/arch/texi/star-topology.texi
+  docs.d/hackerlab/html/libhackerlab.html
+  docs.d/hackerlab/ps/libhackerlab.ps
+  docs.d/hackerlab/texi/libhackerlab.texi
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-26
+  lord@regexps.com--2002/dists--lord--1.0--patch-27
+  lord@regexps.com--2002/dists--lord--1.0--patch-28
+
+Patches applied:
+
+  * lord@regexps.com--2002/dists--lord--1.0--patch-28
+     updated manuals
+
+  * lord@regexps.com--2002/dists--lord--1.0--patch-27
+     merge with `devo'
+

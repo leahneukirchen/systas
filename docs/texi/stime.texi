@@ -1,0 +1,217 @@
+@need 3200
+
+@node Time-Related Procedures
+@chapter Time-Related Procedures
+
+The time functions 
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%time}@fuindex %time
+@*
+@example
+@group
+(%time)
+@end group
+@group
+@end group
+@end example
+
+Return the current time of day, measured in seconds beginning at
+@code{00}:00:00 GMT, January @code{1}, @code{1970}.  May return an errrno object.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{time}@fuindex time
+@*
+@example
+@group
+(timevoid)
+@end group
+@group
+@end group
+@end example
+
+Return the current time of day, measured in seconds beginning
+at @code{00}:00:00 GMT, January @code{1}, @code{1970}.
+
+
+If an error occurs, an exception is signaled.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{localtime}@fuindex localtime
+@*
+@example
+@group
+(localtime :optional time)
+@end group
+@group
+@end group
+@end example
+
+Return the local time (as from @code{localtime(3)}) in a
+keyword-argument list.
+
+
+The list includes keyword/arguments: 
+
+@example
+@group
+     :hour <integer>         the current hour (0..23)
+     :min <integer>          the current minute (0..59)
+     :sec <integer>          the current second (0..59)
+     :mday <integer>         the current day/month (1..31)
+     :mon <integer>          the current month (0..11)
+@end group
+@group
+     :wday <integer>         the current day (0 (sun) .. 6 (sat))
+     :yday <integer>         the current day-or-year (0..365)
+     :isdst <boolean>        are summer hours in effect?
+     :zone <string>          a name for the current timezone
+     :gmtoff <integer>       offset from GMT in hours
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%times}@fuindex %times
+@*
+@example
+@group
+(%times)
+@end group
+@group
+@end group
+@end example
+
+Return a list of process and system times:
+
+@example
+@group
+     (uptime
+      user-time
+      system-time
+      children-user-time
+      children-system-time)
+@end group
+@group
+@end group
+@end example
+
+These times are expressed in clock ticks.  The number of clock
+ticks per second is bound to @code{internal-time-units-per-second}.
+
+
+See the manual page for @code{times}.  This function may return
+an errno object.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{times}@fuindex times
+@*
+@example
+@group
+(times)
+@end group
+@group
+@end group
+@end example
+
+Return a list of process and system times:
+
+@example
+@group
+     (uptime
+      user-time
+      system-time
+      children-user-time
+      children-system-time)
+@end group
+@group
+@end group
+@end example
+
+These times are expressed in clock ticks.  The number of clock
+ticks per second is bound to @code{internal-time-units-per-second}.
+
+
+See the manual page for @code{times}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{get-internal-run-time}@fuindex get-internal-run-time
+@*
+@example
+@group
+(get-internal-run-timevoid)
+@end group
+@group
+@end group
+@end example
+
+Return the amount of time, in @geindex clock ticks
+@dfn{clock ticks}, consumed by this
+process (both user and system).
+
+
+The number of clock ticks per second is bound to
+@code{internal-time-units-per-second}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%gettimeofday}@fuindex %gettimeofday
+@*
+@example
+@group
+(%gettimeofday)
+@end group
+@group
+@end group
+@end example
+
+Return a list:
+
+@example
+@group
+     ((sec . usec) minuteswest dsttime)
+@end group
+@group
+@end group
+@end example
+
+See @code{gettimeofday}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{get-internal-real-time}@fuindex get-internal-real-time
+@*
+@example
+@group
+(get-internal-real-timevoid)
+@end group
+@group
+@end group
+@end example
+
+Return the amount of real time that have elapsed
+since this process was started.  The result is expressed
+in @geindex clock ticks
+@dfn{clock ticks}.
+
+
+The number of clock ticks per second is bound to
+@code{internal-time-units-per-second}
+
+
+
+

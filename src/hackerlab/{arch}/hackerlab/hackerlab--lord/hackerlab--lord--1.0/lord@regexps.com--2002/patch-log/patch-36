@@ -1,0 +1,22 @@
+Revision: hackerlab--lord--1.0--patch-36
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Tue May  7 09:50:23 PDT 2002
+Standard-date: 2002-05-07 16:50:23 GMT
+Summary: an `unexec' hook
+Keywords: 
+New-files: piw piw-glob piw-malloc
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-36
+New-directories: =piw
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  Makefile.in vu/vu.c vu/vu.h
+New-patches: lord@regexps.com--2002/hackerlab--lord--1.0--patch-36
+
+
+Added a hook in `vu' to reinitialize a process created
+from an unexeced executable.
+
+Added `piw' to the build so as not to pick up `malloc' from
+a dynamically loaded shared library.
+

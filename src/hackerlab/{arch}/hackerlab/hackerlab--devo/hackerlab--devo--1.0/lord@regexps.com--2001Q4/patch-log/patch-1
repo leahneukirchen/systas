@@ -1,0 +1,61 @@
+Revision: hackerlab--devo--1.0--patch-1
+Archive: lord@regexps.com--2001Q4
+Creator: Tom Lord <lord@regexps.com>
+Date: Wed Jan  2 16:10:01 PST 2002
+Standard-date: 2002-01-02
+Summary: removed piw
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--2001Q4/patch-log/patch-1
+Removed-files: piw-malloc/.arch-ids/=default
+  tests/piw-tests/PLUGIN/.arch-ids/=dont-care
+  tests/piw-malloc-tests/PLUGIN/.arch-ids/=dont-care
+  piw-glob/PLUGIN/.arch-ids/=dont-care
+  piw/PLUGIN/.arch-ids/=dont-care
+  piw-malloc/PLUGIN/.arch-ids/=dont-care
+  piw-printlog/PLUGIN/.arch-ids/=dont-care
+  piw-malloc/piw-malloc.c piw/gdb.c piw-malloc/malloc.h
+  piw-malloc/libc-malloc.c tests/piw-tests/unit-log.c
+  tests/piw-tests/unit-variables.c piw/=later/backtrace.c
+  piw/piw.h piw/gdb.h piw/piw.c piw-glob/piw-glob.c
+  tests/piw-malloc-tests/Makefile.in
+  tests/piw-tests/Makefile.in piw-glob/Makefile.in
+  piw-printlog/Makefile.in piw/Makefile.in
+  tests/piw-tests/unit-log.sh
+  tests/piw-tests/unit-variables.sh
+  tests/piw-malloc-tests/unit-malloc.sh
+  piw/instrumentation.doc
+  piw-malloc/=scaffolding/log-formats.scm
+  tests/piw-printlog-tests/DESC tests/piw-tests/DESC
+  tests/piw-glob-tests/DESC
+  piw-malloc/=scaffolding/log-cogen.scm
+  piw-malloc/libc-malloc.h piw/variables.h piw-malloc/errno.h
+  piw-malloc/errno.c piw/log.c piw/log.h
+  piw-malloc/watchpt-breakpoints.c piw-printlog/piw-printlog.c
+  piw/variables.c tests/piw-malloc-tests/unit-malloc.c
+  piw-malloc/piw-write-barriers.h piw-glob/PLUGIN/REQ
+  piw-malloc/PLUGIN/REQ piw-printlog/PLUGIN/REQ piw/PLUGIN/REQ
+  tests/piw-malloc-tests/PLUGIN/REQ tests/piw-tests/PLUGIN/REQ
+  piw-malloc/Makefile.in piw-malloc/gcc.c
+  piw-malloc/log-printing.c piw-malloc/log-printing.h
+  piw-malloc/logging.c piw-malloc/logging.h
+  piw-malloc/piw-malloc.doc piw-malloc/piw-malloc.h
+  piw-malloc/piw-variables.c piw-malloc/piw-variables.h
+  piw-malloc/piw-write-barriers.c
+  piw-malloc/watchpt-breakpoints.h
+  piw-malloc/write-barrier-breakpoints.c
+  piw-malloc/write-barrier-breakpoints.h
+  piw-malloc/write-barriers.c piw-malloc/write-barriers.h
+Removed-directories: piw piw-glob piw-glob/PLUGIN piw-malloc/=scaffolding
+  piw-malloc/PLUGIN piw-printlog piw-printlog/PLUGIN piw/=later
+  piw/PLUGIN tests/piw-glob-tests tests/piw-malloc-tests
+  tests/piw-malloc-tests/PLUGIN tests/piw-printlog-tests
+  tests/piw-tests tests/piw-tests/PLUGIN
+  piw-glob/PLUGIN/.arch-ids piw-malloc/.arch-ids
+  piw-malloc/PLUGIN/.arch-ids piw-printlog/PLUGIN/.arch-ids
+  piw/PLUGIN/.arch-ids tests/piw-malloc-tests/PLUGIN/.arch-ids
+  tests/piw-tests/PLUGIN/.arch-ids piw-malloc
+Modified-files: ChangeLog Makefile.in
+New-patches: lord@regexps.com--2001Q4/hackerlab--devo--1.0--patch-1
+
+Removed `piw' from libhackerlab -- it should be a separate library.
+

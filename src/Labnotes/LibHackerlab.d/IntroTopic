@@ -1,0 +1,86 @@
+
+! The Hackerlab C Library
+
+	  
+		   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+						+++
+						bg: #d5ffff
+
+
+		   *the `libhackerlab' C library*
+
+ 		   *project home page*: http://www.regexps.com/hackerlab.html
+
+		   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This workbook contains notes about the the [Hackerlab C library].
+
+`libhackerlab' is a general purpose C library.  It is a complete
+replacement for all but the platform-specific functionality of the
+standard C library on Posix-conforming platforms.
+
+Why do such a thing?  Why replace a 20 year old library that pretty
+much everyone uses?  Because standard `libc' is a historical accident:
+a random accumulation of extensions made at different times, by
+different people, many pieces of which were first designed and created
+by talented programmers who, nontheless, had little experience in C
+library design. (Almost by definition!  They were among the first to
+acquire such experience.)  As a result, the standard C library is a
+big bag filled to overflowing with little annoyances, quirky
+irregularities, and needless limitations.  Some day, I predict, you'll
+be using the Hackerlab C library in preference to standard `libc'.
+
+Some current highlights of the library are: `VU', a per-process
+virtual file system that, among other things, replaces `stdio'; the
+fast and wonderful `Rx' regexp engine with support for true regular
+expressions (8-bit characters and Unicode), Posix regexps, and [XML
+regular expressions]; and `bitset trees', a fast and space efficient
+data structure for huge, mostly homogenous bitsets.  
+
+v================================
+				+++
+				width: 100
+				bg: #d5ffff
+				headers: no
+
+
+			+ __project info__ +
+
++ [Hackerlab C library]		:::	the project home page
+
++ [downloading]			:::	the FTP area
+
++ ReleaseNews			:::	what's new?
+
++ [manual]			:::	an on-line copy of the
+					reference manual
+
+
+		       + __developer notes__ +
+
++ PosixRegexps			:::	a discussion of some
+					controversial points of 
+					Posix regexp semantics
+
+^================================
+
+
+
+
+There isn't much here yet, though you can read something obscure about
+PosixRegexps.  
+
+
+*references:*
+
+[downloading]:: ftp://ftp.regexps.com/pub/src/hackerlab
+
+[Hackerlab C library]:: http://www.regexps.com/hackerlab.html
+
+[manual]:: http://www.regexps.com/src/docs.d/hackerlab/html/libhackerlab.html
+
+[XML regular expressions]:: http://www.w3.org/TR/xmlschema-2
+
+---
+%%% tag: Tom Lord Fri May  3 11:34:12 2002 (LibHackerlab.d/IntroTopic)
+%%%

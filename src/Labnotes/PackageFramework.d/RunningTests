@@ -1,0 +1,49 @@
+
+!>			Writing a `Makefile.in' to Run Tests
+
+
+`package-framework' contains a `Makefile' fragment to help you
+implement a `make test' target:
+
+
+<<<
+	include $(makefiles)/unit-tests.mk
+>>>
+
+
+By default, `make all' will compile all files matching one of these
+patterns:
+
+<<<
+	unit-*.c
+	test-*.c
+>>>
+
+to create an (uninstalled) program.  If you then run `make test', 
+the makefile will look for source files maching `*.sh', run each of
+those, and note their exit status.  If any script exits with a non-0
+status, `make test' fails.
+
+You can override the set of file compiled to produce programs by
+defining `mains'.  You can link your programs against non-default
+libraries by defining `libs'. (See BuildingPrograms.)
+
+You can override the list of test scripts by setting `test-scripts'.
+
+Finally, there's one other kind of test that you can perform, though
+this test is done at `make all' time: header file compilation tests.
+
+A reasonable convention for most libraries is that each header file in
+the library should compile cleanly in isolation.  For example, if the
+*hackerlab C library* contains a header file `hackerlab/arrays/ar.h',
+then this program should compile (when given a suitable `-I' option):
+
+<<<
+	#include "hackerlab/arrays/ar.h"
+>>>
+
+You can define a list of header files that should compile in isolation
+by defining the variable `test-headers'.
+
+%%% tag: Tom Lord Thu May  9 12:46:53 2002 (PackageFramework.d/RunningTests)
+%%%

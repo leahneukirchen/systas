@@ -1,0 +1,23 @@
+Revision: package-framework--lord--1.0--patch-15
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Wed Feb  6 15:18:57 PST 2002
+Standard-date: 2002-02-06
+Summary: fixed `--prefix=' handling in `configure-top'
+Keywords: 
+New-files: {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-15
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  build-tools/scripts/configure-top
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-15
+
+In configure-top around line 288 the command line arguments are being
+checked for a passed in value, but it is looking at the default value
+instead of the command line argument.  The line should read:
+
+    --prefix=*) \
+	prefix="`printf '%s\n' \"$1\" | sed -e 's/^--prefix=//'`" 
+
+Notice that $prefix is changed to $1.  Hope this helps.
+
+						-- Jonathan Geisler --

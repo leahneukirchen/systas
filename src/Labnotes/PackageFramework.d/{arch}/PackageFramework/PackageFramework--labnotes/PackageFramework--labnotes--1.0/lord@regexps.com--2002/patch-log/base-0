@@ -1,0 +1,15 @@
+Revision: PackageFramework--labnotes--1.0--base-0
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu May  9 12:49:31 PDT 2002
+Standard-date: 2002-05-09 19:49:31 GMT
+Summary: initial import
+Keywords: 
+New-files: ./BuildingLibraries ./BuildingPrograms ./ConfigVariables
+  ./FrameworkPorting ./IntroTopic ./ManagingDependencies
+  ./NestedMakefiles ./PkgDependencies ./RunningTests ./TodoList
+  ./TreeLayout ./UserView ./WritingMakefiles
+New-patches: lord@regexps.com--2002/PackageFramework--labnotes--1.0--base-0
+
+Initial import.
+

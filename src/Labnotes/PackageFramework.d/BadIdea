@@ -1,0 +1,23 @@
+
+!  		Replacing *GNU* `auto*' is a Bad Idea
+
+
+
+	Replacing `autoconf', `automake', and `libtool' is certainly
+	a bad idea.  After all, those programs (pretty much) work,
+	are very popular, and represent _more than a decade_ of
+	collected, collective wisdom about the problems of 
+	configuring and building software in a portable way.
+
+	Any attempt to replace those programs will (like the initial
+	release of the `package-framework' itself!) fall _wildly_ 
+	short of the mark, failing to provide anywhere near the 
+	portability and comprehensiveness of those venerable *GNU*
+	packages.
+
+	__If it ain't broke, don't fix it.__
+
+	Unless it's a GoodIdea.
+
+%%% tag: Tom Lord Thu May 16 01:37:47 2002 (PackageFramework.d/BadIdea)
+%%%

@@ -1,0 +1,17 @@
+# Makefile.in:
+#
+################################################################
+# Copyright (C) 2002 Tom Lord
+# 
+# See the file "COPYING" for further information about
+# the copyright and warranty status of this work.
+# 
+
+
+source-files	:=	$(cfg__unexec_implementation) malloc.c
+
+include $(makefiles)/library.mk
+include $(makefiles)/install-library.mk
+
+# tag: Tom Lord Thu May  9 23:27:12 2002 (libunexec/Makefile.in)
+#

@@ -1,0 +1,50 @@
+@need 3200
+
+@node Simple Debugging Aids
+@chapter Simple Debugging Aids
+
+This is a surprisingly handy tool for debugging without
+needing a complete debugger:
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{peek}@fuindex peek
+@*
+@example
+@group
+peek . any
+@end group
+@group
+@end group
+@end example
+
+Accept any non-0 number of arguments, write them to the
+current error port as a comment.  Return the last argument.
+
+@example
+@group
+     (+ 10 (troublesome-fn))
+     => (+ 10 (pk 'troublesome-fn-returned (troublesome-fn)))
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{pk}@fuindex pk
+@*
+@example
+@group
+pk . any
+@end group
+@group
+@end group
+@end example
+
+@code{pk} is a synonym for @code{peek}.
+
+
+
+

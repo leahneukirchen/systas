@@ -1,0 +1,19 @@
+Revision: systas--lord--1.0--patch-1
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon Jan  7 02:33:13 PST 2002
+Standard-date: 2002-01-07
+Summary: modified ChangeLog structure
+Keywords: 
+New-files: ChangeLog.d/lord@regepx.com--2002/ChangeLog
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-1
+  ChangeLog.d/lord@regepx.com--2001Q4/ChangeLog.devo
+New-directories: ChangeLog.d ChangeLog.d/lord@regepx.com--2001Q4
+  ChangeLog.d/lord@regepx.com--2002
+Modified-files: ChangeLog
+New-patches: lord@regexps.com--2002/systas--lord--1.0--patch-1
+
+
+Added ChangeLog.d and rearranged ChangeLogs into a sensible
+arrangement for multi-branch development.
+

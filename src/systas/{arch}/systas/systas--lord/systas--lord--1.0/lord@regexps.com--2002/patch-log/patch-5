@@ -1,0 +1,22 @@
+Revision: systas--lord--1.0--patch-5
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Jan 17 18:44:14 PST 2002
+Standard-date: 2002-01-17
+Summary: nit city and (trivial) merge from `devo'
+Keywords: 
+New-files: {arch}/systas/systas--devo/systas--devo--1.0/lord@regexps.com--2002/patch-log/patch-2
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-5
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regepx.com--2002/ChangeLog.lord--1.0
+  libsystas/stime.c libsystas/system.c
+New-patches: lord@regexps.com--2002/systas--devo--1.0--patch-2
+  lord@regexps.com--2002/systas--lord--1.0--patch-5
+
+Fixed all bugs reported by gcc options `-Wformat' and `-Wall'.
+
+Patches applied:
+
+  * lord@regexps.com--2002/systas--devo--1.0--patch-2
+     merge from `lord': boilerplate files
+

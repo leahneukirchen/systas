@@ -1,0 +1,51 @@
+
+
+!		How to Port `unexec'
+
+* Get Emacs
+
+  Get a recent distribution of *GNU Emacs* -- ports work
+  by copying code and data from Emacs.  Build that emacs
+  and observe:
+
+	*) Which unexec implementation is used.
+	*) Which `src/s/*.h' and `src/m/*.h' files are used.
+	*) How `temacs' is linked.
+
+
+* Get the right `unexec'
+
+  Grab the right `unexec' implementation from emacs, if it isn't
+  already present in `unexec/libunexec'.
+
+  Change the parameters to the function `unexec'.   Write some
+  simple macros to turn calls to `fatal' into panic exits.
+  Scan the code for `#if' and `#ifdef', watching for conditionals
+  that rely on the emacs configuration process.
+
+  Make sure that your hacked up unexec can be compiled with `cc -c'.
+
+  *Note*: It is tempting to really thoroughly clean-up the old
+  `unexec' implementations from emacs, but that probably isn't a good
+  idea at this stage.  It turns out that, crufty though they may be,
+  they also seem to be not particularly stable -- `unexelf.c', for
+  example, has had bug fixes within just the past few years.
+  Consequently, it is not implausible that this library will have to
+  pick up patches from emacs in the future: so minimizing the changes
+  to the implementations is a good idea.
+
+
+* Update `package-framework'
+
+  I recommend using the PackageFramework/ instead of `autoconf' and
+  `automake' if you are going to use `unexec'.  This isn't absolutely
+  required, but it should make your life easier.
+
+  To support `unexec', you must hack the part of the package framework
+  stored in `src/build-tools/platforms'.  There's an `=README' file 
+  there with some advice.  Generally, you can find the information
+  you need for `unexec' support by dissecting an Emacs distribution.
+
+
+%%% tag: Tom Lord Thu May 16 02:55:36 2002 (LibUnexec.d/PortingUnexec)
+%%%

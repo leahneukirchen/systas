@@ -1,0 +1,371 @@
+<html>
+<head>
+<title>Ports</title>
+</head>
+<body>
+
+<a name="Ports"></a>
+
+
+
+<h2 align=center>Ports</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="read-print.html#Reading_and_Writing_Data_Structures">Reading and Writing Data Structures</a></br>
+
+
+</small>
+<br>
+
+
+
+
+
+
+<p>Ports are objects, such as open files, from which characters can be
+read or written in sequence.  Ports are distinguished by whether
+they are for reading, writing, or both.
+</p><p>In Systas Scheme, ports are indistinguishable from file descriptor
+objects.  (See <em>xref</em>).
+</p><p>These procedures (defined in <code>scheme-library/ice-9/basic.scm</code>
+)
+still need documentation
+</p><pre>
+    call-with-input-string call-with-output-string open-input-file
+    open-output-file open-io-file close-input-port
+    close-output-port close-io-port call-with-input-file
+    call-with-output-file with-input-from-port with-output-to-port
+    with-error-to-port with-input-from-file with-output-to-file
+    with-error-to-file with-input-from-string with-output-to-string
+    with-error-to-string ->string display->string the-eof-object
+
+</pre>
+<ul>
+<li><a href="ports.html#The_Current_Ports">The Current Ports</a></li>
+<li><a href="ports.html#Opening_Files_and_Closing_Ports">Opening Files and Closing Ports</a></li>
+</ul>
+
+<p><b><u>Function</u> <code><a name="port?"></a><a name="index-pt:0"></a>
+port?
+</code></b><br>
+<pre>
+(port? obj)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is a port, <code>#f</code>
+ otherwise.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="input-port?"></a><a name="index-pt:1"></a>
+input-port?
+</code></b><br>
+<pre>
+(input-port? x)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is an input port, <code>#f</code>
+ otherwise.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="output-port?"></a><a name="index-pt:2"></a>
+output-port?
+</code></b><br>
+<pre>
+(output-port? x)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is an output port, <code>#f</code>
+ otherwise.
+</p>
+<br>
+<br><hr>
+
+<a name="The_Current_Ports"></a>
+
+
+
+<h3 align=center>The Current Ports</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="ports.html#Ports">Ports</a></br>
+<b>next: </b><a href="ports.html#Opening_Files_and_Closing_Ports">Opening Files and Closing Ports</a></br>
+
+
+</small>
+<br>
+
+
+
+
+
+
+<p>Three dynamic values, the current input, output, and error port,
+provide the default ports for input operations, output operations,
+and error messages.
+</p><p>The <em>
+<a name="index-pt:3"></a>
+
+current load port
+</em>
+ is the port currently opened for loading a
+file (or <code>#f</code>
+ if no file is being loaded).
+</p><p><b><u>Function</u> <code><a name="current-input-port"></a><a name="index-pt:4"></a>
+current-input-port
+</code></b><br>
+<pre>
+(current-input-portvoid)
+
+</pre>
+<p>Return the current input port.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="current-output-port"></a><a name="index-pt:5"></a>
+current-output-port
+</code></b><br>
+<pre>
+(current-output-portvoid)
+
+</pre>
+<p>Return the current output port.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="current-error-port"></a><a name="index-pt:6"></a>
+current-error-port
+</code></b><br>
+<pre>
+(current-error-portvoid)
+
+</pre>
+<p>Return the current error port.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="current-load-port"></a><a name="index-pt:7"></a>
+current-load-port
+</code></b><br>
+<pre>
+(current-load-portvoid)
+
+</pre>
+<p>Return the current load port.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="set-current-input-port"></a><a name="index-pt:8"></a>
+set-current-input-port
+</code></b><br>
+<pre>
+(set-current-input-port port)
+
+</pre>
+<p>Make <code>port</code>
+ the current input port.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="set-current-output-port"></a><a name="index-pt:9"></a>
+set-current-output-port
+</code></b><br>
+<pre>
+(set-current-output-port port)
+
+</pre>
+<p>Make <code>port</code>
+ the current output port.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="set-current-error-port"></a><a name="index-pt:10"></a>
+set-current-error-port
+</code></b><br>
+<pre>
+(set-current-error-port port)
+
+</pre>
+<p>Make <code>port</code>
+ the current error port.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Opening_Files_and_Closing_Ports"></a>
+
+
+
+<h3 align=center>Opening Files and Closing Ports</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="ports.html#Ports">Ports</a></br>
+
+<b>prev: </b><a href="ports.html#The_Current_Ports">The Current Ports</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="open-file"></a><a name="index-pt:11"></a>
+open-file
+</code></b><br>
+<pre>
+(open-file name flags mode)
+
+</pre>
+<p>Open the file <code>name</code>
+ with <code>flags</code>
+ and <code>mode</code>
+ as to <code>%open</code>
+ (*xref).
+Return a port for the newly opened file.
+</p><p>The port returned is buffered.  To open an unbuffered port, see
+<code>%open</code>
+.
+</p><p>If the file can not be opened, an exception is signaled.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="%open-buffered"></a><a name="index-pt:12"></a>
+%open-buffered
+</code></b><br>
+<pre>
+(%open-buffered name sflags mode)
+
+</pre>
+<p>Open the file <code>name</code>
+ with <code>flags</code>
+ and <code>mode</code>
+ as to <code>%open</code>
+ (*xref).
+Return a port for the newly opened file.
+</p><p>The port returned is buffered.  To open an unbuffered port, see
+<code>%open</code>
+.
+</p><p>If the file can not be opened, an errno object is returned. (<em>xref</em>).
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="close-port"></a><a name="index-pt:13"></a>
+close-port
+</code></b><br>
+<pre>
+(close-port port)
+
+</pre>
+<p>Close the indicated port.  If an error occurs, an exception is signaled.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="eof-object?"></a><a name="index-pt:14"></a>
+eof-object?
+</code></b><br>
+<pre>
+(eof-object? obj)
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is the end-of-file indicator.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="read-char"></a><a name="index-pt:15"></a>
+read-char
+</code></b><br>
+<pre>
+(read-char :optional port)
+
+</pre>
+<p>Read one character from <code>port</code>
+ or the current input port.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="force-output"></a><a name="index-pt:16"></a>
+force-output
+</code></b><br>
+<pre>
+(force-output port)
+
+</pre>
+<p>Flush buffered output from <code>port</code>
+ or the current output port.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="peek-char"></a><a name="index-pt:17"></a>
+peek-char
+</code></b><br>
+<pre>
+(peek-char port)
+
+</pre>
+<p>Return the next character from <code>port</code>
+ without consuming that
+character from the input SCM_STREAM.  <code>port</code>
+ must be a buffered
+input port.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="char-ready?"></a><a name="index-pt:18"></a>
+char-ready?
+</code></b><br>
+<pre>
+(char-ready? port)
+
+</pre>
+<p>Return <code>#t</code>
+ if there is input ready on <code>port</code>
+, <code>#f</code>
+ otherwise.
+</p><p><strong><u>BROKEN</u></strong> -- the current implementation always returns <code>#t</code>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

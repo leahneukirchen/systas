@@ -1,0 +1,47 @@
+Revision: dists--devo--1.0--patch-2
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sat Jan 12 14:44:12 PST 2002
+Standard-date: 2002-01-12
+Summary: merge from `lord'
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-2
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-3
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-4
+  =README.d/=README.ftp-utils =README.d/=README.hackerlab
+  =README.d/=README.systas configs/regexps.com/devo.hackerlab
+  configs/regexps.com/lord.hackerlab
+  configs/regexps.com/devo.ftp-utils
+  configs/regexps.com/lord.ftp-utils
+  configs/regexps.com/devo.systas
+  configs/regexps.com/lord.systas
+  configs/regexps.com/release-template.arch
+  configs/regexps.com/release-template.ftp-utils
+  configs/regexps.com/release-template.hackerlab
+  configs/regexps.com/release-template.systas
+  =README.d/=README.arch
+New-directories: =README.d configs/regexps.com
+Removed-files: =README
+Removed-directories: configs/lord@regexps.com--2002
+Renamed-files: configs/lord@regexps.com--2002/lord configs/regexps.com/lord
+  configs/lord@regexps.com--2002/lord.arch configs/regexps.com/lord.arch
+  configs/lord@regexps.com--2002/devo.arch configs/regexps.com/devo.arch
+  configs/lord@regexps.com--2002/devo configs/regexps.com/devo
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  INSTALL
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/base-0
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-2
+  lord@regexps.com--2002/dists--lord--1.0--patch-3
+  lord@regexps.com--2002/dists--lord--1.0--patch-4
+
+Details in ChangeLog.d
+
+Patches applied:
+
+  * lord@regexps.com--2002/dists--lord--1.0--patch-4
+     prepared for new branching strategy
+
+  * lord@regexps.com--2002/dists--lord--1.0--patch-3
+     rearranged config files
+

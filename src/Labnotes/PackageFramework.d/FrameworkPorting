@@ -1,0 +1,18 @@
+
+
+!>		Porting `package-framework'
+
+
+Mostly, porting the package framework should be a noop -- it really
+ought to "just work" on any unix-ish platform.  So, instead of
+porting, perhaps you'd like to help work on a test suite?  (See
+TodoList.)
+
+Ok, there's one area where porting can be helpful.  In a source
+tree, check out `src/build-tools/platforms/=README'.  It isn't
+_mandatory_ to write new platform-specific files, but it can be
+_helpful_, at least for some packages that make use of
+extraordinarilly platform-specific features (such as LibUnexec/).
+
+%%% tag: Tom Lord Thu May  9 12:46:26 2002 (PackageFramework.d/FrameworkPorting)
+%%%

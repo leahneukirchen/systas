@@ -1,0 +1,75 @@
+Revision: systas--lord--1.0--patch-16
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon May  6 14:27:04 PDT 2002
+Standard-date: 2002-05-06 21:27:04 GMT
+Summary: various progress on the wiki
+Keywords: 
+New-files: libsystas/=junk/dump-impl.c
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-16
+  libsystas/.arch-ids/unexec-impl.c.id libsystas/=junk/dump.c
+  libsystas/=junk/dump-impls/dump-fail.c
+  libsystas/=junk/dump-impls/dump-elf32.c libsystas/unexec.c
+  wiki-cgi/=make.scm wiki-cgi/time2.sh wiki-cgi/time.sh
+  libsystas/unexec-impls/unexnope.c
+  libsystas/unexec-impls/unexelf.c libsystas/=junk/dump-impl.h
+  libsystas/=junk/dump.h libsystas/unexec-impl.h
+  libsystas/unexec.h libsystas/unexec-impl.c
+New-directories: libsystas/=junk libsystas/=junk/dump-impls
+  libsystas/unexec-impls libsystas/.arch-ids
+Removed-files: wiki-cgi/time.sh
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regepx.com--2002/ChangeLog.lord--1.0
+  libsystas/gc.c libsystas/init.c libsystas/init.h
+  scheme-library/cgi/commands.scm scheme-library/cgi/users.scm
+  scheme-library/ice-9/basic.scm scheme-library/ice-9/rt0.scm
+  scheme-library/ice-9/user.scm
+  scheme-library/standard/string-parsing.scm
+  scheme-library/unix/filenames.scm
+  scheme-library/wiki/cgi.scm scheme-library/wiki/config.scm
+  scheme-library/wiki/edit.scm scheme-library/wiki/library.scm
+  scheme-library/wiki/view.scm systas/Makefile.in
+  systas/systas.c wiki-cgi/meta-x.ss
+New-patches: lord@regexps.com--2002/systas--lord--1.0--patch-16
+
+
+
+`libsystas': Added `unexec' for elf32 machines.
+
+
+`libsystas/gc.c': tweaked the GC parameters for the wiki code.
+ 
+
+`scheme-library/cgi/commands.scm': added support for automatic form
+generation for CGI commands.
+
+`./scheme-library/wiki/cgi.scm': added support for automatic form
+generation for CGI commands.
+
+`./scheme-library/wiki/view.scm': Added the paragraph type "?M-x
+command" that expands to an automatically generated form for a CGI
+command.
+
+`scheme-library/ice-9/*.scm': rewrote the booting procedure to get rid
+of a bunch of vestigial, broken code.
+
+`./schemelibrary/standard/string-parsing.scm': rewrote some regexps 
+for speed.
+ 
+`./scheme-library/unix/filenames.scm': rewote
+`filename-simplify-slashes' for speed.
+ 
+ 
+`./scheme-library/wiki/library.scm': treat `---cgi---/IntroTopic' the
+same way as `---cgi---/---index---'.
+ 
+
+`./scheme-library/wiki/view.scm': Rewrote some regexps for speed.
+
+`./scheme-library/wiki/view.scm': Don't use relative paths in
+hyperlinks to CGI commands (since the URLs that lead to HTML-form page
+views don't have a fixed path-info, due to automatic CGI form generation).
+
+
+`systas/systas.c': unexec support
+

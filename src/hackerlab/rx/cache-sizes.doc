@@ -1,0 +1,137 @@
+/* tag: Tom Lord Tue Dec  4 14:57:15 2001 (cache-sizes.doc)
+ */
+/* cache-sizes.c -
+ *
+ ****************************************************************
+ * Copyright (C) 2000 Tom Lord
+ * 
+ * See the file "COPYING" for further information about
+ * the copyright and warranty status of this work.
+ */
+
+
+/************************************************************************
+ *(h1 "The Impact of NFA and DFA Cache Sizes")
+ * 
+ * |cache sizes (impact of)|
+ * |NFA cache|
+ * |cache (NFA)|
+ * |DFA cache|
+ * |cache (DFA)|
+ * This chapter discusses strategies for choosing sizes for the NFA
+ * and DFA caches (see xref:"Tuning the NFA Cache Size" and xref:"Tuning the
+ * DFA Cache Size").
+ * 
+ */
+ 
+/*(h2 "What Do Caches Effect?")
+ * 
+ * |matching speed|
+ * |speed|
+ * |performance|
+ * 
+ * Both caches predominately effect the speed of regexp matching
+ * functions such as the Posix function `regexec' or the Unicode
+ * function `rx_xml_is_match'.  Both NFA and DFA construction takes
+ * place during matching -- not during compiling.
+ * 
+ */
+
+/*(h2 "What Determines Cache Effectiveness?")
+ * 
+ * |cache effectiveness|
+ * The variety of expressions matched and the frequency of their use
+ * determines the effectiveness of both caches.   An expression that
+ * is frequently re-used will tend to remain in the caches.  An 
+ * expression that is infrequently used will tend to be flushed from
+ * the caches.
+ * 
+ * |thrashing|
+ * |cache thrashing|
+ * Thrashing can occur if no expressions are frequently enough re-used
+ * to remain in the caches even though some expressions are re-used
+ * many times.  Future releases of Rx will contain improved caching 
+ * strategies to reduce the likely-hood of this kind of thrashing.
+ * 
+ * Thrashing can also occur if either or both of the caches is too
+ * small.
+ * 
+ * DFA cache entries are keyed by sets of NFA states.  Thus, the
+ * effectiveness of the DFA cache is limited by the effectiveness
+ * of the NFA cache.  If an NFA is flushed from the NFA cache, 
+ * all cached DFA fragments for that NFA become useless (and are
+ * eventually flushed from the cache.)
+ * 
+ * NFA cache entries are keyed on syntax trees for patterns and
+ * sub-patterns.  Thus, the effectiveness of the NFA cache is limited
+ * by the frequency with which patterns (and sub-patterns) having
+ * equivalent syntax trees are re-used.
+ * 
+ * If the same pattern is compiled twice, yielding distinct but
+ * equivalent syntax trees, both compilations will re-use the same NFA
+ * cache entries.  Nevertheless, in some applications performance
+ * can be improved by avoiding recompilation (keeping a separate cache
+ * of compiled expresses) in order to avoid the cost of redundantly
+ * parsing expressions and building syntax trees.  
+ */
+
+/*(h2 "Choosing Cache Sizes")
+ * 
+ * Choosing cache sizes can be tricky: two values (the cache sizes),
+ * whose effects are not independent, must be determined.
+ * 
+ * Complicating matters further, cache usage is heavily dependent 
+ * on the particular expressions compiled and matches performed, and the
+ * order in which those compilations and matches occur.  There is no
+ * mathematically simple relation between cache size and overall 
+ * performance.
+ * 
+ * Caches may be too small, which leads to expensive cache misses, or
+ * too large, which leads to wasted memory.  Both conditions can be
+ * detected by varying the cache sizes on successive test runs and
+ * observing the values returned by `rx_nfa_cache_statistics' and
+ * `rx_dfa_cache_statistics'.  If lowering a cache size has little
+ * effect on the ratio of cache hits to cache misses, the cache was
+ * too large.  If raising a cache size increases the hit/miss ratio,
+ * the cache was too small.  Once again, note that improving the
+ * hit/miss ratio for the NFA cache may, as a side effect, improve
+ * the hit/miss ratio for the DFA cache.
+ * 
+ * One possible strategy for choosing cache sizes is to simply accept
+ * the default (1MB for each cache).  For many applications, the default
+ * will yield acceptable performance.
+ * 
+ * Another possible strategy is as follows:
+ * 
+ * \Choose A Maximum/  Decide on a total amount of memory that you can afford
+ * to dedicate to both caches.  Having made that decision, you must then
+ * decide how to divide that memory between the NFA and DFA caches.  Unfortunately,
+ * there is no simple answer which is guaranteed to be optimal: the best ratio
+ * of NFA cache size to DFA cache size depends on the regexp usage patterns
+ * of your particular application.
+ * 
+ * \Determine the Ratio of NFA Cache Size to DFA Cache Size/  You can simply
+ * divide memory equally between the two caches, or you can experiment.
+ * If you decide to experiment, make sure that you can run repeatable tests
+ * which use regexps in a characteristic way.  If your application uses a
+ * fixed set of regexps in a regular way, designing tests will be easy.
+ * If your application allows users to choose the regexps and how they
+ * are used, designing tests will be a challenge.
+ * 
+ * Run your test programs repeatedly, varying the ratio of NFA cache
+ * size to DFA cache size.  Compare the ratios of hits to misses in
+ * both caches and the overall throughput of your application.
+ * Presumably your goal is to optimize overall throughput; the
+ * hit/miss ratios will help you understand how the cache size ratio
+ * effects the behavior of Rx.
+ * 
+ * \Optionally, Minimize the Cache Sizes/ After choosing a ratio of
+ * NFA to DFA cache sizes, you have the opportunity to reduce the size
+ * of the caches.  Run your test program, reducing the size of one
+ * cache at a time, until the hit/miss ratio for that cache worsens
+ * significantly.  Then, choose the smallest cache size that does not
+ * adversely effect the hit/miss ratio.  Done correctly, this should
+ * have no adverse effect on the throughput of your program.
+ * 
+ */
+

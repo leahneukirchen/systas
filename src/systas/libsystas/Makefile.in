@@ -1,0 +1,21 @@
+# tag: Tom Lord Tue Dec  4 14:52:20 2001 (libsystas/Makefile.in)
+#
+generated-includes	:=	scmconfig.h
+
+the-pdml-index	:=	systas.pdml-index
+texi-main	:=	systas.texi
+documentation-skip	:= appinit.c =config.c init.c root.c smob.c socket.c stackchk.c vuprocs.c 
+
+all:
+
+scmconfig.h: =config.c
+	$(CC) -o =config $<
+	./=config > scmconfig.h
+
+include $(makefiles)/scm-library.mk
+include $(makefiles)/install-library.mk
+include $(makefiles)/install-includes.mk
+
+include $(makefiles)/library-ps.mk
+include $(makefiles)/library-html.mk
+

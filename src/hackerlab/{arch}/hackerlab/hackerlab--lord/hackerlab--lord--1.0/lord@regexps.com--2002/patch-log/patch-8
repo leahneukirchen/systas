@@ -1,0 +1,21 @@
+Revision: hackerlab--lord--1.0--patch-8
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Jan 17 13:44:19 PST 2002
+Standard-date: 2002-01-17
+Summary: merge from `devo'
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--2002/patch-log/patch-2
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-8
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/hackerlab--devo--1.0--patch-2
+  lord@regexps.com--2002/hackerlab--lord--1.0--patch-8
+
+Patches applied:
+
+  * lord@regexps.com--2002/hackerlab--devo--1.0--patch-2
+     merge from `lord'
+     	 --version support
+     	 boilerplate files
+

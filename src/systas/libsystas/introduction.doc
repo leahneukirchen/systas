@@ -1,0 +1,58 @@
+/* tag: Tom Lord Tue Dec  4 14:57:21 2001 (introduction.doc)
+ */
+/* introduction.doc -
+ *
+ ****************************************************************
+ * Copyright (C) 2001 Tom Lord
+ * 
+ * See the file "COPYING" for further information about
+ * the copyright and warranty status of this work.
+ */
+
+
+/************************************************************************
+ *(h0 "Introducing Systas Scheme")
+ * 
+
+Systas Scheme is a dialect of the Scheme programming language and
+an implementation of that dialect.
+
+Systas Scheme (the language) has several design goals.  These include:
+
+\Beefed up Scheme/ Systas is close to the minimal language defined by
+the RnRS series of documents (espcially R4RS), but adds some features
+for both power and convenience.  Systas is supposed to close the gap
+between the ``toy'' language, Standard Scheme, and a serious,
+practical language.  For that purpose, Systas includes a module
+system, some new data types, and an enriched collection of primitives.
+Systas is distributed with a powerful library of special purpose
+modules.
+
+\Interactive Use/ Systas should include whatever features are
+desirable for *interactive use*.  In particular, it should be a
+pleasant experience to extend, modify, and examine a Systas
+application *as it is running.*
+
+\Scheme for Posix/ Systas comes with a nearly complete programming
+interface to the basic capabilities of Posix environments.  Systas
+includes a flexible and efficient file system interface and a
+shell module for managing subprocesses in sophisticated ways.
+
+\Scheme for Text Processing/ The Systas string types have features
+in support of convenient and efficient text processing.
+
+\Scheme for Numeric Processing/ The Systas number types will have
+features in support of convenient and efficient numeric processing,
+including an extensible form the full numeric lattice of standard
+Scheme.
+
+\Scheme as an Extension Language/ Eventually, Systas will be used as
+an extension language.  The primary goal is to build a generic
+interaction manager, similar in style to Emacs, but including
+facilities for a greater range of graphical input and output.
+Imagine an emacs-like program with the display capabilities of 
+modern web browsers...
+
+		
+ */
+

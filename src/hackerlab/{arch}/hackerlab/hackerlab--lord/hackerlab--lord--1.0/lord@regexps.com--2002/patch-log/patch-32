@@ -1,0 +1,26 @@
+Revision: hackerlab--lord--1.0--patch-32
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Mar 21 17:18:30 PST 2002
+Standard-date: 2002-03-22 01:18:30 GMT
+Summary: os/Makefile.in `rm' tolerance for cygwin
+	 machine/endian.sh fix for CC
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-32
+Modified-files: =THANKS ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  machine/Makefile.in machine/endian.sh os/Makefile.in
+New-patches: lord@regexps.com--2002/hackerlab--lord--1.0--patch-32
+
+In `os/Makefile.in', don't fail if a particular temp file can't be
+removed.
+
+It isn't particularly important to anything that the remove succeed.
+It fails on cygwin where cc generates executables with a ".exe".
+Added -f to the `rm' call so this doesn't get in the way of people
+investigating the possibility of a cygwin port.
+
+
+In `machine/endian.sh' and its `Makefile.in', use the CC variable
+from make rather than hard-coded cc.
+

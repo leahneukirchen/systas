@@ -1,0 +1,196 @@
+<html>
+<head>
+<title>Rationale -- Dictionaries in General</title>
+</head>
+<body>
+
+<a name="Rationale_--_Dictionaries_in_General"></a>
+
+
+
+<h2 align=center>Rationale -- Dictionaries in General</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="hash.html#Hash_Values">Hash Values</a></br>
+
+<b>prev: </b><a href="alist.html#Association_Lists">Association Lists</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>A <em>
+<a name="index-pt:0"></a>
+
+dictionary
+</em>
+ is defined to be any data structure that maintains
+an association between <em>
+<a name="index-pt:1"></a>
+
+keys
+</em>
+ and <em>
+<a name="index-pt:2"></a>
+
+values
+</em>
+.  A wide variety of
+implementations and semantics are possible for dictionaries.  Some
+examples are association lists, keyword-argument lists, hash
+tables, weak hash tables, and so on.
+</p><p>Systas Scheme does not contain a universal <em>
+<a name="index-pt:3"></a>
+
+dictionary type
+</em>
+ of which
+all actual dictionaries are instances and it does not contain a set of
+generic dictionary procedures that can operate on any dictionary,
+regardless of its actual type.  Instead, Systas defines some common
+minimal calling conventions that apply to all dictionaries.  Because all
+dictionaries have these calling conventions in common, code that you
+write has great flexibility in how it mixes and matches dictionary
+representations.
+</p><p>There are three basic dictionary operators:
+</p><pre>
+     ;; Looking Up Values
+     ;; =================
+     ;;
+     ;; Return the value bound to `key' in `dictionary'.  
+     ;; Return #f if `key' has no binding.
+     ;;
+     (&lt;dictionary-type>-ref dictionary key)
+
+</pre>
+<pre>
+     ;; Defining Values
+     ;; ===============
+     ;;
+     ;; Set the value bound to `key' in `dictionary'.
+        ;; 
+     (&lt;dictionary-type>-set! dictionary key value)
+
+</pre>
+<pre>
+     ;; This may construct a new head for the dictionary.  
+     ;; If your dictionary is bound to `x', be sure to use:
+     ;;
+     (set! x (&lt;dictionary-type>-set! x key value))
+     ;;
+     ;; NOT:  (&lt;dictionary-type>-set! x key value)
+
+</pre>
+<pre>
+     ;; Removing Values
+     ;; ===============
+     ;; Remove `key' from `dictionary'.
+     ;;
+     (&lt;dictionary-type>-remove! dictionary key)
+
+</pre>
+<pre>
+     ;; This may construct a new head for the dictionary.  
+     ;; If your dictionary is bound to `x', be sure to use:
+     ;;
+     (set! x (&lt;dictionary-type>-remove! x key value))
+     ;;
+     ;; NOT:  (&lt;dictionary-type>-remove! x key value)
+
+</pre>
+<p>Here is one way to use these conventions.  Suppose that your code
+involves a dictionary-style data structure.  Initially you choose to
+use association lists.  You might write:
+</p><pre>
+  (define (make-widget-dictionary)           '())
+  (define (widget-dictionary-ref . args)     (apply assq-ref args))
+  (define (widget-dictionary-set! . args)    (apply assq-set! args))
+  (define (widget-dictionary-remove! . args) (apply assq-remove! args))
+
+</pre>
+<p>Later, you can change to hash tables by changing just those four
+lines:
+</p><pre>
+  (define (make-widget-dictionary)           (make-hash-table))
+  (define (widget-dictionary-ref . args)     (apply hashq-ref args))
+  (define (widget-dictionary-set! . args)    (apply hashq-set! args))
+  (define (widget-dictionary-remove! . args) (apply hashq-remove! args))
+
+</pre>
+<p>It is similarly straightforward to define ways to choose the
+representation of a dictionary on-the-fly, or even to change the
+representation of a dictionary in a running program.
+</p><p>Another aspect of the dictionary calling convention is that for each
+type of dictionary data structure, three dictionary types are usually
+provided: one each for the possibilities of comparing keys using
+<code>eq?</code>
+, <code>eqv?</code>
+, and <code>equal?</code>
+.  We try to make it so that <code>eq?</code>
+ and
+<code>eqv?</code>
+  dictionary procedures are named with abbreviations using <em>
+<a name="index-pt:4"></a>
+
+q
+</em>
+
+and <em>
+<a name="index-pt:5"></a>
+
+v
+</em>
+, while the <code>equal?</code>
+ version uses no suffix character.  This
+convention gives the cleanest looking names to <em>
+<a name="index-pt:6"></a>
+
+equal?
+</em>
+ based
+procedures: <code>hash-ref</code>
+, <code>assoc-ref</code>
+.
+</p><p>Finally, some dictionary types can be extended beyond <code>eq?</code>
+, <code>eqv?</code>
+
+and <code>equal?</code>
+ to be based on an arbitrary equivalence relation.  When
+this is the case, a generalized form of the dictionary operators may
+be provided using the suffix <em>
+<a name="index-pt:7"></a>
+
+x
+</em>
+ (as in <code>hashx-ref</code>
+).  Compared to
+normal dictionary operators, the <em>
+<a name="index-pt:8"></a>
+
+x
+</em>
+ forms take extra arguments.
+</p>
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

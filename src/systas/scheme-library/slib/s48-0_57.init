@@ -1,0 +1,381 @@
+;;;"scheme48.init" Initialisation for SLIB for Scheme48-0.57	-*-scheme-*-
+;;; Author: Aubrey Jaffer
+;;;
+;;; This code is in the public domain.
+
+,batch on
+,load-package floatnums
+,config
+,load =scheme48/misc/packages.scm
+(define-structure slib-primitives
+  (export s48-getenv
+	  s48-system
+	  s48-current-error-port
+	  s48-force-output
+	  s48-with-handler
+	  s48-ascii->char
+	  s48-error)
+  (open scheme signals ascii extended-ports i/o primitives handle
+	posix c-system-function)
+  (begin
+    (define s48-getenv lookup-environment-variable)
+    (define s48-system system)
+    (define s48-current-error-port current-error-port)
+    (define s48-force-output force-output)
+    (define s48-with-handler with-handler)
+    (define s48-ascii->char ascii->char)
+    (define s48-error error)))
+,user
+,open slib-primitives
+
+(define getenv s48-getenv)
+(define system s48-system)
+
+;;; (software-type) should be set to the generic operating system type.
+;;; UNIX, VMS, MACOS, AMIGA and MS-DOS are supported.
+
+(define (software-type) 'UNIX)
+
+;;; (scheme-implementation-type) should return the name of the scheme
+;;; implementation loading this file.
+
+(define (scheme-implementation-type) 'Scheme48)
+
+;;; (scheme-implementation-home-page) should return a (string) URI
+;;; (Uniform Resource Identifier) for this scheme implementation's home
+;;; page; or false if there isn't one.
+
+(define (scheme-implementation-home-page) "http://s48.org/")
+
+;;; (scheme-implementation-version) should return a string describing
+;;; the version of the scheme implementation loading this file.
+
+(define scheme-implementation-version
+  (let ((version (getenv "S48_VERSION")))
+    (lambda () version)))
+
+;;; (implementation-vicinity) should be defined to be the pathname of
+;;; the directory where any auxiliary files to your Scheme
+;;; implementation reside.
+
+(define implementation-vicinity
+  (let ((vic (getenv "S48_VICINITY")))
+    (lambda () vic)))
+
+;;; (library-vicinity) should be defined to be the pathname of the
+;;; directory where files of Scheme library functions reside.
+
+(define library-vicinity
+  (let ((vic (getenv "SCHEME_LIBRARY_PATH")))
+    (lambda () vic)))
+
+;;; (home-vicinity) should return the vicinity of the user's HOME
+;;; directory, the directory which typically contains files which
+;;; customize a computer environment for a user.
+
+(define home-vicinity
+  (let ((home-path (getenv "HOME")))
+    (lambda () home-path)))
+
+(let* ((siv (scheme-implementation-version))
+       (num-ver (and siv (string->number siv))))
+  (cond ((not num-ver))
+	((>= num-ver 0.54)
+	 (set! system #f))))
+
+;;; *FEATURES* should be set to a list of symbols describing features
+;;; of this implementation.  See Template.scm for the list of feature
+;;; names.
+
+(define *features*
+      '(
+	source				;can load scheme source files
+					;(slib:load-source "filename")
+;	compiled			;can load compiled files
+					;(slib:load-compiled "filename")
+
+		       ;; Scheme report features
+
+	rev5-report			;conforms to
+	eval				;R5RS two-argument eval
+	values				;R5RS multiple values
+	dynamic-wind			;R5RS dynamic-wind
+	macro				;R5RS high level macros
+	delay				;has DELAY and FORCE
+	multiarg-apply			;APPLY can take more than 2 args.
+	char-ready?
+	rationalize
+	rev4-optional-procedures	;LIST-TAIL, STRING->LIST,
+					;LIST->STRING, STRING-COPY,
+					;STRING-FILL!, LIST->VECTOR,
+					;VECTOR->LIST, and VECTOR-FILL!
+
+	rev4-report			;conforms to
+
+	ieee-p1178			;conforms to
+
+;	rev3-report			;conforms to
+
+;	rev2-procedures			;SUBSTRING-MOVE-LEFT!,
+					;SUBSTRING-MOVE-RIGHT!,
+					;SUBSTRING-FILL!,
+					;STRING-NULL?, APPEND!, 1+,
+					;-1+, <?, <=?, =?, >?, >=?
+;	object-hash			;has OBJECT-HASH
+
+;	multiarg/and-			;/ and - can take more than 2 args.
+	with-file			;has WITH-INPUT-FROM-FILE and
+					;WITH-OUTPUT-FROM-FILE
+;	transcript			;TRANSCRIPT-ON and TRANSCRIPT-OFF
+;	ieee-floating-point		;conforms to IEEE Standard 754-1985
+					;IEEE Standard for Binary
+					;Floating-Point Arithmetic.
+	full-continuation		;can return multiple times
+
+			;; Other common features
+
+;	srfi				;srfi-0, COND-EXPAND finds all srfi-*
+;	sicp				;runs code from Structure and
+					;Interpretation of Computer
+					;Programs by Abelson and Sussman.
+	defmacro			;has Common Lisp DEFMACRO
+;	record				;has user defined data structures
+;	string-port			;has CALL-WITH-INPUT-STRING and
+					;CALL-WITH-OUTPUT-STRING
+;	sort
+;	pretty-print
+;	object->string
+;	format				;Common-lisp output formatting
+;	trace				;has macros: TRACE and UNTRACE
+;	compiler			;has (COMPILER)
+;	ed				;(ED) is editor
+	system				;posix (system <string>)
+	getenv				;posix (getenv <string>)
+;	program-arguments		;returns list of strings (argv)
+;	current-time			;returns time in seconds since 1/1/1970
+		  ;; Implementation Specific features
+	))
+
+;;; (OUTPUT-PORT-WIDTH <port>)
+(define (output-port-width . arg) 79)
+
+;;; (OUTPUT-PORT-HEIGHT <port>)
+(define (output-port-height . arg) 24)
+
+;;; (CURRENT-ERROR-PORT)
+(define current-error-port s48-current-error-port)
+
+;;; (TMPNAM) makes a temporary file name.
+(define tmpnam
+  (let ((cntr 100))
+    (lambda () (set! cntr (+ 1 cntr))
+	    (let ((tmp (string-append "slib_" (number->string cntr))))
+	      (if (file-exists? tmp) (tmpnam) tmp)))))
+
+;;; (FILE-EXISTS? <string>)
+(define (file-exists? f)
+  (call-with-current-continuation
+   (lambda (k)
+     (s48-with-handler
+      (lambda (condition decline)
+	(k #f))
+      (lambda ()
+	(close-input-port (open-input-file f))
+	#t)))))
+
+;;; (DELETE-FILE <string>)
+(define (delete-file file-name)
+  (system (string-append "rm " file-name)))
+
+;;; FORCE-OUTPUT flushes any pending output on optional arg output port
+;;; use this definition if your system doesn't have such a procedure.
+(define (force-output . arg)
+  (s48-force-output
+   (if (null? arg) (current-output-port) (car arg))))
+
+;;; "rationalize" adjunct procedures.
+(define (find-ratio x e)
+  (let ((rat (rationalize x e)))
+    (list (numerator rat) (denominator rat))))
+(define (find-ratio-between x y)
+  (find-ratio (/ (+ x y) 2) (/ (- x y) 2)))
+
+;;; CHAR-CODE-LIMIT is one greater than the largest integer which can
+;;; be returned by CHAR->INTEGER.
+(define integer->char s48-ascii->char)
+(define char->integer
+  (let ((char->integer char->integer)
+	(code0 (char->integer (integer->char 0))))
+    (lambda (char) (- (char->integer char) code0))))
+(define char-code-limit 256)
+
+;;; Workaround MODULO bug
+(define modulo
+  (let ((modulo modulo))
+    (lambda (n1 n2)
+      (let ((ans (modulo n1 n2)))
+	(if (= ans n2) (- ans ans) ans)))))
+
+;;; Workaround atan bug
+(define two-arg:atan atan)
+(define (atan y . x)
+  (if (null? x) (two-arg:atan y 1) (two-arg:atan y (car x))))
+
+;;; MOST-POSITIVE-FIXNUM is used in modular.scm
+(define most-positive-fixnum #x1FFFFFFF)
+
+;;; Return argument
+(define (identity x) x)
+
+;;; SLIB:EVAL is single argument eval using the top-level (user) environment.
+(define slib:eval
+  (let ((eval eval)
+	(interaction-environment interaction-environment))
+    (lambda (form)
+      (eval form (interaction-environment)))))
+
+;;; If your implementation provides R4RS macros:
+(define macro:eval slib:eval)
+(define (macro:load <pathname>)
+  (if (not (file-exists? <pathname>))
+      (set! <pathname> (string-append <pathname> (scheme-file-suffix))))
+  (load <pathname>))
+
+(define *defmacros*
+  (list (cons 'defmacro
+	      (lambda (name parms . body)
+		`(set! *defmacros* (cons (cons ',name (lambda ,parms ,@body))
+					 *defmacros*))))))
+(define (defmacro? m) (and (assq m *defmacros*) #t))
+
+(define (macroexpand-1 e)
+  (if (pair? e)
+      (let ((a (car e)))
+	(cond ((symbol? a) (set! a (assq a *defmacros*))
+	       (if a (apply (cdr a) (cdr e)) e))
+	      (else e)))
+      e))
+
+(define (macroexpand e)
+  (if (pair? e)
+      (let ((a (car e)))
+	(cond ((symbol? a)
+	       (set! a (assq a *defmacros*))
+	       (if a (macroexpand (apply (cdr a) (cdr e))) e))
+	      (else e)))
+      e))
+
+(define gentemp
+  (let ((*gensym-counter* -1))
+    (lambda ()
+      (set! *gensym-counter* (+ *gensym-counter* 1))
+      (string->symbol
+       (string-append "slib:G" (number->string *gensym-counter*))))))
+
+(define base:eval slib:eval)
+(define (defmacro:eval x) (base:eval (defmacro:expand* x)))
+
+(define defmacro:load macro:load)
+
+(define (slib:eval-load <pathname> evl)
+  (if (not (file-exists? <pathname>))
+      (set! <pathname> (string-append <pathname> (scheme-file-suffix))))
+  (call-with-input-file <pathname>
+    (lambda (port)
+      (let ((old-load-pathname *load-pathname*))
+	(set! *load-pathname* <pathname>)
+	(do ((o (read port) (read port)))
+	    ((eof-object? o))
+	  (evl o))
+	(set! *load-pathname* old-load-pathname)))))
+
+(define slib:warn
+  (lambda args
+    (let ((cep (current-error-port)))
+      ;;(if (provided? 'trace) (print-call-stack cep))
+      (display "Warn: " cep)
+      (for-each (lambda (x) (display x cep)) args))))
+
+;;; define an error procedure for the library
+(define (slib:error . args)
+  ;;(if (provided? 'trace) (print-call-stack (current-error-port)))
+  (apply s48-error args))
+
+;;; define these as appropriate for your system.
+(define slib:tab (s48-ascii->char 9))
+(define slib:form-feed (s48-ascii->char 12))
+
+;;; Support for older versions of Scheme.  Not enough code for its own file.
+(define (last-pair l) (if (pair? (cdr l)) (last-pair (cdr l)) l))
+(define t #t)
+(define nil #f)
+
+;;; Define these if your implementation's syntax can support them and if
+;;; they are not already defined.
+
+(define (1+ n) (+ n 1))
+(define (-1+ n) (+ n -1))
+;(define 1- -1+)
+
+(define in-vicinity string-append)
+
+;;; Define SLIB:EXIT to be the implementation procedure to exit or
+;;; return if exitting not supported.
+(define slib:exit (lambda args #f))
+
+;;; Here for backward compatability
+(define scheme-file-suffix
+  (case (software-type)
+    ((NOSVE) (lambda () "_scm"))
+    (else (lambda () ".scm"))))
+
+;;; (SLIB:LOAD-SOURCE "foo") should load "foo.scm" or with whatever
+;;; suffix all the module files in SLIB have.  See feature 'SOURCE.
+
+(define (slib:load-source f) (load (string-append f (scheme-file-suffix))))
+
+;;; (SLIB:LOAD-COMPILED "foo") should load the file that was produced
+;;; by compiling "foo.scm" if this implementation can compile files.
+;;; See feature 'COMPILED.
+
+(define slib:load-compiled load)
+
+;;; At this point SLIB:LOAD must be able to load SLIB files.
+
+(define slib:load slib:load-source)
+
+;;; Scheme48 complains that these are not defined (even though they
+;;; won't be called until they are).
+(define synclo:load #f)
+(define syncase:load #f)
+(define macwork:load #f)
+(define transcript-on #f)
+(define transcript-off #f)
+
+;;; Jacques Mequin wins the Spring 2001 SLIB extreme cleverness award:
+(define-syntax defmacro
+  (lambda (e r c)
+    (let* ((e-fields (cdr e))
+	   (macro-name (car e-fields))
+	   (macro-args (cdr e-fields))
+	   (slib-store (eval 'defmacro:eval (interaction-environment))))
+      (slib-store `(defmacro ,macro-name ,@macro-args)))
+    `(define-syntax ,(cadr e)
+       (lambda (em rm cm)
+	 (let ((macro-name ',(cadr e))
+	       (macro-args (cdr em))
+	       (slib-eval (eval 'macroexpand-1 (interaction-environment))))
+	   (slib-eval `(,macro-name ,@macro-args)))))))
+
+(slib:load (in-vicinity (library-vicinity) "require"))
+
+;;; Needed to support defmacro
+(require 'defmacroexpand)
+(define *args* '())
+(define (program-arguments) (cons "scheme48" *args*))
+(set! *catalog* #f)
+
+,collect
+,batch off
+,dump slib.image "(slib 2d2)"
+,exit

@@ -1,0 +1,16 @@
+Revision: hackerlab--lord--1.0--patch-6
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sun Jan 13 19:00:25 PST 2002
+Standard-date: 2002-01-13
+Summary: fixed --version support
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-6
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  sb/sb.c
+New-patches: lord@regexps.com--2002/hackerlab--lord--1.0--patch-6
+
+`--version' (in sb.c) now prints a version id based on
+"src/=project/package".
+

@@ -1,0 +1,22 @@
+Revision: systas--lord--1.0--patch-20
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon May 13 23:05:36 PDT 2002
+Standard-date: 2002-05-14 06:05:36 GMT
+Summary: eliminated gc pseudo-signal
+Keywords: 
+New-files: {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-20
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regepx.com--2002/ChangeLog.lord--1.0
+  libsystas/async.c
+New-patches: lord@regexps.com--2002/systas--lord--1.0--patch-20
+
+
+Eliminated (temporarily) the pseudo-signal `SIGGC' which
+was invoked after a GC.  The problem is that the signal isn't
+blocked while it's handler is invoked -- so if the `SIGGC' handler
+causes GC, an infinite loop can happen.
+
+Anyway...this requires more thought.  What would the signal mean
+in an incremental GC context, for example?
+

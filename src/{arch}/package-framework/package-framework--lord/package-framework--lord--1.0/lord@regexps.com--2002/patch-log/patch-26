@@ -1,0 +1,60 @@
+Revision: package-framework--lord--1.0--patch-26
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu May  2 00:09:02 PDT 2002
+Standard-date: 2002-05-02 07:09:02 GMT
+Summary: build-tools cleanups/additions + symbolic link scripts
+Keywords: 
+New-files: {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-26
+  links/make-links links/remove-links
+  build-tools/Makefiles/install-shell-cgi-scripts.mk
+  build-tools/Makefiles/install-scm-cgi-scripts.mk
+New-directories: links
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  build-tools/Makefiles/install-scm-scripts.mk
+  build-tools/Makefiles/install-scm-subdirs.mk
+  build-tools/Makefiles/rules.mk
+  build-tools/Makefiles/scm-scripts.mk
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-26
+
+
+
+*** added files
+ 
+    ./build-tools/Makefiles/install-scm-cgi-scripts.mk
+    ./build-tools/Makefiles/install-shell-cgi-scripts.mk
+
+	Makefiles for installing scripts in a CGI directory
+
+    ./links/make-links
+    ./links/remove-links
+
+	Shell scripts for maintaining trees of symbolic links.
+ 
+
+*** patched regular files
+ 
+    ./build-tools/Makefiles/install-scm-scripts.mk
+
+    	Formatting cleanups and a better (atomic) install rule.
+
+
+    ./build-tools/Makefiles/install-scm-subdirs.mk
+
+	New for globbing onto scheme source files.  In particular,
+	avoid using features found only in GNU `find'.
+
+
+    ./build-tools/Makefiles/rules.mk
+
+	Define `cgi-install-dir' as `$(prefix)/cgi'.
+
+    ./build-tools/Makefiles/scm-scripts.mk
+ 
+	Use the standard config variable to find the object tree root,
+	not `pwd'.
+
+	Remove old "#!" lines from scheme scripts in the source tree
+	when turning them into executable files and adding a new "#!"
+	line.

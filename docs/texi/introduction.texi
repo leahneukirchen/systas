@@ -1,0 +1,55 @@
+@need 3200
+
+@node Introducing Systas Scheme
+@chapter Introducing Systas Scheme
+
+Systas Scheme is a dialect of the Scheme programming language.
+Currently, the Systas Scheme dialect is understood by a single 
+interpreter, called, @code{systas}.
+
+
+Systas Scheme (the language) has several design goals.  These include:
+
+
+@strong{Beefed up Scheme} Systas is close to the minimal language defined by
+the RnRS series of documents (espcially R4RS), but adds some features
+for both power and convenience.  Systas is supposed to close the gap
+between the "toy" language, Standard Scheme, and a serious,
+practical language.  For that purpose, Systas includes a module
+system, some new data types, and an enriched collection of primitives.
+Systas is distributed with a powerful library of special purpose
+modules.
+
+
+@strong{Interactive Use} Systas should include whatever features are
+desirable for @emph{interactive use}.  In particular, it should be a
+pleasant experience to extend, modify, and examine a Systas
+application @emph{as it is running.}
+
+
+@strong{Scheme for Posix} Systas comes with a nearly complete programming
+interface to the basic capabilities of Posix environments.  Systas
+includes a flexible and efficient file system interface and a
+shell module for managing subprocesses in sophisticated ways.
+
+
+@strong{Scheme for Text Processing} The Systas string types have features
+in support of convenient and efficient text processing.
+
+
+@strong{Scheme for Numeric Processing} The Systas number types will have
+features in support of convenient and efficient numeric processing,
+including an extensible form the full numeric lattice of standard
+Scheme.
+
+
+@strong{Scheme as an Extension Language} Eventually, Systas will be used as
+an extension language.  The primary goal is to build a generic
+interaction manager, similar in style to Emacs, but including
+facilities for a greater range of graphical input and output.
+Imagine an emacs-like program with the display capabilities of 
+modern web browsers...
+
+
+
+

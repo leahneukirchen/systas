@@ -1,0 +1,20 @@
+Revision: package-framework--lord--1.0--patch-18
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Wed Feb  6 20:00:03 PST 2002
+Standard-date: 2002-02-06
+Summary: watch out for GCC 3.1 when making .d files
+Keywords: 
+New-files: {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-18
+Modified-files: =THANKS ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  build-tools/Makefiles/cpp-to-includes.sed
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-18
+
+Someone has reported that GCC 3.1 produces '-E' output of the form:
+
+	# 1 "<built-in>"
+	# 1 "<command line>"
+
+so, watch out for those when deriving a ".d" file.
+

@@ -1,0 +1,403 @@
+Revision: systas--devo--1.0--base-0
+Archive: lord@regexps.com--2001Q4
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri Jan 11 21:14:08 PST 2002
+Standard-date: 2002-01-11
+Summary: initial import
+Keywords: 
+New-files: ./ChangeLog ./Makefile.in ./PLUGIN ./PLUGIN/.arch-ids
+  ./PLUGIN/.arch-ids/=dont-care ./PLUGIN/DIRS ./PLUGIN/REQ
+  ./libsystas ./libsystas/=config.c
+  ./libsystas/=documentation-notes ./libsystas/Makefile.in
+  ./libsystas/PLUGIN ./libsystas/PLUGIN/.arch-ids
+  ./libsystas/PLUGIN/.arch-ids/=dont-care
+  ./libsystas/PLUGIN/REQ ./libsystas/alist.c
+  ./libsystas/alist.h ./libsystas/appinit.c
+  ./libsystas/appinit.h ./libsystas/async.c ./libsystas/async.h
+  ./libsystas/boolean.c ./libsystas/boolean.h
+  ./libsystas/chars.c ./libsystas/chars.h
+  ./libsystas/continuations.c ./libsystas/continuations.h
+  ./libsystas/credits.doc ./libsystas/debug.doc
+  ./libsystas/dictionaries.c ./libsystas/dictionaries.h
+  ./libsystas/dynwind.c ./libsystas/dynwind.h
+  ./libsystas/emacs.doc ./libsystas/eq.c ./libsystas/eq.h
+  ./libsystas/error.c ./libsystas/error.h ./libsystas/eval.c
+  ./libsystas/eval.h ./libsystas/fdsocket.c
+  ./libsystas/fdsocket.h ./libsystas/filesys.c
+  ./libsystas/filesys.h ./libsystas/gc.c ./libsystas/gc.h
+  ./libsystas/hash.c ./libsystas/hash.h ./libsystas/hashtab.c
+  ./libsystas/hashtab.h ./libsystas/identifier-index.c
+  ./libsystas/identifier-index.h ./libsystas/init.c
+  ./libsystas/init.h ./libsystas/introduction.doc
+  ./libsystas/invocation.doc ./libsystas/kw.c ./libsystas/kw.h
+  ./libsystas/list.c ./libsystas/list.h ./libsystas/load.c
+  ./libsystas/load.h ./libsystas/macros.c ./libsystas/macros.h
+  ./libsystas/modules.doc ./libsystas/numbers.c
+  ./libsystas/numbers.h ./libsystas/pairs.c ./libsystas/pairs.h
+  ./libsystas/params.h ./libsystas/ports.c ./libsystas/ports.h
+  ./libsystas/procs.c ./libsystas/procs.h ./libsystas/promise.c
+  ./libsystas/promise.h ./libsystas/read-print.c
+  ./libsystas/read-print.h ./libsystas/records.doc
+  ./libsystas/rgx.c ./libsystas/rgx.h ./libsystas/root.c
+  ./libsystas/root.h ./libsystas/scheme.c ./libsystas/scheme.h
+  ./libsystas/scm.h ./libsystas/smob.c ./libsystas/smob.h
+  ./libsystas/socket.c ./libsystas/socket.h
+  ./libsystas/stackchk.c ./libsystas/stackchk.h
+  ./libsystas/stime.c ./libsystas/stime.h ./libsystas/strings.c
+  ./libsystas/strings.h ./libsystas/struct.c
+  ./libsystas/struct.h ./libsystas/symbols.c
+  ./libsystas/symbols.h ./libsystas/syntax.doc
+  ./libsystas/systas.c ./libsystas/systas.h
+  ./libsystas/system.c ./libsystas/system.h ./libsystas/tags.h
+  ./libsystas/throw.c ./libsystas/throw.h
+  ./libsystas/values.doc ./libsystas/variable.c
+  ./libsystas/variable.h ./libsystas/vectors.c
+  ./libsystas/vectors.h ./libsystas/vuprocs.c
+  ./libsystas/vuprocs.h ./libsystas/weaks.c ./libsystas/weaks.h
+  ./scheme-library ./scheme-library/=later
+  ./scheme-library/=later/net
+  ./scheme-library/=later/net/=README
+  ./scheme-library/=later/net/=scsh-copyright
+  ./scheme-library/=later/net/crlf-io.scm
+  ./scheme-library/=later/net/html.scm
+  ./scheme-library/=later/net/http-errors.scm
+  ./scheme-library/=later/net/http-replies.scm
+  ./scheme-library/=later/net/http-request.scm
+  ./scheme-library/=later/net/http-server.scm
+  ./scheme-library/=later/net/rfc822.scm
+  ./scheme-library/=later/net/uri.scm
+  ./scheme-library/Makefile.in ./scheme-library/PLUGIN
+  ./scheme-library/PLUGIN/.arch-ids
+  ./scheme-library/PLUGIN/.arch-ids/=dont-care
+  ./scheme-library/PLUGIN/REQ ./scheme-library/cogen
+  ./scheme-library/cogen/=README
+  ./scheme-library/cogen/autogen.scm
+  ./scheme-library/compatability
+  ./scheme-library/compatability/=README
+  ./scheme-library/compatability/=scsh-copyright
+  ./scheme-library/compatability/conditionals.scm
+  ./scheme-library/compatability/defrec.scm
+  ./scheme-library/compatability/fluid.scm
+  ./scheme-library/compatability/format.scm
+  ./scheme-library/compatability/general-table.scm
+  ./scheme-library/data-structures
+  ./scheme-library/data-structures/=README
+  ./scheme-library/data-structures/=bit-rotted
+  ./scheme-library/data-structures/=bit-rotted/bsearch.scm
+  ./scheme-library/data-structures/=bit-rotted/enum.scm
+  ./scheme-library/data-structures/=copying-conditions.gpl-slib
+  ./scheme-library/data-structures/hcons.scm
+  ./scheme-library/data-structures/ratlist.scm
+  ./scheme-library/data-structures/string-fun.scm
+  ./scheme-library/doc ./scheme-library/doc/=README
+  ./scheme-library/doc/hdml.scm ./scheme-library/doc/html.scm
+  ./scheme-library/doc/markup.scm
+  ./scheme-library/doc/old-pdml.scm
+  ./scheme-library/doc/old-xdml.scm
+  ./scheme-library/doc/parse-c-documentation.scm
+  ./scheme-library/doc/pdml.scm
+  ./scheme-library/doc/snarf-c-documentation.scm
+  ./scheme-library/doc/texinfo.scm
+  ./scheme-library/doc/xdml-comp.ss
+  ./scheme-library/doc/xdml-html.scm
+  ./scheme-library/doc/xdml-texinfo.scm
+  ./scheme-library/doc/xdml.scm ./scheme-library/etree
+  ./scheme-library/etree/diffs.scm
+  ./scheme-library/etree/source-hygiene.scm
+  ./scheme-library/etree/uids.scm ./scheme-library/formatting
+  ./scheme-library/formatting/=README
+  ./scheme-library/formatting/numbers.scm
+  ./scheme-library/formatting/report.scm ./scheme-library/fps
+  ./scheme-library/fps-utils
+  ./scheme-library/fps-utils/=README
+  ./scheme-library/fps-utils/font-sampler.scm
+  ./scheme-library/fps-utils/general.scm
+  ./scheme-library/fps/.arch-ids
+  ./scheme-library/fps/.arch-ids/=all
+  ./scheme-library/fps/=README
+  ./scheme-library/fps/=scsh-copyright
+  ./scheme-library/fps/afm.scm ./scheme-library/fps/ask.scm
+  ./scheme-library/fps/bitmap.scm
+  ./scheme-library/fps/color.scm ./scheme-library/fps/comp.scm
+  ./scheme-library/fps/fps-ref.txt
+  ./scheme-library/fps/fps-tutorial.txt
+  ./scheme-library/fps/fps.scm
+  ./scheme-library/fps/globals.scm
+  ./scheme-library/fps/glyph.scm ./scheme-library/fps/map.scm
+  ./scheme-library/fps/mat.scm
+  ./scheme-library/fps/options.scm
+  ./scheme-library/fps/paint.scm
+  ./scheme-library/fps/ps-misc.scm
+  ./scheme-library/fps/ps-path.scm
+  ./scheme-library/fps/show.scm ./scheme-library/fps/style.scm
+  ./scheme-library/fps/types.scm ./scheme-library/fps/util.scm
+  ./scheme-library/ice-9 ./scheme-library/ice-9/=README
+  ./scheme-library/ice-9/basic.scm
+  ./scheme-library/ice-9/rt0.scm
+  ./scheme-library/ice-9/user.scm ./scheme-library/ps-fonts
+  ./scheme-library/ps-fonts/=README
+  ./scheme-library/ps-fonts/AFM ./scheme-library/ps-fonts/afm
+  ./scheme-library/ps-fonts/afm/.arch-ids
+  ./scheme-library/ps-fonts/afm/.arch-ids/=all
+  ./scheme-library/ps-fonts/afm/CenturySchL-Bold.afm
+  ./scheme-library/ps-fonts/afm/CenturySchL-BoldItal.afm
+  ./scheme-library/ps-fonts/afm/CenturySchL-Ital.afm
+  ./scheme-library/ps-fonts/afm/CenturySchL-Roma.afm
+  ./scheme-library/ps-fonts/afm/Courier.afm
+  ./scheme-library/ps-fonts/afm/Dingbats.afm
+  ./scheme-library/ps-fonts/afm/Helvetica.afm
+  ./scheme-library/ps-fonts/afm/NewCenturySchlbk-Bold.afm
+  ./scheme-library/ps-fonts/afm/NewCenturySchlbk-BoldItalic.afm
+  ./scheme-library/ps-fonts/afm/NewCenturySchlbk-Italic.afm
+  ./scheme-library/ps-fonts/afm/NewCenturySchlbk-Roman.afm
+  ./scheme-library/ps-fonts/afm/NimbusMonL-Bold.afm
+  ./scheme-library/ps-fonts/afm/NimbusMonL-BoldObli.afm
+  ./scheme-library/ps-fonts/afm/NimbusMonL-Regu.afm
+  ./scheme-library/ps-fonts/afm/NimbusMonL-ReguObli.afm
+  ./scheme-library/ps-fonts/afm/NimbusRomNo9L-Medi.afm
+  ./scheme-library/ps-fonts/afm/NimbusRomNo9L-MediItal.afm
+  ./scheme-library/ps-fonts/afm/NimbusRomNo9L-Regu.afm
+  ./scheme-library/ps-fonts/afm/NimbusRomNo9L-ReguItal.afm
+  ./scheme-library/ps-fonts/afm/NimbusSanL-Bold.afm
+  ./scheme-library/ps-fonts/afm/NimbusSanL-BoldCond.afm
+  ./scheme-library/ps-fonts/afm/NimbusSanL-BoldCondItal.afm
+  ./scheme-library/ps-fonts/afm/NimbusSanL-BoldItal.afm
+  ./scheme-library/ps-fonts/afm/NimbusSanL-Regu.afm
+  ./scheme-library/ps-fonts/afm/NimbusSanL-ReguCond.afm
+  ./scheme-library/ps-fonts/afm/NimbusSanL-ReguCondItal.afm
+  ./scheme-library/ps-fonts/afm/NimbusSanL-ReguItal.afm
+  ./scheme-library/ps-fonts/afm/StandardSymL.afm
+  ./scheme-library/ps-fonts/afm/Symbol.afm
+  ./scheme-library/ps-fonts/afm/Times-BoldItalic.afm
+  ./scheme-library/ps-fonts/afm/Times-Roman.afm
+  ./scheme-library/ps-fonts/afm/URWBookmanL-DemiBold.afm
+  ./scheme-library/ps-fonts/afm/URWBookmanL-DemiBoldItal.afm
+  ./scheme-library/ps-fonts/afm/URWBookmanL-Ligh.afm
+  ./scheme-library/ps-fonts/afm/URWBookmanL-LighItal.afm
+  ./scheme-library/ps-fonts/afm/URWChanceryL-MediItal.afm
+  ./scheme-library/ps-fonts/afm/URWGothicL-Book.afm
+  ./scheme-library/ps-fonts/afm/URWGothicL-BookObli.afm
+  ./scheme-library/ps-fonts/afm/URWGothicL-Demi.afm
+  ./scheme-library/ps-fonts/afm/URWGothicL-DemiObli.afm
+  ./scheme-library/ps-fonts/afm/URWPalladioL-Bold.afm
+  ./scheme-library/ps-fonts/afm/URWPalladioL-BoldItal.afm
+  ./scheme-library/ps-fonts/afm/URWPalladioL-Ital.afm
+  ./scheme-library/ps-fonts/afm/URWPalladioL-Roma.afm
+  ./scheme-library/raw ./scheme-library/raw/=README
+  ./scheme-library/raw/time.scm ./scheme-library/regexps
+  ./scheme-library/regexps/=README
+  ./scheme-library/regexps/cached.scm
+  ./scheme-library/regexps/structured.scm
+  ./scheme-library/regexps/subst.scm ./scheme-library/slib
+  ./scheme-library/slib/.arch-ids
+  ./scheme-library/slib/.arch-ids/=all
+  ./scheme-library/slib/=README ./scheme-library/slib/ANNOUNCE
+  ./scheme-library/slib/Bev2slib.scm
+  ./scheme-library/slib/COPYING
+  ./scheme-library/slib/ChangeLog
+  ./scheme-library/slib/DrScheme.init
+  ./scheme-library/slib/FAQ ./scheme-library/slib/Makefile
+  ./scheme-library/slib/README
+  ./scheme-library/slib/RScheme.init
+  ./scheme-library/slib/STk.init
+  ./scheme-library/slib/Systas.scm
+  ./scheme-library/slib/Template.scm
+  ./scheme-library/slib/alist.scm
+  ./scheme-library/slib/alistab.scm
+  ./scheme-library/slib/array.scm
+  ./scheme-library/slib/arraymap.scm
+  ./scheme-library/slib/batch.scm
+  ./scheme-library/slib/bigloo.init
+  ./scheme-library/slib/break.scm
+  ./scheme-library/slib/byte.scm
+  ./scheme-library/slib/chap.scm
+  ./scheme-library/slib/charplot.scm
+  ./scheme-library/slib/chez.init
+  ./scheme-library/slib/cltime.scm
+  ./scheme-library/slib/coerce.scm
+  ./scheme-library/slib/coerce.txi
+  ./scheme-library/slib/collect.scm
+  ./scheme-library/slib/comlist.scm
+  ./scheme-library/slib/comparse.scm
+  ./scheme-library/slib/cring.scm
+  ./scheme-library/slib/db2html.scm
+  ./scheme-library/slib/db2html.txi
+  ./scheme-library/slib/dbrowse.scm
+  ./scheme-library/slib/dbutil.scm
+  ./scheme-library/slib/debug.scm
+  ./scheme-library/slib/defmacex.scm
+  ./scheme-library/slib/determ.scm
+  ./scheme-library/slib/differ.scm
+  ./scheme-library/slib/dwindtst.scm
+  ./scheme-library/slib/dynamic.scm
+  ./scheme-library/slib/dynwind.scm
+  ./scheme-library/slib/elk.init
+  ./scheme-library/slib/eval.scm
+  ./scheme-library/slib/factor.scm
+  ./scheme-library/slib/factor.txi
+  ./scheme-library/slib/fft.scm
+  ./scheme-library/slib/fluidlet.scm
+  ./scheme-library/slib/fmtdoc.txi
+  ./scheme-library/slib/format.scm
+  ./scheme-library/slib/formatst.scm
+  ./scheme-library/slib/gambit.init
+  ./scheme-library/slib/genwrite.scm
+  ./scheme-library/slib/getopt.scm
+  ./scheme-library/slib/getparam.scm
+  ./scheme-library/slib/glob.scm
+  ./scheme-library/slib/guile.init
+  ./scheme-library/slib/hash.scm
+  ./scheme-library/slib/hashtab.scm
+  ./scheme-library/slib/htmlform.scm
+  ./scheme-library/slib/htmlform.txi
+  ./scheme-library/slib/http-cgi.scm
+  ./scheme-library/slib/http-cgi.txi
+  ./scheme-library/slib/lineio.scm
+  ./scheme-library/slib/lineio.txi
+  ./scheme-library/slib/logical.scm
+  ./scheme-library/slib/macrotst.scm
+  ./scheme-library/slib/macscheme.init
+  ./scheme-library/slib/macwork.scm
+  ./scheme-library/slib/makcrc.scm
+  ./scheme-library/slib/mbe.scm
+  ./scheme-library/slib/minimize.scm
+  ./scheme-library/slib/minimize.txi
+  ./scheme-library/slib/mitscheme.init
+  ./scheme-library/slib/mklibcat.scm
+  ./scheme-library/slib/modular.scm
+  ./scheme-library/slib/mulapply.scm
+  ./scheme-library/slib/mularg.scm
+  ./scheme-library/slib/mwdenote.scm
+  ./scheme-library/slib/mwexpand.scm
+  ./scheme-library/slib/mwsynrul.scm
+  ./scheme-library/slib/nclients.scm
+  ./scheme-library/slib/nclients.txi
+  ./scheme-library/slib/obj2str.scm
+  ./scheme-library/slib/obj2str.txi
+  ./scheme-library/slib/objdoc.txi
+  ./scheme-library/slib/object.scm
+  ./scheme-library/slib/paramlst.scm
+  ./scheme-library/slib/plottest.scm
+  ./scheme-library/slib/pnm.scm ./scheme-library/slib/pp.scm
+  ./scheme-library/slib/ppfile.scm
+  ./scheme-library/slib/prec.scm
+  ./scheme-library/slib/printf.scm
+  ./scheme-library/slib/priorque.scm
+  ./scheme-library/slib/process.scm
+  ./scheme-library/slib/promise.scm
+  ./scheme-library/slib/pscheme.init
+  ./scheme-library/slib/psxtime.scm
+  ./scheme-library/slib/qp.scm ./scheme-library/slib/queue.scm
+  ./scheme-library/slib/r4rsyn.scm
+  ./scheme-library/slib/randinex.scm
+  ./scheme-library/slib/randinex.txi
+  ./scheme-library/slib/random.scm
+  ./scheme-library/slib/random.txi
+  ./scheme-library/slib/ratize.scm
+  ./scheme-library/slib/rdms.scm
+  ./scheme-library/slib/recobj.scm
+  ./scheme-library/slib/record.scm
+  ./scheme-library/slib/repl.scm
+  ./scheme-library/slib/report.scm
+  ./scheme-library/slib/require.scm
+  ./scheme-library/slib/root.scm
+  ./scheme-library/slib/s48-0_57.init
+  ./scheme-library/slib/sc2.scm
+  ./scheme-library/slib/sc4opt.scm
+  ./scheme-library/slib/sc4sc3.scm
+  ./scheme-library/slib/scaexpp.scm
+  ./scheme-library/slib/scaglob.scm
+  ./scheme-library/slib/scainit.scm
+  ./scheme-library/slib/scamacr.scm
+  ./scheme-library/slib/scanf.scm
+  ./scheme-library/slib/scaoutp.scm
+  ./scheme-library/slib/scheme2c.init
+  ./scheme-library/slib/scheme48.init
+  ./scheme-library/slib/schmooz.scm
+  ./scheme-library/slib/schmooz.texi
+  ./scheme-library/slib/scm.init
+  ./scheme-library/slib/scmacro.scm
+  ./scheme-library/slib/scsh.init
+  ./scheme-library/slib/selfset.scm
+  ./scheme-library/slib/sierpinski.scm
+  ./scheme-library/slib/simetrix.scm
+  ./scheme-library/slib/slib.info
+  ./scheme-library/slib/slib.spec
+  ./scheme-library/slib/slib.texi
+  ./scheme-library/slib/slibcat ./scheme-library/slib/sort.scm
+  ./scheme-library/slib/soundex.scm
+  ./scheme-library/slib/srfi-1.scm
+  ./scheme-library/slib/srfi.scm
+  ./scheme-library/slib/stdio.scm
+  ./scheme-library/slib/strcase.scm
+  ./scheme-library/slib/strport.scm
+  ./scheme-library/slib/strsrch.scm
+  ./scheme-library/slib/structure.scm
+  ./scheme-library/slib/syncase.sh
+  ./scheme-library/slib/synchk.scm
+  ./scheme-library/slib/synclo.scm
+  ./scheme-library/slib/synrul.scm
+  ./scheme-library/slib/t3.init
+  ./scheme-library/slib/tek40.scm
+  ./scheme-library/slib/tek41.scm
+  ./scheme-library/slib/timezone.scm
+  ./scheme-library/slib/trace.scm
+  ./scheme-library/slib/tree.scm
+  ./scheme-library/slib/trnscrpt.scm
+  ./scheme-library/slib/tsort.scm
+  ./scheme-library/slib/tzfile.scm
+  ./scheme-library/slib/umbscheme.init
+  ./scheme-library/slib/uri.scm ./scheme-library/slib/uri.txi
+  ./scheme-library/slib/values.scm
+  ./scheme-library/slib/version.txi
+  ./scheme-library/slib/vscm.init
+  ./scheme-library/slib/withfile.scm
+  ./scheme-library/slib/wttest.scm
+  ./scheme-library/slib/wttree.scm
+  ./scheme-library/slib/yasyn.scm ./scheme-library/standard
+  ./scheme-library/standard/=README
+  ./scheme-library/standard/=bit-rotted
+  ./scheme-library/standard/=bit-rotted/alist.scm
+  ./scheme-library/standard/=bit-rotted/hash-tables.scm
+  ./scheme-library/standard/=bit-rotted/state-machine.scm
+  ./scheme-library/standard/char-set-lib.scm
+  ./scheme-library/standard/define-record-type.scm
+  ./scheme-library/standard/let-values.scm
+  ./scheme-library/standard/list-lib.scm
+  ./scheme-library/standard/list-sorting.scm
+  ./scheme-library/standard/regexps.scm
+  ./scheme-library/standard/string-lib.scm
+  ./scheme-library/standard/string-parsing.scm
+  ./scheme-library/test ./scheme-library/test/test-macros.scm
+  ./scheme-library/unix ./scheme-library/unix/=README
+  ./scheme-library/unix/=bit-rotted
+  ./scheme-library/unix/=bit-rotted/editor.scm
+  ./scheme-library/unix/=bit-rotted/inline-text.scm
+  ./scheme-library/unix/=copyright-conditions
+  ./scheme-library/unix/=test-output-files.scm
+  ./scheme-library/unix/directories.scm
+  ./scheme-library/unix/file-utils.scm
+  ./scheme-library/unix/filenames.scm
+  ./scheme-library/unix/options.scm
+  ./scheme-library/unix/output-files.scm
+  ./scheme-library/unix/safe-directory-find-expressions.scm
+  ./scheme-library/unix/safe-directory-find.scm
+  ./scheme-library/unix/shell.scm
+  ./scheme-library/unix/temp-files.scm
+  ./scheme-library/unix/untabify.scm
+  ./scheme-library/unix/users.scm ./systas ./systas/Makefile.in
+  ./systas/PLUGIN ./systas/PLUGIN/.arch-ids
+  ./systas/PLUGIN/.arch-ids/=dont-care ./systas/PLUGIN/REQ
+  ./systas/systas.c ./tests ./tests/DESC ./tests/Makefile.in
+  ./tests/PLUGIN ./tests/PLUGIN/.arch-ids
+  ./tests/PLUGIN/.arch-ids/=dont-care ./tests/PLUGIN/REQ
+  ./tests/test.scm ./tests/unit-alist.scm
+  ./tests/unit-boolean.scm ./tests/unit-chars.scm
+  ./tests/unit-eq.scm ./tests/unit-hash.scm ./tests/unit-kw.scm
+  ./tests/unit-list.scm ./tests/unit-pairs.scm
+  ./tests/unit-promise.scm ./tests/unit-strings.scm
+  ./tests/unit-symbols.scm ./tests/unit-vector.scm
+  ./tests/unit-weaks.scm
+New-patches: lord@regexps.com--2001Q4/systas--devo--1.0--base-0
+
+initial import

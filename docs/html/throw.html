@@ -1,0 +1,472 @@
+<html>
+<head>
+<title>Catch and Throw</title>
+</head>
+<body>
+
+<a name="Catch_and_Throw"></a>
+
+
+
+<h2 align=center>Catch and Throw</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="error.html#Conventions_for_Errors">Conventions for Errors</a></br>
+
+<b>prev: </b><a href="dynwind.html#Dynamic_Wind">Dynamic Wind</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>Exceptions are triggered by unusual events such as encountering
+an error.  They interrupt the normal flow of control in a program.
+</p><p>Exceptions may be caused deliberately by a programmer as a way
+to organize some aspects of a program.
+</p><p>Exceptions are caused by being <em>
+<a name="index-pt:0"></a>
+
+thrown
+</em>
+.  When an exception is
+thrown, an exception <em>
+<a name="index-pt:1"></a>
+
+type
+</em>
+ must be specified, and any number 
+of exception <em>
+<a name="index-pt:2"></a>
+
+parameters
+</em>
+ may be specified.  Usually, but not
+necessarily, the <em>
+<a name="index-pt:3"></a>
+
+type
+</em>
+ is represented by a symbol.
+</p><pre>
+     (throw 'no-solution)    ; throw an exception of type 'no-solution
+
+</pre>
+<pre>
+     (throw 'found-one 69)   ; throw an exception of type 'found-one
+                             ; with one parameter.
+
+</pre>
+<p>A call to <code>throw</code>
+ does not return.  To throw an exception which
+might (but does not necessarily return), use <code>handle</code>
+:
+</p><pre>
+     (if (number? x)
+         (compute-the-usual-way x)
+         (handle 'not-a-number x))
+
+</pre>
+<p>The key passed to <code>throw</code>
+ or <code>handle</code>
+ must not be <code>#f</code>
+ for reasons that
+will be explained below.
+</p><p>The procedure <code>catch</code>
+ is used to handle exceptions which will
+not ever return to the point at which they are thrown.  A call 
+to <code>catch</code>
+:
+</p><pre>
+     (catch key thunk handler)
+
+</pre>
+<p>calls <code>thunk</code>
+.  If an exception of type <code>key</code>
+ occurs during
+the call to <code>thunk</code>
+, <code>handler</code>
+ is immediately invoked and passed
+the exception type and parameters as arguments.  When <code>handler</code>
+
+returns, <code>catch</code>
+ immediately returns the value returned from
+<code>handler</code>
+ -- further execution of <code>thunk</code>
+ is skipped.
+</p><p>To establish a handler that can return to the point at which
+an exception was thrown with <code>handle</code>
+, use <code>handles</code>
+:
+</p><pre>
+     (handles key thunk handler)
+
+</pre>
+<p>If an exception is thrown with <code>handle</code>
+, and a handler was 
+established with <code>handles</code>
+, then the value of the handler is
+returned from <code>handle</code>
+.
+</p><p>When searching for handlers, exception types are compared using <code>eq?</code>
+.
+</p><p>Finally, for every type of exception, a default handler
+can be established using <code>set-default-handler</code>
+.
+</p><p>This table describes the interactions between <code>catch</code>
+, <code>handles</code>
+, <code>throw</code>
+,
+<code>handle</code>
+, and default handlers:
+</p><pre>
+   exception       handler         is this         return from handler
+   thrown by:      posted by:      handler used?   causes a return from:
+   =====================================================================
+   throw           catch           yes             catch
+   throw           handles         no              -
+   throw           default         yes             outermost[*]
+
+</pre>
+<pre>
+   handle          catch           yes             catch
+   handle          handles         yes             handle
+   handle          default         yes             handle
+
+</pre>
+<pre>
+           [*] If a default handler returns from an exception
+               caused by `throw', that causes a return from the
+               outermost expression being evaluated.  That might
+               mean a return to a top-level repl or an immediate exit
+               from the interpreter.
+
+</pre>
+<p>If the <code>key</code>
+ specified for <code>catch</code>
+ or <code>handles</code>
+ is <code>#t</code>
+, then all
+exceptions are caught, regardless of type.
+</p><p>If the <code>key</code>
+ specified for <code>catch</code>
+ (but not <code>handles</code>
+) is <code>#f</code>
+, then
+<code>thunk</code>
+ is invoked with one argument: a <em>
+<a name="index-pt:4"></a>
+
+jump buffer
+</em>
+.  If that
+object is passed to <code>throw</code>
+, as the exception type, then the
+exception is caught by this call to <code>catch</code>
+ and no other.
+That is the reason that <code>#f</code>
+ can not be a key to <code>throw</code>
+ or 
+<code>handle</code>
+ -- because that key has a special meaning when passed
+to <code>catch</code>
+.
+</p><p>If nested calls to <code>catch</code>
+ or <code>handle</code>
+ use the same value for <code>key</code>
+
+and that value is not <code>#f</code>
+, then exceptions are caught by the
+innermost call.  (Except that the handler supplied to a call to <code>handles</code>
+ 
+is never used for an excpetion thrown by <code>throw</code>
+.)
+</p><p>If there is no handler established for a given key, the procedure
+<code>bad-throw</code>
+ is invoked and passed the exception type and parameters.
+If <code>bad-throw</code>
+ returns and the exception was caused by <code>throw</code>
+, 
+control returns from the outermost expression being evaluated.
+If <code>bad_throw</code>
+ returns from an expression caused by <code>handle</code>
+, its 
+return value is returned  from <code>handle</code>
+.
+</p><p>The default definition of <code>bad-throw</code>
+ operates as follows:
+</p><p>If the exception type has a default handler, that handler is invoked
+and its value (if it returns) is returned from <code>bad-throw</code>
+.  The
+procedure <code>set-default-exception-handler</code>
+ is used to establish
+a default handler.  <code>default-exception-handler</code>
+ retrieves default
+handlers.
+</p><p>If the exception type has no default handler, then the exception is
+converted to type 'error and re-thrown.  If not caught, the
+exception type 'error does have a default handler which prints a
+message to the current error port and throws an exception of type
+'abort.  Exceptions of type 'abort are caught, if nowhere else, by
+the top-level repl.
+</p><p>If no handler can be found for a given exception, for exaple, if <code>bad-throw</code>
+
+is not defined as a procedure, that is a fatal condition that stops execution 
+entirely.
+</p><p><b><u>Function</u> <code><a name="catch"></a><a name="index-pt:5"></a>
+catch
+</code></b><br>
+<pre>
+(catch tag thunk handler)
+
+</pre>
+<p>Invoke <code>thunk</code>
+ in the dynamic context of <code>handler</code>
+ for excpetions
+matching <code>key</code>
+.  If thunk throws to the exception <code>key</code>
+, then <code>handler</code>
+ is
+invoked this way:
+</p><pre>
+     (handler key args ...)
+
+</pre>
+<p>For most values of <code>key</code>
+, <code>thunk</code>
+ takes no arguments.  If
+<code>thunk</code>
+ returns normally, that is the return value of <code>catch</code>
+.
+</p><p>Handler is invoked outside the scope of its own <code>catch</code>
+.  If
+<code>handler</code>
+ again throws to the same key, a new handler from further
+up the call chain is invoked.
+</p><p>If the key is <code>#t</code>
+, then a throw to <em>any</em> value will match this
+call to <code>catch</code>
+.
+</p><p>Key may also be the value <code>#f</code>
+.  In that case, <code>thunk</code>
+ takes one
+argument which will be passed a <em>
+<a name="index-pt:6"></a>
+
+jump buffer object
+</em>
+.  A jump
+buffer object may be used as the key argument to <code>throw</code>
+ to throw
+to a specific <code>catch</code>
+ without an intervening search for a key.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="handles"></a><a name="index-pt:7"></a>
+handles
+</code></b><br>
+<pre>
+(handles tag thunk handler)
+
+</pre>
+<p>Invoke <code>thunk</code>
+ in the dynamic context of <code>handler</code>
+ for excpetions
+matching <code>key</code>
+.  If thunk invokes <code>handle</code>
+ for the exception <code>key</code>
+,
+then <code>handler</code>
+ is invoked this way:
+</p><pre>
+     (handler key args ...)
+
+</pre>
+<p>For most values of <code>key</code>
+, <code>thunk</code>
+ takes no arguments.  If
+<code>thunk</code>
+ returns normally, that is the return value of <code>catch</code>
+.
+</p><p>Handler is invoked directly by <code>handle</code>
+ and may return control
+to the caller of <code>handle</code>
+.
+</p><p>If the key is <code>#t</code>
+, then <code>handle</code>
+ for <em>any</em> value will match this
+call to <code>handles</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="throw"></a><a name="index-pt:8"></a>
+throw
+</code></b><br>
+<pre>
+(throw key . args)
+
+</pre>
+<p>Invoke the catch form matching <code>key</code>
+, passing <code>args</code>
+ to the 
+handler.
+</p><p>key will match catches of the same value or
+of <code>#t</code>
+.  If no catch matches but the key has a 
+default exception handler, that handler is invoked:
+</p><pre>
+     (handler key args ...)
+
+</pre>
+<p>If it returns, control returns from the outermost expression
+being evaluated.
+</p><p>If there is no handler at all, <code>bad-throw</code>
+ is used as the default
+handler.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="handle"></a><a name="index-pt:9"></a>
+handle
+</code></b><br>
+<pre>
+(handle key . args)
+
+</pre>
+<p>Invoke the catch form matching <code>key</code>
+, passing <code>args</code>
+ to the 
+handler.
+</p><p>key will match catches of the same value or
+of <code>#t</code>
+.  If no catch matches but the key has a 
+default exception handler, that handler is invoked:
+</p><pre>
+     (handler key args ...)
+
+</pre>
+<p>If the handler returns, its value is returned from this function.
+</p><p>If there is no handler at all, <code>bad-handle</code>
+ is used as the default
+handler.
+</p>
+<br>
+<br>
+<a name="Rationale_--_Catch_and_Throw"></a>
+
+
+
+<h3 align=center>Rationale -- Catch and Throw</h3>
+
+
+
+
+
+
+
+
+
+
+<p>It is well known that functions like <code>catch</code>
+, <code>throw</code>
+, <code>handle</code>
+, and
+<code>handles</code>
+ can be implemented using the single primitive 
+<code>call-with-current-continuation</code>
+.
+</p><p>Actually using <code>call-with-current-continuation</code>
+ for that purpose
+places a heavy burden on the implementation.  <code>Catch</code>
+ and <code>throw</code>
+
+should be relatively fast and that precludes a stack-copying
+implementation of <code>call-with-current-continuation</code>
+.
+</p><p>Precluding a stack-copying <code>call-with-current-continuation</code>
+
+places a heavy burden on the garbage collector and activation
+record allocation strategies.  For example, it makes it 
+impossible for Scheme to share flow of control in any reasonable
+way with programs written in a stack-oriented language like C
+since Scheme activation records must be allocated from the
+heap -- not a stack.  This restriction would, in turn, complicate
+the implementation of primitives in C -- the calling conventions
+would be far more complicated than those we actually use.
+</p><p>We wanted to mix fluently with C and therefore like the idea
+of a stack-copying <code>call-with-current-continuation</code>
+.  Therefore,
+we find ourselves wanting <code>catch</code>
+, <code>throw</code>
+, <code>handle</code>
+ and <code>handles</code>
+ to be
+language primitives -- not synthesized from continuations.
+We want exception handling to have an implementation like C's 
+<code>setjmp/longjmp</code>
+. 
+</p><p>We chose our particular calling convention and semantics for
+these functions because they seem to capture the essense of other
+systems of exception handling while not adding much clutter to
+the language.
+</p><p>We could have gotten by without introducing the new type <code>jump buffer</code>
+
+to the language.  The same effect (of a newly created catch tag) can be
+achieved without that type:
+</p><pre>
+     (define (catch-1 procedure handler)
+       (let ((pseudo-jump-buffer (cons #f #f)))
+         (catch pseudo-jump-buffer
+           (lambda () (procedure pseudo-jump-buffer))
+           (handler))))
+
+</pre>
+<p>Which is effectively the same as this example which uses jump
+buffers:
+</p><pre>
+     (define (catch-1 procedure handler)
+       (catch #f procedure handler))
+
+</pre>
+<p>Conversely, it isn't hard, given our functions, to define <code>catch</code>
+ and
+<code>throw</code>
+ which do not treat <code>#f</code>
+ specially.  So it makes little difference
+either way.
+</p><p>It is mostly accidental that we have jump buffer objects, though
+they may be faster than other kinds of exceptions when thrown in
+situations where the wind chain is quite long.
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

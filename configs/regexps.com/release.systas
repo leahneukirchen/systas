@@ -1,0 +1,14 @@
+#
+# automatically generated configuration
+#
+#  derived from regexps.com/release-template.systas
+#
+
+./src                         	lord@regexps.com--2002/package-framework--devo--1.0--patch-15
+./src/Labnotes/LibHackerlab.d 	lord@regexps.com--2002/LibHackerlab--labnotes--1.0--patch-2
+./src/Labnotes/LibUnexec.d    	lord@regexps.com--2002/LibUnexec--labnotes--1.0--base-0
+./src/Labnotes/PackageFramework.d	lord@regexps.com--2002/PackageFramework--labnotes--1.0--patch-1
+./src/Labnotes/SystasScheme.d 	lord@regexps.com--2002/SystasScheme--labnotes--1.0--patch-1
+./src/hackerlab               	lord@regexps.com--2002/hackerlab--devo--1.0--patch-20
+./src/systas                  	lord@regexps.com--2002/systas--devo--1.0--patch-8
+./src/unexec                  	lord@regexps.com--2002/unexec--devo--1.0--patch-1

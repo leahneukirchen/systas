@@ -1,0 +1,38 @@
+/* tag: Tom Lord Tue Dec  4 14:57:21 2001 (debug.doc)
+ */
+/* debug.doc -
+ *
+ ****************************************************************
+ * Copyright (C) 2001 Thomas Lord
+ * 
+ * See the file "COPYING" for further information about
+ * the copyright and warranty status of this work.
+ */
+
+
+
+/************************************************************************
+ *(h0 "Simple Debugging Aids")
+ * 
+ * 
+ * This is a surprisingly handy tool for debugging without
+ * needing a complete debugger:
+ */
+
+/*(c peek)
+ * peek . any
+ * 
+ * Accept any non-0 number of arguments, write them to the
+ * current error port as a comment.  Return the last argument.
+ * 
+ * 	(+ 10 (troublesome-fn))
+ * 	=> (+ 10 (pk 'troublesome-fn-returned (troublesome-fn)))
+ * 
+ */
+
+/*(c pk)
+ * pk . any
+ * 
+ * `pk' is a synonym for `peek'.
+ */
+

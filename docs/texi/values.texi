@@ -1,0 +1,54 @@
+@need 3200
+
+@node Multiple Return Values
+@chapter Multiple Return Values
+
+Systas permits a procedure to return more than one value using
+the facilities described here.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{values}@fuindex values
+@*
+@example
+@group
+(values . args)
+@end group
+@group
+@end group
+@end example
+
+Return all of the arguments as multiple return values
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{call-with-values}@fuindex call-with-values
+@*
+@example
+@group
+(call-with-values producer consumer)
+@end group
+@group
+@end group
+@end example
+
+Invoke @code{producer}, passing all of the values it returns
+as arguments to @code{consumer}.
+
+
+For example:
+
+@example
+@group
+     (call-with-values (lambda () (values 1 2 3))
+                       +)
+     => 6
+@end group
+@group
+@end group
+@end example
+
+
+

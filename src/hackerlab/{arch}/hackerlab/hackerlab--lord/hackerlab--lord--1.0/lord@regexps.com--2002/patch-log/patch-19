@@ -1,0 +1,16 @@
+Revision: hackerlab--lord--1.0--patch-19
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Wed Feb 13 14:21:06 PST 2002
+Standard-date: 2002-02-13
+Summary: unit-ar.c bug fix
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-19
+Modified-files: =THANKS ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  tests/arrays-tests/unit-ar.c
+New-patches: lord@regexps.com--2002/hackerlab--lord--1.0--patch-19
+
+An array was being initialized incorrectly, causing the
+test to hang on some systems.
+

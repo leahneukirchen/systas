@@ -1,0 +1,97 @@
+# tag: Tom Lord Tue Dec  4 15:05:29 2001 (rx-posix-tests/DESC)
+#
+
+We test the installed header files to make sure they compile.
+
+test-rx
+	Run a long series of hand-coded regexp tests.  Each test tries
+	to compile an expression and checks the result (which may be
+	an expected failure).  If the expression compiles, compare it
+	to a string and check the result (which again, may be an
+	expected failure).  If the match succeeds, check the
+	subexpression positions returned by `regexec'.
+
+	Command line options can vary the NFA and DFA cache sizes.
+	`test-rx.sh' runs with small, medium, and large caches.
+
+	The complete set of tests can be repeated more than once and
+	within each run of tests, each individual test can be
+	repeated.  `test-rx.sh' does this.
+
+	If all tests pass, the NFA and DFA caches are flushed and the
+	amount of memory retained by Rx is checked (using the features
+	of "flux/mem/alloc-limits.h").  If Rx has leaked storage, the
+	test fails.
+
+	If a particular test fails, its test number and name are
+	printed along with a description of the failure.  The rest of
+	the tests are run.  "test-rx" exits with a non-0 status.
+
+	This program can be used for debugging too, by specifying a
+	specific test on the command line, or by asking that tests be
+	run in random order.
+
+	Tests are defined in "test-rx.scm" -- a Scheme program which
+	generates header files for "test-rx.c" (the tests can also be
+	run from Scheme).
+
+	A subset of the tests test whether Rx conforms to the Posix.2
+	specification for regexps.  Many subtle cases are tested and
+	every other implementation we have tested fails some of these
+	Posix-specific tests [19-Oct-2000].
+
+	test-rx exercises Rx's low-level features heavily, for strings
+	of 8-bit characters.
+
++generic-test-regex.c
+	This program is not compiled automatically.
+
+	+generic-test-regex is a simplified version of test-rx.
+	It can be used to run the Posix-specific test cases with
+	libc regex (or, with slight modification, any other
+	version of regcomp/regexec).
+
+	   gcc -o +generic-test-regex -g ./+generic-test-regex.c
+
+	 On most systems, this is a good way to find bugs in
+	 other implementations.
+
+
+posix-decl-test.c
+	A compile-only test.
+
+	This program includes these files:
+
+		#include <sys/types.h>
+		#include <limits.h>
+		#include "flux/rx-posix/regex.h"
+		#include "flux/rx-posix/limits.h"
+
+	It contains do-nothing code that verifies the
+	presence of required fields in `regex_t' and
+	`regmatch_t', definitions for required 
+	`regcomp' and `regexec' flags, and definitions
+	for return values from `regcomp' and `regmatch',
+	a definition for `RE_DUP_MAX'.
+
+	Also contains redundant extern declarations
+	for `regcomp', regexec', `regerror', and
+	`regfree' to verify type signatures.
+
+
+rx-size
+	A compile only program.
+
+	This can be used to figure out what files are
+	linked to a program that calls `regexec', `regcomp', 
+	and `regerror'.
+
+
+dbug-comp
+	Not a test -- a debugging tool
+
+	Compile a regexp supplied on the command line
+	and print information about the compiled 
+	expression.
+
+

@@ -1,0 +1,31 @@
+Revision: hackerlab--lord--1.0--patch-10
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Jan 17 18:39:56 PST 2002
+Standard-date: 2002-01-17
+Summary: nit city
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-10
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  bitsets/bits-print.c bitsets/bitset.c bitsets/bitset.h
+  cmd/main.h rx/dbug.c tests/bitset-tests/unit-bitset.c
+  tests/rx-posix-tests/test-rx.c
+  tests/rx-tests/unit-dfa-iso8859-1.c
+  tests/rx-tests/unit-dfa-utf-no-surrogates.c
+  tests/rx-tests/unit-dfa-utf.c
+  tests/rx-tests/unit-dfa-utf16.c
+  tests/rx-tests/unit-dfa-utf8.c
+  tests/rx-xml-tests/test-time-re.c
+  tests/rx-xml-tests/unit-re.c
+  tests/unidata-tests/unit-unidata.c
+  unidata-scaffolding/unidata-generate.c
+  vu-network/url-socket.c vu/printfmt.c vu/printfmt.h
+  vu/reserv.c vu/safe-printfmt.c vu/safe-printfmt.h
+  vu/safe-vfdbuf.c vu/safe-vu-utils.c vu/vu-help.c vu/vu-sys.c
+New-patches: lord@regexps.com--2002/hackerlab--lord--1.0--patch-10
+
+Added __attribute__((printf ...)) to the declarations for `printfmt'
+and `safe_printfmt'.
+
+Fixed all bugs detected by GCC options -Wformat and -Wall.

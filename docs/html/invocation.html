@@ -1,0 +1,74 @@
+<html>
+<head>
+<title>Invoking Systas</title>
+</head>
+<body>
+
+<a name="Invoking_Systas"></a>
+
+
+
+<h2 align=center>Invoking Systas</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="modules.html#An_Introduction_to_Systas_Modules">An Introduction to Systas Modules</a></br>
+
+
+</small>
+<br>
+
+
+
+
+
+
+<p><code>systas [--eval expression]* [file [other arguments]*]</code>
+
+</p><p>With no argument, systas enters an interactive read-eval-print
+loop which you can exit by calling <code>(quit)</code>
+:
+</p><pre>
+     % systas
+     systas> (+ 1 2)
+     3
+     ...
+     systas> (quit)
+     % 
+
+</pre>
+<p>With arguments, systas interprets each argument in order and then
+invokes the procedure bound to <code>main</code>
+.  By default, that procedure
+exits the process with status <code>0</code>
+.
+</p><p>An argument of the form <code>--eval expression</code>
+ simply evaluates
+<code>expression</code>
+.
+</p><p>An argument of the form <code>file</code>
+ attempts to load that file.  
+</p><p>In either case, if an error occurs, systas exits with non-0 status.
+</p><p>If <code>main</code>
+ is invoked, it is passed a list of strings containing
+the <code>other arguments</code>
+.
+</p>
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

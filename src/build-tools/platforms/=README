@@ -1,0 +1,98 @@
+
+This directory contains "hardwired" configuration variable settings.
+
+This is for variables that aren't worth trying to derive
+automatically, that are too complicated to ask most users to figure
+out, but that can be set on the basis of the canonical system name.
+
+There should be as few of these kinds of variables as possible, but
+for some kinds of code, they are necessary.
+
+So how does it work?  `../scripts/configure-top' has the job of
+computing all the "configuration variables".  Those are the variables
+that wind up in the `Options' file in your build directory, and that
+are propogated to the `Makefile's and
+`config-include/config-options.h'.
+
+That script accepts an optional argument: a system name.  If provided,
+it attempts to canonicalize the system name using GNU's `config.subs'.
+If not provided, it attempts to guess a canonical system name
+using GNU's `config.guess'.
+
+The canonical system name is given to the `sysconfig' script in this
+directory, which uses that name to pick a system configuration file.
+The system specific configuration file is run, which sets some shell
+variables.  Finally, `sysconfig' emits a selection of those variables
+as `Options' settings.
+
+So, when porting this software, you have to make sure that a
+reasonable system-specific configuration file is chosen for 
+your system.  If no such file exists, you have to write one.
+
+How does that work?
+
+
+* What's Your Canonical System Name?
+
+  Most users will be able to discover their canonical system name
+  by running `../gnu/config.guess'.
+
+  For some users, presumably, that won't work.  In that case,
+  you need to know a name for your system that `config.subs' will
+  treat reasonably.  I don't have much advice, yet, for choosing
+  system names in that case.  A good place to start is to look at
+  the `MACHINES' file in a GNU Emacs distribution and use the name
+  recommended there for Emacs builds.
+
+
+* What's Your System File?
+
+  Canonical system names are very specific but, often, the 
+  corresponding configuration file can be used for several
+  different canonical systems.  So, the mapping from canonical
+  name to config file name is handled by `pickconfig'.  Run:
+
+	% ./pickconfig CANONICAL-SYSTEM-NAME
+
+  to see which (if any) config file is automatically selected for
+  your system.
+
+  If the selected file is wrong for some reason, there are two 
+  possibilities:  (1) It's wrong on _every_ system that uses that
+  config file: in that case, the config file needs to be changed.
+  (2) It's right for _some_ systems that use that config file, but
+  not others:  in that case, you need to (a) create a new config
+  file for your system;  (b) modify `pickconfig' to choose correctly
+  between the problematic config file and your new config file.
+
+  That may sound horribly fragile -- and basically it is.  But there
+  is no practical alternative for some kinds of config settings, and
+  a similar arrangement has worked well for GNU Emacs for quite a 
+  few years.
+
+
+* Writing a Config File
+
+  Read the (very simple) script `vars'.  It contains a series of
+  comments describing the shell variables you might want to set.  Your
+  config file should set all of those variables.  If you want to
+  assign a variable the empty string, you should instead assign it the
+  string "%none%" -- that helps to automatically detect variables that
+  haven't been explicitly dealt with by the config file author.
+
+  In the simplest case, you can write an entirely new config file.
+  However, you also have the option of trying to factor out parts
+  of the config file that are re-usable.  For example, you might have
+  a config file specifically for `i386-any-freebsd3.0', but that
+  script might call `helpers/freebsd' to do some of its work.
+
+
+* Testing it Out
+
+  Run the top-level `configure' script, telling it your system name
+  if necessary.  Examine the variable settings it produces.  Does it
+  get the system name right?  The system config file name?  The
+  various variables managed by `sysconfig'?
+
+# tag: Tom Lord Fri May 10 02:16:14 2002 (platforms/=README)
+#

@@ -1,0 +1,20 @@
+Revision: package-framework--lord--1.0--patch-25
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri Mar 22 04:59:33 PST 2002
+Standard-date: 2002-03-22 12:59:33 GMT
+Summary: removed arch-utils
+Keywords: 
+New-files: {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-25
+Removed-files: arch-utils/PLUGIN/.arch-ids/REQ.id
+  arch-utils/package-names.h arch-utils/Makefile.in
+  arch-utils/package-names.c arch-utils/PLUGIN/REQ
+Removed-directories: arch-utils arch-utils/PLUGIN arch-utils/PLUGIN/.arch-ids
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-25
+
+
+`arch-utils' needs its own category and shouldn't
+be in the tree yet anyway.
+

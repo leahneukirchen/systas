@@ -1,0 +1,119 @@
+
+
+! 			How to Use Unexec
+
+
+This is some documentation for using `unexec' in your own
+programs.  
+
+* Make Sure It's Ported
+
+  Try building an `unexec' distribution on your target platform and
+  take note of the configuration parameter settings reported when
+  you run `configure'.  There's one variable called
+  `unexec-should-work'.  If it's value is `yes', then `unexec' stands
+  a chance of working on your target.  If it's value is `no', then 
+  you will certainly need to do some work PortingUnexec.
+
+
+* Make Sure Your Program is Statically Linked
+
+  If your program dynamically links various libraries, be aware
+  that you must _not_ dynamically link before calling `unexec'.
+
+  There are some exceptions.  For example, on systems where `libc'
+  is dynamically linked you can get away with linking for functions
+  that don't allocte any memory or have any variables in the `data'
+  section or `bss' section of your executable.  This will typically
+  include, for example, the system calls but not `atexit', `malloc',
+  or `stdio'.  
+
+  I assume you can also run into trouble if a shared library 
+  changes after you `unexec' an executable and the new version
+  locates various symbols in new locations.
+
+  *Be aware that `libunexec' includes its own version of `malloc'.*
+  Rather than go through the hair of deciding on which platforms it
+  is safe to use the native `malloc', I've simply included a malloc
+  implementation (from `glibc' via `emacs') in `libunexec'.
+
+
+* Get the Build Rules Right
+
+  Programs that call `unexec' have to be specially linked.
+
+  You can see how a program is supposed to be linked on your
+  target by building an emacs distribution and watching how
+  `temacs' is built.  From there, you can reverse engineer
+  the emacs makefiles to extract the salient points.
+
+  The PackageFramework/ contains a generic makefile that can be
+  used to build `unexec'ing programs on any (supported) platform: 
+  it contains a cleaned-up form of build rules taken from Emacs.
+  One reasonable approach is to use `package-framework' to build
+  your own program, extending its support to new targets as
+  necessary.
+
+
+* Call `unexec'
+
+  Your program calls `unexec' this way:
+
+<<<
+	{
+	  int err_val;
+	  char * new_file;
+	  char * old_file;
+
+	  ...
+
+	  if (0 > unexec (&err_val, new_file, old_file))
+	    {
+	       ...unexec failed, errno value in `err_val'...
+	    }
+	}
+>>>
+
+  That will create `new_file' (with `O_CREAT | O_EXCL') and 
+  take debugging symbols from `old_file'.  Be aware that,
+  at this time, error handling is not well supported.  In 
+  particular, upon an error, it might just print a panic 
+  message and exit immediately.  Hopefully this will improve
+  in future releases.
+
+
+* Considerations for Open Files
+
+  Obviously you can't trust that any descriptor will survive the
+  round-trip from the call to `unexec' to a process started by
+  running an `unexec'ed executable.
+
+  Three new standard descriptors (`0, 1, 2') will (presumably) be 
+  inherited by the new process.  Note that subtle things can occur --
+  for example, if `stdout' was a regular file in the process calling
+  `unexec', but a pipe in the new process.
+
+  Another question is what becomes of their `stdio' buffers.
+  I wouldn't know -- I don't use `stdio'.  I presume that on platforms
+  where `stdio' is a shared library can have problems, but you
+  might get away with it anyway (if it's harmless to reinitialize the
+  buffers in the new process).  You might also have problems if
+  `stdio' is statically linked -- for example, does the buffer data
+  structure think it knows the current file offsets for the standard
+  descriptors?
+
+  I use `vu' (in LibHackerlab/).  Using `vu', if the standard 
+  descriptors are buffered, you can call `vfdbuf_unbuffer_fd' before
+  calling `unexec', and `vfdbuf_buffer_fd' on start-up.
+
+
+* Pure Space
+
+  On some platforms, emacs can move data from data space to text space
+  during `unexec', so that (immutable but dynamically constructed)
+  data can become shared among multiple processes.  `unexec' in this
+  library currently has no support for that.  Sorry.
+
+
+%%% tag: Tom Lord Thu May 16 02:55:28 2002 (LibUnexec.d/UsingUnexec)
+%%%

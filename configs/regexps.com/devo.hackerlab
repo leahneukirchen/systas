@@ -1,0 +1,13 @@
+# 
+# Check out a libhackerlab distribution from the devo branches.  
+# Latest revisions.
+#
+
+./src                   lord@regexps.com--2002/package-framework--devo
+./src/hackerlab         lord@regexps.com--2002/hackerlab--devo
+
+./src/Labnotes/LibHackerlab.d	lord@regexps.com--2002/LibHackerlab--labnotes
+./src/Labnotes/PackageFramework.d	lord@regexps.com--2002/PackageFramework--labnotes
+
+# tag: Tom Lord Sat Jan 12 13:56:53 2002 (regexps.com/devo.hackerlab)
+#

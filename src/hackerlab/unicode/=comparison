@@ -1,0 +1,23 @@
+# tag: Tom Lord Tue Dec  4 15:06:35 2001 (unicode/=comparison)
+#
+
+glibc
+	utf-8 based
+	Posix mb and wchar interface
+	Posix locales 
+	utf-8 posix regexps (bugs)
+
+icu
+	utf-16 based
+	new interface (c/c++)
+	icu locales
+	no regexps
+
+Hackerlab
+	encoding form neutral (mix utf-8/16 and ascii8)
+	new interface (c)
+	hackerlab locale support in a future release
+	no locale support in current release
+	posix regexps (8-bit characters, posix locales)
+	xml regexps (encoding neutral)
+	encoding-neutral posix regexps in a future release

@@ -1,0 +1,15 @@
+Revision: dists--lord--1.0--patch-33
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri May 10 02:39:49 PDT 2002
+Standard-date: 2002-05-10 09:39:49 GMT
+Summary: updated the config regexps.com/lord
+Keywords: 
+New-files: {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-33
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  configs/regexps.com/lord
+New-patches: lord@regexps.com--2002/dists--lord--1.0--patch-33
+
+Updated the config `regexps.com/lord'.
+

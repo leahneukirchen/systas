@@ -1,0 +1,37 @@
+/****************************************************************
+ *(book "hackerlab coding standards"
+ *	:subtitles ("visit the Hackerlab at www.regexps.com")
+ *	:authors ("Thomas Lord")
+ *	:one-line-summary ""
+ *	:keywords ("coding standards")
+ *	:copyright-years (2002)
+ *	:copyright "Thomas Lord"
+ *	:publisher #f
+ *	:home-page-link "<a href=\"http://www.regexps.com\">The Hackerlab at <code>regexps.com</code></a>"
+ *	:contains ("The Hackerlab Coding Standards"
+ * 		   #f
+ *		   "The GNU Free Documentation License"
+ *		   #f
+ *		   "Indexes")
+ *
+ *	:permissions ("Permission is granted to copy, distribute and/or modify this document"
+ *		      "under the terms of the GNU Free Documentation License, Version 1.1"
+ *		      "or any later version published by the Free Software Foundation;"
+ *		      "with the Invariant Sections being:"
+ *		      ""
+ * 		      "		(none)"
+ * 		      ""
+ * 		      "with the Front-Cover Texts being"
+ * 		      ""
+ * 		      "		\"visit www.regexps.com\","
+ * 		      ""
+ *  		      "and with the Back-Cover Texts being"
+ *		      ""
+ *		      "		(none)."
+ *		      ""
+ *		      "A copy of the license is included in the section entitled \"GNU"
+ *		      "Free Documentation License\"."))
+ *
+ */
+/* tag: Tom Lord Sun Mar 10 05:10:05 2002 (standards.doc)
+ */

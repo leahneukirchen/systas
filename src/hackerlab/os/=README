@@ -1,0 +1,43 @@
+# tag: Tom Lord Tue Dec  4 15:06:35 2001 (os/=README)
+#
+
+		   Gateway to System Include Files
+
+A Hackerlab coding convention is that every include file should:
+
+	1. Be idempotent.  Including an already included file
+	   must have no effect.
+
+	2. Be self-sufficient.  No include file may require that
+	   a second file be included first.
+
+System header files generally do not have those properties.
+Therefore, Hackerlab code doesn't use those header files directly.
+Instead, they use the `os' header files.
+
+Whenever you would normally have a sequence of system includes such
+as:
+
+	#include <A.h>
+	#include <B.h>
+
+where `A.h' is required to be included before `B.h', in Hackerlab
+code, write:
+
+	#include "hackerlab/os/B.h"
+
+
+The set of files here isn't yet ``complete'' -- files are being added
+as-needed.  Still, the most commonly needed files for file system
+access, time values, and network programming are all here.
+
+There are also a few C functions here which simply call equivalent
+functions in libc (e.g. `errno_to_string' which calls `strerror').  In
+some cases, there is a tentative plan to later replace these with new
+implementations for various obscure reasons (e.g., because some
+popular libc implementation or other is absurd).  In other cases, I
+simply wanted a function name that was consistent with other names in
+`libhackerlab'.
+
+
+

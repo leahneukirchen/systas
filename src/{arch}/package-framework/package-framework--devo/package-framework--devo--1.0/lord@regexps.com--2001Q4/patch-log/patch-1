@@ -1,0 +1,14 @@
+Revision: package-framework--devo--1.0--patch-1
+Archive: lord@regexps.com--2001Q4
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Jan  3 05:49:50 PST 2002
+Standard-date: 2002-01-03
+Summary: fix Maintfile
+Keywords: 
+New-files: {arch}/package-framework/package-framework--devo/package-framework--devo--1.0/lord@regexps.com--2001Q4/patch-log/patch-1
+Modified-files: ChangeLog Maintfile
+New-patches: lord@regexps.com--2001Q4/package-framework--devo--1.0--patch-1
+
+
+Updated the rules for making `TAGS' files.
+

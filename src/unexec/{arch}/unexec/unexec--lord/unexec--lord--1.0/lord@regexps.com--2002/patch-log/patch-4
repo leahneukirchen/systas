@@ -1,0 +1,53 @@
+Revision: unexec--lord--1.0--patch-4
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon May 13 22:58:29 PDT 2002
+Standard-date: 2002-05-14 05:58:29 GMT
+Summary: linux unexec support
+Keywords: 
+New-files: {arch}/unexec/unexec--lord/unexec--lord--1.0/lord@regexps.com--2002/patch-log/patch-4
+  libunexec/unexelf.c
+Removed-files: libunexec/=unexec-impls-raw/.arch-ids/unexaix.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexalpha.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexapollo.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexconvex.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexec.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexelf.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexencap.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexmips.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexnext.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexenix.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexfx2800.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexhp9k800.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexsgi.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexsni.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexsunos4.c.id
+  libunexec/=unexec-impls-raw/.arch-ids/unexw32.c.id
+  libunexec/unexelf.c libunexec/unexelf2.c
+  libunexec/=unexec-impls-raw/unexaix.c
+  libunexec/=unexec-impls-raw/unexalpha.c
+  libunexec/=unexec-impls-raw/unexapollo.c
+  libunexec/=unexec-impls-raw/unexconvex.c
+  libunexec/=unexec-impls-raw/unexec.c
+  libunexec/=unexec-impls-raw/unexelf.c
+  libunexec/=unexec-impls-raw/unexencap.c
+  libunexec/=unexec-impls-raw/unexmips.c
+  libunexec/=unexec-impls-raw/unexnext.c
+  libunexec/=unexec-impls-raw/unexenix.c
+  libunexec/=unexec-impls-raw/unexfx2800.c
+  libunexec/=unexec-impls-raw/unexhp9k800.c
+  libunexec/=unexec-impls-raw/unexsgi.c
+  libunexec/=unexec-impls-raw/unexsni.c
+  libunexec/=unexec-impls-raw/unexsunos4.c
+  libunexec/=unexec-impls-raw/unexw32.c
+Removed-directories: libunexec/=unexec-impls-raw
+  libunexec/=unexec-impls-raw/.arch-ids
+New-patches: lord@regexps.com--2002/unexec--lord--1.0--patch-4
+
+Got rid of the cache of `raw' unexec implementations which
+were from an old version of emacs.  It turns out that 
+these aren't as stable as I'd hoped.
+
+Replaced `unexelf.c' with a version from a recent emacs (and it
+now actually works under Linux).
+

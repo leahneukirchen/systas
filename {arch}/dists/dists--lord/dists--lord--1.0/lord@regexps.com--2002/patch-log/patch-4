@@ -1,0 +1,98 @@
+Revision: dists--lord--1.0--patch-4
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sat Jan 12 14:28:22 PST 2002
+Standard-date: 2002-01-12
+Summary: prepared for new branching strategy
+Keywords: 
+New-files: {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-4
+  =README.d/=README.ftp-utils =README.d/=README.hackerlab
+  =README.d/=README.systas configs/regexps.com/devo.hackerlab
+  configs/regexps.com/lord.hackerlab
+  configs/regexps.com/devo.ftp-utils
+  configs/regexps.com/lord.ftp-utils
+  configs/regexps.com/devo.systas
+  configs/regexps.com/lord.systas
+  configs/regexps.com/release-template.arch
+  configs/regexps.com/release-template.ftp-utils
+  configs/regexps.com/release-template.hackerlab
+  configs/regexps.com/release-template.systas
+  =README.d/=README.arch
+New-directories: =README.d
+Removed-files: =README
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  INSTALL
+New-patches: lord@regexps.com--2002/dists--lord--1.0--patch-4
+
+
+The `dists' tree is used as the top-level directory of several
+different distributions.  It is now organized as follows:
+
+	=README.d
+
+		A directory containing all of the readme files for all
+		of the distributions that share this directory.
+
+	configs
+
+		A directory containing configuration files for each
+		primary maintainer (all one of them, at present).
+
+
+The archive will soon have a separate branch of `dists' for each
+project (the branch labels will probably be
+`candidate-<distribution-name>'.  Within that branch, superfluous
+readme files will be removed and the appropriate readme file moved to
+the top level directory.
+
+Additionally, on those branches, a revision-precise `release'
+configuration will be created for each candidate release.
+
+No other changes will occur on those branches.  `devo' will
+periodically be merged into those branches, but they should never be
+merged back to `devo'.
+
+Finally, there will be a collection of branches (label `releases')
+containing tags of the `candidate-<foo>' branches.  Actual
+distributions will be cut from that branch.
+
+There are a collection of configurations with names like
+`release-template.arch'
+
+To create a new candidate release for testing, after ensuring that all
+the sub-tree revisions for the release are in `devo', check out
+`dists' from the appropriate `candidate-<distribution-name>' branch.
+
+Update it, if necessary, from the `devo' branch of `dists'.
+
+Use `arch build-config' to build the tree of revisions that are
+supposed to be in the release.  If these are simply the latest
+revisions in `devo', the configurations with names like
+`release-template.arch' will do the trick.
+
+Form a revision-specific configuration for the release with a command
+like:
+
+	% arch record-config --force \
+	       regexps.com/lord/release-template.arch \
+	       regexps.com/lord/release.arch
+
+
+Then commit `dists' to the `candidate-<foo>' branch.  (If there were
+more maintainers, it would also be time to tag that `candidate-<foo>'
+revision in a `test-this' branch ...).
+
+To build a candidate tree for testing, `get' from the
+`candidate-<foo>' branch and `build-config' the `release'
+configuration (e.g. `release.arch').
+
+To actually make a release, tag the `candidate-<foo>' revision in the
+`release-<foo>' branch.  That will trigger the automatic FTP site
+update.
+
+All of this implies that programs that print a version identifier
+should be printing the (mangled) full name of revisions of `dists'
+from the `release-<foo>' branches -- but that isn't done yet.
+
+

@@ -1,0 +1,15 @@
+Revision: hackerlab--devo--1.0--patch-3
+Archive: lord@regexps.com--2001Q4
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Jan  3 14:53:37 PST 2002
+Standard-date: 2002-01-03
+Summary: added patch log for public repository
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--2001Q4/patch-log/patch-3
+  {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--public-2001Q4/patch-log/base-0
+Modified-files: ChangeLog
+New-patches: lord@regexps.com--2001Q4/hackerlab--devo--1.0--patch-3
+  lord@regexps.com--public-2001Q4/hackerlab--devo--1.0--base-0
+
+added patch log for public repository
+

@@ -1,0 +1,48 @@
+Revision: unexec--devo--1.0--base-0
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri May 10 02:19:48 PDT 2002
+Standard-date: 2002-05-10 09:19:48 GMT
+Summary: initial import
+Keywords: 
+New-files: ./=README ./Makefile.in ./PLUGIN/.arch-ids/DIRS.id
+  ./PLUGIN/.arch-ids/REQ.id ./PLUGIN/DIRS ./PLUGIN/REQ
+  ./libunexec/=unexec-impls-raw/.arch-ids/unexaix.c.id
+  ./libunexec/=unexec-impls-raw/.arch-ids/unexalpha.c.id
+  ./libunexec/=unexec-impls-raw/.arch-ids/unexapollo.c.id
+  ./libunexec/=unexec-impls-raw/.arch-ids/unexconvex.c.id
+  ./libunexec/=unexec-impls-raw/.arch-ids/unexec.c.id
+  ./libunexec/=unexec-impls-raw/.arch-ids/unexelf.c.id
+  ./libunexec/=unexec-impls-raw/.arch-ids/unexencap.c.id
+  ./libunexec/=unexec-impls-raw/.arch-ids/unexenix.c.id
+  ./libunexec/=unexec-impls-raw/.arch-ids/unexfx2800.c.id
+  ./libunexec/=unexec-impls-raw/.arch-ids/unexhp9k800.c.id
+  ./libunexec/=unexec-impls-raw/.arch-ids/unexmips.c.id
+  ./libunexec/=unexec-impls-raw/.arch-ids/unexnext.c.id
+  ./libunexec/=unexec-impls-raw/.arch-ids/unexsgi.c.id
+  ./libunexec/=unexec-impls-raw/.arch-ids/unexsni.c.id
+  ./libunexec/=unexec-impls-raw/.arch-ids/unexsunos4.c.id
+  ./libunexec/=unexec-impls-raw/.arch-ids/unexw32.c.id
+  ./libunexec/=unexec-impls-raw/unexaix.c
+  ./libunexec/=unexec-impls-raw/unexalpha.c
+  ./libunexec/=unexec-impls-raw/unexapollo.c
+  ./libunexec/=unexec-impls-raw/unexconvex.c
+  ./libunexec/=unexec-impls-raw/unexec.c
+  ./libunexec/=unexec-impls-raw/unexelf.c
+  ./libunexec/=unexec-impls-raw/unexencap.c
+  ./libunexec/=unexec-impls-raw/unexenix.c
+  ./libunexec/=unexec-impls-raw/unexfx2800.c
+  ./libunexec/=unexec-impls-raw/unexhp9k800.c
+  ./libunexec/=unexec-impls-raw/unexmips.c
+  ./libunexec/=unexec-impls-raw/unexnext.c
+  ./libunexec/=unexec-impls-raw/unexsgi.c
+  ./libunexec/=unexec-impls-raw/unexsni.c
+  ./libunexec/=unexec-impls-raw/unexsunos4.c
+  ./libunexec/=unexec-impls-raw/unexw32.c
+  ./libunexec/Makefile.in ./libunexec/PLUGIN/.arch-ids/REQ.id
+  ./libunexec/PLUGIN/REQ ./libunexec/unexec-unsupported.c
+  ./libunexec/unexec.h ./libunexec/unexelf.c
+New-patches: lord@regexps.com--2002/unexec--devo--1.0--base-0
+
+Initial import.
+

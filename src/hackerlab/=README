@@ -1,0 +1,96 @@
+
+		       The hackerlab C Library
+
+Standard `libc' is a drag.  Use this instead (though you might want to
+help me actually _finish_ it first).
+
+Some notable subcomponents:
+
+The `os' module provides a portable interface to those low-level parts
+of `libc' that can't be avoided.
+
+`mem' provides replacements for `memcpy' and friends. It provides an
+allocation interface layered on top of `malloc' that let's you write
+library routines that: (a) are agnostic as to whether malloc failures
+cause the program to stop or the function to return an error, (b) are able
+to partition allocations into separate pools (e.g., to trigger GC for
+some kinds of allocation but not others), (c) have lots of annoying
+extra parameters to get used to.
+
+`arrays' lets you allocate chunks of memory that can tell you how
+large they are ("variable size arrays").  It also has a module for
+huge but sparse arrays (a little unicode, anyone?).
+
+`bitsets' has an exhaustive supply of `bitset' functions and, also,
+some modules for huge but sparse bitset arrays (a little more unicode,
+anyone?).
+
+`cmd' is moving towards a `getopt' replacement.  It's already nicer
+than `getopt', but there's more to do.
+
+`fs' provides some file-name manipulation functions.  Since gaining
+experience with this API, I've decided that it's completely wrong.
+
+`hash' provides an in-core hash-table module which is not optimal in
+either space or time, but not too bad in either, either -- so it makes
+a good default choice when you don't have any specific requirements
+beyond "a hash table".  The API needs some work.  `hash' also has some
+functions for computing hash values.  More are needed.
+
+`rx', `rx-posix', and `rx-xml' are the best regular expression and
+regexp libraries on earth (supporting both 8-bit and Unicode
+characters).  So there.
+
+`sb' is a program (kind of odd for a library) which is like simplified
+`cat', except that it can read and write from unix and internet
+sockets, acting as either client or server.  (This program is included
+with the library since at one time, it was used by the build process.
+I don't think it is anymore and this program might eventually move to
+another package.)  A neat thing about this program is its simplicity.
+Because it uses the hackerlab C library, and in particular `cmd' and
+`VU', `sb' is all of 189 lines long (last I checked).  (NOTE: the `sb'
+program has been "unplugged", meaning that it is not built or
+installed by default.  If you reall want it, rename sb/UNPLUGGED to
+sb/PLUGIN though be aware that careless use of sb can lead to security
+issues (since it can be told to behave as a promiscuous internet
+server).).
+
+`str' is a string library to replace the `str*' functions in `libc'.
+After gaining some experience, I've decided that this API has its
+strong points, but also has its problems.  More functions and some
+changes to existing functions are needed.
+
+`uni', `unicode', and `unidata' are the first steps towards a nice
+`unicode' library, run-time agnostic with respect to coding system and
+written in sublimely classical `C' style.  There's much more to add,
+though.
+
+`vu' is a virtual file system interface.  It provides all of the file
+system functions, but with a layer of indirection so that processes
+can define per-process file-system semantics.  You can "stack" the
+handlers for a particular descriptor.  One of the stackable handlers
+is a buffering package that replaces `stdio'.  `vu' is awesome.
+There's a *little bit* more to do to make it perfect.
+
+`vu-network' extends the file system namespace with handlers for
+(non-standard) URLs for unix and internet domain sockets.
+
+Still needed are: more data structures, especially for (attributed and
+structured) text processing; better string functions; a `find'-like
+file system walker; a generic module for parsing input into fields;
+better support for temporary files; sorting and related functions,
+both in-core and disk-resident; disk-resident hash tables; a reader
+and writer for Scheme-like data structures; a GC-based implementation
+of Scheme-like data structures; a couple of VM implementations,
+covering signifcant space/time/complexity trade-offs in the VM design
+space.  Probably some other things I've forgotten at the moment.
+
+
+Have fun,
+Tom Lord
+
+Report bugs, ask for help, offer money, or volunteer to help by
+writing "lord@regexps.com".
+
+# tag: Tom Lord Thu Jan 10 02:57:12 2002 (hackerlab/=README)
+#

@@ -1,0 +1,101 @@
+Revision: package-framework--devo--1.0--patch-15
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sat May 18 12:16:57 PDT 2002
+Standard-date: 2002-05-18 19:16:57 GMT
+Summary: merge with `lord'
+Keywords: 
+New-files: =fix-library.sh
+  {arch}/package-framework/package-framework--devo/package-framework--devo--1.0/lord@regexps.com--2002/patch-log/patch-15
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-26
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-27
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-28
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-29
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-30
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-31
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-32
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-33
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-34
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-35
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-36
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-37
+  .arch-ids/=NEWS.package-framework.id Labnotes/.arch-ids/=id
+  build-tools/platforms/sysconfig links/make-links
+  links/remove-links build-tools/Makefiles/unexec-programs.mk
+  build-tools/gnu/ChangeLog build-tools/gnu/config.guess
+  build-tools/gnu/config.sub build-tools/platforms/=README
+  build-tools/platforms/vars
+  build-tools/auto-conf-lib/gcc-test
+  build-tools/Makefiles/install-shell-cgi-scripts.mk
+  build-tools/platforms/configs/gnu-linux
+  build-tools/Makefiles/install-library-objects.mk
+  build-tools/Makefiles/install-scm-cgi-scripts.mk
+  build-tools/platforms/pickconfig
+  build-tools/platforms/configs/freebsd
+  build-tools/auto-conf-lib/library-test
+  =NEWS.package-framework
+New-directories: build-tools/gnu build-tools/platforms
+  build-tools/platforms/configs build-tools/platforms/helpers
+  links Labnotes/.arch-ids Labnotes
+Removed-files: build-tools/auto-conf-lib/library-test
+Modified-files: =TODO ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  PLUGIN/auto build-tools/=README
+  build-tools/Makefiles/install-scm-scripts.mk
+  build-tools/Makefiles/install-scm-subdirs.mk
+  build-tools/Makefiles/rules.mk
+  build-tools/Makefiles/scm-scripts.mk
+  build-tools/scripts/configure-top configure
+New-patches: lord@regexps.com--2002/package-framework--devo--1.0--patch-15
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-26
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-27
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-28
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-29
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-30
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-31
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-32
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-33
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-34
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-35
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-36
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-37
+
+Patches applied:
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-37
+     updated =NEWS
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-36
+     =Labnotes -> Labnotes
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-35
+     don't use pax
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-34
+     tagged =LabNotes
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-33
+     linux unexec work
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-32
+     linux unexec tweaks
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-31
+     build precrt0.o with debugging
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-30
+     additional unexec ld switches for gnu-linux
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-29
+     tweaking unexec support / first-cut GNU/linux unexec support /
+     	 better output formatting from configure-top
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-28
+     `package-framework' extensions and clean-ups.
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-27
+     new directory `labnotes'
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-26
+     build-tools cleanups/additions + symbolic link scripts
+

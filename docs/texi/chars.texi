@@ -1,0 +1,747 @@
+@need 3200
+
+@node Characters
+@chapter Characters
+
+Individual character constants are written:
+
+@example
+@group
+     #\<character-name>
+@end group
+@group
+@end group
+@end example
+
+For example, uppercase @geindex A
+@dfn{A} is written:
+
+@example
+@group
+     #\A
+@end group
+@group
+@end group
+@end example
+
+@noindent
+lowercase:
+
+@example
+@group
+     #\a
+@end group
+@group
+@end group
+@end example
+
+Characters can be written in terms of their ASCII representation by
+using octal numbers:
+
+@example
+@group
+     #\101
+      => #\A
+@end group
+@group
+@end group
+@end example
+
+Some special characters are given mnemonic names:
+
+@example
+@group
+     #\space
+     #\newline
+     #\nl
+     #\tab
+     #\backspace
+     #\return
+     #\page
+     #\null
+     #\del
+@end group
+@group
+@end group
+@end example
+
+Other special character names (following ASCII) include:
+
+@example
+@group
+     nul soh stx etx eot enq ack bel bs ht vt np cr so
+     si dle dc1 dc2 dc3 dc4 nak syn etb can em sub esc
+     fs gs rs us
+@end group
+@group
+@end group
+@end example
+@need 3200
+
+@section Implicit Integer->Character Conversion
+
+Most functions that except a character argument also accept an
+immediate integer argument.  The integer @code{x} is interpreted as the
+character @code{(integer->char x)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char?}@fuindex char?
+@*
+@example
+@group
+(char? obj)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} of @code{obj} is a character, @code{#f} otherwise.
+
+
+
+
+@need 3200
+
+@section Case-sensative Character Comparisons
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char=?}@fuindex char=?
+@*
+@example
+@group
+(char=? . args)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if all of the arguments are equal when interpreted as
+characters.  Arguments must be characters or integers.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char<?}@fuindex char<?
+@*
+@example
+@group
+(char<? . args)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if each argument is less than the next when interpreted
+as characters.
+
+
+Arguments must be characters or integers.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char<=?}@fuindex char<=?
+@*
+@example
+@group
+(char<=? . args)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if each argument is less than or equal to the next when
+interpreted as characters.
+
+
+Arguments must be characters or integers.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char>?}@fuindex char>?
+@*
+@example
+@group
+(char>? . args)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if each argument is greater than the next when
+interpreted as characters.
+
+
+Arguments must be characters or integers.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char>=?}@fuindex char>=?
+@*
+@example
+@group
+(char>=? . args)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if each argument is greater than or equal to the next
+when interpreted as characters.
+
+
+Arguments must be characters or integers.
+
+
+
+
+@need 3200
+
+@section Case-insensative Character Comparisons
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char-ci=?}@fuindex char-ci=?
+@*
+@example
+@group
+(char-ci=? . args)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if each argument is equal to the next when interpreted
+as characters, disregarding the case of alphabetic characters.
+
+
+Arguments must be characters or integers.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char-ci<?}@fuindex char-ci<?
+@*
+@example
+@group
+(char-ci<? . args)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if each argument is less than the next when interpreted
+as characters, disregarding the case of alphabetic characters.
+
+
+Arguments must be characters or integers.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char-ci<=?}@fuindex char-ci<=?
+@*
+@example
+@group
+(char-ci<=? . args)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if each argument is less than or equal to the next when
+interpreted as characters, disregarding the case of alphabetic
+characters.
+
+
+Arguments must be characters or integers.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char-ci>?}@fuindex char-ci>?
+@*
+@example
+@group
+(char-ci>? . args)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if each argument is greater than the next when
+interpreted as characters, disregarding the case of alphabetic
+characters.
+
+
+Arguments must be characters or integers.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char-ci>=?}@fuindex char-ci>=?
+@*
+@example
+@group
+(char-ci>=? . args)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if each argument is greater than or equal to the next
+when interpreted as characters, disregarding the case of alphabetic
+characters.
+
+
+Arguments must be characters or integers.
+
+
+
+
+@need 3200
+
+@section Character Classes
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char-alpha?}@fuindex char-alpha?
+@*
+@example
+@group
+(char-alpha? character) 
+(char-alphabetic? character) ; aka
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{character} is an alphabetic charater, @code{#f}
+otherwise.  The alphabetic charaters are @geindex a-z
+@dfn{a-z} and @geindex A-Z
+@dfn{A-Z}.
+
+
+@code{character} must be a character or integer.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char-digit?}@fuindex char-digit?
+@*
+@example
+@group
+(char-digit? character) 
+(char-numeric? character) ; aka
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{character} is a decimal digit, @code{#f} otherwise.  The
+decimal digits are @geindex 0-9
+@dfn{0-9}.
+
+
+@code{character} must be a character or integer.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char-space?}@fuindex char-space?
+@*
+@example
+@group
+(char-space? character) 
+(char-whitespace? character) ; aka
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{character} is a whitespace character, @code{#f}
+otherwise.  The whitespace characters are:
+
+@example
+@group
+     #\ht #\nl #\vt #\np #\cr #\space
+@end group
+@group
+@end group
+@end example
+
+@code{character} must be a character or integer.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char-upper?}@fuindex char-upper?
+@*
+@example
+@group
+(char-upper? character) 
+(char-upper-case? character) ; aka
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{character} is an uppercase character, @code{#f}
+otherwise.  The upper case characters are @geindex A-Z
+@dfn{A-Z}.
+
+
+@code{character} must be a character or integer.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char-lower?}@fuindex char-lower?
+@*
+@example
+@group
+(char-lower? character) 
+(char-lower-case? character) ; aka
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{character} is a lowercase character, @code{#f}
+otherwise.  The upper case characters are @geindex a-z
+@dfn{a-z}.
+
+
+@code{character} must be a character or integer.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char-alphanumeric?}@fuindex char-alphanumeric?
+@*
+@example
+@group
+(char-alphanumeric? character) 
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{character} is an alphanumeric character, @code{#f}
+otherwise.  The alphanumeric characters are @geindex a-z
+@dfn{a-z}, @geindex A-Z
+@dfn{A-Z}, and
+@geindex 0-9
+@dfn{0-9}.
+
+
+@code{character} must be a character or integer.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char-graph?}@fuindex char-graph?
+@*
+@example
+@group
+(char-graph? character) 
+(char-graphic? character) ; aka
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{character} is a graphic character, @code{#f} otherwise.
+The graphic characters are all characters which are not control
+characters, whitespace characters, or delete.
+
+
+@code{character} must be a character or integer.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char-printable?}@fuindex char-printable?
+@*
+@example
+@group
+(char-printable? character) 
+(char-printing? character) ; aka
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{character} is a printable character, @code{#f}
+otherwise.  The printable characters are all characters which are
+either space characters, or are not control characters, or delete.
+
+
+@code{character} must be a character or integer.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char-blank?}@fuindex char-blank?
+@*
+@example
+@group
+(char-blank? character) 
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{character} is a blankspace character, @code{#f}
+otherwise.  The blankspace characters are space and tab.
+
+
+@code{character} must be a character or integer.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char-control?}@fuindex char-control?
+@*
+@example
+@group
+(char-control? character) 
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{character} is a control character, @code{#f} otherwise.
+The control characters are character codes @code{0}..31 (inclusive).
+
+
+@code{character} must be a character or integer.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char-punct?}@fuindex char-punct?
+@*
+@example
+@group
+(char-punct? character) 
+(char-punctuation? character) ; aka
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{character} is a punctuation character, @code{#f}
+otherwise.  The punctuation characters are all graphic characters
+which are not alphanumeric and not whitespace.
+
+
+@code{character} must be a character or integer.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char-xdigit?}@fuindex char-xdigit?
+@*
+@example
+@group
+(char-xdigit? character) 
+(char-hex-digit? character) ; aka
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{character} is a hexidecimal digit character, @code{#f}
+otherwise.  The hexidecimal digits are @geindex 0..9
+@dfn{0..9}, @geindex a-f
+@dfn{a-f}, and @geindex A-F
+@dfn{A-F}.
+
+
+@code{character} must be a character or integer.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char-ascii?}@fuindex char-ascii?
+@*
+@example
+@group
+(char-ascii? character) 
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{character} is a valid ascii character, @code{#f}
+otherwise.
+
+
+@code{character} must be a character or integer.
+
+
+
+
+@need 3200
+
+@section Character Case Conversions
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char-upcase}@fuindex char-upcase
+@*
+@example
+@group
+(char-upcase character) 
+@end group
+@group
+@end group
+@end example
+
+If @code{character} is a lowercase letter, return the corresponding
+uppercase letter.  Otherwise, return @code{character}.
+
+
+@code{character} must be a character or integer.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char-downcase}@fuindex char-downcase
+@*
+@example
+@group
+(char-downcase character) 
+@end group
+@group
+@end group
+@end example
+
+If @code{character} is an uppercase letter, return the corresponding
+lowercase letter.  Otherwise, return @code{character}.
+
+
+@code{character} must be a character or integer.
+
+
+
+
+@need 3200
+
+@section Character <-> Integer Conversions
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{char->integer}@fuindex char->integer
+@*
+@example
+@group
+(char->integer character) 
+@end group
+@group
+@end group
+@end example
+
+Return a number which is the integer character code of @code{character}.
+
+
+@code{character} must be a character or integer.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{integer->char}@fuindex integer->char
+@*
+@example
+@group
+(integer->char integer) 
+@end group
+@group
+@end group
+@end example
+
+Return the character whose integer character code is @code{integer}.
+
+
+@code{integer} is interpreted as a @code{32} bit unsigned integer and masked to
+@code{24} bits.
+
+
+@code{character} must be a character or integer.
+
+
+
+
+@need 3200
+
+@section Printing Characters
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{write-char}@fuindex write-char
+@*
+@example
+@group
+(write-char char :optional port)
+@end group
+@group
+@end group
+@end example
+
+Write the character @code{char} to the given port and return an
+unspecified value.  This procedure writes the character itself, not
+an external representation of the character, for example:
+
+@example
+@group
+     a
+not
+     #\a
+@end group
+@group
+@end group
+@end example
+
+@code{port} defaults to @code{(current-output-port)}
+
+
+If an I/O error occurs, an exception is thrown.
+
+
+
+
+@need 3200
+
+@section Rationale -- Characters
+
+The eventual plan is to support Unicode, not just ASCII.
+
+
+Mostly, Systas simply follows standard Scheme.
+
+
+Accepting integers as characters is convenient and aids in
+exchanging data with Emacs lisp.
+
+
+For convenience, several procedures are given both the standard
+scheme name and a name based on standard C libraries
+(e.g. @code{char-upper-case?} and @code{char-upper?}).
+
+
+For convenience, several characters are given both the standard
+scheme read name and a name based on ASCII (e.g. @code{#\newline} and
+@code{#\nl}).
+
+
+
+
+
+
+

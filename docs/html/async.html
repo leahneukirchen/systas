@@ -1,0 +1,432 @@
+<html>
+<head>
+<title>Asynchronous Events</title>
+</head>
+<body>
+
+<a name="Asynchronous_Events"></a>
+
+
+
+<h2 align=center>Asynchronous Events</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="variable.html#First-Class_Variables">First-Class Variables</a></br>
+
+<b>prev: </b><a href="promise.html#Promises">Promises</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>A process may be called upon to respond to events which occur
+asynchronously with respect to all other activities of the process.
+Unix signals are an example: a signal may be delivered to a process
+at any time.
+</p><p>Systas Scheme is made of up several subsystems such as the
+interpreter, the built-in functions, and the garbage collector that
+can not interrupt one another arbitrarily.  For example, during
+portions of garbage collection, primitive functions can not be
+called.  During some portions of the built-ins, neither the garbage
+collector or the evaluator can be called.  These restrictions raise
+the question of just how asynchronous events are handled.  If an
+asynchronous event arrives while a built-in function is busy, then
+it is not safe to call the interpreter to handle the asynchronous
+event.  Scheme programs may define additional conditions, such as
+when making updates to a complex data structure, during which
+asynchronous event handling should be deferred.
+</p><p>A data-type called an <em>
+<a name="index-pt:0"></a>
+
+async object
+</em>
+ helps to reconcile this
+situation.  An async object represents a particular kind of
+asynchronous event.  Every async object corresponds to a procedure,
+the <em>
+<a name="index-pt:1"></a>
+
+async handler
+</em>
+, that will be called whenever that asynchronous
+event has occured.  When the event occurs, the async object is
+specially marked.  The mark instructs the system to call the async
+later, when it is safe.  In other words, async objects provide
+programmers with a way to schedule a call to a handler procedure
+without necessarily making that call immediately.
+</p><p>Calls to async handlers are never nested.  While one is running, no
+other handler will be called.  If an async is already marked,
+marking it again has no further effect.
+</p><p>There are two flavors of async objects, <em>
+<a name="index-pt:2"></a>
+
+system asyncs
+</em>
+ and <em>
+<a name="index-pt:3"></a>
+
+user
+asyncs
+</em>
+.  Handlers for system asyncs are called by the interpreter
+as soon as it is safe to do so and take precedence over ordinary
+evaluation Handlers for user asyncs are called only when explicitly
+requested by a running program.
+</p><p>To prevent all system asyncs from running, use the procedure
+<code>mask-interrupts</code>
+.  To permit system asyncs to run after masking
+them, use <code>unmask-interrupts</code>
+.
+</p><ul>
+<li><a href="async.html#Signal_Handlers">Signal Handlers</a></li>
+<li><a href="async.html#Rationale_--_Asynchronous_Events">Rationale -- Asynchronous Events</a></li>
+</ul>
+
+<hr>
+
+<a name="Signal_Handlers"></a>
+
+
+
+<h3 align=center>Signal Handlers</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="async.html#Asynchronous_Events">Asynchronous Events</a></br>
+<b>next: </b><a href="async.html#Rationale_--_Asynchronous_Events">Rationale -- Asynchronous Events</a></br>
+
+
+</small>
+<br>
+
+
+
+
+
+
+<p>There is a system async for every kind of unix signal known to the
+interpreter.  When a signal arrives, the corresponding async is
+marked.
+</p><p>By default, the async functions for signals throw an exception of
+type <code>signal</code>
+: For example:
+</p><pre>
+     (throw 'signal 'SIGINT) // This happens when SIGINT arrives
+
+</pre>
+<p>You can override the default behavior by defining a function named
+after the signal (with a lowercase name).  For example:
+</p><pre>
+     (define (sigint) (display &quot;sigint happens\n&quot;))
+
+</pre>
+<p>There are two <em>
+<a name="index-pt:4"></a>
+
+pseudo-signals
+</em>
+ -- these work like unix signals but
+are generated internally and do not correspond to any actual unix
+signals.  These are:
+</p><pre>
+     SIGGC           ;; Signalled when garbage collection finishes
+     SIGTICK         ;; Signalled when the tick counter expires.
+
+</pre>
+<p>The <em>
+<a name="index-pt:5"></a>
+
+tick counter
+</em>
+ is a count-down timer that is decremented
+<em>
+<a name="index-pt:6"></a>
+
+frequently
+</em>
+ by the interpreter.  To set the tick counter, use the
+function <code>set-tick-rate</code>
+.
+</p><p><b><u>Function</u> <code><a name="async"></a><a name="index-pt:7"></a>
+async
+</code></b><br>
+<pre>
+(async thunk)
+
+</pre>
+<p>Construct a new async object that calls <code>thunk</code>
+ when executed.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="system-async"></a><a name="index-pt:8"></a>
+system-async
+</code></b><br>
+<pre>
+(system-async thunk)
+
+</pre>
+<p>Construct a new system async that calls <code>thunk</code>
+ when ready to be
+executed.  System asyncs are automatically invoked as soon after
+being marked as possible, if they are marked using
+<code>system-async-mark</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="async-mark"></a><a name="index-pt:9"></a>
+async-mark
+</code></b><br>
+<pre>
+(async-mark async)
+
+</pre>
+<p>Mark <code>async</code>
+ ready for execution.  
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="system-async-mark"></a><a name="index-pt:10"></a>
+system-async-mark
+</code></b><br>
+<pre>
+(system-async-mark async)
+
+</pre>
+<p>Mark an <code>async</code>
+ ready for execution and execute all pending system
+asyncs as quickly as possible.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="set-tick-rate"></a><a name="index-pt:11"></a>
+set-tick-rate
+</code></b><br>
+<pre>
+(set-tick-rate n)
+
+</pre>
+<p>The <code>tick</code>
+ timer is decremented frequently during the evaluation of
+expressions.  When it reaches <code>0</code>
+, a <em>
+<a name="index-pt:12"></a>
+
+tick signal
+</em>
+ is generated which
+causes the procedure bound to <em>
+<a name="index-pt:13"></a>
+
+TICK_SIGNAL
+</em>
+ to be invoked.
+</p><p>This procedure sets the tick timer to <code>n</code>
+ -- <code>n</code>
+ ticks must occur
+before a tick signal is generated.  If <code>n</code>
+ is <code>0</code>
+, no tick signals
+are generated.
+</p><p>The previous value of the tick timer is returned.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="run-asyncs"></a><a name="index-pt:14"></a>
+run-asyncs
+</code></b><br>
+<pre>
+(run-asyncs list-of-asyncs)
+
+</pre>
+<p>Execute the thunks associated with any marked asyncs in
+<code>list-of-asyncs</code>
+.  Clear the marks of those asyncs.  If interrupts
+are currently masked, return without doing anything.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="mask-interrupts"></a><a name="index-pt:15"></a>
+mask-interrupts
+</code></b><br>
+<pre>
+(mask-interrupts)
+
+</pre>
+<p>Block the execution of asyncs by incrementing the interrupt mask
+counter.  See <code>unmask-interrupts</code>
+.
+</p><p>Return the old value of the interrupt mask counter (an integer).
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="unmask-interrupts"></a><a name="index-pt:16"></a>
+unmask-interrupts
+</code></b><br>
+<pre>
+(unmask-interrupts)
+
+</pre>
+<p>Decrement the interrupt mask variable if it is greater than <code>0</code>
+.
+When the interrupt mask variable is <code>0</code>
+, interrupts are permitted.
+</p><p>Return the old value of the interrupt mask counter (an integer).
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="without-interrupts"></a><a name="index-pt:17"></a>
+without-interrupts
+</code></b><br>
+<pre>
+(without-interrupts thunk)
+
+</pre>
+<p>Simply:
+</p><pre>
+ (dynamic-wind mask-interrupts
+               thunk
+               unmask-interrupts))
+
+</pre>
+
+<br>
+<br><p><b><u>Function</u> <code><a name="with-interrupts"></a><a name="index-pt:18"></a>
+with-interrupts
+</code></b><br>
+<pre>
+(with-interrupts thunk)
+
+</pre>
+<p>Conceptually, this is approximately:
+</p><pre>
+ (dynamic-wind unmask-interrupts
+               thunk
+               mask-interrupts))
+
+</pre>
+<p>but in fact, things are not that simple:
+</p><pre>
+      ;; We can't write:
+      ;;
+      ;;     (dynamic-wind unmask-interrupts thunk mask-interrupts)
+      ;;
+      ;; because `unmask-interrupts' can be exited by a exception 
+      ;; thrown from an interrupt handler.  That would cause
+      ;; `with-interrupts' to exit with interrupts unmasked.
+      ;; 
+      (dynamic-wind (lambda () #f)
+                    (lambda ()
+                      (dynamic-wind unmask-interrupts
+                                    thunk
+                                    (lambda () #f)))
+                    mask-interrupts)
+
+</pre>
+
+<br>
+<br><p><b><u>Function</u> <code><a name="interrupts-masked?"></a><a name="index-pt:19"></a>
+interrupts-masked?
+</code></b><br>
+<pre>
+(interrupts-masked?)
+
+</pre>
+<p>Return <code>#t</code>
+ if interrupts are currently blocked, <code>#f</code>
+ otherwise.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="ignore-signals"></a><a name="index-pt:20"></a>
+ignore-signals
+</code></b><br>
+<pre>
+(ignore-signals)
+
+</pre>
+<p>Restore the default handlers for all unix signals handled by the
+Scheme.
+</p><p>This is intended for use after <code>fork()</code>
+ and before <code>exec()</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="unignore-signals"></a><a name="index-pt:21"></a>
+unignore-signals
+</code></b><br>
+<pre>
+(unignore-signals)
+
+</pre>
+<p>Restore the Scheme handlers for unix signals.
+</p><p>This undoes the effect of <code>ignore-signals</code>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<hr>
+
+<a name="Rationale_--_Asynchronous_Events"></a>
+
+
+
+<h3 align=center>Rationale -- Asynchronous Events</h3>
+
+
+
+
+<small>
+<b>up: </b><a href="async.html#Asynchronous_Events">Asynchronous Events</a></br>
+
+<b>prev: </b><a href="async.html#Signal_Handlers">Signal Handlers</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>Systas need asyncs for Posix signals, but their is a natural abstraction
+to Posix signals, which I hope I've captured with this interface.
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

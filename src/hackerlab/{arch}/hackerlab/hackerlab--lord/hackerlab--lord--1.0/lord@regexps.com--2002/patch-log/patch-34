@@ -1,0 +1,30 @@
+Revision: hackerlab--lord--1.0--patch-34
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Wed May  1 14:13:38 PDT 2002
+Standard-date: 2002-05-01 21:13:38 GMT
+Summary:  various `rx' fixes
+Keywords: 
+New-files: tests/rx-posix-tests/=test.tcl
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-34
+Modified-files: =TODO ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  Makefile.in rx-posix/match-regexp.c rx-posix/posix.c
+  rx-posix/re8-parse.c tests/rx-posix-tests/test-rx.scm
+New-patches: lord@regexps.com--2002/hackerlab--lord--1.0--patch-34
+
+
+`rx-posix/match-regexp.c': `rx_solution_fits' returns a non-boolean
+  value (but with 0 indicating false), so don't assume it is either
+  0 or 1.
+
+
+`rx-posix/posix.c': Mised an anchor case when REG_NEWLINE is provided.
+
+`rx-posix/re8-parse.c': code rearrangement for clarity.
+
+`tests/rx-posix-tests/test-rx.scm': added code to generate tests
+  that can be run in Tcl (to test the Tcl matcher).
+
+`tests/rx-posix-tests/=test.tcl': a Tcl script of the regexp tests.
+

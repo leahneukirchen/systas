@@ -1,0 +1,39 @@
+/* tag: Tom Lord Tue Dec  4 14:57:14 2001 (memory.doc)
+ */
+/************************************************************************
+ *(h0 "Low-level Memory Management")
+ * 
+ * The programming interfaces described in this chapter provide
+ * some frequently needed functionality built on top of the standard
+ * functions `malloc', `realloc', and `free'.
+ * 
+ * There are functions that work like `malloc' and friends, but
+ * that cause the process to exit with an error message and a 
+ * non-0 status if an allocation fails.  See xref:"Allocate or Die".
+ * 
+ * There are functions that let you keep track of how much memory is
+ * used by a particular subsystem of your program, and limit that
+ * amount of memory if you choose. You can use these functions to 
+ * trigger various forms of garbage collection.  See xref:"Allocation With
+ * Limitations".
+ * 
+ * Finally, There are functions that operate on arrays of bytes.
+ * These do little more than replace standard functions such as
+ * `memcpy', but are included for symmetry and completeness.  See
+ * xref:"Array-of-Byte Functions".
+ * 
+ */
+
+
+/*(menu)
+ */
+
+/*(include-documentation "must-malloc.c")
+ */
+
+/*(include-documentation "alloc-limits.c")
+ */
+
+/*(include-documentation "mem.c")
+ */
+

@@ -1,0 +1,102 @@
+<html>
+<head>
+<title>Conventions for Errors</title>
+</head>
+<body>
+
+<a name="Conventions_for_Errors"></a>
+
+
+
+<h2 align=center>Conventions for Errors</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="continuations.html#Continuations">Continuations</a></br>
+
+<b>prev: </b><a href="throw.html#Catch_and_Throw">Catch and Throw</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>Errors in built-ins usually generate exceptions of type
+<code>parameter-error</code>
+.   Exceptions are thrown:
+</p><pre>
+     (throw 'parameter-error msg-string procedure-name . data)
+
+</pre>
+<p>Usually the CAR of <code>data</code>
+ is the errant parameter or a substructure
+of the errant parameter, but <code>data</code>
+ may be <code>()</code>
+.
+</p><p>Errors in <code>eval</code>
+ generate exceptions of the type <code>eval-error</code>
+:
+</p><pre>
+     (throw 'eval-error procedure-or-procedure-name
+
+</pre>
+<p>Unhandled signals generate an exception of type <code>signal</code>
+:
+</p><pre>
+     (throw 'signal signal-name)
+
+</pre>
+<p>A stack depth exceeded condition generates an exception of 
+type <code>stack-depth</code>
+:
+</p><pre>
+     (throw 'stack-depth)
+
+</pre>
+<p><b><u>Function</u> <code><a name="fatal"></a><a name="index-pt:0"></a>
+fatal
+</code></b><br>
+<pre>
+(fatal . args)
+
+</pre>
+<p>Display on the current error port an error message containing 
+the arguments and exit the process with status <code>1</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="error"></a><a name="index-pt:1"></a>
+error
+</code></b><br>
+<pre>
+(error . args)
+
+</pre>
+<p>Signal a generic error (exception type <code>error</code>
+), passing <code>args</code>
+ to 
+the error handler. (Does not return.)
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

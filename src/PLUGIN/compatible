@@ -1,0 +1,11 @@
+
+;; Compatability policy:
+;; 
+;; We try to preserve upwards compatability with the two previous
+;; versioned releases.
+;; 
+
+;; hackerlab-package-framework--0.0
+;; hackerlab-package-framework--0.1
+
+

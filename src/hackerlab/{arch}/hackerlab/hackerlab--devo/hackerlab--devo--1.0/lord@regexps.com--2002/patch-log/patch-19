@@ -1,0 +1,13 @@
+Revision: hackerlab--devo--1.0--patch-19
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Tue Apr  9 01:33:46 PDT 2002
+Standard-date: 2002-04-09 08:33:46 GMT
+Summary: updated =NEWS
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--2002/patch-log/patch-19
+Modified-files: =NEWS ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/hackerlab--devo--1.0--patch-19
+
+Updated "=NEWS".

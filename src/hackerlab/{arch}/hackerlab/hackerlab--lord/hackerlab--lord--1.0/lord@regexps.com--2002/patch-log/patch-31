@@ -1,0 +1,16 @@
+Revision: hackerlab--lord--1.0--patch-31
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Wed Mar 20 11:24:29 PST 2002
+Standard-date: 2002-03-20 19:24:29 GMT
+Summary: test/fs-tests/Makefile.in -- don't hardcode `sh'
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-31
+Modified-files: =THANKS ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  tests/fs-tests/Makefile.in
+New-patches: lord@regexps.com--2002/hackerlab--lord--1.0--patch-31
+
+
+Use the configured posix shell, not `sh' to run a shell script.
+

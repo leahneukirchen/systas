@@ -1,0 +1,24 @@
+/* intro.doc:
+ *
+ ****************************************************************
+ * Copyright (C) 2002 Tom Lord
+ * 
+ * See the file "COPYING" for further information about
+ * the copyright and warranty status of this work.
+ */
+
+
+/************************************************************************
+ *(h0 "The Hackerlab Coding Standards")
+ * 
+
+The purpose of these standards is to help people write programs which
+are consistently and conveniently formatted and consistent in
+build processes, testing processes, installation, and operation.
+
+
+ */
+
+
+/* tag: Tom Lord Sun Mar 10 05:07:33 2002 (intro.doc)
+ */

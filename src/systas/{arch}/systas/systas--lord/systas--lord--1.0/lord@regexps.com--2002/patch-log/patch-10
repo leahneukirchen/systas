@@ -1,0 +1,66 @@
+Revision: systas--lord--1.0--patch-10
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sat Apr 20 19:59:13 PDT 2002
+Standard-date: 2002-04-21 02:59:13 GMT
+Summary: initial checkin with wiki code
+Keywords: 
+New-files: {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-10
+  wiki-cgi/PLUGIN/.arch-ids/REQ.id wiki-cgi/edit-topic.ss
+  scheme-library/wiki/users.scm
+  scheme-library/ice-9/=later/sched.scm
+  scheme-library/http/uri.scm
+  scheme-library/http/http-errors.scm
+  scheme-library/http/http-replies.scm
+  scheme-library/http/html.scm
+  scheme-library/http/http-server.scm
+  scheme-library/wiki/local-server.ss libsystas/md5.c
+  libsystas/md5s.c wiki-cgi/login.ss
+  scheme-library/standard/regexps.scm
+  scheme-library/wiki/config.scm libsystas/md5.h
+  libsystas/md5s.h wiki-cgi/Makefile.in
+  scheme-library/wiki/view.scm wiki-cgi/view-topic.ss
+  scheme-library/wiki/library.scm wiki-cgi/PLUGIN/REQ
+New-directories: scheme-library/=bit-rot scheme-library/=bit-rot/etree
+  scheme-library/http scheme-library/ice-9/=later
+  scheme-library/standard/=later scheme-library/wiki wiki-cgi
+  wiki-cgi/PLUGIN wiki-cgi/PLUGIN/.arch-ids
+Removed-files: scheme-library/=later/net/http-errors.scm
+  scheme-library/=later/net/http-replies.scm
+  scheme-library/=later/net/html.scm
+  scheme-library/=later/net/http-server.scm
+  scheme-library/=later/net/uri.scm
+Removed-directories: scheme-library/=later scheme-library/=later/net
+  scheme-library/etree
+Renamed-files: scheme-library/=later/net/rfc822.scm scheme-library/http/rfc822.scm
+  scheme-library/=later/net/crlf-io.scm scheme-library/http/crlf-io.scm
+  scheme-library/etree/uids.scm scheme-library/=bit-rot/etree/uids.scm
+  scheme-library/etree/diffs.scm scheme-library/=bit-rot/etree/diffs.scm
+  scheme-library/etree/source-hygiene.scm scheme-library/=bit-rot/etree/source-hygiene.scm
+  scheme-library/=later/net/=README scheme-library/http/=README
+  scheme-library/=later/net/=scsh-copyright scheme-library/http/=scsh-copyright
+  scheme-library/=later/net/http-request.scm scheme-library/http/http-request.scm
+  scheme-library/standard/regexps.scm scheme-library/standard/=later/regexps.scm
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regepx.com--2002/ChangeLog.lord--1.0
+  libsystas/async.c libsystas/async.h libsystas/eval.c
+  libsystas/fdsocket.c libsystas/filesys.c libsystas/gc.c
+  libsystas/init.c libsystas/rgx.c libsystas/rgx.h
+  scheme-library/http/crlf-io.scm
+  scheme-library/http/http-request.scm
+  scheme-library/http/rfc822.scm
+  scheme-library/ice-9/basic.scm scheme-library/ice-9/user.scm
+  scheme-library/standard/=later/regexps.scm
+  scheme-library/standard/string-parsing.scm
+  scheme-library/unix/directories.scm
+  scheme-library/unix/filenames.scm
+  scheme-library/unix/shell.scm
+New-patches: lord@regexps.com--2002/systas--lord--1.0--patch-10
+
+Just a quick (first) check-in of wiki code since I'm a bit
+nervous about having all this unarchives source.  It is not
+currently in a particularly useful state (parts work, but very
+fragile).
+
+
+

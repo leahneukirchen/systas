@@ -1,0 +1,19 @@
+# tag: Tom Lord Tue Dec  4 15:05:30 2001 (unidata-tests/DESC)
+#
+
+We test the installed header files to make sure they compile.
+
+unit-unidata
+	Generate a version of "unidata.txt", omitting
+	some fields, starting from the unidata database
+	in "libflux/unidata/unidata.h".
+
+	Compare the generated database to the official
+	"unidata.txt".
+
+
+
+"libflux/unidata/blocks.h" isn't tested yet (but is exceedingly
+trivial).  It is indirectly, partially tested by rx-unicode tests.
+
+

@@ -1,0 +1,145 @@
+Revision: systas--devo--1.0--patch-6
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sat May 18 11:53:58 PDT 2002
+Standard-date: 2002-05-18 18:53:58 GMT
+Summary: merge with `lord'
+Keywords: 
+New-files: {arch}/systas/systas--devo/systas--devo--1.0/lord@regexps.com--2002/patch-log/patch-6
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-10
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-11
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-12
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-13
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-14
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-15
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-16
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-17
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-18
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-19
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-20
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-21
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-22
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-23
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-9
+  .arch-ids/=NEWS.id libsystas/unexec.c
+  scheme-library/ice-9/=later/sched.scm
+  systas/=unexec-script.scm scheme-library/http/uri.scm
+  scheme-library/http/http-errors.scm
+  scheme-library/http/http-replies.scm
+  scheme-library/http/html.scm
+  scheme-library/http/http-server.scm libsystas/md5.c
+  libsystas/md5s.c scheme-library/standard/regexps.scm
+  libsystas/md5.h libsystas/md5s.h libsystas/unexec.h
+  scheme-library/html/utils.scm PLUGIN/options =NEWS
+New-directories: scheme-library/=bit-rot scheme-library/=bit-rot/etree
+  scheme-library/html scheme-library/http
+  scheme-library/ice-9/=later scheme-library/standard/=later
+  .arch-ids libsystas/.arch-ids
+Removed-files: =NEWS scheme-library/=later/net/http-errors.scm
+  scheme-library/=later/net/http-replies.scm
+  scheme-library/=later/net/html.scm
+  scheme-library/=later/net/http-server.scm
+  scheme-library/=later/net/uri.scm
+Removed-directories: scheme-library/=later scheme-library/=later/net
+  scheme-library/etree
+Renamed-files: scheme-library/=later/net/rfc822.scm scheme-library/http/rfc822.scm
+  scheme-library/=later/net/crlf-io.scm scheme-library/http/crlf-io.scm
+  scheme-library/etree/uids.scm scheme-library/=bit-rot/etree/uids.scm
+  scheme-library/etree/diffs.scm scheme-library/=bit-rot/etree/diffs.scm
+  scheme-library/etree/source-hygiene.scm scheme-library/=bit-rot/etree/source-hygiene.scm
+  scheme-library/=later/net/=README scheme-library/http/=README
+  scheme-library/=later/net/=scsh-copyright scheme-library/http/=scsh-copyright
+  systas/systas.c systas/systas-raw.c
+  scheme-library/=later/net/http-request.scm scheme-library/http/http-request.scm
+  scheme-library/standard/regexps.scm scheme-library/standard/=later/regexps.scm
+Modified-files: =README ChangeLog
+  ChangeLog.d/lord@regepx.com--2002/ChangeLog.lord--1.0
+  PLUGIN/REQ libsystas/async.c libsystas/async.h
+  libsystas/eval.c libsystas/fdsocket.c libsystas/filesys.c
+  libsystas/gc.c libsystas/init.c libsystas/init.h
+  libsystas/introduction.doc libsystas/rgx.c libsystas/rgx.h
+  libsystas/scheme.c libsystas/stime.c libsystas/systas.h
+  libsystas/system.c scheme-library/Makefile.in
+  scheme-library/cogen/=README
+  scheme-library/data-structures/=README
+  scheme-library/doc/=README scheme-library/formatting/=README
+  scheme-library/http/=README scheme-library/http/crlf-io.scm
+  scheme-library/http/http-request.scm
+  scheme-library/http/rfc822.scm scheme-library/ice-9/=README
+  scheme-library/ice-9/basic.scm scheme-library/ice-9/rt0.scm
+  scheme-library/ice-9/user.scm
+  scheme-library/ps-fonts/=README scheme-library/raw/=README
+  scheme-library/raw/time.scm scheme-library/regexps/=README
+  scheme-library/slib/=README scheme-library/standard/=README
+  scheme-library/standard/=later/regexps.scm
+  scheme-library/standard/string-parsing.scm
+  scheme-library/unix/=README
+  scheme-library/unix/directories.scm
+  scheme-library/unix/filenames.scm
+  scheme-library/unix/shell.scm systas/Makefile.in
+  systas/systas-raw.c
+New-patches: lord@regexps.com--2002/systas--devo--1.0--patch-6
+  lord@regexps.com--2002/systas--lord--1.0--patch-10
+  lord@regexps.com--2002/systas--lord--1.0--patch-11
+  lord@regexps.com--2002/systas--lord--1.0--patch-12
+  lord@regexps.com--2002/systas--lord--1.0--patch-13
+  lord@regexps.com--2002/systas--lord--1.0--patch-14
+  lord@regexps.com--2002/systas--lord--1.0--patch-15
+  lord@regexps.com--2002/systas--lord--1.0--patch-16
+  lord@regexps.com--2002/systas--lord--1.0--patch-17
+  lord@regexps.com--2002/systas--lord--1.0--patch-18
+  lord@regexps.com--2002/systas--lord--1.0--patch-19
+  lord@regexps.com--2002/systas--lord--1.0--patch-20
+  lord@regexps.com--2002/systas--lord--1.0--patch-21
+  lord@regexps.com--2002/systas--lord--1.0--patch-22
+  lord@regexps.com--2002/systas--lord--1.0--patch-23
+  lord@regexps.com--2002/systas--lord--1.0--patch-9
+
+
+Patches applied:
+
+  * lord@regexps.com--2002/systas--lord--1.0--patch-23
+     updated =NEWS
+
+  * lord@regexps.com--2002/systas--lord--1.0--patch-22
+     fixed a GC bug in libsystas/rgx.c
+
+  * lord@regexps.com--2002/systas--lord--1.0--patch-21
+     case independent string prefix comparison functions
+
+  * lord@regexps.com--2002/systas--lord--1.0--patch-20
+     eliminated gc pseudo-signal
+
+  * lord@regexps.com--2002/systas--lord--1.0--patch-19
+     `unexec' work
+
+  * lord@regexps.com--2002/systas--lord--1.0--patch-18
+     unexec related hacking
+
+  * lord@regexps.com--2002/systas--lord--1.0--patch-17
+     fixed compile bugs
+
+  * lord@regexps.com--2002/systas--lord--1.0--patch-16
+     various progress on the wiki
+
+  * lord@regexps.com--2002/systas--lord--1.0--patch-15
+     Fixed a `listify' bug and signal name bug.
+
+  * lord@regexps.com--2002/systas--lord--1.0--patch-14
+     wiki hacking
+
+  * lord@regexps.com--2002/systas--lord--1.0--patch-13
+     various wiki tweaks and libsystas cleanups
+
+  * lord@regexps.com--2002/systas--lord--1.0--patch-12
+     minor milestone
+
+  * lord@regexps.com--2002/systas--lord--1.0--patch-11
+     basic cgi command framework
+
+  * lord@regexps.com--2002/systas--lord--1.0--patch-10
+     initial checkin with wiki code
+
+  * lord@regexps.com--2002/systas--lord--1.0--patch-9
+     merge with `devo'
+

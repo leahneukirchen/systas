@@ -1,0 +1,19 @@
+These modules provide some basic data structures.
+
+In contrast to the data structure modules in the adjacent directory
+`standard', these are quick hacks -- not attempts at 100% solutions.
+
+	hcons		-- eq?-based hash-consing utilities
+
+	ratlist		-- an old list library, still used in 
+			   some places, but now replaced by
+			   (standard list-lib)
+
+	string-fun	-- an old string library, still used
+			   in some places, but now replaced
+			   by (standard string-parsing)
+
+
+# tag: Tom Lord Tue Dec  4 15:06:39 2001 (data-structures/=README)
+#
+

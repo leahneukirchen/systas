@@ -1,0 +1,136 @@
+
+!> The systas Scheme Todo List
+
+
+For a long time, the entire todo list was:
+
+			    ~~~~~~~~~~~~~
+					+++
+					bg: #ffd5ff
+
+
+			      *Todo List*
+
+				*) start over
+			    ~~~~~~~~~~~~~
+
+because there's such a huge accumlation of things wrong with this
+implementation that that seemed like it _might_ be the simplest route.
+Even though I wasn't certain, I was sufficiently disgusted with
+this implementation that starting over had a definate appeal.
+
+But the other route has always been to just fix it.  After all,
+"correctness enhancing transformations" are often the easiest way to
+work.
+
+So, here's a todo list, that will probably grow when I have some more
+time:
+
+
++ better eval		:::	I've heard good results reported for
+				the new evaluator in SCM --- it should
+				be ported to systas.  Specifically,
+				the new eval uses a special-case 
+				generational copying collector:
+				environments for procedure application
+				are allocated in a separate area,
+				collected by a copying collector.
+				This makes perfect sense since `eval'
+				does more consing than anything else
+				(by a lot), but most of that consing
+				is of very short-lived objects
+				reachable only from a small root set.
+
+
++ precise GC		:::	Conservative GC doesn't work.  Oh,
+				sure, it works _well enough_ for 
+				some purposes -- but won't work for
+				some of the target applications I
+				have in mind for systas.  So precise 
+				GC is needed.  One simple approach
+				_might_ be to compile with C++, using 
+				constructors and destructors to keep
+				accurate track of the part of the root
+				set that lives on the C stack  -- but
+				that's not the only approach to
+				consider.  Nope, not by a long shot.
+
++ incremental GC	:::	Long pauses suck.
+
+
++ stackless		:::	I wouldn't mind doing away with using
+				the C stack for continuations.  That
+				would yield fast `call/cc' (useful for
+				cooperative threading) and simplify
+				GC.
+
++ real-time		:::	Very low latency interrupt handling,
+				even with some restrictions, is highly
+				desirable.
+
++ bytecode		:::	Graph code is very space inefficient
+				compared to graph code.  Now that
+				scheme libraries are starting to
+				accumulate, this inefficiency is
+				becoming noticable and problematic.
+				The emacs pattern (having both a graph
+				and a bytecode interpreter) seems like
+				a promising solution.  But, this might
+				be less important than native
+				compilation:
+
++ native compilation	:::	For speed, being able to compile
+				(some) libraries to native code
+				(possibly via C) is critical.
+
+
++ better numerics	:::	I don't trust this (very old) code
+				from (out of date) versions of SCM.
+				The Guile crew is said to be working
+				on a GMP version of these functions --
+				that might be worth picking up.  Or
+				a snarf from a more-recent SCM.
+
++ debugging eval	:::	There's a tension between the speed of
+				graph-based eval and debugging
+				features (whose portable implementation
+				typically slows down `eval').  One
+				idea is to make a debugging eval
+				optional;  another is to use
+				non-portable techniques to get
+				debugging without overhead;  a third
+				is to accept the performance penalty
+				but rely on the bytecode interpreter
+				being fast.
+
++ unicode		:::	Unicode support (all encoding forms)
+				is needed.
+
++ vu hooks		:::	Support is needed for writing VU
+				handlers in scheme.
+
++ X library		:::	A (good) low-level X11 library is
+				needed.
+
++ strings		:::	Editable, attributed strings are
+				needed (though I'm leaning towards 
+				first doing this in C in
+				LibHackerlab/).
+
++ code cleanups		::: 	The macros inherited from SCM have
+				been largely cleaned up, but there's
+				still more to do.  Especially
+				desirable is more abstraction between
+				the tagging system and the rest of the
+				code.
+
++ scheme library	:::	The scheme library has several modules
+				that are vestigial cruft.  Those
+				should be factored out and killed, and
+				the documentation for the remaining
+				modules made extractable from the
+				comments.
+
+---
+%%% tag: Tom Lord Thu May 16 01:36:36 2002 (SystasScheme.d/TodoList)
+%%%

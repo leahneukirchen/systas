@@ -1,0 +1,18 @@
+Revision: systas--lord--1.0--patch-8
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Feb 14 13:56:39 PST 2002
+Standard-date: 2002-02-14
+Summary: adjust for vu_readdir interface change
+Keywords: 
+New-files: {arch}/systas/systas--devo/systas--devo--1.0/lord@regexps.com--2002/patch-log/patch-4
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-8
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regepx.com--2002/ChangeLog.lord--1.0
+  libsystas/filesys.c
+New-patches: lord@regexps.com--2002/systas--devo--1.0--patch-4
+  lord@regexps.com--2002/systas--lord--1.0--patch-8
+
+The interface to `vu_readdir' has changed -- systas needs to be
+modified for that.
+

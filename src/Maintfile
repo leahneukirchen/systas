@@ -1,0 +1,35 @@
+# tag: Tom Lord Tue Dec  4 15:04:23 2001 (src/Maintfile)
+#
+# MAINTFILE -
+#
+################################################################
+# Copyright (C) 2001 Thomas Lord
+# 
+# See the file "COPYING" for further information about
+# the copyright and warranty status of this work.
+
+
+################################################################
+# This is a makefile.  Use `make -f MAINTFILE <target>'
+# 
+# These make targets are useful for building tags files for 
+# all of the source in this package.
+# 
+
+# Build a tag file of all source files.
+# 
+tags:
+	etags */*.[ch] */*/*.[ch] */*/*/*.[ch] */*/*.scm */*/*/*.scm \
+	--language=c */*/*.doc */*/*/*.doc
+
+# Build a tag file of all source files and makefiles.
+# 
+# There are no tags of interest in makefiles, but it is
+# useful to emacs users to have makefiles listed in TAGS.
+# That way, for example, the emacs command `tags-query-replace'
+# will search makefiles.
+# 
+bigtags:
+	etags */*.[ch] */*/*.[ch] */*/*/*.[ch] */*/*.scm */*/*/*.scm \
+	--language=c */*/*.doc */*/*/*.doc --language=none \
+	--regex="!no-matches!" */*/*.mk */*.in */*/*.in *.in

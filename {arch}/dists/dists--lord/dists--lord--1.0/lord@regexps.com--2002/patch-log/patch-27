@@ -1,0 +1,60 @@
+Revision: dists--lord--1.0--patch-27
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Sun Mar 10 04:34:26 PST 2002
+Standard-date: 2002-03-10 12:34:26 GMT
+Summary: merge with `devo'
+Keywords: 
+New-files: {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-20
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-21
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-22
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-23
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-24
+  {arch}/dists/dists--devo/dists--devo--1.0/lord@regexps.com--2002/patch-log/patch-25
+  {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-27
+  docs.d/arch/html/.arch-ids/sync.html.id
+  docs.d/arch/texi/.arch-ids/sync.texi.id
+  configs/regexps.com/arch-1.1 configs/local/arch-1.1
+  docs.d/arch/html/sync.html docs.d/arch/texi/sync.texi
+Removed-files: docs.d/arch/html/.arch-ids/sync.html.id
+  docs.d/arch/texi/.arch-ids/sync.texi.id
+  docs.d/arch/html/sync.html docs.d/arch/texi/sync.texi
+Modified-files: =RELEASE-ID.d/=RELEASE-ID.arch
+  =RELEASE-ID.d/=RELEASE-ID.ftp-utils
+  =RELEASE-ID.d/=RELEASE-ID.hackerlab ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  configs/local/devo.arch configs/regexps.com/devo
+  configs/regexps.com/devo.arch
+  configs/regexps.com/release-template.arch
+  docs.d/arch/html/indexes.html
+  docs.d/arch/html/inventory.html docs.d/arch/ps/arch.ps
+  docs.d/arch/texi/inventory.texi
+  docs.d/hackerlab/ps/libhackerlab.ps
+New-patches: lord@regexps.com--2002/dists--devo--1.0--patch-20
+  lord@regexps.com--2002/dists--devo--1.0--patch-21
+  lord@regexps.com--2002/dists--devo--1.0--patch-22
+  lord@regexps.com--2002/dists--devo--1.0--patch-23
+  lord@regexps.com--2002/dists--devo--1.0--patch-24
+  lord@regexps.com--2002/dists--devo--1.0--patch-25
+  lord@regexps.com--2002/dists--lord--1.0--patch-27
+
+Patches applied:
+
+  * lord@regexps.com--2002/dists--devo--1.0--patch-25
+     updated arch docs
+
+  * lord@regexps.com--2002/dists--devo--1.0--patch-24
+     updated release IDS
+
+  * lord@regexps.com--2002/dists--devo--1.0--patch-23
+     merge with `lord' and update docs
+
+  * lord@regexps.com--2002/dists--devo--1.0--patch-22
+     updated configs
+
+  * lord@regexps.com--2002/dists--devo--1.0--patch-21
+     updated hackerlab and arch manuals
+
+  * lord@regexps.com--2002/dists--devo--1.0--patch-20
+     merge from `lord'
+

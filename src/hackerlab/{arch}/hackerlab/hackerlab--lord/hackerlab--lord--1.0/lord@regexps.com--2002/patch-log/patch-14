@@ -1,0 +1,18 @@
+Revision: hackerlab--lord--1.0--patch-14
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Wed Feb  6 18:32:11 PST 2002
+Standard-date: 2002-02-06
+Summary: fixed an endian-bug in uni/coding-inlines.c
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--2002/patch-log/patch-7
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-14
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  uni/coding-inlines.c
+New-patches: lord@regexps.com--2002/hackerlab--devo--1.0--patch-7
+  lord@regexps.com--2002/hackerlab--lord--1.0--patch-14
+
+`uni/coding-inlines.c' was testing a macro of the wrong name to 
+find out whether or not the machine is big-endian.
+

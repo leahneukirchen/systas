@@ -1,0 +1,405 @@
+@need 3200
+
+@node Asynchronous Events
+@chapter Asynchronous Events
+
+A process may be called upon to respond to events which occur
+asynchronously with respect to all other activities of the process.
+Unix signals are an example: a signal may be delivered to a process
+at any time.
+
+
+Systas Scheme is made of up several subsystems such as the
+interpreter, the built-in functions, and the garbage collector that
+can not interrupt one another arbitrarily.  For example, during
+portions of garbage collection, primitive functions can not be
+called.  During some portions of the built-ins, neither the garbage
+collector or the evaluator can be called.  These restrictions raise
+the question of just how asynchronous events are handled.  If an
+asynchronous event arrives while a built-in function is busy, then
+it is not safe to call the interpreter to handle the asynchronous
+event.  Scheme programs may define additional conditions, such as
+when making updates to a complex data structure, during which
+asynchronous event handling should be deferred.
+
+
+A data-type called an @geindex async object
+@dfn{async object} helps to reconcile this
+situation.  An async object represents a particular kind of
+asynchronous event.  Every async object corresponds to a procedure,
+the @geindex async handler
+@dfn{async handler}, that will be called whenever that asynchronous
+event has occured.  When the event occurs, the async object is
+specially marked.  The mark instructs the system to call the async
+later, when it is safe.  In other words, async objects provide
+programmers with a way to schedule a call to a handler procedure
+without necessarily making that call immediately.
+
+
+Calls to async handlers are never nested.  While one is running, no
+other handler will be called.  If an async is already marked,
+marking it again has no further effect.
+
+
+There are two flavors of async objects, @geindex system asyncs
+@dfn{system asyncs} and @geindex user
+asyncs
+@dfn{user
+asyncs}.  Handlers for system asyncs are called by the interpreter
+as soon as it is safe to do so and take precedence over ordinary
+evaluation Handlers for user asyncs are called only when explicitly
+requested by a running program.
+
+
+To prevent all system asyncs from running, use the procedure
+@code{mask-interrupts}.  To permit system asyncs to run after masking
+them, use @code{unmask-interrupts}.
+
+@menu
+* Signal Handlers::
+* Rationale -- Asynchronous Events::
+@end menu
+
+@need 3200
+
+@node Signal Handlers
+@section Signal Handlers
+
+There is a system async for every kind of unix signal known to the
+interpreter.  When a signal arrives, the corresponding async is
+marked.
+
+
+By default, the async functions for signals throw an exception of
+type @code{signal}: For example:
+
+@example
+@group
+     (throw 'signal 'SIGINT) // This happens when SIGINT arrives
+@end group
+@group
+@end group
+@end example
+
+You can override the default behavior by defining a function named
+after the signal (with a lowercase name).  For example:
+
+@example
+@group
+     (define (sigint) (display "sigint happens\n"))
+@end group
+@group
+@end group
+@end example
+
+There are two @geindex pseudo-signals
+@dfn{pseudo-signals} -- these work like unix signals but
+are generated internally and do not correspond to any actual unix
+signals.  These are:
+
+@example
+@group
+     SIGGC           ;; Signalled when garbage collection finishes
+     SIGTICK         ;; Signalled when the tick counter expires.
+@end group
+@group
+@end group
+@end example
+
+The @geindex tick counter
+@dfn{tick counter} is a count-down timer that is decremented
+@geindex frequently
+@dfn{frequently} by the interpreter.  To set the tick counter, use the
+function @code{set-tick-rate}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{async}@fuindex async
+@*
+@example
+@group
+(async thunk)
+@end group
+@group
+@end group
+@end example
+
+Construct a new async object that calls @code{thunk} when executed.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{system-async}@fuindex system-async
+@*
+@example
+@group
+(system-async thunk)
+@end group
+@group
+@end group
+@end example
+
+Construct a new system async that calls @code{thunk} when ready to be
+executed.  System asyncs are automatically invoked as soon after
+being marked as possible, if they are marked using
+@code{system-async-mark}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{async-mark}@fuindex async-mark
+@*
+@example
+@group
+(async-mark async)
+@end group
+@group
+@end group
+@end example
+
+Mark @code{async} ready for execution.  
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{system-async-mark}@fuindex system-async-mark
+@*
+@example
+@group
+(system-async-mark async)
+@end group
+@group
+@end group
+@end example
+
+Mark an @code{async} ready for execution and execute all pending system
+asyncs as quickly as possible.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{set-tick-rate}@fuindex set-tick-rate
+@*
+@example
+@group
+(set-tick-rate n)
+@end group
+@group
+@end group
+@end example
+
+The @code{tick} timer is decremented frequently during the evaluation of
+expressions.  When it reaches @code{0}, a @geindex tick signal
+@dfn{tick signal} is generated which
+causes the procedure bound to @geindex TICK_SIGNAL
+@dfn{TICK_SIGNAL} to be invoked.
+
+
+This procedure sets the tick timer to @code{n} -- @code{n} ticks must occur
+before a tick signal is generated.  If @code{n} is @code{0}, no tick signals
+are generated.
+
+
+The previous value of the tick timer is returned.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{run-asyncs}@fuindex run-asyncs
+@*
+@example
+@group
+(run-asyncs list-of-asyncs)
+@end group
+@group
+@end group
+@end example
+
+Execute the thunks associated with any marked asyncs in
+@code{list-of-asyncs}.  Clear the marks of those asyncs.  If interrupts
+are currently masked, return without doing anything.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{mask-interrupts}@fuindex mask-interrupts
+@*
+@example
+@group
+(mask-interrupts)
+@end group
+@group
+@end group
+@end example
+
+Block the execution of asyncs by incrementing the interrupt mask
+counter.  See @code{unmask-interrupts}.
+
+
+Return the old value of the interrupt mask counter (an integer).
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{unmask-interrupts}@fuindex unmask-interrupts
+@*
+@example
+@group
+(unmask-interrupts)
+@end group
+@group
+@end group
+@end example
+
+Decrement the interrupt mask variable if it is greater than @code{0}.
+When the interrupt mask variable is @code{0}, interrupts are permitted.
+
+
+Return the old value of the interrupt mask counter (an integer).
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{without-interrupts}@fuindex without-interrupts
+@*
+@example
+@group
+(without-interrupts thunk)
+@end group
+@group
+@end group
+@end example
+
+Simply:
+
+@example
+@group
+ (dynamic-wind mask-interrupts
+               thunk
+               unmask-interrupts))
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{with-interrupts}@fuindex with-interrupts
+@*
+@example
+@group
+(with-interrupts thunk)
+@end group
+@group
+@end group
+@end example
+
+Conceptually, this is approximately:
+
+@example
+@group
+ (dynamic-wind unmask-interrupts
+               thunk
+               mask-interrupts))
+@end group
+@group
+@end group
+@end example
+
+@noindent
+but in fact, things are not that simple:
+
+@example
+@group
+      ;; We can't write:
+      ;;
+      ;;     (dynamic-wind unmask-interrupts thunk mask-interrupts)
+      ;;
+      ;; because `unmask-interrupts' can be exited by a exception 
+@end group
+@group
+      ;; thrown from an interrupt handler.  That would cause
+      ;; `with-interrupts' to exit with interrupts unmasked.
+      ;; 
+      (dynamic-wind (lambda () #f)
+@end group
+@group
+                    (lambda ()
+                      (dynamic-wind unmask-interrupts
+                                    thunk
+                                    (lambda () #f)))
+                    mask-interrupts)
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{interrupts-masked?}@fuindex interrupts-masked?
+@*
+@example
+@group
+(interrupts-masked?)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if interrupts are currently blocked, @code{#f} otherwise.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{ignore-signals}@fuindex ignore-signals
+@*
+@example
+@group
+(ignore-signals)
+@end group
+@group
+@end group
+@end example
+
+Restore the default handlers for all unix signals handled by the
+Scheme.
+
+
+This is intended for use after @code{fork()} and before @code{exec()}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{unignore-signals}@fuindex unignore-signals
+@*
+@example
+@group
+(unignore-signals)
+@end group
+@group
+@end group
+@end example
+
+Restore the Scheme handlers for unix signals.
+
+
+This undoes the effect of @code{ignore-signals}.
+
+
+
+
+@need 3200
+
+@node Rationale -- Asynchronous Events
+@section Rationale -- Asynchronous Events
+
+Systas need asyncs for Posix signals, but their is a natural abstraction
+to Posix signals, which I hope I've captured with this interface.
+
+
+
+
+
+
+

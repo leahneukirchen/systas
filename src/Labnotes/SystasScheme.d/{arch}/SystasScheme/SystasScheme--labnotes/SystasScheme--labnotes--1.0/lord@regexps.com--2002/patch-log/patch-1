@@ -1,0 +1,15 @@
+Revision: SystasScheme--labnotes--1.0--patch-1
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri May 17 13:51:15 PDT 2002
+Standard-date: 2002-05-17 20:51:15 GMT
+Summary: Fixed a gnu.org link
+Keywords: 
+New-files: {arch}/SystasScheme/SystasScheme--labnotes/SystasScheme--labnotes--1.0/lord@regexps.com--2002/patch-log/patch-1
+Modified-files: IntroTopic
+New-patches: lord@regexps.com--2002/SystasScheme--labnotes--1.0--patch-1
+
+
+It's "www.gnu.org/software/package" not
+"www.gnu.org/software/package.html".
+

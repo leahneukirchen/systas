@@ -1,0 +1,43 @@
+/* tag: Tom Lord Tue Dec  4 14:57:25 2001 (syntax.doc)
+ */
+/* syntax.doc -
+ *
+ ****************************************************************
+ * Copyright (C) 2001 Thomas Lord
+ * 
+ * See the file "COPYING" for further information about
+ * the copyright and warranty status of this work.
+ */
+
+
+/************************************************************************
+ *(h0 "Syntax Rules")
+ * 
+ * Systas provides the standard procedures and syntax:
+ * 
+ */
+
+/*(c syntax-rules)
+ * (syntax-rules)
+ * 
+ * Not documented yet (but standard).
+ */
+
+/*(c define-syntax)
+ * (define-syntax)
+ * 
+ * Not documented yet (but standard).
+ */
+
+/*(c let-syntax)
+ * (let-syntax)
+ * 
+ * Not documented yet (but standard).
+ */
+
+/*(c letrec-syntax)
+ * (letrec-syntax)
+ * 
+ * Not documented yet (but standard).
+ */
+

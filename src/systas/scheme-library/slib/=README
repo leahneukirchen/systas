@@ -1,0 +1,12 @@
+
+Slib is one of those big messes with a bunch of gems mixed in.
+
+If you need something from slib, why not write a nice clean Systas
+Scheme module containing a "100% solution"?
+
+Until then, the module `(slib Systas)' defines slib's "require".
+All slib files are loaded into that module, and all of their 
+definitions are public from that module.
+
+;;; tag: Tom Lord Wed May  1 16:26:05 2002 (slib/=README)
+;;;

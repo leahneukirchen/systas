@@ -1,0 +1,20 @@
+Revision: systas--devo--1.0--patch-4
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Jan 24 02:10:57 PST 2002
+Standard-date: 2002-01-24
+Summary: merge from `lord'
+Keywords: 
+New-files: {arch}/systas/systas--devo/systas--devo--1.0/lord@regexps.com--2002/patch-log/patch-4
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-7
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regepx.com--2002/ChangeLog.lord--1.0
+  libsystas/identifier-index.c
+New-patches: lord@regexps.com--2002/systas--devo--1.0--patch-4
+  lord@regexps.com--2002/systas--lord--1.0--patch-7
+
+Patches applied:
+
+  * lord@regexps.com--2002/systas--lord--1.0--patch-7
+     Tagged `identifier-index.c'.
+

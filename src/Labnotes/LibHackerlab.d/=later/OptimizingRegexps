@@ -1,0 +1,76 @@
+%%% tag: Tom Lord Thu May 16 02:59:05 2002 (=later/OptimizingRegexps)
+%%%
+
+
+
+;;; (foo)
+dfa cache stats:
+   threshold 3145728; failure_pt 0
+   in_use 2420392; high_water_mark 2420392
+   hits 40; misses 121; total_hits 155; total_misses 522
+nfa cache stats:
+   threshold 2097152; failure_pt 0
+   in_use 1710330; high_water_mark 1713558
+   hits 100077; misses 71; saves 46887
+memory retained by dfa cache: 0 bytes
+memory retained by nfa cache: 626194 bytes
+        3.03 real         2.44 user         0.10 sys
+
+;;; (foo)
+dfa cache stats:
+   threshold 3145728; failure_pt 0
+   in_use 2420392; high_water_mark 2420392
+   hits 40; misses 121; total_hits 155; total_misses 522
+nfa cache stats:
+   threshold 2097152; failure_pt 0
+   in_use 1710330; high_water_mark 1713558
+   hits 100077; misses 71; saves 46887
+memory retained by dfa cache: 0 bytes
+memory retained by nfa cache: 626194 bytes
+        5.39 real         2.40 user         0.17 sys
+
+
+
+(gdb) br in match_regexp_h
+(gdb) comm 1
+> c
+> end
+(gdb) br in scm_reg...
+
+in basic.scm, pk
+
+(gdb) 
+Continuing.
+
+Breakpoint 4, scm_low_level_regexec (rgx=138046616, str=137694488, match_pick=138045904, efl=13172)
+    at /home/lord/wd/arch/src/systas/libsystas/rgx.c:336
+(gdb) 
+(gdb) 
+Continuing.
+
+Breakpoint 1, rx_next_solution_internal (solns=0x81e4a0c, err_escape=0xefbfc170, depth=0)
+    at /home/lord/wd/arch/src/hackerlab/rx-posix/match-regexp.c:994
+
+Breakpoint 1, rx_next_solution_internal (solns=0x81e450c, err_escape=0xefbfc170, depth=1)
+    at /home/lord/wd/arch/src/hackerlab/rx-posix/match-regexp.c:994
+
+Breakpoint 1, rx_next_solution_internal (solns=0x81e480c, err_escape=0xefbfc170, depth=1)
+    at /home/lord/wd/arch/src/hackerlab/rx-posix/match-regexp.c:994
+
+Breakpoint 1, rx_next_solution_internal (solns=0x81e4b0c, err_escape=0xefbfc170, depth=2)
+    at /home/lord/wd/arch/src/hackerlab/rx-posix/match-regexp.c:994
+
+Breakpoint 1, rx_next_solution_internal (solns=0x83c930c, err_escape=0xefbfc170, depth=3)
+    at /home/lord/wd/arch/src/hackerlab/rx-posix/match-regexp.c:994
+
+Breakpoint 4, scm_low_level_regexec (rgx=137889544, str=137695400, match_pick=137888992, efl=13172)
+    at /home/lord/wd/arch/src/systas/libsystas/rgx.c:336
+
+;;; (str "  ::goto::\n")
+
+;;; (re-res 0 "::goto::")
+
+;;; (re #<rgx [[:(^[[:([[:([[:([[:([[:blank:]]):]]*):]][[:([[:(
+):]]\|[[:([[:([[:():]]$):]]):]]):]]):]]*):]]):]]>)
+
+;;; (str "\n\n       v??? view-topic\n         ?<.. wiki-topic :  ..>\n         ?<[[ go : go ]]>\n\t ?<XX wiki-workbook : $$$WorkbookName XX>\n       ^???\n\n  ::controls::\n\n    |       <<edit>> / <<plain text>> |\n    |\t    \t\t <<login/out>>|\n\t\t\t+++\n\t\t\theaders: no\n\t\t\tborder: 0\n\t\t\tcell-spacing: 0\n\t\t\tcell-padding: 0\n\n^====\n\n%%% tag: Tom Lord Wed May  1 23:19:43 2002 (LabNotesSystem.d/PageHeader)\n%%%\n")

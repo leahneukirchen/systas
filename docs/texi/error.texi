@@ -1,0 +1,85 @@
+@need 3200
+
+@node Conventions for Errors
+@chapter Conventions for Errors
+
+Errors in built-ins usually generate exceptions of type
+@code{parameter-error}.   Exceptions are thrown:
+
+@example
+@group
+     (throw 'parameter-error msg-string procedure-name . data)
+@end group
+@group
+@end group
+@end example
+
+Usually the CAR of @code{data} is the errant parameter or a substructure
+of the errant parameter, but @code{data} may be @code{()}.
+
+
+Errors in @code{eval} generate exceptions of the type @code{eval-error}:
+
+@example
+@group
+     (throw 'eval-error procedure-or-procedure-name
+@end group
+@group
+@end group
+@end example
+
+Unhandled signals generate an exception of type @code{signal}:
+
+@example
+@group
+     (throw 'signal signal-name)
+@end group
+@group
+@end group
+@end example
+
+A stack depth exceeded condition generates an exception of 
+type @code{stack-depth}:
+
+@example
+@group
+     (throw 'stack-depth)
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{fatal}@fuindex fatal
+@*
+@example
+@group
+(fatal . args)
+@end group
+@group
+@end group
+@end example
+
+Display on the current error port an error message containing 
+the arguments and exit the process with status @code{1}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{error}@fuindex error
+@*
+@example
+@group
+(error . args)
+@end group
+@group
+@end group
+@end example
+
+Signal a generic error (exception type @code{error}), passing @code{args} to 
+the error handler. (Does not return.)
+
+
+
+

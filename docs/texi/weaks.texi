@@ -1,0 +1,314 @@
+@need 3200
+
+@node Weak Vectors and Weak Hash Tables
+@chapter Weak Vectors and Weak Hash Tables
+
+Normally, if object A references object B, then object B is
+guaranteed to exist for as long as A does.  @geindex Weak references
+@dfn{Weak references} are
+the exception to that rule.
+
+
+An object A may weakly reference an object B, in which case B might
+cease to exist before A does.  If that happens, A's reference to B
+is removed.  The rule is that when all the references to an object
+are weak references, the system is free (but not obligated) to
+destroy the object and remove the references at any time.  If any
+reference to an object is not a weak reference (including the
+implicit reference of using the object as an anonymous intermediate
+value of a complex expression), then the object is protected and
+all references to the object, including weak references, will
+continue to exist.
+
+
+There are several types in Systas that hold weak references to
+other objects.  These types are all vector-like objects - @code{vector?}
+returns true if passed one of these objects.
+
+
+A @geindex weak-vector
+@dfn{weak-vector} is like a vector, except that the elements of the
+vector are weakly referenced.  When a reference is removed from a
+weak vector, that element is replaced by @code{()}.
+
+
+A @geindex weak-key-hash-table
+@dfn{weak-key-hash-table} is like a vector, except that if any elements
+of the vector are assoc lists, then the @emph{keys} (cars of key-value
+cells) of those lists are weakly referenced.  When a key is removed
+from such an assoc list because the object it refers to has been
+destroyed, the key-value cell for that key is deleted from the
+assoc list.
+
+
+A @geindex weak-value-hash-table
+@dfn{weak-value-hash-table} is like a vector, except that if any
+elements of the vector are assoc lists, then the @emph{values} (cdrs of
+key-value cells) of those lists are weakly referenced.  When a value is
+removed from such an assoc list because the object it refers to has
+been destroyed, the key-value cell for that value is deleted
+from the assoc list.
+
+
+A @geindex doubly-weak-hash-table
+@dfn{doubly-weak-hash-table} is like a vector, except that if any
+elements of the vector are assoc lists, then both the @emph{keys} and
+@emph{values} (cars and cdrs of key-value cells) of those lists are
+weakly referenced.  When a key or value is removed from such an assoc
+list because the object it refers to has been destroyed, the 
+key-value cell for that value is deleted from the assoc list.
+
+
+The printed representations of these objects are:
+
+@example
+@group
+     #w( elts... )           ; a weak hash table.
+     #wv( elts... )          ; a weak value hash table.
+     #wk( elts... )          ; a weak key hash table.
+     #wkv( elts... )         ; a doubly weak hash table.
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{weak-vector?}@fuindex weak-vector?
+@*
+@example
+@group
+(weak-vector? obj)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is a weak vector, @code{#f} otherwise.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{weak-key-hash-table?}@fuindex weak-key-hash-table?
+@*
+@example
+@group
+(weak-key-hash-table? obj)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is a weak key hash table, @code{#f} otherwise.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{weak-value-hash-table?}@fuindex weak-value-hash-table?
+@*
+@example
+@group
+(weak-value-hash-table? obj)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is a weak value hash table, @code{#f} otherwise.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{doubly-weak-hash-table?}@fuindex doubly-weak-hash-table?
+@*
+@example
+@group
+(doubly-weak-hash-table? obj)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is a doubly weak hash table, @code{#f} otherwise.
+
+@need 3200
+
+@section Constructing Weak Vectors
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{make-weak-vector}@fuindex make-weak-vector
+@*
+@example
+@group
+(make-weak-vector n :optional fill multiple?)
+@end group
+@group
+@end group
+@end example
+
+Create a new weak vector of @code{n} elements, initialized to @code{fill} or
+@code{()} if @code{fill} is not specified.
+
+
+If @code{multiple?} is supplied and not @code{#f}, then @code{fill} is interpreted
+as a list of initializers.  If there are too few elements in that
+list, the remaining elements are initialized to @code{()}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{weak-vector}@fuindex weak-vector
+@*
+@example
+@group
+(weak-vector . elts)
+@end group
+@group
+@end group
+@end example
+
+Construct a new weak vector containing @code{elts}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{list->weak-vector}@fuindex list->weak-vector
+@*
+@example
+@group
+(list->weak-vector elts)
+@end group
+@group
+@end group
+@end example
+
+Construct a new weak vector containing the members of the list
+@code{elts}.
+
+
+
+
+@need 3200
+
+@section Constructing Weak Hash Tables
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{make-weak-key-hash-table}@fuindex make-weak-key-hash-table
+@*
+@example
+@group
+(make-weak-key-hash-table n)
+@end group
+@group
+@end group
+@end example
+
+Create a weak key hash table with @code{n} buckets.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{make-weak-value-hash-table}@fuindex make-weak-value-hash-table
+@*
+@example
+@group
+(make-weak-value-hash-table n)
+@end group
+@group
+@end group
+@end example
+
+Create a weak value hash table with @code{n} buckets.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{make-doubly-weak-hash-table}@fuindex make-doubly-weak-hash-table
+@*
+@example
+@group
+(make-doubly-weak-hash-table n)
+@end group
+@group
+@end group
+@end example
+
+Create a doubly weak hash table with @code{n} buckets.
+
+
+
+
+@need 3200
+
+@section Rationale -- Weak References
+
+Weak references were included to support a style of programming
+with memoization that is not possible without them.
+
+
+Memoization, weak-references, and garbage collection interact
+nicely: a function can be memoized in a weak hash table without
+leaking storage.  The memo retains only live values.  If only a few
+values would otherwise live, programmers can augment a weak hash
+table with a bounded-size queue of recently memoized values to
+extend the lifetime of a limited number of memoized values.
+
+
+Without weak refrences, or something equivalent, a memo must either
+grow without bound, or fail to promise @code{eq?} results for @code{eq?}
+arguments.  Consider whether it is possible to implement the
+following without weak references of some kind and without leaking
+storage:
+
+@example
+@group
+             (define memo (make-doubly-weak-hash-table 509))
+@end group
+@group
+@end group
+@end example
+@example
+@group
+             ;; This version of cons always returns 
+             ;; an eq? pair for eq? objects except that
+             ;; the pairs it creates may be garbage
+             ;; collected if they are not otherwise 
+             ;; referenced.
+@end group
+@group
+             ;;
+             (define (cached-cons a b)
+                (let ((prototype (cons a b)))
+                   (or (hash-ref memo prototype)
+                       (hash-set! memo prototype))))
+@end group
+@group
+@end group
+@end example
+
+Other systems provide @geindex weak pointers
+@dfn{weak pointers} which is conceptually a more
+general facility (though there is no actual difference in
+capability).
+
+
+Weak vectors and hash tables were provided in Systas to @geindex optimize
+the common case
+@dfn{optimize
+the common case} (our most favored uses for weak references) and
+because they happened to be easy to implement.  Had we implemented
+weak pointers and tried to build hash tables from those, the result
+would probably have been much less efficient and less convenient.
+
+
+Weak pointers may be provided later, if a need for them is
+demonstrated.
+
+
+
+
+
+
+

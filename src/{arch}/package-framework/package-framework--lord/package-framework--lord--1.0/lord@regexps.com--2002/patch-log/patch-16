@@ -1,0 +1,19 @@
+Revision: package-framework--lord--1.0--patch-16
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Wed Feb  6 15:52:33 PST 2002
+Standard-date: 2002-02-06
+Summary: don't use -e in the configure scripts
+Keywords: 
+New-files: {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-16
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  build-tools/scripts/configure-dirs
+  build-tools/scripts/configure-generic
+  build-tools/scripts/configure-top
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-16
+
+Use `-r' rather than `-e' in the configure scripts since it makes
+them slightly more portable.  (A later fix should provide a mechanism
+to evade the hardwired "#!/bin/sh" in those scripts.)
+

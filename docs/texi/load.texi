@@ -1,0 +1,224 @@
+@need 3200
+
+@node Evaluating Expressions in Files
+@chapter Evaluating Expressions in Files
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{load}@fuindex load
+@*
+@example
+@group
+(load filename)
+@end group
+@group
+@end group
+@end example
+
+Try to load a file by searching the @code{load-path}.  Both @code{filename} and
+@code{filename} with the various @code{scheme-file-suffixes} appended are
+tried.
+
+
+If the file can not be found, an error is signalled.
+
+
+@code{load-verbosely} controls the printed output
+of this procedure.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{load-with-path}@fuindex load-with-path
+@*
+@example
+@group
+(load-with-path filename path)
+@end group
+@group
+@end group
+@end example
+
+Like @code{load}, but searches the specified path instead of the
+default path.  @code{path} is a list of directory names.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Variable} @code{load-verbosely}@vaindex load-verbosely
+@*
+@example
+@group
+load-verbosely
+@end group
+@group
+@end group
+@end example
+
+If not @code{#f}, then print informative messages on the
+current output port while loading files.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Variable} @code{load-path}@vaindex load-path
+@*
+@example
+@group
+(load-path)
+@end group
+@group
+@end group
+@end example
+
+A list of directories to search for scheme source code.
+
+
+The list consists of elements from the environment variable
+@geindex SCHEME_LOAD_PATH
+@dfn{SCHEME_LOAD_PATH} (or '(@geindex ./
+@dfn{./} @geindex /
+@dfn{/}) if that environment is not
+defined) followed by the built-in load path.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Variable} @code{scheme-suffixes}@vaindex scheme-suffixes
+@*
+@example
+@group
+(scheme-suffixes)
+@end group
+@group
+@end group
+@end example
+
+A list of filename extensions that designate Scheme
+source code.  Default value:
+
+@example
+@group
+      '(".scm" ".ss"))
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{parse-path}@fuindex parse-path
+@*
+@example
+@group
+(parse-path path-string)
+@end group
+@group
+@end group
+@end example
+
+Convert a string of the form:
+
+@example
+@group
+             "elt1:elt2:elt3..."
+@end group
+@group
+@end group
+@end example
+
+@noindent
+to a list of the form:
+
+@example
+@group
+             ("elt1" "elt2" "elt3" ...)
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{try-load}@fuindex try-load
+@*
+@example
+@group
+(try-load filename)
+@end group
+@group
+@end group
+@end example
+
+Try to load the named file from the list of directories
+bound to @code{load-path}.   If @code{load-path} is not defined,
+try to load the named file from the current directory or,
+if @code{filename} is absolute, from the root.
+
+
+Return @code{#f} if the file could not be found.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{try-load-with-path}@fuindex try-load-with-path
+@*
+@example
+@group
+(try-load-with-path filename path)
+@end group
+@group
+@end group
+@end example
+
+Try to load the named file from the indicated list of
+directories.   
+
+
+Return @code{#f} if the file could not be found.
+
+@need 3200
+
+@section Low Level File Loading
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{low-level-try-load}@fuindex low-level-try-load
+@*
+@example
+@group
+(load-level-try-load filename 
+                     [:optional ignore-case?
+                                sharp-reader])
+@end group
+@group
+@end group
+@end example
+
+Attempt to open @code{filename}, read expressions from that file, and evaluate
+those expressions.
+
+
+@code{ignore-case?} means to convert all symbol names to lower case as they 
+are read.
+
+
+@code{sharp-reader}, if provided and not @code{#f}, is a procedure to call to read
+expressions that begin @code{#} where the @code{#} is not followed a recognized 
+character.  (See @code{read}).
+
+
+If the file can not be opened this procedure silently returns @code{#f}.
+
+
+If any other error occurs, an exception is generated.
+
+
+If this procedure succeeds, @code{#t} is returned.
+
+
+
+
+
+
+

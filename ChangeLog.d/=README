@@ -1,0 +1,16 @@
+
+
+These ChangeLogs are for the top level configuration management
+directory only.  The ChangeLogs for particular packages are in
+their respective subdirectories.  For example, the `arch' 
+ChangeLogs are:
+
+
+	src/arch/ChangeLog	# master ChangeLog
+
+	src/arc/ChangeLog.d/	# branch ChangeLogs
+
+
+
+# tag: Tom Lord Mon Jan  7 16:11:16 2002 (ChangeLog.d/=README)
+#

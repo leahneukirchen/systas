@@ -1,0 +1,82 @@
+<html>
+<head>
+<title>Promises</title>
+</head>
+<body>
+
+<a name="Promises"></a>
+
+
+
+<h2 align=center>Promises</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="async.html#Asynchronous_Events">Asynchronous Events</a></br>
+
+<b>prev: </b><a href="records.html#Simple_Record_Types">Simple Record Types</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p>A <em>
+<a name="index-pt:0"></a>
+
+promise
+</em>
+ represents a lazily-computed value that is cached once
+it has been computed.
+</p><p><b><u>Function</u> <code><a name="promise?"></a><a name="index-pt:1"></a>
+promise?
+</code></b><br>
+<pre>
+promise? obj
+
+</pre>
+<p>Return <code>#t</code>
+ if <code>obj</code>
+ is a promise, <code>#f</code>
+ otherwise.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="make-promise"></a><a name="index-pt:2"></a>
+make-promise
+</code></b><br>
+<pre>
+(make-promise thunk)
+
+</pre>
+<p>Return a new promise whose forced value is computed by <code>(thunk)</code>
+.
+See also <em>xref</em>:<em>
+<a name="index-pt:3"></a>
+
+delay
+</em>
+.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

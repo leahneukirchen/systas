@@ -1,0 +1,715 @@
+@need 3200
+
+@node Cons Pairs
+@chapter Cons Pairs
+
+A @geindex cons pair
+@dfn{cons pair} is storage for two Scheme values called the @geindex car
+@dfn{car} and
+@geindex cdr
+@dfn{cdr} of the pair.  Cons pairs are written this way:
+
+@example
+@group
+     (a . b)
+@end group
+@group
+@end group
+@end example
+
+@noindent
+where @code{a} is stored in the car of the pair, and @code{b} is stored in the
+the cdr.
+
+
+As a special cases, if @code{b} is nil, the pair is normally written:
+
+@example
+@group
+     (a)
+@end group
+@group
+@end group
+@end example
+
+@noindent
+and if b is itself a pair, instead of:
+
+@example
+@group
+     (a . (c . (d . (e))))
+@end group
+@group
+@end group
+@end example
+
+@noindent
+it is customary to write:
+
+@example
+@group
+     (a c d e)
+@end group
+@group
+@end group
+@end example
+
+The notations may be mixed, so:
+
+@example
+@group
+     (a . (b . c))
+@end group
+@group
+@end group
+@end example
+
+@noindent
+is normally written:
+
+@example
+@group
+     (a b . c)
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{pair?}@fuindex pair?
+@*
+@example
+@group
+(pair? obj)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is a cons pair, @code{#f} otherwise.
+
+@menu
+* Constructing Cons Pairs::
+* Modifying Cons Pairs::
+* CxR Procedures::
+* Rationale -- cons pairs::
+@end menu
+
+@need 3200
+
+@node Constructing Cons Pairs
+@section Constructing Cons Pairs
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{cons}@fuindex cons
+@*
+@example
+@group
+(cons a b)
+@end group
+@group
+@end group
+@end example
+
+Return a new cons pair with @code{a} in the car, and @code{b} in the cdr.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{cons*}@fuindex cons*
+@*
+@example
+@group
+(cons* elt1 elt2 ... eltn)
+@end group
+@group
+@end group
+@end example
+
+With on arguments, return @code{()}:
+
+@example
+@group
+     (cons*) => ()
+@end group
+@group
+@end group
+@end example
+
+With one argument, return that argument:
+
+@example
+@group
+     (cons* OBJ) => OBJ
+@end group
+@group
+@end group
+@end example
+
+With two or more arguments:
+
+@example
+@group
+     (cons* A B ... Z)
+     => (cons A (cons* B ... Z))
+@end group
+@group
+@end group
+@end example
+
+
+
+@need 3200
+
+@node Modifying Cons Pairs
+@section Modifying Cons Pairs
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{set-car!}@fuindex set-car!
+@*
+@example
+@group
+(set-car! obj value)
+@end group
+@group
+@end group
+@end example
+
+Set the car of cons-pair @code{obj} to @code{value}.
+
+
+Return @code{obj}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{set-cdr!}@fuindex set-cdr!
+@*
+@example
+@group
+(set-cdr! obj value)
+@end group
+@group
+@end group
+@end example
+
+Set the cdr of cons-pair @code{obj} to @code{value}.
+
+
+Return @code{obj}.
+
+
+
+
+@need 3200
+
+@node CxR Procedures
+@section CxR Procedures
+
+The procedures in this sectoin are all compositions of @code{car} and
+@code{cdr}.  The name of each of these functions is a description of
+what it does.  For example, @code{(cadr x)} is the same as
+
+@example
+@group
+     (car (cdr x))
+@end group
+@group
+@end group
+@end example
+
+In C, these procedures are provided as macros.  For example, @code{cadr}
+is the macro @code{SCM_CADR}.  The macros may be used as l-values, for
+example:
+
+@example
+@group
+     SCM_CAR (x) = value;
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{car}@fuindex car
+@*
+@example
+@group
+(car obj)
+@end group
+@group
+@end group
+@end example
+
+Return the car of cons-pair @code{obj}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{cdr}@fuindex cdr
+@*
+@example
+@group
+(cdr obj)
+@end group
+@group
+@end group
+@end example
+
+Return the cdr of cons-pair @code{obj}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{caar}@fuindex caar
+@*
+@example
+@group
+(caar obj)
+@end group
+@group
+@end group
+@end example
+
+Return the car of @code{(car obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{cadr}@fuindex cadr
+@*
+@example
+@group
+(cadr obj)
+@end group
+@group
+@end group
+@end example
+
+Return the car of @code{(cdr obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{cdar}@fuindex cdar
+@*
+@example
+@group
+(cdar obj)
+@end group
+@group
+@end group
+@end example
+
+Return the cdr of @code{(car obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{cddr}@fuindex cddr
+@*
+@example
+@group
+(cddr obj)
+@end group
+@group
+@end group
+@end example
+
+Return the cdr of @code{(cdr obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{caaar}@fuindex caaar
+@*
+@example
+@group
+(caaar obj)
+@end group
+@group
+@end group
+@end example
+
+Return the car of @code{(caar obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{caadr}@fuindex caadr
+@*
+@example
+@group
+(caadr obj)
+@end group
+@group
+@end group
+@end example
+
+Return the car of @code{(cadr obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{cadar}@fuindex cadar
+@*
+@example
+@group
+(cadar obj)
+@end group
+@group
+@end group
+@end example
+
+Return the car of @code{(cdar obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{caddr}@fuindex caddr
+@*
+@example
+@group
+(caddr obj)
+@end group
+@group
+@end group
+@end example
+
+Return the car of @code{(cddr obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{cdaar}@fuindex cdaar
+@*
+@example
+@group
+(cdaar obj)
+@end group
+@group
+@end group
+@end example
+
+Return the cdr of @code{(caar obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{cdadr}@fuindex cdadr
+@*
+@example
+@group
+(cdadr obj)
+@end group
+@group
+@end group
+@end example
+
+Return the cdr of @code{(cadr obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{cddar}@fuindex cddar
+@*
+@example
+@group
+(cddar obj)
+@end group
+@group
+@end group
+@end example
+
+Return the cdr of @code{(cdar obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{cdddr}@fuindex cdddr
+@*
+@example
+@group
+(cdddr obj)
+@end group
+@group
+@end group
+@end example
+
+Return the cdr of @code{(cddr obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{caaaar}@fuindex caaaar
+@*
+@example
+@group
+(caaaar obj)
+@end group
+@group
+@end group
+@end example
+
+Return the car of @code{(caaar obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{caaadr}@fuindex caaadr
+@*
+@example
+@group
+(caaadr obj)
+@end group
+@group
+@end group
+@end example
+
+Return the car of @code{(caadr obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{caadar}@fuindex caadar
+@*
+@example
+@group
+(caadar obj)
+@end group
+@group
+@end group
+@end example
+
+Return the car of @code{(cadar obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{caaddr}@fuindex caaddr
+@*
+@example
+@group
+(caaddr obj)
+@end group
+@group
+@end group
+@end example
+
+Return the car of @code{(caddr obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{cadaar}@fuindex cadaar
+@*
+@example
+@group
+(cadaar obj)
+@end group
+@group
+@end group
+@end example
+
+Return the car of @code{(cdaar obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{cadadr}@fuindex cadadr
+@*
+@example
+@group
+(cadadr obj)
+@end group
+@group
+@end group
+@end example
+
+Return the car of @code{(cdadr obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{caddar}@fuindex caddar
+@*
+@example
+@group
+(caddar obj)
+@end group
+@group
+@end group
+@end example
+
+Return the car of @code{(cddar obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{cadddr}@fuindex cadddr
+@*
+@example
+@group
+(cadddr obj)
+@end group
+@group
+@end group
+@end example
+
+Return the car of @code{(cdddr obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{cdaaar}@fuindex cdaaar
+@*
+@example
+@group
+(cdaaar obj)
+@end group
+@group
+@end group
+@end example
+
+Return the cdr of @code{(caaar obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{cdaadr}@fuindex cdaadr
+@*
+@example
+@group
+(cdaadr obj)
+@end group
+@group
+@end group
+@end example
+
+Return the cdr of @code{(caadr obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{cdadar}@fuindex cdadar
+@*
+@example
+@group
+(cdadar obj)
+@end group
+@group
+@end group
+@end example
+
+Return the cdr of @code{(cadar obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{cdaddr}@fuindex cdaddr
+@*
+@example
+@group
+(cdaddr obj)
+@end group
+@group
+@end group
+@end example
+
+Return the cdr of @code{(caddr obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{cddaar}@fuindex cddaar
+@*
+@example
+@group
+(cddaar obj)
+@end group
+@group
+@end group
+@end example
+
+Return the cdr of @code{(cdaar obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{cddadr}@fuindex cddadr
+@*
+@example
+@group
+(cddadr obj)
+@end group
+@group
+@end group
+@end example
+
+Return the cdr of @code{(cdadr obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{cdddar}@fuindex cdddar
+@*
+@example
+@group
+(cdddar obj)
+@end group
+@group
+@end group
+@end example
+
+Return the cdr of @code{(cddar obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{cddddr}@fuindex cddddr
+@*
+@example
+@group
+(cddddr obj)
+@end group
+@group
+@end group
+@end example
+
+Return the cdr of @code{(cdddr obj)}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{scm_cons2}@fuindex scm_cons2
+@*
+@example
+@group
+SCM scm_cons2 (SCM w, SCM x, SCM y);
+@end group
+@group
+@end group
+@end example
+
+Return @code{(cons w (cons x y))}.
+
+
+
+
+@need 3200
+
+@node Rationale -- cons pairs
+@section Rationale -- cons pairs
+
+Systas Scheme simply follows standard Scheme here.
+
+
+
+
+
+
+

@@ -1,0 +1,30 @@
+Revision: package-framework--devo--1.0--patch-4
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Fri Jan 18 01:51:41 PST 2002
+Standard-date: 2002-01-18
+Summary: merge from `lord'
+Keywords: 
+New-files: {arch}/package-framework/package-framework--devo/package-framework--devo--1.0/lord@regexps.com--2002/patch-log/patch-4
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-6
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-7
+  {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-8
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  build-tools/Makefiles/unit-tests.mk
+New-patches: lord@regexps.com--2002/package-framework--devo--1.0--patch-4
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-6
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-7
+  lord@regexps.com--2002/package-framework--lord--1.0--patch-8
+
+Patches applied:
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-8
+     bash bug work-around in `unit-tests.mk'
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-7
+     merge from `devo'
+
+  * lord@regexps.com--2002/package-framework--lord--1.0--patch-6
+     merge from devo
+

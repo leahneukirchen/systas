@@ -1,0 +1,44 @@
+Revision: hackerlab--devo--1.0--patch-2
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon Jan 14 15:21:24 PST 2002
+Standard-date: 2002-01-14
+Summary: merge from `lord'
+	 --version support
+	 boilerplate files
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--2002/patch-log/patch-2
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-3
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-4
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-5
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-6
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-7
+  COPYING =TODO =NEWS =README
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  cmd/opt.c sb/sb.c
+  {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/base-0
+New-patches: lord@regexps.com--2002/hackerlab--devo--1.0--patch-2
+  lord@regexps.com--2002/hackerlab--lord--1.0--patch-3
+  lord@regexps.com--2002/hackerlab--lord--1.0--patch-4
+  lord@regexps.com--2002/hackerlab--lord--1.0--patch-5
+  lord@regexps.com--2002/hackerlab--lord--1.0--patch-6
+  lord@regexps.com--2002/hackerlab--lord--1.0--patch-7
+
+Patches applied:
+
+  * lord@regexps.com--2002/hackerlab--lord--1.0--patch-7
+     corrected "Report bugs to" address
+
+  * lord@regexps.com--2002/hackerlab--lord--1.0--patch-6
+     fixed --version support
+
+  * lord@regexps.com--2002/hackerlab--lord--1.0--patch-5
+     fixed bug in version id printing
+
+  * lord@regexps.com--2002/hackerlab--lord--1.0--patch-4
+     =NEWS file updates
+
+  * lord@regexps.com--2002/hackerlab--lord--1.0--patch-3
+     added boilerplate files
+

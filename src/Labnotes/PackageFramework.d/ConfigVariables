@@ -1,0 +1,209 @@
+
+  
+!>			 Determining Configuration Variable Settings
+
+
+  Compilation is controlled, in part, by ``configuration variables''.
+
+  Each configuration variable has a name which starts with a letter
+  and consists of letters, numbers, and dashes.  Each variable has
+  a value which can either be an arbitrary string (for a _string
+  variable_) or a boolean value (`0' or `1', for a _binary variable_).
+
+  A typical example of a configuration variable might be `posix-shell'
+  which some packages use to stand for the name of the program on
+  a system that provides the closest approximation of the `sh' program
+  that is part of a standard POSIX environment.
+
+  When building a package, users start by running the `configure'
+  script.  That script determines what variables need to be set, and
+  what their values should be.  
+
+  There are four sources of configuration variables:
+
+  + standard variables		::: The configure script itself sets
+				    a few standard variables (such as
+				    `srcroot', the root directory of
+				    the source tree).
+
+  + command line options	::: Users can set some variables on
+				    the command line used to invoke
+				    the `configure' script.
+
+  + auto-computed variables	::: Some variable settings are
+				    "computed" at configuration time
+				    by scripts which directly examine
+				    the target environment.
+
+  + platform variables		::: Some variables are determined by
+				    a database of platform-specific
+				    variable settings.  This database
+				    is kept up-to-date by the
+				    `package-framework' maintainers.
+
+
+* Standard Variables
+
+  The standard config variables are:
+
+<<<
+	prefix		the root of the installation tree
+
+	srcroot		the root of the source tree
+
+	objroot		the root of the build tree
+
+	system		the canonical name of the target system
+
+	package		the name of the package being built
+
+	advertised-as	alternative names for the package being built
+
+>>>
+
+  The values of `srcroot' and `objroot' are determined automatically
+  by the `configure' script.  `srcroot' is the directory where the `configure'
+  script resides, `objroot' the directory where the `configure' script
+  is invoked.
+
+  The value of `prefix' defaults to `$objroot/=install' but can be 
+  overridden by a user with the `--prefix' option to `configure'.
+
+  Those three variables, `prefix' `srcroot', and `objroot' are
+  exported directly to makefiles (as `$(prefix)', etc.).  (Within a
+  subdirectory of the build directory, `thispath' is set to the 
+  path of the subdirectory (relative to `$(objroot)') and `srcdir' is
+  set to `$(srcroot)/$(thispath)'.
+
+  The system name may be specified on the command line (in which case
+  it is canonicalized by the *GNU* script `config.subs') or
+  `configure' can try to guess the system name (using the *GNU* script
+  `config.guess').
+
+
+* Command Line Options
+
+  You can specify a set of command line options for `configure' by
+  creating files called `PLUGIN/options' in your source
+  subdirectories.  
+
+  In that file, blank lines and lines whose first non-whitespace
+  character is a semicolon are ignored.  Long lines can be continued
+  with backslashes.  String variables can be specified with:
+
+<<<
+  	string	VARIABLE	DEFAULT
+		documentation for this
+		variable
+
+>>>
+
+  where the keyword `string' must start in column 0.  Binary variables
+  can be specified with:
+
+<<<
+  	binary	VARIABLE	DEFAULT
+		documentation for this
+		variable
+
+>>>
+  
+  where `binary' begins in column 0 and `default' can be any binary
+  value (`yes', `no', `0', `1', etc.).
+
+  Users can override the default values of those variables on the
+  `configure' command line.  For a string variable, any of these work:
+
+<<<
+	../configure --with VARIABLE=VALUE
+	../configure --with VARIABLE VALUE
+	../configure --with-VARIABLE=VALUE
+	../configure --with-VARIABLE VALUE
+>>>
+
+  For a binary variable any of these:
+
+<<<
+	../configure --with VARIABLE={yes,no,1,0,true,false,y,n}
+	../configure --with VARIABLE {yes,no,1,0,true,false,y,n}
+	../configure --with-VARIABLE={yes,no,1,0,true,false,y,n}
+	../configure --with-VARIABLE {yes,no,1,0,true,false,y,n}
+	../configure --yes VARIABLE
+	../configure --no VARIABLE
+>>>
+
+  The list of all available options (and their documentation) is 
+  given by:
+
+<<<
+	./configure --help-options
+>>>
+
+  Command line variables are exported to `Makefiles'.  The `make' name
+  is formed by replacing `-' with `_' and prefixing `cfg__' (so that,
+  for example, the option `posix-shell' becomes
+  `$(cfg__posix_shell)').
+
+  Command line variables are also exproted as *CPP* macros in
+  `$(buildroot)/config-include/config-options.h'.  The directory
+  `$(buildroot)' is added to the default search path for include
+  files for *C* programs.
+
+
+* auto-computed Variables
+
+  A file `PLUGIN/auto' can specify automatically computed variables.
+  This file has a similar syntax:
+
+<<<
+	DIRECTIVE	VARIABLE	PARAMS
+		documentation for this variable
+		....
+>>>
+
+  The set of valid directives for auto-computed variables, and the
+  documentation for the various directives, can be found in the
+  directory `src/build-tools/auto'.
+
+  A typical example is the directive `library-test', as in this
+  example:
+
+<<<
+	library-test	socket-library	-lsocket
+		If the socket library exists on this platform,
+		we want to link against it.
+>>>
+
+  When `configure' is run, it will invoke the script
+  `src/build-tools/auto/socket-library' which tries to compile a
+  program with `-lsocket'.  If that compilation succeeds, the
+  configuration variable `socket-library' is set to `-lsocket',
+  otherwise, it's set to the empty string.
+
+  Auto-computed variables are exported to `Makefiles' and *C* programs
+  in the same way as command-line variables
+  (e.g. `$(cfg__socket_library)').
+
+
+* Platform Variables
+
+  Some variables can't reasonably be specified by users or figured
+  out automatically at run-time.  The only choice is to build up a
+  database of "known-good" values for these variables.
+
+  The currently supported set of platform variables and the details of
+  the database that determines them are documented in
+  `src/build-tools/platforms'.
+
+  Roughly speaking, `configure' uses the `system' name (from
+  `config.guess' or `config.subs') to choose a platform-specific
+  configuration file in `src/build-tools/platforms/configs'.  That
+  file sets some of the standard platform variables.
+
+  As an example, the `unexec' package, a package that can produce
+  an executable from the image of a running process, relies on several
+  parameters that are recorded in platform-specific configuration
+  files.
+
+%%% tag: Tom Lord Thu May  9 12:46:18 2002 (PackageFramework.d/ConfigVariables)
+%%%

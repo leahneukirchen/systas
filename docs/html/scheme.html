@@ -1,0 +1,641 @@
+<html>
+<head>
+<title>Special Forms</title>
+</head>
+<body>
+
+<a name="Special_Forms"></a>
+
+
+
+<h2 align=center>Special Forms</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+<b>next: </b><a href="debug.html#Simple_Debugging_Aids">Simple Debugging Aids</a></br>
+
+<b>prev: </b><a href="syntax.html#Syntax_Rules">Syntax Rules</a></br>
+
+</small>
+<br>
+
+
+
+
+
+
+<p><b><u>Function</u> <code><a name="quote"></a><a name="index-pt:0"></a>
+quote
+</code></b><br>
+<pre>
+(quote expresion)
+
+</pre>
+<p>Return <code>expresion</code>
+, unevaluated, substituting variable names for
+first-class variables in <code>expression</code>
+.  Quote expressions can be
+written using the special syntax:
+</p><pre>
+     'expression
+
+</pre>
+<p>as in:
+</p><pre>
+     '(this list is not evaluated)
+
+</pre>
+<p>See also <code>strong-quote</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="strong-quote"></a><a name="index-pt:1"></a>
+strong-quote
+</code></b><br>
+<pre>
+(strong-quote expresion)
+
+</pre>
+<p>Return <code>expresion</code>
+ completely unevaluated.  <code>strong-quote</code>
+ expressions
+can be written using the special syntax:
+</p><pre>
+     #'expression
+
+</pre>
+<p>as in:
+</p><pre>
+     #'(this list is not evaluated)
+
+</pre>
+
+<br>
+<br><p><b><u>Function</u> <code><a name="begin"></a><a name="index-pt:2"></a>
+begin
+</code></b><br>
+<pre>
+(begin expression . expressions)
+
+</pre>
+<p>Evaluate the expressions in order, returning the value of
+the last expression.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="if"></a><a name="index-pt:3"></a>
+if
+</code></b><br>
+<pre>
+(if condition then-expression else-expression)
+
+</pre>
+<p>Evaluate <code>condition</code>
+.  If it returns a true value, evaluate
+<code>the-expression</code>
+ and return its value.  Otherwise, evaluate 
+<code>else-expression</code>
+ and return its value.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="set!"></a><a name="index-pt:4"></a>
+set!
+</code></b><br>
+<pre>
+(set! variable expression . rest)
+
+</pre>
+<p>Evaluate <code>expression</code>
+ and bind its value to <code>variable</code>
+.
+<code>variable</code>
+ is not evaluated.
+</p><p>More than one variable and expression may be provided:
+</p><pre>
+     ;; assign 1 to a, 2 to b and 3 to c
+     ;;
+     (set! a 1 b 2 c 3)
+
+</pre>
+
+<br>
+<br><p><b><u>Function</u> <code><a name="and"></a><a name="index-pt:5"></a>
+and
+</code></b><br>
+<pre>
+(and . expressions)
+
+</pre>
+<p>Evaluate the expressions in order, stopping if one of them
+returns <code>#f</code>
+.  Return the value of the last expression evaluated.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="and=>"></a><a name="index-pt:6"></a>
+and=>
+</code></b><br>
+<pre>
+(and=> value thunk)
+
+</pre>
+<p>This is simply:
+</p><pre>
+     (define (and=> value thunk) (and value (thunk value)))
+
+</pre>
+<p>It saves you from having to invent a variable name for <code>value</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="or"></a><a name="index-pt:7"></a>
+or
+</code></b><br>
+<pre>
+(or . expressions)
+
+</pre>
+<p>Evaluate the expressions in order, stopping if one of them
+returns a value other than <code>#f</code>
+.  Return the value of the last 
+expression evaluated.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="case"></a><a name="index-pt:8"></a>
+case
+</code></b><br>
+<pre>
+(case expression . cases)
+
+</pre>
+<p>Each case must be of the form:
+</p><pre>
+     (values . body)
+
+</pre>
+<p>Each <code>values</code>
+ is a list of unevaluated values or the symbol <code>else</code>
+.
+</p><p>Evaluate <code>expression</code>
+.  Search for its value in the values lists,
+in order, comparing values with <code>eqv?</code>
+.  If a matching value is
+found, evaluate the expressions of the corresponding <code>body</code>
+ and
+return the value of the last expression evaluated.
+</p><p>If the <code>values</code>
+ part of a case is <code>else</code>
+, immediate evaluate
+the corresponding body and return the value of the last expression
+evaluated.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="cond"></a><a name="index-pt:9"></a>
+cond
+</code></b><br>
+<pre>
+(cond . cases)
+
+</pre>
+<p>Each case must be of the form:
+</p><pre>
+     (test . body)
+
+</pre>
+<p>or
+</p><pre>
+     (test => procedure-expression)
+
+</pre>
+<p>Evaluate the tests, in order, until one returns a value other than <code>#f</code>
+.
+Evaluate the expressions of the corresponding <code>body</code>
+ and return the
+value of the last expression. 
+</p><p>If the case is of the <code>=></code>
+ form, then evaluate <code>procedure-expression</code>
+ to 
+yield a procedure and apply that procedure to the value returned from <code>test</code>
+.
+Return the value of the procedure.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="extended-formals->scheme"></a><a name="index-pt:10"></a>
+extended-formals->scheme
+</code></b><br>
+<pre>
+(extended-formals->scheme lambda-exp)
+
+</pre>
+<p>Convert a list of formal parameters from extended syntax to ordinary
+Scheme syntax. 
+</p><pre>
+  I. (lambda ((a b ...) x y ...) &lt;body>)
+
+</pre>
+<pre>
+     =>
+
+</pre>
+<pre>
+     (lambda (a b ...)
+       (lambda (x y ...)
+         &lt;body>))
+
+</pre>
+<pre>
+ II. (lambda (a b :optional c d . e)
+       &lt;body>)
+
+</pre>
+<pre>
+     =>
+
+</pre>
+<pre>
+     (lambda (a b . optionals)
+       (let ((c (and (pair? optionals)
+                     (noop (car optionals)
+                           (set! optionals (cdr optionals)))))
+             (d (and (pair? optionals)
+                     (noop (car optionals)
+                           (set! optionals (cdr optionals)))))
+             (e optionals))
+         &lt;body>))
+
+</pre>
+
+<br>
+<br><p><b><u>Function</u> <code><a name="lambda"></a><a name="index-pt:11"></a>
+lambda
+</code></b><br>
+<pre>
+(lambda formals . body)
+
+</pre>
+<p>Return a procedure.  <code>formals</code>
+ and <code>body</code>
+ are not evaluated.
+<code>formals</code>
+ may be of one the forms:
+</p><pre>
+     a               ;; Accept any number of parameters, 
+                     ;; binding a list of them to `a'
+     (a b c ...)     ;; Accept the indicated number of parameters
+                     ;; binding the first to `a', the second to `b',
+                     ;; etc.
+
+</pre>
+<pre>
+     (a b ... . z)   ;; Accept any number of parameters, binding the
+                     ;; first to `a', the second to `b' etc. and 
+                     ;; binding all remaining parameters as a list
+                     ;; to `z'.
+
+</pre>
+<p>When invoked with a correct number of parameters, the expressions
+of <code>body</code>
+ are evaluated in order in a context with variable bindings as
+described above.  The value of the last expression of <code>body</code>
+ is returned.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="let*"></a><a name="index-pt:12"></a>
+let*
+</code></b><br>
+<pre>
+(let* bindings . body)
+
+</pre>
+<p>Bindings must be of the form:
+</p><pre>
+     ((variable init-expression) ...)
+
+</pre>
+<p>Each <code>init-expression</code>
+ is evaluated in order and its 
+value bound to the corresponding <code>variable</code>
+ (which is not evaluated).
+Each <code>init-expression</code>
+ is evaluated in a scope in containing the 
+preceeding variable bindings.  
+</p><p>The expressions of <code>body</code>
+ are evaluated in order and the value
+of the last expression evaluated is returned.  The body is evaluated
+in the scope of all of the variables of the <code>let</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="letrec"></a><a name="index-pt:13"></a>
+letrec
+</code></b><br>
+<pre>
+(letrec bindings . body)
+
+</pre>
+<p>Bindings must be of the form:
+</p><pre>
+     ((variable init-expression) ...)
+
+</pre>
+<p>Each <code>init-expression</code>
+ is evaluated in order and its 
+value bound to the corresponding <code>variable</code>
+ (which is not 
+evaluated).  The expressions are evaluated in the scope of
+all of the variables of the <code>let*</code>
+.  If an expression references
+a value before its value is established, an error is signalled.
+</p><p>The expressions of <code>body</code>
+ are evaluated in order and the value
+of the last expression evaluated is returned.  The body is evaluated
+in the scope of all of the variables of the <code>letrec</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="let"></a><a name="index-pt:14"></a>
+let
+</code></b><br>
+<pre>
+(let bindings . body)
+
+</pre>
+<p>Bindings must be of the form:
+</p><pre>
+     ((variable init-expression) ...)
+
+</pre>
+<p>Each <code>init-expression</code>
+ is evaluated in order and its 
+value bound to the corresponding <code>variable</code>
+ (which is not 
+evaluated).  The expressions are evaluated outside of the scope of
+all of the variables of the <code>let</code>
+. 
+</p><p>The expressions of <code>body</code>
+ are evaluated in order and the value
+of the last expression evaluated is returned.  The body is evaluated
+in the scope of all of the variables of the <code>letrec</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="do"></a><a name="index-pt:15"></a>
+do
+</code></b><br>
+<pre>
+(do loop-variables return-condition . body)
+
+</pre>
+<p><code>loop-variables</code>
+ must be of the form:
+</p><pre>
+     ((variable-name init-expression step-expression) ...)
+
+</pre>
+<p><code>return-condition</code>
+ must be of the form:
+</p><pre>
+     (test-expression . body)
+
+</pre>
+<p>Each of the init expressions is evaluated in order to produce
+values that will be bound to the corresponding loop variables.
+</p><p>Each iteration begins by evaluating <code>test-expression</code>
+ in the
+context of the loop variable bindings.  If it returns a true
+value, the expressions of the return-condition body are evaluated
+in order and the value of the last expression is returned.
+</p><p>If the test expression returns <code>#f</code>
+, then the expressions of the
+body are evaluated in order and then the step expressions
+are evaluated to produce bindings for the loop variables for the
+next iteration.  The loop begins again, with the evaluation of the
+test expression.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="quasiquote"></a><a name="index-pt:16"></a>
+quasiquote
+</code></b><br>
+<pre>
+(quasiquote template)
+
+</pre>
+<p>Quasiquote is a convenient short-hand for writing expressions that
+compose the functions and syntax <code>list</code>
+, <code>vector</code>
+, <code>cons</code>
+, and
+<code>quote</code>
+.
+</p><p>Put another way, it is a convenient way to write expressions
+denoting <em>
+<a name="index-pt:17"></a>
+
+almost constant
+</em>
+ values.
+</p><p><code>template</code>
+ should be a list (possibly improper but non-circular) or
+vector.  The template is recursively copied with two exceptions.
+</p><p>If an element has the form <code>(unquote exp)</code>
+, it is replaced by
+the result of evaluating <code>exp</code>
+.  A one element list beginning
+with <code>unquote</code>
+ can be written using a comma:
+</p><pre>
+     ,exp    ;; The same as ,(exp)
+
+</pre>
+<p>If the final element of a proper list has the form
+<code>(unquote-splicing exp)</code>
+, then the value of evaluating <code>exp</code>
+
+becomes the tail of the list.   A one element list beginning
+with <code>unquote-splicing</code>
+ can be written using the special symbol
+<code>,@</code>
+:
+</p><pre>
+     ,@exp   ;; The same as (unquote-splicing exp)
+
+</pre>
+<p>Here are some expamples that illustrate quasiquotation:
+</p><pre>
+     (let ((x 5))
+       `(1 (+ 2 3) ,(+ 4 x)))
+
+</pre>
+<pre>
+     => (1 (+ 2 3) 9)
+
+</pre>
+<pre>
+     (let ((x 5))
+       `(1 (+ 2 3) #(,(+ 4 x) a b)))
+
+</pre>
+<pre>
+     => (1 (+ 2 3) #(9 a b))
+
+</pre>
+<pre>
+     (let ((naughts '(bowman tichy)))
+       `(kelvin ,@ naughts))
+
+</pre>
+<pre>
+     => (kelvin bowman tichy)
+
+</pre>
+<p>Quasiquotes nest, so:
+</p><pre>
+     ;; Note that the inner quasiquote prevents
+     ;; the outer quasiquote from evaluating one
+     ;; level of unquotes:
+     ;;
+
+</pre>
+<pre>
+     `(1 2 `(3 ,(+ 4 ,(+ 1 5))))
+     =>
+     (1 2 (quasiquote (3 (unquote (+ 4 6)))))
+
+</pre>
+
+<br>
+<br><p><b><u>Function</u> <code><a name="strong-quasiquote"></a><a name="index-pt:18"></a>
+strong-quasiquote
+</code></b><br>
+<pre>
+(strong-quasiquote exp)
+
+</pre>
+<p>Like <code>quasiquote</code>
+ except that quoted objects are quoted with <code>strong-quote</code>
+
+instead of <code>quote</code>
+.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="the-environment"></a><a name="index-pt:19"></a>
+the-environment
+</code></b><br>
+<pre>
+(the-environment)
+
+</pre>
+<p>Return the current environment.  This is a dangerous procedure
+since corruptions to the environment can hopelessly confuse and
+even crash the interpreter.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="delay"></a><a name="index-pt:20"></a>
+delay
+</code></b><br>
+<pre>
+(delay expression)
+
+</pre>
+<p>Promises are expressions whose evaluation is postponed until the
+result it will yield is needed.  The result of a promise may be
+requested more than once, but the expression is evaluated only once.
+(*Note: <code>force</code>
+.)
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="define"></a><a name="index-pt:21"></a>
+define
+</code></b><br>
+<pre>
+(define name-and-formals . definition)
+
+</pre>
+<p>Create a top-level binding for <code>name</code>
+ to the value of <code>expression</code>
+.
+</p><p>There are three forms for <code>define</code>
+:
+</p><pre>
+     (define name expression)
+     (define (name . formals) . body)
+     (define ((name . formals-1) . formals2) . body)
+
+</pre>
+<p>The second form of define:
+</p><pre>
+     (define (name arg1 arg2 ...)  exp1 exp2 ...)
+
+</pre>
+<p>is equivalent to:
+</p><pre>
+     (define name (lambda (arg1 arg2 ...) exp1 exp2...))
+
+</pre>
+<p>The form
+</p><pre>
+     (define ((name arg1 ...) arg2 ...)  exp1 exp2 ...)
+
+</pre>
+<p>means:
+</p><pre>
+     (define (name arg1...) (lambda (arg2 ...) exp1 exp2...))
+
+</pre>
+<p>The nesting can go on arbitrarily:
+</p><pre>
+     (define ((((name arg1...) arg2...) arg3...) arg4...) exp1 exp2 ...)
+
+</pre>
+<pre>
+     ;; is like:
+
+</pre>
+<pre>
+     (define (name arg1...)
+        (lambda (arg2...)
+           (lambda (arg3...)
+              (lambda (arg4 ...)
+                 exp1
+                 exp2
+                 ...))))
+
+</pre>
+
+<br>
+<br><p><b><u>Function</u> <code><a name="apply"></a><a name="index-pt:22"></a>
+apply
+</code></b><br>
+<pre>
+(apply function . arguments)
+
+</pre>
+<p>Apply <code>function</code>
+ to the <code>arguments</code>
+.  The last argument provided is special:
+it should be a list.  Each member of the list is treated as an individual
+argument.
+</p><p>For example:
+</p><pre>
+     (apply + 1 2 '(3 4 5)) => 15
+
+</pre>
+
+<br>
+<br>
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

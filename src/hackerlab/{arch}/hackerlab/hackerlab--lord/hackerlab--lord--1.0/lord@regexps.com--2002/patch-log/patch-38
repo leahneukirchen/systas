@@ -1,0 +1,29 @@
+Revision: hackerlab--lord--1.0--patch-38
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon May 13 02:36:10 PDT 2002
+Standard-date: 2002-05-13 09:36:10 GMT
+Summary: unbuffering support
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--lord/hackerlab--lord--1.0/lord@regexps.com--2002/patch-log/patch-38
+Removed-files: piw piw-glob piw-malloc
+Removed-directories: =piw
+Modified-files: =TODO ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  Makefile.in vu/safe-vfdbuf.c vu/safe-vfdbuf.h vu/vfdbuf.c
+  vu/vfdbuf.h
+New-patches: lord@regexps.com--2002/hackerlab--lord--1.0--patch-38
+
+**** ./vu/safe-vfdbuf.c
+**** ./vu/safe-vfdbuf.h
+
+	New function, `safe_unbuffer' (see `vfdbuf_unbuffer_fd')
+ 
+ 
+**** ./vu/vfdbuf.c
+**** ./vu/vfdbuf.h
+
+	New function, `vfdbuf_unbuffer_fd', to get rid of an
+	established buffer.
+
+ 

@@ -1,0 +1,165 @@
+
+!>			`package-framework' Source Tree Layout
+
+
+  The standard layout for a source project using the
+  `package-framework' is this:
+
+<<<
+  [!]   $PACKAGE/
+  [!]     =RELEASE-ID
+  [!]     COPYING
+  [!]     README (etc.)
+  [*]     src/
+  [*]       Makefile.in
+  [*]       PLUGIN/
+  [!]         ...package configuration files...
+  [*]       build-tools/
+  [*]         ...various parts of  the framework...
+  [*]       configure
+  [*]       link-tools/
+  [*]         make-links
+  [*]         remove-links
+  [!]       ...your source subdirectories...
+>>>
+
+  The parts of the tree marked `[*]' are parts that are included
+  with `package-framework' -- you should never need to modify those
+  files (unless you are helping to extend the framework itself, of 
+  course).
+
+  The parts marked `[!]' are parts that you provide.  For example,
+  your source files will be stored in subdirectories of
+  `$PACKAGE/src'.
+
+  By convention, the top-level directory, `$PACKAGE', should have the
+  complete name of your package, including any version identifier, in
+  the same form it would occur in a `tar' bundle of your package.  For
+  example, `package-framework-1.0pre53.tar.gz' unpacks to produce a
+  single directory, named `package-framework-1.0pre53'.
+
+* Your Source Subdirectories
+
+  Your source goes into subdirectories of `$PACKAGE/src'.  You can use
+  multiple subdirectories to group your source up into logically
+  related parts.
+
+  A typical source subdirectory must have a `Makefile.in' and a 
+  `PLUGIN' subdirectory:
+
+<<<
+        $PACKAGE/
+	  src/
+	    $SUBDIR/
+	      Makefile.in
+	      PLUGIN/
+	        ...package configuration files...
+>>>
+
+  The contents of `Makefile.in' are the topic of WritingMakefiles.
+
+  There are several different files that can go in `PLUGIN'.  Some
+  of those are discussed here, some in other topics.  There's a 
+  PluginIndex that gives the complete list.
+
+
+* The Plugin Concept
+
+  Suppose that you write one package that depends on some other package.
+  In a few cases, you can reasonably expect those dependencies to 
+  be already installed on all target platforms.  In other cases, you
+  can reasonably put a note in your top level `README', telling users
+  that they must install those other packages first.
+
+  A common practice, though, especially if the dependency is small
+  and/or if it exists in many incompatible versions, is to _include_
+  the package you depend on in your own source distribution.  You
+  won't (necessarily) install that package, but you will build it at
+  the same time your own source is compiled.
+
+  The package framework is designed to make that situation easier to
+  handle by means of ``the plugin concept''.  Each subdirectory of
+  `$PACKAGE/src' is called a ``plugin''.  The framework automatically
+  detects what plugins are present, figures out how to configure them,
+  and builds them in the right order.
+
+  As long as all the packages you need use the `package-framework',
+  you'll never need to edit your `Makefile's or complicate your build
+  process to include those other packages -- just drop them into your
+  source tree as subdirectories of `$PACKAGE/src', and everything else
+  is (or _should be_) automatic.
+
+
+* Ordering Compilation
+
+  In what order are the subdirectories of `$PACKAGE/src' built?  The
+  order is determined by two files in each subdirectory, `PLUGIN/REQ'
+  and `PLUGIN/OPT', either or both of which may be present:
+
+<<<
+	$PACKAGE/
+	  src/
+	    subdir/
+	      PLUGIN/
+		REQ
+		OPT
+>>>
+
+  Both `REQ' and `OPT' contain a series of lines, each line consisting
+  of two subdirectory names, separated by whitespace.  The directory
+  in the first column must be built before the directory in the second
+  column.  As a special case, a directory with no prerequisites can just
+  mention its own name in both columns.
+
+  If a directory is mentioned in _any_ `REQ' file, then that directory
+  _must_ be present in the tree (or configuration will fail with an
+  error).
+
+  If a directory is mentioned _only_ in `OPT' files, then that
+  directory _may_ be present in the tree (if it is missing,
+  configuration will just ignore its absense).
+
+  As an example, let's suppose that I have two libraries: `hackerlab'
+  and `piw', and a program, `systas'.   The libraries can be built in
+  any order, but `systas' must be built after both libraries.  This
+  can be accomplished with three `REQ' files:
+
+  _$PACKAGE/src/hackerlab/PLUGIN/REQ:_
+<<<
+	hackerlab	hackerlab
+>>>
+
+  _$PACKAGE/src/piw/PLUGIN/REQ:_
+<<<
+	piw		piw
+>>>
+
+  _$PACKAGE/src/systas/PLUGIN/REQ:_
+<<<
+	hackerlab	systas
+	piw		systas
+>>>
+
+
+
+
+* Rationales
+
+  __Why such a deep tree layout?__ The package framework tree layout
+  is slightly unusual for two reasons.  First, the source tree doesn't
+  start at the root -- but rather in `$PACKAGE/src'.  Second, the
+  non-generic source -- the source files that _aren't_ part of the
+  `package-framework' itself -- are stored in _subdirectories_ of
+  `$PACKAGE/src'.  This hierarchy makes life a bit easier for package
+  maintainers.  For example, maintainers who use a revision control
+  system can store the top-level directory as one "module", each of
+  their source subdirectories as its own module, and the
+  `package-framework' itself as a final module.  It then becomes very
+  easy to put these pieces together, or to replace any one of them
+  (as, for example, when upgrading to a new version of the
+  `package-framework').  This hierarchy also supports {the plugin
+  concept}, described below.
+
+
+%%% tag: Tom Lord Thu May  9 12:47:06 2002 (PackageFramework.d/TreeLayout)
+%%%

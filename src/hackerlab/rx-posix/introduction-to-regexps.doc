@@ -1,0 +1,843 @@
+/* tag: Tom Lord Tue Dec  4 14:57:15 2001 (introduction-to-regexps.doc)
+ */
+/* introduction-to-regexps.c
+ *
+ ****************************************************************
+ * Copyright (C) 2000 Thomas Lord
+ * 
+ * See the file "COPYING" for further information about
+ * the copyright and warranty status of this work.
+ */
+
+
+
+
+/*
+  general purpose library
+  multiple regexp languages
+  8 and 16 bit character set support
+  lexical analysis support
+  rexp, nfa, dfa interfaces
+  long-match interrupt
+  dynamic & static regexp compilation
+  debugging features
+  test suite
+ */
+
+/*(h0 "An Introduction to Posix Regexps"
+      :appendix)
+
+|Posix| |Posix.2| |1003.2| |ANSI/IEEE 1003.2| |ISO/IEDC 994502|
+|regular expression notation|
+|regexp|
+|regular expression|
+
+This chapter describes the Posix-derived regexp pattern languages
+understood by Rx.  The *Posix.2* standard (*ISO/IEC 994502: 1993
+(ANSI/IEEE Std 1003.2 - 1992*)), section *2.8*) specifies the syntax
+and semantics of a ``Regular Expression Notation''.  Appendix ``B.5''
+defines a ``C Binding for RE Matching''.
+
+The current release of Rx follows this standard with several
+extensions and two minor omissions (multi-character collating elements
+and equivalence classes based on primary collation weights).
+
+The languages understood by Rx are notations for describing text
+patterns called *regexps*.  Regexps are typically used by searching
+within a string for a substring that matches the pattern.
+
+In some documentation, pattern languages such as those understood by
+Rx are called *regular expressions* and in other documentation, *regexps*.
+We prefer the term *regexps* because *regular expression*
+has a formal mathematical meaning which does not describe the
+languages understood by Rx.  Moreover, the mathematical term does
+describe a subset of what we will call regexps.  Sometimes
+(particularly when talking about performance issues), it is
+useful to distinguish the regular expression subset of regexps from
+regexps as a whole.  Therefore, it is handy to have two separate terms
+with distinct meaning: *regexps* (the entire pattern language) and *regular
+expressions* (a subset of the language, recognizable in some
+branches of mathematics).
+
+*/
+
+/*(menu)
+ */
+
+/************************************************************************
+ *(h1 "Basic Regexps and Extended Regexps")
+ * 
+
+Posix defines two regexp languages which they call "Basic Regular
+Expressions" ("BRE") and "Extended Regular Expressions" ("ERE").  (We
+would have preferred the terms "Basic Regexp" and "Extended Regexp".)
+
+This chapter describes BRE, and then describes how ERE differ from BRE.
+
+The reason for having two regexp langauges is historical.  BRE is the
+language traditionally used by `ed'; ERE is the language traditionally
+used by `egrep'.
+
+The two languages, as specified by Posix, have different capabilities.
+There are some BRE operators with no corresponding ERE operator and
+some ERE operators with no corresponding BRE operator.  Fortunately,
+the syntaxes chosen by Posix are extensible: new operators can be
+added to either language and, in fact, both can be extended to have
+the same set of operators (but using slightly different syntaxes).
+
+Rx does, in fact, extend both syntaxes in that way.  In the
+introduction that follows, we have attempted to indicate which
+operators are extensions: if you want to write regexps that are
+maximally portable, avoid those extensions.
+
+
+ */
+
+
+
+/*(h1 "Literal Characters and Special Characters")
+
+|literal characters (in Posix regexps)|
+|special characters (in Posix regexps)|
+
+In the simplest cases, a regexp is just a literal string that must
+match exactly.  For example, the pattern:
+
+     regexp
+
+matches the string ``regexp'' and no others.
+
+Some characters have a special meaning when they occur in a regexp.
+They aren't matched literally as in the previous example, but instead
+denote a more general pattern.  For example, the character `*' is used
+to indicate that the preceding element of a regexp may be repeated 0,
+1, or more times.  In the pattern:
+
+     smooo*th
+
+the `*' indicates that the preceding `o' can be repeated 0 or more
+times.  So the pattern matches:
+
+     smooth
+     smoooth
+     smooooth
+     smoooooth
+     ...
+
+The same pattern does not match these examples:
+
+     smoth	-- The pattern requires at least two o's
+     smoo*th	-- The pattern doesn't match the *
+
+
+Suppose you want to write a pattern that literally matches a special
+character like `*'; in other words, you don't want to `*' to indicate
+a permissible repetition, but to match `*' literally.  This is
+accomplished by quoting |quoting (in Posix regexps)| the special character with a backslash.  The
+pattern:
+
+     smoo\*th
+
+matches the string:
+
+     smoo*th
+
+and no other strings.
+
+These characters are special (their meaning is described in this
+chapter):
+
+     . [ \ * ^ $
+
+In seven cases, the pattern is reversed - a backslash makes a normal
+character special instead of making a special character normal.  The
+characters `+', `?', `|', `(', and `)' are normal but the sequences
+`\+', `\?', `\|', `\(', `\)', `\{', and `\}' are special (their
+meaning is described later).
+
+The remaining sections of this chapter introduce and explain the
+various special characters that can occur in regexps.
+*/
+
+
+/*(h1 "Character Set Expressions")
+
+This section introduces the special characters `.' and `['.
+*/
+
+/*(h2 "The Dot Operator")
+
+|dot operator (in Posix regexps)|
+|. (in Posix regexps)|
+
+`.' ordinarily matches any character except the NULL character.  For
+example:
+
+     p.ck
+
+matches
+
+     pick
+     pack
+     puck
+     pbck
+     pcck
+     p.ck
+
+etc.
+
+In some applications, `.' matches a newline |newline (in Posix regexps)| character, and in other
+applications, it does not.  This is an application-specific paramter
+and the documentation for a particular application should tell you
+what `.' matches.
+*/
+
+
+/*(h2 "The Character Set Operator")
+
+|character set operator (in Posix regexps)|
+|[...] (in Posix regexps)|
+
+`[' begins a ``character set''.  A character set is similar to `.' in
+that it matches not a single, literal character, but any of a set of
+characters.  `[' is different from `.' in that with `[', you define
+the set of characters explicitly.
+
+There are two basic forms a character set can take.
+
+The first form is a plain character set:
+
+     [<cset-spec>]	-- every character in <cset-spec> is in the set.
+
+the second form is a negated character set: |negated character set (in Posix regexps)|
+
+     [^<cset-spec>]	-- every character *not* in <cset-spec>
+     			   is in the set.
+
+In some applications, the newline |newline (in Posix regexps)| character ({'\n'}) is included in a
+negated character set if it is not mentioned in '<cset-spec>'.  In
+other applications, the newline character is not included.  This is an
+application-specific paramter and the documentation for a particular
+application should tell you whether newline is included in negated
+character sets.
+
+A `<cset-spec>' may be a more or less an explicit enumeration of a set
+of characters.  It can be written as a string of individual
+characters:
+
+     [aeiou]		-- matches any of five vowels
+
+or as a range of characters:
+
+     [0-9]		-- matches any decimal digit
+
+These two forms can be mixed:
+
+     [A-za-z0-9_$]	-- any letter (either case), any digit, 
+			   `_' or `$'
+
+Because of that notation, if you want to include an unescaped `-' in a
+character set, it must be the last character in the specification:
+
+     [A-Za-]		-- all upper case letters, `a' and `-'
+
+If you want to include an unescaped `]' in a character set, it must be
+the first character in the specification:
+
+     [^])}]		-- any character except `]', ')', and '}'
+
+Characters that are special in regexps outside of character-set
+specifictions (such as `*') are *not* special within a character set.
+Character set syntax has its own, distinct set of special characters.
+This is a four-character set:
+
+     [*+/-]		-- the characters `*', '+', `/', and `-'
+
+A backslash within a character set specification is not special -- it
+is a literal character:
+
+     [\.]		-- the characters `\' and `.'
+
+Characters which are have special meaning in a character set can be
+introduced as literal characters by surrounding them with `[.' and
+`.]':
+
+     [a[.-.]z]		-- the characters `a', `-', and `z'
+     [[.[.]-[.].]]	-- all characters from `[' to `]'
+
+A character set specification may also contain a ``character class'': |character class (in Posix regexps)|
+
+    [[:class-name:]]	-- every character described by class-name 
+			   is in the set
+
+The supported character class names are:
+
+    any		- the set of all characters
+    alnum	- the set of alpha-numeric characters
+    alpha	- the set of alphabetic characters
+    blank	- tab and space
+    cntrl	- the control characters
+    digit	- decimal digits
+    graph	- all printable characters except space
+    lower	- lower case letters
+    print	- the "printable" characters
+    punct	- punctuation
+    space	- whitespace characters
+    upper	- upper case letters
+    xdigit	- hexadecimal digits
+
+
+Character classes can be combined with other kinds of character set
+specification:
+
+    [a-pr-y[:digit:]]	-- the telephone keypad alphabet
+
+*/
+
+
+/*(h1 "Parenthesized Subexpressions")
+
+|subexpression (parenthesized, in Posix regexps)|
+|parenthesized subexpression (in Posix regexps)|
+|(...) (in Posix regexps)|
+
+A subexpression is a regular expression enclosed in `\(' and `\)'.  A
+subexpression can be used anywhere a single character or character set
+can be used.
+
+Subexpressions are useful for grouping regexp constructs.  For
+example, the repeat operator, `*', usually applies to just the
+preceding character.  Recall that:
+
+     smooo*th
+
+matches
+
+     smooth
+     smoooth
+     ...
+
+Using a subexpression, we can apply `*' to a longer string:
+
+     banan\(an\)*a
+
+matches
+
+     banana
+     bananana
+     banananana
+     ...
+
+Subexpressions also have a special meaning with regard to
+backreferences and substitutions. (See xref:"Backreferences
+and Substitutions".)
+*/
+
+
+/*(h1 "Repeated Subexpressions")
+
+|repeated subexpression (in Posix regexps)|
+|~* (in Posix regexps)|
+
+As previously explained, `*' is the repeat operator.  It applies to
+the preceding character, character set, subexpression or
+backreference.  It indicates that the preceding element can be matched
+0 or more times:
+
+     bana\(na\)*
+
+matches
+
+     bana
+     banana
+     bananana
+     banananana
+     ...
+
+|+ (in Posix regexps)|
+`\+' is similar to `*' except that `\+' requires the preceding element
+to be matched at least once.  So on the one hand:
+
+     bana\(na\)*
+
+matches
+
+     bana
+
+but
+
+     bana(na\)\+
+
+does not.   Both match
+
+     banana
+     bananana
+     banananana
+     ...
+
+\Note:/ The `\+' operator is not present in standard BRE -- it is an
+extension.  The corresponding `+' operator of ERE is standard.
+
+*/
+
+
+/*(h1 "Optional Subexpressions")
+
+|optional subexpression (in Posix regexps)|
+|? (in Posix regexps)|
+`\?' indicates that the preceding character, character set, or
+subexpression is optional.  It is permitted to match, or to be
+skipped:
+
+     CSNY\?
+
+matches both
+
+     CSN
+
+and
+
+     CSNY
+
+\Note:/ The `\?' operator is not present in standard BRE -- it is an
+extension.  The corresponding `?' operator of ERE is standard.
+
+*/
+
+/*(h1 "Counted Iteration: Interval Expressions")
+
+|counted iteration (in Posix regexps)|
+|interval expression (in Posix regexps)|
+|{...} (in Posix regexps)|
+An interval expression, `\{m,n\}' where `m' and `n' are decimal
+integers with `0 <= m <= n <= 255', applies to the preceding
+character, character set, subexpression or backreference.  It
+indicates that the preceding element must match at least `m' times and
+may match as many as `n' times.
+
+For example:
+
+     c\([ad]\)\{1,4\}r
+
+matches
+
+     car
+     cdr
+     caar
+     cdar
+     ...
+     caaar
+     cdaar
+     ...
+     cadddr
+     cddddr
+
+but it doesn't match:
+
+     cdddddr
+
+because that has five d's, and the pattern only permits four, and it
+doesn't match
+
+     cr
+
+because the pattern requires at least one `a' or `d'.
+
+A pattern of the form:
+
+	R\{M,\}
+
+matches `M' or more iterations of `R'.
+
+A pattern of the form:
+
+	R\{M\}
+
+matches exactly 'M' iterations of 'R'.
+
+*/
+
+/*(h1 "Alternative Subexpressions")
+
+|alternative subexpressions (in Posix regexps)|
+|| (in Posix regexps)|
+
+An alternative is written:
+
+     regexp-1\|regexp-2\|regexp-3\|...
+
+It matches anything matched by some `regexp-n'.  For example:
+
+     Crosby, Stills, \(and Nash\|Nash, and Young\)
+
+matches
+
+     Crosby, Stills, and Nash
+
+and also
+
+     Crosby, Stills, Nash, and Young
+
+
+\Note:/ The `\|' operator is not present in standard BRE -- it is an
+extension.  The corresponding `|' operator of ERE is standard.
+
+*/
+
+/*(h1 "Anchors")
+
+|anchors (in Posix regexps)|
+|left anchor (in Posix regexps)|
+|right anchor (in Posix regexps)|
+|^ (in Posix regexps)|
+|~$ (in Posix regexps)|
+
+Anchor experssions are written `^' (``left anchor'') and `$' (``right
+anchor'').  Both kinds of anchor match the empty string but only in
+certain contexts.  A left anchor matches at the beginning of a string,
+a right anchor at the end of a string.
+
+In some situations, `^' matches the empty string immediately after a
+newline character, and '$' matches immediately before a newline
+character.  Whether or not this is the case is an application-specific
+behavior: the documentation for each application that uses regexps
+should state whether or not anchors match near newlines.
+
+*/
+
+
+/*(h1 "Backreferences and Substitutions")
+
+|backreferences (in Posix regexps)|
+|substitutions (in Posix regexps)|
+|\DIGIT (in Posix regexps)|
+A backreference is written `\n' where `n' is some single digit, 1-9.
+To be a valid backreference, there must be at least `n' parenthesized
+subexpressions in the pattern prior to the backreference.
+
+A backreference matches a literal copy of whatever was matched by the
+corresponding subexpression.  For example,
+
+     \(.*\)-\1
+
+matches:
+
+     go-go		-- .* matches the first "go"; 
+			   \1 matches  the second
+     ha-ha
+     wakka-wakka
+     ...
+
+but does not match:
+
+     ha-wakka		-- .* matches "ha", but "wakka" is not
+			   the same as "ha"
+
+In some applications, subexpressions are used to extract substrings.
+For example, Emacs |emacs| has the functions `match-beginning' and
+`match-end' which report the positions of strings matched by
+subexpressions.  These functions use the same numbering scheme for
+subexpressions as backreferences, with the additional rule that
+subexpression 0 is defined to be the whole regexp.
+
+In some applications, subexpressions are used in string substitution.
+This again uses the backreference numbering scheme. For example, this
+sed command:
+
+     s/From:.*<\(.*\)>/To: \1/
+
+matches the entire line:
+
+     From: Joe Schmoe <schmoe@uspringfield.edu>
+
+and subexpression 1 matches `schmoe@uspringfield.edu'.  The command
+replaces the matched line with `To: \1' after doing subexpression
+substitution on it to get:
+
+     To: schmoe@uspringfield.edu
+
+\Note:/ The backreference operator is present in standard BRE, but not
+in ERE.  Rx adds the backreference operator to ERE as an extension.
+
+*/
+
+
+/*(h1 "Anonymous Subexpressions")
+
+|anonymous subexpression (in Posix regexps)|
+|subexpression (anonymous, in Posix regexps)|
+|[[:(...:)]] (in Posix regexps)|
+An anonymous subexpression is a subexpression that can not be
+backreferenced.  In some situations, a pattern written using anonymous
+subexpressions will run faster than the same pattern written with
+ordinary subexpressions.
+
+An anonymous subexpression is written as a regular expression enclosed
+in `[[:(' and `):]]', for example:
+
+	sm[[:(oo):]]*th
+
+will match all fanciful spellings of ``smooth'' that include an even
+number of `o''s.
+
+An anonymous subexpression can be used anywhere a single character or
+character set can be used.
+
+\Note:/ The `[[:():]]' operator is not standard in either BRE or ERE
+-- it is an Rx extension.
+
+
+*/
+
+/*(h1 "The cut Operator")
+
+|cut (in Posix regexps)|
+|[[:cut n:]] (in Posix regexps)|
+The cut operator is used to indicate a point in the middle of a regexp
+at which a match can succeed without matching the remaining pattern.
+The cut operator takes a parameter which is an integer called the
+`state label'. |state label (in Posix regexps)| When a pattern matches by reaching a cut operator, one
+of the values that can be returned is the state label.
+
+For example, this regexp can be used for lexical analysis |lexical analysis (with Posix regexps)|:
+
+	if[[:cut 2:]]\\|then[[:cut 3:]]\\|else[[:cut 4:]]
+
+If it matches ``then'', the state label returned will be 3.  If it
+matches ``else'', the state label will be 4.  The default state label is
+1.
+
+This example illustrates using `cut' to terminate a match early:
+
+	GNU[[:cut 2:]] project
+
+That expression matches either of two strings:
+
+	GNU
+	GNU project
+
+with a state label of 2 in the first case and 1 in the second case.
+
+A state label may be a decimal integer, or it may be `%'.  In the
+latter case, an integer value is assigned automatically.
+Automatically assigned integer values start with 1 and each successive
+`[[:(cut %):]]' in an expression increments the automatically assigned
+value.
+
+\Note:/ The `[[:cut n:]]' operator is not standard in either BRE or ERE
+-- it is an Rx extension.
+
+
+*/
+
+/*(h1 "Regexps versus Regular Expressions")
+ * 
+ * |regexp| |regular expression| |true regexp| |true regular expression|
+ * In the Rx documentation and source code we distinguish between
+ * *regexps* and *regular expressions*.  Regular expressions are a
+ * subset of regexps.  We call regexps which are not regular
+ * expressions ``true regexps'' and if a regexp is a regular expression,
+ * we say that that regexp is ``regular'' or a ``true regular
+ * expression''.
+ *
+ * A practial reason for making such a distinction is performance:
+ * comparing text to a true regular expression is often much less
+ * computationally expensive than comparing text to a true regexp.
+ *
+ * Writing a true regular expression is easy.  Every regexp is regular
+ * if it does *not* use any of the following operators:
+ *
+ *	^re		- left anchor
+ *	re$		- right anchor
+ *  	re\{x,y\}	- counted iteration
+ *	\(re\)...\1	- parentheses with backreferences
+ *
+ * If you are mathematically inclined, you may notice that a regexp
+ * of the form:
+ * 
+ *  	re\{x,y\}	- counted iteration
+ * 
+ * is, in the mathematical sense, a regular expression.  For practical
+ * reasons, however, Rx treats such expressions as true regexps.
+ */
+
+
+
+/*(h1 "A Summary of Regexp Syntax")
+
+|regexp syntax summary (Posix)|
+In summary, regexps can be:
+
+   `abcd' 		- a string literal
+
+   `.' 			- the universal character set.
+
+   `[a-z_?]'		- a character set
+   `[^a-z_?]'		- an inverted character set
+   `[[:alpha:]]' 	- a named character set
+   `[[.c.]]'		- a quoted character set character
+
+   `\(subexp\)' 	- an expression grouped to form a
+			  parenthesized subexpression. 
+
+   `[[:(subexp:)]]' 	- an expression grouped to form an
+			  anonymous subexpression. (Non-standard)
+
+   `^'			- a left anchor, matching the beginning
+   			  of a string.
+
+   `$'			- a right anchor, matching the end
+   			  of a string.
+
+   `\n' 		- a backreference to the nth parenthesized
+			  subexpression. (Non-standard in ERE)
+
+    `[[:cut n:]]'	- a point at which a regular expression 
+    			  match can immediately succeed.
+			  (Non-standard)
+
+The following special characters and sequences can be applied to a
+character, character set, subexpression, or backreference:
+
+   `*'			- repeat the preceding element 0 
+			  or more times.
+
+   `\+' 		- repeat the preceding element 1 
+			  or more times. (Non-standard in BRE)
+
+   `\?' 		- match the preceding element 0 
+			  or 1 time. (Non-standard in BRE)
+
+   `\{m,n\}' 		- match the preceding element at 
+			  least `m', and as many as `n' times,
+			  where 0 <= m <= n <= 255
+
+   `\{m,\}' 		- match the preceding element at 
+			  least `m' times, where 0 <= m <= 255
+
+
+   `\{m\}' 		- match the preceding element exactly
+			  `m' times, where 0 <= m <= 255
+
+
+Finally, a list of patterns built from the preceeding operators can be
+combined using `\|':
+
+
+   `regexp-1\|regexp-2\|..' 	- match regexp-1 or regex-2 or ...
+				  (Non-standard in BRE)
+
+A special character, like `.' or `*' can be made into a literal by
+prefixing it with `\'.
+
+A special sequence, like `\+' or `\?' can be made into a literal
+character by dropping the `\'.
+
+*/
+
+/*(h1 "The Extended Regexp Syntax")
+
+|extended regexp syntax (Posix)| |basic regexp syntax (Posix)| 
+|ERE (Posix Regexps)| |BRE (Posix Regexps)|
+
+The regexp syntax described in the preceeding sections is called
+``Basic Regular Expression Syntax'' (BRE).  In that syntax, some
+operators are preceeded by a backslash:
+
+	one\|the other		-- the \| operator
+	\(many\)\+		-- The \( \) and \+ operators
+	re\{x,y\}		-- The \{ \} operator
+
+In that way, the BRE syntax is optimized for situations where we are
+more likely to want to write `|', `()', `+', or `{}' as literal
+characters than as regexp operators.  The common case is handled
+without the backslash, the less common case with the backslash.
+
+Another syntax exists for situations where the regexp operators are
+more likely to occur than the corresponding literal characters.  In
+this, the ``Extended Regexp Syntax'' (ERE), none of the regexp operators
+require a backslash and except in a character set specification, a
+backslash always means to interpret the next character literally.
+
+
+	    BRE OPERATOR	  ERE OPERATOR
+		\|			|
+		\+			+
+		\( \)			( )
+		\{ x, y \}		{ x, y }
+
+If an application uses the extended syntax, the documentation for that
+application should tell you so.
+
+*/
+
+/*(h1 "The Leftmost Longest Rule")
+
+|leftmost longest rule (in Posix regexps)|
+|regexp, ambiguous (Posix)|
+|ambiguous regexp (Posix)|
+Sometimes a regexp appears to be ambiguous.  When
+comparing an expression like:
+
+	match
+
+to a string like:
+
+	match-match
+
+there is an ambiguity about where the match begins.  Do the first 5
+characters match? or the last 5?
+
+In every case like this, the leftmost match is preferred.  The first 5
+characters will match.
+
+Sometimes the ambiguity is not about where a match will begin, but how
+long a match will be.  For example, suppose we compare the pattern:
+
+     begin\|beginning
+
+to the string
+
+     beginning
+
+either just the first 5 characters will match, or the whole string
+will match.
+
+In every case like this, consistent with finding the leftmost match,
+the longer match is preferred.  The whole string will match.
+
+Sometimes there is ambiguity not about how many characters to match or
+where a match begins, but where the subexpressions occur within the
+match.  This can effect extraction functions like Emacs'
+`match-beginning' or rewrite functions like sed's `s' command.  For
+example, consider matching the pattern:
+
+     b\([^q]*\)\(ing\)?
+
+against the string
+
+     beginning
+
+One possibility is that the first parenthesized subexpression matches
+`eginning' and the second parenthesized subexpression is skipped.
+Another possibility is that the first subexpression matches `eginn'
+and the second matches `ing'.
+
+The rule is that consistant with finding the leftmost and longest
+overall match, the lengths of strings matched by subpatterns are
+maximized, from left to right.
+
+In the example, the subpattern `b' matches one character, the
+subpattern `\([^q]*\)' matches the longest possible string,
+`eginning', and finally the third subpattern `\(ing\)?' matches what
+is left over (the empty string).
+
+The presence or absense of parentheses doesn't change what subpatterns
+match.  If the pattern is:
+
+     b[^q]*\(ing\)?
+
+The subpattern `[^q]*' still matches `eginning' and `\(ing\)?' still
+matches the empty string.
+
+*/

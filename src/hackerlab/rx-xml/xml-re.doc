@@ -1,0 +1,24 @@
+/* tag: Tom Lord Tue Dec  4 14:57:17 2001 (xml-re.doc)
+ */
+/************************************************************************
+ *(h0 "XML Regular Expressions")
+ * 
+ * The W3C document *XML Schema Part 2: Datatypes* defines a regular
+ * expression language for use in XML Schema.  (See
+ * url:"http://www.w3.org/TR/xmlschema-2".)
+ * 
+ * This chapter presents C functions used for matching XML regular
+ * expressions.  (See xref:"An Introduction to XML Regular
+ * Expressions".)
+ * 
+ */
+
+/*(menu)
+ */
+
+/*(include-documentation "re.c")
+ */
+
+/*(include-documentation "using.doc")
+ */
+

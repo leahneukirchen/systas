@@ -1,0 +1,25 @@
+# tag: Tom Lord Tue Dec  4 15:06:45 2001 (fps-utils/=README)
+#
+
+Utilities for use with FPS (functional postscript):
+
+	font-sampler	- generate a postscript document illustrating
+			  the available fonts.  
+
+			  You can use this to see how slow
+			  font-loading is in FPS.  Try calling
+			  `generate-font-sampler' twice in a row,
+			  making two different files.  On my system,
+			  the first file takes about three minutes;
+			  the second, about two seconds.  This could
+			  be fixed by pre-compiling the .afm files.
+
+
+
+	general		- a place where I've started to collect FPS 
+			  procedures I've needed repeatedly.  The 
+			  intention is to keep adding things here,
+			  make a big mess, then study the mess and 
+			  design some clean libraries.
+
+

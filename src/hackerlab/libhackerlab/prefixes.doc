@@ -1,0 +1,102 @@
+/* tag: Tom Lord Tue Dec  4 14:57:14 2001 (prefixes.doc)
+ */
+/************************************************************************
+ *(h0 "Naming Conventions in the Hackerlab C Library"
+ *    :appendix)
+ * 
+ * 
+
+This appendix describes the naming conventions used in the Hackerlab
+C library.
+
+ */
+/*(menu)
+ */
+
+
+/************************************************************************
+ *(h1 "C Identifiers and Macros")
+ * 
+
+C identifiers and macro names are divided into categories related by
+functionality.  For each category, a unique "category stub" is chosen
+which is an alphanumeric string.  If a category has the stub `STUB',
+most names in that category begin with the string `STUB_'.  In some
+cases, the name `STUB' is used as an identifier by itself.  If `STUB'
+is the name of a data structure, there may be functions named
+`make_STUB' and `free_STUB'.  For some data types, a `sizeof_STUB'
+macro is defined.  Case distinctions do not matter: a stub may be
+used with any combination of upper and lowercase letters.
+
+If a name is publicly visible, but is not intended to be used outside
+of the implementation of the Hackerlab C Library, it is given a prefix
+of the form `STUB__'.
+
+The stubs currently in use are:
+
+	ar		dynamically sized arrays
+	bits		shared bitset trees
+	bits_tree	bitset trees
+	bitset		flat bitsets
+	char		manipulating 8-bit characters
+	cvt		number/string conversions
+	errno		manipulating error codes
+	file_name	manipulating file names
+	hash		computing hash values
+	hashtree	the hashtree data structure
+	invariant	testing invariants
+	lim		limited allocation
+	mem		manipulating arrays of bytes
+	MACHINE		machine-specific parameters
+	must		errorless allocation
+	opt		command line option processing
+	panic		aborting programs
+	path		manipulating directory search paths
+	piw		the Program Instrumentation Workbench
+	pow2_array	power-or-two sized sparse arrays
+	printfmt	formatted I/O
+	reserv		reserved file descriptors
+	rx		regexp pattern matching
+	safe		errorless I/O functions
+	str		manipulating ISO 8859-1 strings
+	t		fundamental typedefs (e.g. `t_uint8')
+	uni		foundational Unicode support
+	unidata		the Unicode character database
+	url		url-based virtual file systems
+	vfdbuf		descriptor-based buffered I/O
+	vu		virtual descriptor-based i/o
+	xml		XML utilities
+
+
+There are also some exceptions.  Some versions of the library
+export the Posix.2 interface for regexp pattern matching (`regcomp',
+`regexec' etc.).  Some versions of the library export standard
+interfaces for memory allocation (`malloc', `free', etc.).
+
+ */
+
+/************************************************************************
+ *(h1 "Header Files")
+ * 
+
+Hackerlab C Library header files are always named by two directories
+and a file name, as in this example:
+
+	<hackerlab/machine/types.h>
+
+Every public header file can be included by itself -- without having
+to include any other header file first.  Some Hackerlab header files
+have the effect of including other Hackerlab header files.
+
+Every Hackerlab header file may be safely included more than once.
+A CPP macro beginning with `INCLUDE__' is used to protect the contents
+of each header file from being interpreted more than once.  For
+example, the header `<hackerlab/machine/types.h>' contains:
+
+	#ifndef INCLUDE__MACHINE__TYPES_H
+	#define INCLUDE__MACHINE__TYPES_H
+	...
+	#endif  /* INCLUDE__MACHINE__TYPES_H */
+
+ * 
+ */

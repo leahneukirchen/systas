@@ -1,0 +1,1069 @@
+@need 3200
+
+@node System Calls and C Library Functions
+@chapter System Calls and C Library Functions
+
+The procedures in this section are a more or less direct interface
+to many of the most important unix system calls and C library
+functions defined by popular unix standards.  Not included in this
+section are the file-system functions. (See @ref{File System and Descriptor Procedures}.)
+
+
+Functions whose name begins with @geindex %
+@dfn{%} report system errors by
+returning a symbol (the name of the error, as defined in
+@geindex errno.h
+@dfn{errno.h}).  Other kinds of error, such as passing a parameter of
+the wrong type, cause exceptions.  This documentation refers to all
+such functions as @geindex system calls
+@dfn{system calls}, regardless of whether they are
+actually implemented by system calls on the host platform.
+
+
+The return value of a system call can be checked for error
+conditions using @code{errno?}.  The error number can be recovered using
+@code{errno->integer} and an error message, provided by the host
+platform, can be dervided using @code{strerror}.
+
+
+The procedure @code{%%} is useful for calling a system call and
+converting error returns into exceptions.  In addition, @code{%%} will
+retry system calls that are interrupted by a signal.  (@code{%e} can be
+used to convert errors to exceptions without retrying system calls
+and @code{%i} can be used to retry system calls without converting
+errors to exceptions).
+
+
+Some of these procedures return a structure where the corresponding
+C function would return a structure. The module @code{(unix structures)}
+provides functions which can read and write values from these 
+vectors by name instead of index number. (*Note: Unix Structures.)
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{errno?}@fuindex errno?
+@*
+@example
+@group
+(errno? obj)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is an errno object, @code{#f} otherwise.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{errno->integer}@fuindex errno->integer
+@*
+@example
+@group
+(errno->integer errno)
+@end group
+@group
+@end group
+@end example
+
+Return the error number associated with an errno object.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%e}@fuindex %e
+@*
+@example
+@group
+;; %e fn . args
+;; %signal-errors fn . args
+;; 
+;; Apply `fn' to `args'.  If `fn' returns an errno object,
+;; throw a exception whose type is the name of the answer.
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%i}@fuindex %i
+@*
+@example
+@group
+%i fn . args
+%retry-interrupted-calls fn . args
+@end group
+@group
+@end group
+@end example
+
+Apply @code{fn} to @code{args}.  If @code{fn} returns an errno object,
+and the indicated error is @code{EINTR}, retry the call to @geindex fn
+@dfn{fn}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%%}@fuindex %%
+@*
+@example
+@group
+%% fn . args
+%high-level-system-call fn . args
+@end group
+@group
+@end group
+@end example
+
+Apply @code{fn} to @code{args}.  If @code{fn} returns an errno object,
+and the indicated error is @code{EINTR}, retry the call to @geindex fn
+@dfn{fn}.
+
+
+If @code{fn} returns an errno object for some other error,
+throw an exception whose type is the name of the error
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{errno-exceptions-return}@fuindex errno-exceptions-return
+@*
+@example
+@group
+errno-exceptions-return thunk
+@end group
+@group
+@end group
+@end example
+
+Invoke @code{thunk} in the context of @code{catch}.  If an errno exception
+is caught, return the errno object.  If any other exception is 
+caught, rethrow that exception.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{strerror}@fuindex strerror
+@*
+@example
+@group
+(strerror error)
+@end group
+@group
+@end group
+@end example
+
+Return the system-defined error message for a given 
+error number.  @code{error} must be an integer or an errno object.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%getgroups}@fuindex %getgroups
+@*
+@example
+@group
+(%getgroups)
+@end group
+@group
+@end group
+@end example
+
+Return the process group access list (a vector of integer id numbers).
+See the manual page @geindex getgroups
+@dfn{getgroups}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{getpwent}@fuindex getpwent
+@*
+@example
+@group
+(getpwent)
+@end group
+@group
+@end group
+@end example
+
+Return the next entry from the password file as a keyword argument
+list or @code{#f}.
+
+
+See the manual page @geindex getpwent
+@dfn{getpwent}.
+
+
+This function returns a keyword argument list.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{setpwent}@fuindex setpwent
+@*
+@example
+@group
+(setpwent)
+@end group
+@group
+@end group
+@end example
+
+Rewind the file pointer for the password file.  
+See the manual page @geindex setpwent
+@dfn{setpwent}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{endpwent}@fuindex endpwent
+@*
+@example
+@group
+(endpwent)
+@end group
+@group
+@end group
+@end example
+
+Close the password file.
+See the manual page @geindex endpwent
+@dfn{endpwent}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{getpwuid}@fuindex getpwuid
+@*
+@example
+@group
+(getpwuid user-id)
+@end group
+@group
+@end group
+@end example
+
+Return the password file entry for a given user id.
+See the manual page @geindex getpwuid
+@dfn{getpwuid}.
+
+
+This function returns a keyword argument list.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{getpwnam}@fuindex getpwnam
+@*
+@example
+@group
+(getpwnam user-name)
+@end group
+@group
+@end group
+@end example
+
+Return the password file entry for a given user name.
+See the manual page @geindex getpwnam
+@dfn{getpwnam}.
+
+
+This function returns a keyword argument list.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{getgrent}@fuindex getgrent
+@*
+@example
+@group
+(getgrent)
+@end group
+@group
+@end group
+@end example
+
+Return the next entry from the groups file as a keyword-argument
+list.
+
+
+See the manual page @geindex getgrent
+@dfn{getgrent}.
+
+
+This function returns a keyword argument list.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{getgrgid}@fuindex getgrgid
+@*
+@example
+@group
+(getgrgid group-id)
+@end group
+@group
+@end group
+@end example
+
+Return the groups file entry for a given group id.
+See the manual page @geindex getgrgid
+@dfn{getgrgid}.
+
+
+This function returns a keyword argument list.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{getgrnam}@fuindex getgrnam
+@*
+@example
+@group
+(getgrnam group-name)
+@end group
+@group
+@end group
+@end example
+
+Return the groups file entry for a given group name.
+See the manual page @geindex getgrnam
+@dfn{getgrnam}.  Return @code{#f} if no group
+has the given name.
+
+
+This function returns a keyword argument list.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{setgrent}@fuindex setgrent
+@*
+@example
+@group
+(setgrent)
+@end group
+@group
+@end group
+@end example
+
+Rewind the file pointer for the groups file.  
+See the manual page @geindex setgrent
+@dfn{setgrent}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{endgrent}@fuindex endgrent
+@*
+@example
+@group
+(endgrent)
+@end group
+@group
+@end group
+@end example
+
+Close the groups file.
+See the manual page @geindex endgrent
+@dfn{endgrent}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{signal-name->integer}@fuindex signal-name->integer
+@*
+@example
+@group
+(signal-name->integer signal)
+@end group
+@group
+@end group
+@end example
+
+Return the signal number of @code{signal}.  
+
+
+@code{signal} may already be a signal number, or it can be a symbol whose name
+is the traditional name in C for a signal (e.g. 'SIGINT)
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%kill}@fuindex %kill
+@*
+@example
+@group
+(%kill process-id signal)
+@end group
+@group
+@end group
+@end example
+
+Send the indicated signal to the indicated process.
+@code{process-id} and @code{signal} must be integers.
+
+
+See the manual page @geindex kill
+@dfn{kill}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%killpg}@fuindex %killpg
+@*
+@example
+@group
+(%killpg process-group-id signal)
+@end group
+@group
+@end group
+@end example
+
+Send the indicated signal to the indicated process group.
+@code{process-group-id} and @code{signal} must be integers.
+
+
+See the manual page @geindex killpg
+@dfn{killpg}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{wait-options->integer}@fuindex wait-options->integer
+@*
+@example
+@group
+(wait-options->integer options)
+@end group
+@group
+@end group
+@end example
+
+Return an integer which is the logical or of one or more options to the @code{%wait} system call.
+@code{options} may be an integer (which is returned), a symbol, or a list of symbols and integers.
+Accepted symbols share names with CPP constants (e.g. @code{WNOHANG}).
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%waitpid}@fuindex %waitpid
+@*
+@example
+@group
+(%waitpid process-id options)
+@end group
+@group
+@end group
+@end example
+
+Wait for the indicated process to exit and return its status.
+Both arguments must be integers. [!!! out of date]
+
+
+See the manual page @geindex waitpid
+@dfn{waitpid}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{getpid}@fuindex getpid
+@*
+@example
+@group
+(getpid)
+@end group
+@group
+@end group
+@end example
+
+Return the id of the current process.
+See the manual page @geindex getpid
+@dfn{getpid}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{getppid}@fuindex getppid
+@*
+@example
+@group
+(getppid)
+@end group
+@group
+@end group
+@end example
+
+Return the parent process id of the current proces.
+See the manual page @geindex getppid
+@dfn{getppid}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{getuid}@fuindex getuid
+@*
+@example
+@group
+(getuid)
+@end group
+@group
+@end group
+@end example
+
+Return the user id of the current process.
+See the manual page @geindex getuid
+@dfn{getuid}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{getgid}@fuindex getgid
+@*
+@example
+@group
+(getgid)
+@end group
+@group
+@end group
+@end example
+
+Return the group id of the current process.
+See the manual page @geindex getgid
+@dfn{getgid}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{geteuid}@fuindex geteuid
+@*
+@example
+@group
+(geteuid)
+@end group
+@group
+@end group
+@end example
+
+Return the effective user id of the current process.
+See the manual page @geindex geteuid
+@dfn{geteuid}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{getegid}@fuindex getegid
+@*
+@example
+@group
+(getegid)
+@end group
+@group
+@end group
+@end example
+
+Return the effective group id of the current process.
+See the manual page @geindex getegid
+@dfn{getegid}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%setuid}@fuindex %setuid
+@*
+@example
+@group
+(%setuid id)
+@end group
+@group
+@end group
+@end example
+
+Set the effective user id of the current process.
+See the manual page @geindex setuid
+@dfn{setuid}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%setgid}@fuindex %setgid
+@*
+@example
+@group
+(%setgid id)
+@end group
+@group
+@end group
+@end example
+
+Set the effective group id of the current process.
+See the manual page @geindex setgid
+@dfn{setgid}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%seteuid}@fuindex %seteuid
+@*
+@example
+@group
+(%seteuid id)
+@end group
+@group
+@end group
+@end example
+
+Set the effective user id of the current process.
+See the manual page @geindex setuid
+@dfn{setuid}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%setegid}@fuindex %setegid
+@*
+@example
+@group
+(%setegid id)
+@end group
+@group
+@end group
+@end example
+
+Set the effective group id of the current process.
+See the manual page @geindex setegid
+@dfn{setegid}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{getpgrp}@fuindex getpgrp
+@*
+@example
+@group
+(getpgrp)
+@end group
+@group
+@end group
+@end example
+
+Return the process group of the current process.
+See the manual page @geindex getpgrp
+@dfn{getpgrp}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%setpgid}@fuindex %setpgid
+@*
+@example
+@group
+(%setpgid process-id process-group-id)
+@end group
+@group
+@end group
+@end example
+
+Set the process group of the indicated process.
+See the manual page @geindex setpgid
+@dfn{setpgid}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%setsid}@fuindex %setsid
+@*
+@example
+@group
+(%setsid)
+@end group
+@group
+@end group
+@end example
+
+See the manual page @geindex setsid
+@dfn{setsid}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%exec}@fuindex %exec
+@*
+@example
+@group
+(%exec filename args :optional environment)
+@end group
+@group
+@end group
+@end example
+
+Exec the indicated program, providing @code{args} as
+command line arguments.  If @code{environment} is specified,
+make that the environment of program.
+
+
+@code{args} must be a list of read-only strings -- other elements of 
+the list are ignored.
+
+
+See the manual page @geindex exec
+@dfn{exec}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%fork}@fuindex %fork
+@*
+@example
+@group
+(%fork)
+@end group
+@group
+@end group
+@end example
+
+Create a new (child) process.  In the parent process,
+return the process id of the child.  In the child process,
+return @code{0}.
+
+
+See the manual page @geindex fork
+@dfn{fork}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%exit}@fuindex %exit
+@*
+@example
+@group
+(%exit status)
+@end group
+@group
+@end group
+@end example
+
+Exit the current process with the indicated status.
+See the manual page @geindex exit
+@dfn{exit}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%uname}@fuindex %uname
+@*
+@example
+@group
+(%uname)
+@end group
+@group
+@end group
+@end example
+
+Return a vector of information about the host system.
+See the manual page @geindex uname
+@dfn{uname}.
+
+
+This function returns a keyword-argument list.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{environ}@fuindex environ
+@*
+@example
+@group
+(environ (:optional new-environment))
+@end group
+@group
+@end group
+@end example
+
+Return the process environment variables as a list
+of strings of the form:
+
+@example
+@group
+     ("VAR=value" ...)
+@end group
+@group
+@end group
+@end example
+
+If @code{new-environment} is provided, it should be a list
+of the same form.  The process environment variables
+are set to that list.
+
+
+See the manual page @geindex environ
+@dfn{environ}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%access?}@fuindex %access?
+@*
+@example
+@group
+(%access? path mode)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if the processes real user and group id have the
+authority to access the file  @code{path} in the manner specified 
+by @code{mode}.
+
+
+See the manual page @geindex access
+@dfn{access}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{getenv}@fuindex getenv
+@*
+@example
+@group
+(getenv variable-name)
+@end group
+@group
+@end group
+@end example
+
+Return the value of the indicated environment variable.
+Return @code{#f} if the variable has no value.
+
+
+See the manual page @geindex getenv
+@dfn{getenv}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%setenv}@fuindex %setenv
+@*
+@example
+@group
+(%setenv variable-name value overwrite?)
+@end group
+@group
+@end group
+@end example
+
+Add the indicated variable to the environment with the given 
+value. If overwrite is not provided or is @code{#f}, and the variable 
+is already defined, this procedure has no effect.
+
+
+See the manual page @geindex setenv
+@dfn{setenv}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{unsetenv}@fuindex unsetenv
+@*
+@example
+@group
+(unsetenv variable-name)
+@end group
+@group
+@end group
+@end example
+
+Remove the indicated environment variable from the process'
+environment variable settings.
+
+
+See the manual page @geindex unsetenv
+@dfn{unsetenv}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%putenv}@fuindex %putenv
+@*
+@example
+@group
+(%putenv string)
+@end group
+@group
+@end group
+@end example
+
+Modify the processes environment variables according
+to @code{string}.
+
+
+See the manual page @geindex putenv
+@dfn{putenv}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{ctime}@fuindex ctime
+@*
+@example
+@group
+(ctime time)
+@end group
+@group
+@end group
+@end example
+
+Convert a time, represented in seconds since an epoch, to
+a string such as:
+
+@example
+@group
+     "Thu Nov 24 18:22:48 1986\n"
+@end group
+@group
+@end group
+@end example
+
+Fields in the string returned have constant length.
+
+
+See also @code{%time}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%nice}@fuindex %nice
+@*
+@example
+@group
+(%nice increment)
+@end group
+@group
+@end group
+@end example
+
+Change the niceness of the current process by @code{increment}.
+@code{increment} must be an integer.
+
+
+See the manual page @geindex nice
+@dfn{nice}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%sync}@fuindex %sync
+@*
+@example
+@group
+(%sync)
+@end group
+@group
+@end group
+@end example
+
+Force pending file-system changes to disk.
+
+
+See the manual page @geindex fsync
+@dfn{fsync}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%truncate}@fuindex %truncate
+@*
+@example
+@group
+(%truncate path SCM_LENGTH)
+@end group
+@group
+@end group
+@end example
+
+Change the length of a file.
+@code{path} must be a read-only string.
+@code{length} must be an integer.
+
+
+See the manual page @geindex truncate
+@dfn{truncate}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{alarm}@fuindex alarm
+@*
+@example
+@group
+(alarm n)
+@end group
+@group
+@end group
+@end example
+
+Arrange for a SIGALRM interrupt @code{n} seconds into the future.
+
+
+See the manual page @geindex alarm
+@dfn{alarm}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{pause}@fuindex pause
+@*
+@example
+@group
+(pause)
+@end group
+@group
+@end group
+@end example
+
+Make the current process sleep until a signal is received.
+
+
+See the manual page @geindex pause
+@dfn{pause}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{sleep}@fuindex sleep
+@*
+@example
+@group
+(sleep n)
+@end group
+@group
+@end group
+@end example
+
+Make the current process sleep until @code{n} seconds have
+passed or a signal is received.
+
+
+See the manual page @geindex sleep
+@dfn{sleep}.
+
+@need 3200
+
+@section Rationale -- Unix System Call
+
+Another implementation (SCSH) converts all system call errors to 
+exceptions.  That seems wrong: an error from a system call is
+not necessarily an exception  -- it may be a useful return value.
+Therefore, we use the convention that system call errors return
+a symbol, but make it trivial (via the procedure @code{%%}) to convert
+error returns to exceptions.
+
+
+
+
+
+
+

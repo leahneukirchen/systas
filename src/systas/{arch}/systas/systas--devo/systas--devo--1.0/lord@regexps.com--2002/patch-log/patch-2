@@ -1,0 +1,26 @@
+Revision: systas--devo--1.0--patch-2
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Mon Jan 14 15:16:51 PST 2002
+Standard-date: 2002-01-14
+Summary: merge from `lord': boilerplate files
+Keywords: 
+New-files: {arch}/systas/systas--devo/systas--devo--1.0/lord@regexps.com--2002/patch-log/patch-2
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-3
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/patch-4
+  COPYING =NEWS =README =TODO
+Modified-files: ChangeLog
+  ChangeLog.d/lord@regepx.com--2002/ChangeLog.lord--1.0
+  {arch}/systas/systas--lord/systas--lord--1.0/lord@regexps.com--2002/patch-log/base-0
+New-patches: lord@regexps.com--2002/systas--devo--1.0--patch-2
+  lord@regexps.com--2002/systas--lord--1.0--patch-3
+  lord@regexps.com--2002/systas--lord--1.0--patch-4
+
+Patches applied:
+
+  * lord@regexps.com--2002/systas--lord--1.0--patch-4
+     =NEWS updated
+
+  * lord@regexps.com--2002/systas--lord--1.0--patch-3
+     added boiler-plate files
+

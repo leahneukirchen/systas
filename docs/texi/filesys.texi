@@ -1,0 +1,1418 @@
+@need 3200
+
+@node File System and Descriptor Procedures
+@chapter File System and Descriptor Procedures
+
+The procedures in this section are a complete interface to the unix
+file system system-calls and related functions.
+
+
+File descriptors are referred to by @geindex file descriptor objects
+@dfn{file descriptor objects}
+A file descriptor object has two parts: an integer descriptor number,
+and a flag that says whether or not the file should be automatically
+closed when the descriptor object is garbage collected.  In most
+cases (everywhere it makes sense) an integer may be passed in place
+of a descriptor object.
+
+
+In Systas Scheme, file descriptor objects and ports are the same
+thing.  Some descriptors may have an associated buffer.  Only
+buffered descriptors are suitable for use with @code{read}.
+
+
+The procedure @code{integer->fd} is provided to facilitate the handling
+of descriptors inherited from the exec'ing process.
+
+
+The procedure @code{all-file-descriptors} is provided to facilitate closing
+unwanted descriptors before calling one of the variants of @code{%exec}.
+
+
+Opened directories are represented by @geindex directory objects
+@dfn{directory objects}.
+
+
+File statistics (from @code{%stat}, @code{%lstat}, and @code{%fstat}) and directory
+entries (from @code{%readdir}) are returned in keyword/argument lists.
+
+
+Functions whose name begins with @geindex %
+@dfn{%} report system errors by
+returning a symbol (the CPP macro name of the errno number).  Other
+kinds of error, such as passing a parameter of the wrong type,
+cause exceptions.
+
+
+The documentation for these functions frequently refer to unix man
+pages.  When a man page refers to a constant bound to a CPP macro,
+you should use a symbol having that same name (e.g. the symbol
+@code{O_RDWR} may be passed to the Scheme procedure @code{%open}.)  is
+usually a Scheme variable bound to the same value.  For example,
+@code{O_RDWR}, is defined for use with @code{%open}.
+
+@menu
+* File Permissions::
+* File Descriptor Objects::
+* File Statistics::
+* Modifying Directories::
+* Examining Directories::
+* The Current Directory::
+* The Interface to select::
+* Symbolic Links::
+* Pseudo-Descriptors::
+* Rationale -- Unix File System Procedures::
+@end menu
+
+@need 3200
+
+@node File Permissions
+@section File Permissions
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%chown}@fuindex %chown
+@*
+@example
+@group
+(%chown path owner group)
+SCM scm_sys_chown (SCM path, SCM owner, SCM group);
+@end group
+@group
+@end group
+@end example
+
+Change the owner and group of a file.  
+
+
+@code{path} must be a read-only string.
+
+
+@code{owner} and @code{group} are integer ids.  If either is @code{-1}, that
+id is not changed.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{file-mode->integer}@fuindex file-mode->integer
+@*
+@example
+@group
+(file-mode->integer mode)
+@end group
+@group
+@end group
+@end example
+
+Convert to an integer flags for system calls that accept a @code{mode} parameter.
+
+
+@code{flags} may be an integer, symbol, or list of integers and symbols.
+
+
+Symbols must have the names of CPP macros used with the C functions such as @code{chmod},
+e.g.: @code{S_IRUSR}, or @code{S_IRGRP}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{integer->file-mode}@fuindex integer->file-mode
+@*
+@example
+@group
+(integer->file-mode mode)
+@end group
+@group
+@end group
+@end example
+
+Return a symbolic form of an integer file mode.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%chmod}@fuindex %chmod
+@*
+@example
+@group
+(%chmod path mode)
+@end group
+@group
+@end group
+@end example
+
+Change the permissions of a file.  
+See the manual page @geindex chmod
+@dfn{chmod}.
+
+
+@code{path} must be a read-only string.
+@code{mode} must be an integer.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{numeric-permissions}@fuindex numeric-permissions
+@*
+@example
+@group
+(numeric-permissions permissions)
+@end group
+@group
+@end group
+@end example
+
+Convert the file mode specification @code{permissions} to an integer
+file mode specification.
+
+
+If @code{permissions} is an integer, it is simply returned.
+
+
+If @code{permissions} is a symbol or list of symbols, they are interpreted
+as file mode constants from the set:
+
+@example
+@group
+     !!! be more precise?
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%fchmod}@fuindex %fchmod
+@*
+@example
+@group
+(%fchmod fd mode)
+@end group
+@group
+@end group
+@end example
+
+Change the permissions of an open file.
+See the manual page @geindex fchmod
+@dfn{fchmod}.
+
+
+@code{fd} must be a file descriptor object or integer.
+@code{mode} must be an integer.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{umask}@fuindex umask
+@*
+@example
+@group
+(umask (:optional mode))
+@end group
+@group
+@end group
+@end example
+
+Set the current umask.
+See the manual page @geindex umask
+@dfn{umask}.
+
+
+@code{mode} must be an integer.  If @code{mode} is not supplied, 
+the umask is set to @code{0}.
+
+
+
+
+@need 3200
+
+@node File Descriptor Objects
+@section File Descriptor Objects
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{file-descriptor?}@fuindex file-descriptor?
+@*
+@example
+@group
+(file-descriptor? obj)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{obj} is a file descriptor object, @code{#f} otherwise.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{integer->file-descriptor}@fuindex integer->file-descriptor
+@*
+@example
+@group
+(integer->file-descriptor n)
+@end group
+@group
+@end group
+@end example
+
+If @code{n} is an integer, return a file descriptor object for 
+file descriptor @code{n}. If a descriptor already exists for @code{n}, 
+return that.
+
+
+If @code{n} is already a file descriptor object, return @code{n}.
+
+
+If this descriptor is later garbage collected, file @code{n} will
+be automatically closed.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{integer->existing-file-descriptor}@fuindex integer->existing-file-descriptor
+@*
+@example
+@group
+(integer->existing-file-descriptor n)
+@end group
+@group
+@end group
+@end example
+
+If @code{n} is an integer, return an existing file descriptor object for
+file descriptor @code{n}. If no descriptor already exists for @code{n}, return
+@code{#f}.
+
+
+If @code{n} is already a file descriptor object, return @code{n}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{file-descriptor->integer}@fuindex file-descriptor->integer
+@*
+@example
+@group
+(file-descriptor->integer fd)
+@end group
+@group
+@end group
+@end example
+
+Return the numeric descriptor associated with file descriptor object @code{fd}.
+
+
+If @code{fd} is already an integer, return @code{fd}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{all-file-descriptors}@fuindex all-file-descriptors
+@*
+@example
+@group
+(all-file-descriptors)
+@end group
+@group
+@end group
+@end example
+
+Return a newly constructed list of all file live file descriptor objects.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{autoclose-file-descriptor?}@fuindex autoclose-file-descriptor?
+@*
+@example
+@group
+(autoclose-file-descriptor? fd)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if the file associated with descriptor object @code{fd} will
+be automatically closed when @code{fd} is garbage collected, @code{#f} otherwise.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{set-autoclose-file-descriptor!}@fuindex set-autoclose-file-descriptor!
+@*
+@example
+@group
+(set-autoclose-file-descriptor! fd value)
+@end group
+@group
+@end group
+@end example
+
+Set the flag that determines whether the file associated with descriptor 
+object @code{fd} will be automatically closed when @code{fd} is garbage collected.
+@code{#f} means that file will not be closed; all other values mean that the file
+will be closed.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{fd-is-open?}@fuindex fd-is-open?
+@*
+@example
+@group
+(fd-is-open? fd)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if the descriptor @code{fd} is currently open, 
+@code{#f} if it has been closed.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%pipe}@fuindex %pipe
+@*
+@example
+@group
+(%pipe)
+@end group
+@group
+@end group
+@end example
+
+Return a list containing two file descriptor objects that are
+ends of a newly constructed pipe.
+
+
+See the manual page @geindex pipe
+@dfn{pipe}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{open-flags->integer}@fuindex open-flags->integer
+@*
+@example
+@group
+(open-flags->integer flags)
+@end group
+@group
+@end group
+@end example
+
+Convert flags for the @code{%open} system call to an integer.
+
+
+@code{flags} may be an integer, symbol, or list of integers and symbols.
+
+
+Symbols must have the names of CPP macros used with the C function @code{open()},
+e.g.: @code{O_RDONLY} or @code{O_CREAT}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%open}@fuindex %open
+@*
+@example
+@group
+(%open path :optional flags mode)
+@end group
+@group
+@end group
+@end example
+
+Open a file; return a file descriptor object.
+See the manual page @geindex open
+@dfn{open}.
+
+
+@code{path} must be a read-only string.
+
+
+@code{flags} and @code{mode} must be integers.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%create}@fuindex %create
+@*
+@example
+@group
+(%create path mode)
+@end group
+@group
+@end group
+@end example
+
+Create a new file.
+See the manual page @geindex creat
+@dfn{creat}.
+
+
+@code{path} must be a read-only string.
+@code{mode} must be an integer.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%close}@fuindex %close
+@*
+@example
+@group
+(%close fd)
+@end group
+@group
+@end group
+@end example
+
+Close an open file.
+See the manual page @geindex close
+@dfn{close}.
+
+
+@code{fd} must be a file descriptor object or integer.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%write}@fuindex %write
+@*
+@example
+@group
+(%write fd string)
+@end group
+@group
+@end group
+@end example
+
+Write the contents of @code{string} on descriptor @code{fd}.
+See the manual page @geindex write
+@dfn{write}.
+
+
+@code{fd} must be a file descriptor object or integer.
+@code{string} must be a read-only string.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%write-retry}@fuindex %write-retry
+@*
+@example
+@group
+(%write-retry fd string)
+@end group
+@group
+@end group
+@end example
+
+Write the contents of @code{string} on descriptor @code{fd}.
+See the manual page @code{vu_write_retry}.
+
+
+@code{fd} must be a file descriptor object or integer.
+@code{string} must be a read-only string.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%read}@fuindex %read
+@*
+@example
+@group
+(%read fd string)
+@end group
+@group
+@end group
+@end example
+
+Read data from a file into a string.
+See the manual page @geindex read
+@dfn{read}.
+
+
+@code{fd} must be a file descriptor object or integer.
+@code{string} must be a writable string.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%read-retry}@fuindex %read-retry
+@*
+@example
+@group
+(%read-retry fd string)
+@end group
+@group
+@end group
+@end example
+
+Read data from a file into a string.
+See the manual page @geindex vu_read_retry
+@dfn{vu_read_retry}.
+
+
+@code{fd} must be a file descriptor object or integer.
+@code{string} must be a writable string.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%fsync}@fuindex %fsync
+@*
+@example
+@group
+(%fsync fd)
+@end group
+@group
+@end group
+@end example
+
+Flush changes to an open file to disk.
+See the manual page @geindex fsync
+@dfn{fsync}.
+
+
+@code{fd} must be a file descriptor object or integer.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%ftruncate}@fuindex %ftruncate
+@*
+@example
+@group
+(%ftruncate fd where)
+@end group
+@group
+@end group
+@end example
+
+Modify the size of a file open for writing.
+See the manual page @geindex ftruncate
+@dfn{ftruncate}.
+
+
+@code{fd} must be a file descriptor object or integer.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{lseek-flag->integer}@fuindex lseek-flag->integer
+@*
+@example
+@group
+(lseek-flag->integer flag)
+@end group
+@group
+@end group
+@end example
+
+Convert a flag for the @code{%lseek} system call to an integer.
+
+
+@code{flag} may be an integer or symbol.
+
+
+Symbols must have the names of CPP macros used with the C function @code{lseek()},
+e.g.: @code{SEEK_CUR} or @code{SEEK_SET}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%lseek}@fuindex %lseek
+@*
+@example
+@group
+(%lseek fd offset :optional whence)
+@end group
+@group
+@end group
+@end example
+
+Reposition the offset of the file descriptor @code{fd}.
+See the manual page @geindex leek
+@dfn{leek}.
+
+
+@code{fd} must be a file descriptor object or integer.
+@code{offset} must be an integer.
+@code{whence}, if provided, must be an integer.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%dup}@fuindex %dup
+@*
+@example
+@group
+(%dup fd)
+@end group
+@group
+@end group
+@end example
+
+Create a new file descriptor which is a copy of @code{fd}.
+See the manual page @geindex dup
+@dfn{dup}.
+
+
+@code{fd} must be a file descriptor object or integer.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%dup2}@fuindex %dup2
+@*
+@example
+@group
+(%dup2 oldfd newfd)
+@end group
+@group
+@end group
+@end example
+
+Copy file descriptor @code{oldfd} to descriptor @code{newfd}.
+See the manual page @geindex dup2
+@dfn{dup2}.
+
+
+@code{oldfd} and @code{newfd} must be a file descriptor objects or integers.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%move-fd}@fuindex %move-fd
+@*
+@example
+@group
+(%move-fd oldfd newfd)
+@end group
+@group
+@end group
+@end example
+
+Move descriptor @code{oldfd} to descriptor @code{newfd}.  This moves all I/O
+system state for @code{oldfd} to @code{newfd}.  For example, if @code{oldfd} is
+buffered, the buffer is moved to @code{newfd}.  Return the new
+descriptor.
+
+
+If @code{oldfd} and @code{newfd} are the same, return @code{oldfd} with
+no side effects.
+
+
+If @code{newfd} is @code{-1} or @code{#f}, allocate a new descriptor.
+
+
+If an fd object exists for @code{oldfd}, its descriptor number is changed
+to the target descriptor.
+
+
+If an fd object exists for @code{newfd}, its descriptor number is changed
+to the source descriptor, which when this procedure returns, will have
+have been closed.
+
+
+Return a descriptor object for the target descriptor.  If @code{oldfd} is
+a descriptor object, or if a descriptor object previously existed for @code{oldfd},
+that object is returned.  Otherwise, a new descriptor object is returned
+with the @code{close-on-gc} flag set @code{#t}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%fstat}@fuindex %fstat
+@*
+@example
+@group
+(%fstat fd)
+@end group
+@group
+@end group
+@end example
+
+Return statistics about a file.
+
+
+This function returns a vector.  The function
+@code{statbuf-ref} in the module @code{(unix structures)} can
+be used to access statistics by name.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%fcntl}@fuindex %fcntl
+@*
+@example
+@group
+(%fcntl fd cmd :optional arg)
+@end group
+@group
+@end group
+@end example
+
+@code{fcntl} is pretty random.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%isatty?}@fuindex %isatty?
+@*
+@example
+@group
+(%isatty? fd)
+@end group
+@group
+@end group
+@end example
+
+Return @code{#t} if @code{fd} is a descriptor for a tty device.
+See the manual page @geindex isatty
+@dfn{isatty}.
+
+
+@code{fd} must be a file descriptor object or integer.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%ttyname}@fuindex %ttyname
+@*
+@example
+@group
+(%ttyname descriptor)
+@end group
+@group
+@end group
+@end example
+
+Return the name of the terminal device of the indicated file.
+@code{descriptor} may be an integer file descriptor, a file descriptor
+object, or a port.
+
+
+See the manual page @geindex ttyname
+@dfn{ttyname}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%ctermid}@fuindex %ctermid
+@*
+@example
+@group
+(%ctermid)
+@end group
+@group
+@end group
+@end example
+
+Return the name of the device of the controlling terminal.
+See the manual page @geindex ctermid
+@dfn{ctermid}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%tcgetpgrp}@fuindex %tcgetpgrp
+@*
+@example
+@group
+(%tcgetpgrp descriptor)
+@end group
+@group
+@end group
+@end example
+
+Return the process group id of the foreground process of
+the indicated device.
+
+
+@code{descriptor} may be an integer file descriptor, a file descriptor
+object, or a port.
+
+
+See the manual page @geindex tcgetpgrp
+@dfn{tcgetpgrp}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%tcsetpgrp}@fuindex %tcsetpgrp
+@*
+@example
+@group
+(%tcsetpgrp descriptor process-group-id)
+@end group
+@group
+@end group
+@end example
+
+Set the foreground process group id of the indicated device.
+
+
+@code{descriptor} may be an integer file descriptor, a file descriptor
+object, or a port.
+
+
+@code{process-group-id} must be an integer.
+
+
+See the manual page @geindex tcsetpgrp
+@dfn{tcsetpgrp}.
+
+
+
+
+@need 3200
+
+@node File Statistics
+@section File Statistics
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%stat}@fuindex %stat
+@*
+@example
+@group
+(%stat path)
+@end group
+@group
+@end group
+@end example
+
+Return statistics about a file.
+See the manual page @geindex stat
+@dfn{stat}.
+
+
+@code{path} must be a read-only string.
+
+
+This function returns a list of keywords and arguments to 
+keywords.  E.g.:
+
+@example
+@group
+     (%stat "/etc/passwd")
+     =>
+     (:permissions (S_IROTH S_IRGRP S_IWUSR S_IRUSR)
+      :permission-bits 420
+      :type S_IFREG
+@end group
+@group
+      :dev 131072
+      :ino 378
+      :nlink 1
+      :uid 0
+@end group
+@group
+      :gid 0
+      :size 1010
+      :atime 995807934
+      :mtime 963714308
+      :ctime 963714308)
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{file-exists?}@fuindex file-exists?
+@*
+@example
+@group
+(file-exists? f)
+@end group
+@group
+@end group
+@end example
+
+Using @code{%stat}, return @code{#t} if the named file exits.
+
+
+This function returns @code{#f} if the file exists as a symbolic
+link, but the link points to a non-existent file.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{file-is-directory?}@fuindex file-is-directory?
+@*
+@example
+@group
+(file-is-directory? filename)
+@end group
+@group
+@end group
+@end example
+
+Using @code{%stat}, return @code{#t} if @code{filename} is the name of an existing
+directory.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%utime}@fuindex %utime
+@*
+@example
+@group
+(%utime pathname :optional accesstime modtime)
+@end group
+@group
+@end group
+@end example
+
+Set the access and modification times for a file.
+@code{accesstime} and @code{modtime} should be integers or SCM_BOOL_F, 
+if provided.  If either is ommitted, the current time is
+used.
+
+
+See the manual page @geindex utime
+@dfn{utime}.
+
+
+
+
+@need 3200
+
+@node Modifying Directories
+@section Modifying Directories
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%link}@fuindex %link
+@*
+@example
+@group
+(%link oldpath newpath)
+@end group
+@group
+@end group
+@end example
+
+Create a new link to an existing file.
+See the manual page @geindex link
+@dfn{link}.
+
+
+@code{oldpath} and @code{newpath} must be read-only strings.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%unlink}@fuindex %unlink
+@*
+@example
+@group
+(%unlink path)
+@end group
+@group
+@end group
+@end example
+
+Remove a link to a file.
+See the manual page @geindex unlink
+@dfn{unlink}.
+
+
+@code{path} must be a read-only string.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%rename}@fuindex %rename
+@*
+@example
+@group
+(%rename oldpath newpath)
+@end group
+@group
+@end group
+@end example
+
+Rename a file.
+See the manual page @geindex rename
+@dfn{rename}.
+
+
+@code{oldpath} and @code{newpath} must be read-only strings.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%mkdir}@fuindex %mkdir
+@*
+@example
+@group
+(%mkdir path :optional mode)
+@end group
+@group
+@end group
+@end example
+
+Create a new directory.
+See the manual page @geindex mkdir
+@dfn{mkdir}.
+
+
+@code{path} must be a read-only string.
+@code{mode}, if provided, must be an integer.
+
+
+If @code{mode} is not provided, the mode #o777 is used.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%rmdir}@fuindex %rmdir
+@*
+@example
+@group
+(%rmdir path)
+@end group
+@group
+@end group
+@end example
+
+Remove a directory.
+See the manual page @geindex rmdir
+@dfn{rmdir}.
+
+
+@code{path} must be a read-only string.
+
+
+
+
+@need 3200
+
+@node Examining Directories
+@section Examining Directories
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%opendir}@fuindex %opendir
+@*
+@example
+@group
+(%opendir path)
+@end group
+@group
+@end group
+@end example
+
+Open a directory.
+See the manual page @geindex opendir
+@dfn{opendir}.
+
+
+@code{path} must be a read-only string.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%readdirname}@fuindex %readdirname
+@*
+@example
+@group
+(%readdirname directory)
+@end group
+@group
+@end group
+@end example
+
+Return the next file name from a directory.
+
+
+@code{directory} must be a directory object (see @code{%opendir}).
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%closedir}@fuindex %closedir
+@*
+@example
+@group
+(%closedir directory)
+@end group
+@group
+@end group
+@end example
+
+Close a directory stream.
+See the manual page @geindex closedir
+@dfn{closedir}.
+
+
+@code{directory} must be a directory object (see @code{%opendir}).
+
+
+
+
+@need 3200
+
+@node The Current Directory
+@section The Current Directory
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%chdir}@fuindex %chdir
+@*
+@example
+@group
+(%chdir path)
+@end group
+@group
+@end group
+@end example
+
+Change the current working directory.
+See the manual page @geindex chdir
+@dfn{chdir}.
+
+
+@code{path} must be a read-only string.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%fchdir}@fuindex %fchdir
+@*
+@example
+@group
+(%fchdir fd)
+@end group
+@group
+@end group
+@end example
+
+Change directory to the directory open as descriptor @code{fd}.
+See the manual page @geindex fchdir
+@dfn{fchdir}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%getcwd}@fuindex %getcwd
+@*
+@example
+@group
+(%getcwd)
+@end group
+@group
+@end group
+@end example
+
+Return the current working directory.
+See the manual page @geindex getcwd
+@dfn{getcwd}.
+
+
+
+
+@need 3200
+
+@node The Interface to select
+@section The Interface to select
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%select}@fuindex %select
+@*
+@example
+@group
+(%select reads writes exceptions :optional seconds milliseconds)
+@end group
+@group
+@end group
+@end example
+
+Return a list of three lists: descriptors ready to be read,
+descriptors ready to be written, and descriptors in exceptional
+states.
+
+
+See the manual page @geindex select
+@dfn{select}.
+
+
+@code{reads}, @code{writes}, and @code{exceptions} must be lists of descriptor
+objects or integers.
+
+
+@code{seconds} and @code{milliseconds}, if provided, must be integers.
+If not provided, those parameters default to @code{0}.
+
+
+
+
+@need 3200
+
+@node Symbolic Links
+@section Symbolic Links
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%symlink}@fuindex %symlink
+@*
+@example
+@group
+(%symlink oldpath newpath)
+@end group
+@group
+@end group
+@end example
+
+Create a symbolic link.
+See the manual page @geindex symlink
+@dfn{symlink}.
+
+
+@code{oldpath} and @code{newpath} must be read-only strings.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%readlink}@fuindex %readlink
+@*
+@example
+@group
+(%readlink path)
+@end group
+@group
+@end group
+@end example
+
+Return the contents of a symbolic link.
+See the manual page @geindex readlink
+@dfn{readlink}.
+
+
+@code{path} must be a read-only string.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%lstat}@fuindex %lstat
+@*
+@example
+@group
+(%lstat path)
+@end group
+@group
+@end group
+@end example
+
+Return file statistics for a symbolic link.
+See the manual page @geindex lstat
+@dfn{lstat}.
+
+
+@code{path} must be a read-only string.
+
+
+This function returns a vector.  The function
+@code{statbuf-ref} in the module @code{(unix structures)} can
+be used to access statistics by name.
+
+
+
+
+@need 3200
+
+@node Pseudo-Descriptors
+@section Pseudo-Descriptors
+
+Pseudo-descriptors are descriptor objects (ports) that do not 
+correspond to a descriptor maintained by the operating system.
+They are used, for example, to implement string ports.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%reserv}@fuindex %reserv
+@*
+@example
+@group
+(%reserv flags)
+@end group
+@group
+@end group
+@end example
+
+Allocate a file descriptor by using @code{%open} to open @code{"/dev/null"}.
+
+
+@code{flags} is as the parameter of the same name to @code{%open}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{%reserv-pseudo}@fuindex %reserv-pseudo
+@*
+@example
+@group
+(%reserv-pseudo flags)
+@end group
+@group
+@end group
+@end example
+
+Reserve a pseudo file descriptor suitable for use with
+@code{set-fd-handler}.
+
+
+@code{flags} which may be one of @code{O_RDONLY}, @code{O_RDWR} etc.
+
+
+A pseudo file descriptor can be used with file system functions and
+is guaranteed not to be the same as any real file descriptor.
+
+
+
+
+@need 3200
+
+@node Rationale -- Unix File System Procedures
+@section Rationale -- Unix File System Procedures
+
+Unix file descriptors are represented as integers in C.
+
+
+A new Scheme type was introduced for descriptors in order to 
+integrate descriptor handling sanely with garbage collection.
+
+
+Consider this code:
+
+@example
+@group
+             (lambda (data)
+               (let ((fd (%open "/tmp/,x" O_WRONLY #o777)))
+                 ...
+                 (%write fd data)
+                 ...
+                 (%close fd)))
+@end group
+@group
+@end group
+@end example
+
+If @code{fd} were simply an integer, an exception-causing error anywhere
+in the body of the @code{let} would cause a descriptor leak.  Descriptor
+objects prevent this.
+
+
+
+
+
+
+

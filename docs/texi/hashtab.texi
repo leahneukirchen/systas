@@ -1,0 +1,455 @@
+@need 3200
+
+@node Hash Tables
+@chapter Hash Tables
+
+A hash table is a vector whose elements are association lists (see
+@ref{Association Lists} and @ref{Vectors}).  If the vector has
+@code{N} elements, each @code{key} is stored on the association list at
+@code{(hash-fn key N)}.
+
+
+There are five kinds of hash function:
+
+@example
+@group
+     (get-handle hash-table key) => (key . value) | #f
+     (create-handle hash-table key) => (key . value)
+     (ref hash-table key :optional default) => value | default
+     (set! hash-table key value) => hash-table
+     (remove! hash-table key value) => hash-table
+@end group
+@group
+@end group
+@end example
+
+For each of those five kinds of function, four implementations are
+provided:
+
+@example
+@group
+     hashq-  ; hash function `hashq' and association function `assq'
+     hashv-  ; hash function `hashv' and association function `assv'
+     hash-   ; hash function `hash' and association function `assoc'
+     hashx-  ; hash function and association function are parameters
+@end group
+@group
+@end group
+@end example
+
+For example, there are:
+
+@example
+@group
+     (hashq-ref hash-table key)
+     (hashv-ref hash-table key :optional default)
+     (hash-ref hash-table key)
+     (hashx-ref hash-fn assoc-fn hash-table key)
+@end group
+@group
+@end group
+@end example
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{make-hash-table}@fuindex make-hash-table
+@*
+@example
+@group
+(make-hash-table :optional n)
+@end group
+@group
+@end group
+@end example
+
+Make a hash table (vector) with @code{n} slots (default: @code{63}).
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{hashq-get-handle}@fuindex hashq-get-handle
+@*
+@example
+@group
+(hashq-get-handle hash-table obj)
+@end group
+@group
+@end group
+@end example
+
+Return a key-value pair for @code{obj} in @code{hash-table}. Return @code{#f}
+if no such pair exists.
+
+
+Keys are compared using @code{eq?}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{hashq-create-handle}@fuindex hashq-create-handle
+@*
+@example
+@group
+(hashq-create-handle hash-table obj)
+@end group
+@group
+@end group
+@end example
+
+Return a key-value pair for @code{obj} in @code{hash-table}, creating it if
+necessary.
+
+
+Keys are compared using @code{eq?}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{hashq-ref}@fuindex hashq-ref
+@*
+@example
+@group
+(hashq-ref hash-table key (:optional default))
+@end group
+@group
+@end group
+@end example
+
+Return the value associated with @code{key} in @code{hash-table}.  If there
+is no such value, return @code{default} or @code{#f}.
+
+
+Keys are compared using @code{eq?}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{hashq-set!}@fuindex hashq-set!
+@*
+@example
+@group
+(hashq-set! hash-table key value)
+@end group
+@group
+@end group
+@end example
+
+Set the value associated with @code{key} in @code{hash-table}.
+
+
+Keys are compared using @code{eq?}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{hashq-remove!}@fuindex hashq-remove!
+@*
+@example
+@group
+(hashq-remove! hash-table key)
+@end group
+@group
+@end group
+@end example
+
+Remove the value associated with @code{key} in @code{hash-table}.
+
+
+Keys are compared using @code{eq?}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{hashv-get-handle}@fuindex hashv-get-handle
+@*
+@example
+@group
+(hashv-get-handle hash-table obj)
+@end group
+@group
+@end group
+@end example
+
+Return a key-value pair for @code{obj} in @code{hash-table}. Return @code{#f}
+if no such pair exists.
+
+
+Keys are compared using @code{eqv?}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{hashv-create-handle}@fuindex hashv-create-handle
+@*
+@example
+@group
+(hashv-create-handle hash-table obj)
+@end group
+@group
+@end group
+@end example
+
+Return a key-value pair for @code{obj} in @code{hash-table} creating it if
+necessary.
+
+
+Keys are compared using @code{eqv?}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{hashv-ref}@fuindex hashv-ref
+@*
+@example
+@group
+(hashv-ref hash-table key (:optional default))
+@end group
+@group
+@end group
+@end example
+
+Return the value associated with @code{key} in @code{hash-table}.
+If there is no such value, return @code{default} or @code{#f}.
+
+
+Keys are compared using @code{eqv?}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{hashv-set!}@fuindex hashv-set!
+@*
+@example
+@group
+(hashv-set! hash-table key value)
+@end group
+@group
+@end group
+@end example
+
+Set the value associated with @code{key} in @code{hash-table}.
+
+
+Keys are compared using @code{eqv?}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{hashv-remove!}@fuindex hashv-remove!
+@*
+@example
+@group
+(hashv-remove! hash-table key)
+@end group
+@group
+@end group
+@end example
+
+Remove the value associated with @code{key} in @code{hash-table}.
+
+
+Keys are compared using @code{eqv?}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{hash-get-handle}@fuindex hash-get-handle
+@*
+@example
+@group
+(hash-get-handle hash-table obj)
+@end group
+@group
+@end group
+@end example
+
+Return a key-value pair for @code{obj} in @code{hash-table}. Return @code{#f}
+if no such pair exists.
+
+
+Keys are compared using @code{equal?}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{hash-create-handle}@fuindex hash-create-handle
+@*
+@example
+@group
+(hash-create-handle hash-table obj)
+@end group
+@group
+@end group
+@end example
+
+Return (perhaps create) a key-value pair for @code{obj} in @code{hash-table}.
+
+
+Keys are compared using @code{equal?}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{hash-ref}@fuindex hash-ref
+@*
+@example
+@group
+(hash-ref hash-table key (:optional default))
+@end group
+@group
+@end group
+@end example
+
+Return the value associated with @code{key} in @code{hash-table}.  If there
+is no such value, return @code{default} or @code{#f}.
+
+
+Keys are compared using @code{equal?}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{hash-set!}@fuindex hash-set!
+@*
+@example
+@group
+(hash-set! hash-table key value)
+@end group
+@group
+@end group
+@end example
+
+Set the value associated with @code{key} in @code{hash-table}.
+
+
+Keys are compared using @code{equal?}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{hash-remove!}@fuindex hash-remove!
+@*
+@example
+@group
+(hash-remove! hash-table key)
+@end group
+@group
+@end group
+@end example
+
+Remove the value associated with @code{key} in @code{hash-table}.
+
+
+Keys are compared using @code{equal?}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{hashx-get-handle}@fuindex hashx-get-handle
+@*
+@example
+@group
+(hashx-get-handle hash-fn assoc-fn hash-table obj)
+@end group
+@group
+@end group
+@end example
+
+Return a key-value pair for @code{obj} in @code{hash-table}. Return @code{#f}
+if no such pair exists.
+
+
+Hash values are computed using @code{hash-fn}.   Buckets are searched 
+using @code{assoc-fn}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{hashx-create-handle}@fuindex hashx-create-handle
+@*
+@example
+@group
+(hashx-create-handle hash-fn assoc-fn hash-table obj)
+@end group
+@group
+@end group
+@end example
+
+Return a key-value pair for @code{obj} in @code{hash-table}, creating it if
+necessary.
+
+
+Hash values are computed using @code{hash-fn}.   Buckets are searched 
+using @code{assoc-fn}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{hashx-ref}@fuindex hashx-ref
+@*
+@example
+@group
+(hashx-ref hash-fn assoc-fn hash-table key (:optional default))
+@end group
+@group
+@end group
+@end example
+
+Return the value associated with @code{key} in @code{hash-table}. Return
+@code{default} or @code{#f} if no such value exists.
+
+
+Hash values are computed using @code{hash-fn}.   Buckets are searched 
+using @code{assoc-fn}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{hashx-set!}@fuindex hashx-set!
+@*
+@example
+@group
+(hashx-set! hash-fn assoc-fn hash-table key value)
+@end group
+@group
+@end group
+@end example
+
+Set the value associated with @code{key} in @code{hash-table}.
+
+
+Hash values are computed using @code{hash-fn}.   Buckets are searched 
+using @code{assoc-fn}.
+
+@sp 1
+@need 1750
+@noindent
+@b{* Function} @code{hashx-remove}@fuindex hashx-remove
+@*
+@example
+@group
+(hashx-remove hash-fn assoc-fn hash-table key)
+@end group
+@group
+@end group
+@end example
+
+Remove the value associated with @code{key} in @code{hash-table}.
+
+
+Hash values are computed using @code{hash-fn}.   Buckets are searched 
+using @code{assoc-fn} and the key-value pair removed using @code{del}.
+
+@need 3200
+
+@section Rationale -- Hash Tables
+
+The hash table functions follow the general pattern of interfaces
+for dictionaries (see @ref{Rationale -- Dictionaries in General}).
+
+
+
+
+
+
+

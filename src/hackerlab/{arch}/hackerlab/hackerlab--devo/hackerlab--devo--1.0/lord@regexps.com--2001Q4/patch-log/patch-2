@@ -1,0 +1,23 @@
+Revision: hackerlab--devo--1.0--patch-2
+Archive: lord@regexps.com--2001Q4
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu Jan  3 05:31:01 PST 2002
+Standard-date: 2002-01-03
+Summary: bug fixes in networking code
+Keywords: 
+New-files: {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--2001Q4/patch-log/patch-2
+New-directories: {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--public-2001Q4
+  {arch}/hackerlab/hackerlab--devo/hackerlab--devo--1.0/lord@regexps.com--public-2001Q4/patch-log
+Modified-files: ChangeLog vu-network/url-socket.c vu/safe-vu-utils-vfdbuf.c
+New-patches: lord@regexps.com--2001Q4/hackerlab--devo--1.0--patch-2
+
+
+A few small bug-fixes.
+
+In `url-socket.c': remember to initialize teh `sin_len' field of a
+`struct sockaddr_in'.  Remember to clear a parameters structure
+when not all of the fields are going to be filled in.
+
+In `safe-vu-utils-vfdbuf.c': print a more meaningful error message
+in one case.
+

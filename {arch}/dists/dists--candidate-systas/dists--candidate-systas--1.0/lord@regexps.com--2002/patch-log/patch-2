@@ -1,0 +1,152 @@
+Revision: dists--candidate-systas--1.0--patch-2
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Tue Jan 15 00:49:20 PST 2002
+Standard-date: 2002-01-15
+Summary: added pre-formatted documentation
+Keywords: 
+New-files: {arch}/dists/dists--candidate-systas/dists--candidate-systas--1.0/lord@regexps.com--2002/patch-log/patch-2
+  doc/html/.arch-ids/=SYSTAS.html.id
+  doc/html/.arch-ids/alist.html.id
+  doc/html/.arch-ids/async.html.id
+  doc/html/.arch-ids/boolean.html.id
+  doc/html/.arch-ids/chars.html.id
+  doc/html/.arch-ids/continuations.html.id
+  doc/html/.arch-ids/credits.html.id
+  doc/html/.arch-ids/debug.html.id
+  doc/html/.arch-ids/dictionaries.html.id
+  doc/html/.arch-ids/emacs.html.id
+  doc/html/.arch-ids/eq.html.id
+  doc/html/.arch-ids/error.html.id
+  doc/html/.arch-ids/eval.html.id
+  doc/html/.arch-ids/fdsocket.html.id
+  doc/html/.arch-ids/filesys.html.id
+  doc/html/.arch-ids/gc.html.id
+  doc/html/.arch-ids/hash.html.id
+  doc/html/.arch-ids/dynwind.html.id
+  doc/html/.arch-ids/hashtab.html.id
+  doc/html/.arch-ids/identifier-index.html.id
+  doc/html/.arch-ids/introduction.html.id
+  doc/html/.arch-ids/invocation.html.id
+  doc/html/.arch-ids/kw.html.id
+  doc/html/.arch-ids/list.html.id
+  doc/html/.arch-ids/load.html.id
+  doc/html/.arch-ids/macros.html.id
+  doc/html/.arch-ids/modules.html.id
+  doc/html/.arch-ids/numbers.html.id
+  doc/html/.arch-ids/pairs.html.id
+  doc/html/.arch-ids/ports.html.id
+  doc/html/.arch-ids/procs.html.id
+  doc/html/.arch-ids/promise.html.id
+  doc/html/.arch-ids/read-print.html.id
+  doc/html/.arch-ids/records.html.id
+  doc/html/.arch-ids/rgx.html.id
+  doc/html/.arch-ids/scheme.html.id
+  doc/html/.arch-ids/stime.html.id
+  doc/html/.arch-ids/strings.html.id
+  doc/html/.arch-ids/struct.html.id
+  doc/html/.arch-ids/symbols.html.id
+  doc/html/.arch-ids/syntax.html.id
+  doc/html/.arch-ids/systas.html.id
+  doc/html/.arch-ids/system.html.id
+  doc/html/.arch-ids/throw.html.id
+  doc/html/.arch-ids/values.html.id
+  doc/html/.arch-ids/variable.html.id
+  doc/html/.arch-ids/vectors.html.id
+  doc/html/.arch-ids/weaks.html.id
+  doc/ps/.arch-ids/systas.ps.id
+  doc/texi/.arch-ids/alist.texi.id
+  doc/texi/.arch-ids/async.texi.id
+  doc/texi/.arch-ids/boolean.texi.id
+  doc/texi/.arch-ids/chars.texi.id
+  doc/texi/.arch-ids/continuations.texi.id
+  doc/texi/.arch-ids/credits.texi.id
+  doc/texi/.arch-ids/debug.texi.id
+  doc/texi/.arch-ids/dictionaries.texi.id
+  doc/texi/.arch-ids/eq.texi.id
+  doc/texi/.arch-ids/error.texi.id
+  doc/texi/.arch-ids/eval.texi.id
+  doc/texi/.arch-ids/fdsocket.texi.id
+  doc/texi/.arch-ids/filesys.texi.id
+  doc/texi/.arch-ids/gc.texi.id
+  doc/texi/.arch-ids/hash.texi.id
+  doc/texi/.arch-ids/dynwind.texi.id
+  doc/texi/.arch-ids/emacs.texi.id
+  doc/texi/.arch-ids/hashtab.texi.id
+  doc/texi/.arch-ids/identifier-index.texi.id
+  doc/texi/.arch-ids/introduction.texi.id
+  doc/texi/.arch-ids/invocation.texi.id
+  doc/texi/.arch-ids/kw.texi.id
+  doc/texi/.arch-ids/list.texi.id
+  doc/texi/.arch-ids/load.texi.id
+  doc/texi/.arch-ids/macros.texi.id
+  doc/texi/.arch-ids/modules.texi.id
+  doc/texi/.arch-ids/numbers.texi.id
+  doc/texi/.arch-ids/pairs.texi.id
+  doc/texi/.arch-ids/ports.texi.id
+  doc/texi/.arch-ids/procs.texi.id
+  doc/texi/.arch-ids/promise.texi.id
+  doc/texi/.arch-ids/read-print.texi.id
+  doc/texi/.arch-ids/records.texi.id
+  doc/texi/.arch-ids/rgx.texi.id
+  doc/texi/.arch-ids/scheme.texi.id
+  doc/texi/.arch-ids/stime.texi.id
+  doc/texi/.arch-ids/strings.texi.id
+  doc/texi/.arch-ids/struct.texi.id
+  doc/texi/.arch-ids/symbols.texi.id
+  doc/texi/.arch-ids/syntax.texi.id
+  doc/texi/.arch-ids/systas.texi.id
+  doc/texi/.arch-ids/system.texi.id
+  doc/texi/.arch-ids/throw.texi.id
+  doc/texi/.arch-ids/values.texi.id
+  doc/texi/.arch-ids/variable.texi.id
+  doc/texi/.arch-ids/vectors.texi.id
+  doc/texi/.arch-ids/weaks.texi.id doc/html/=SYSTAS.html
+  doc/html/alist.html doc/html/async.html doc/html/boolean.html
+  doc/html/chars.html doc/html/continuations.html
+  doc/html/credits.html doc/html/debug.html
+  doc/html/dictionaries.html doc/html/emacs.html
+  doc/html/eq.html doc/html/error.html doc/html/eval.html
+  doc/html/fdsocket.html doc/html/filesys.html doc/html/gc.html
+  doc/html/hash.html doc/html/dynwind.html
+  doc/html/hashtab.html doc/html/identifier-index.html
+  doc/html/introduction.html doc/html/invocation.html
+  doc/html/kw.html doc/html/list.html doc/html/load.html
+  doc/html/macros.html doc/html/modules.html
+  doc/html/numbers.html doc/html/pairs.html doc/html/ports.html
+  doc/html/procs.html doc/html/promise.html
+  doc/html/read-print.html doc/html/records.html
+  doc/html/rgx.html doc/html/scheme.html doc/html/stime.html
+  doc/html/strings.html doc/html/struct.html
+  doc/html/symbols.html doc/html/syntax.html
+  doc/html/systas.html doc/html/system.html doc/html/throw.html
+  doc/html/values.html doc/html/variable.html
+  doc/html/vectors.html doc/html/weaks.html doc/ps/systas.ps
+  doc/texi/alist.texi doc/texi/async.texi doc/texi/boolean.texi
+  doc/texi/chars.texi doc/texi/continuations.texi
+  doc/texi/credits.texi doc/texi/debug.texi
+  doc/texi/dictionaries.texi doc/texi/eq.texi
+  doc/texi/error.texi doc/texi/eval.texi doc/texi/fdsocket.texi
+  doc/texi/filesys.texi doc/texi/gc.texi doc/texi/hash.texi
+  doc/texi/dynwind.texi doc/texi/emacs.texi
+  doc/texi/hashtab.texi doc/texi/identifier-index.texi
+  doc/texi/introduction.texi doc/texi/invocation.texi
+  doc/texi/kw.texi doc/texi/list.texi doc/texi/load.texi
+  doc/texi/macros.texi doc/texi/modules.texi
+  doc/texi/numbers.texi doc/texi/pairs.texi doc/texi/ports.texi
+  doc/texi/procs.texi doc/texi/promise.texi
+  doc/texi/read-print.texi doc/texi/records.texi
+  doc/texi/rgx.texi doc/texi/scheme.texi doc/texi/stime.texi
+  doc/texi/strings.texi doc/texi/struct.texi
+  doc/texi/symbols.texi doc/texi/syntax.texi
+  doc/texi/systas.texi doc/texi/system.texi doc/texi/throw.texi
+  doc/texi/values.texi doc/texi/variable.texi
+  doc/texi/vectors.texi doc/texi/weaks.texi
+New-directories: doc doc/html doc/ps doc/texi doc/html/.arch-ids doc/ps/.arch-ids
+  doc/texi/.arch-ids
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+New-patches: lord@regexps.com--2002/dists--candidate-systas--1.0--patch-2
+
+Added pre-formatted documentation.
+

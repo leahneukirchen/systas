@@ -1,0 +1,34 @@
+
+			    systas Scheme
+
+
+Systas Scheme is a Scheme interpreter with many features for unix
+systems programming and text processing.  
+
+For more details, see the longer README file (in "src/systas/=README")
+the documentation (in "doc/systas"), and the labnotes (in
+"src/Labnotes/SystasScheme.d").
+
+systas is distributed from:
+
+	http://www.regexps.com
+
+Bugs, questions, port reports, patches, offers to help, etc. should be
+sent to the author:
+
+	bug-systas@regexps.com
+
+Installation instructions are found in the file "=INSTALL".
+
+In order to compile systas, you must have "GNU Make" (available
+from "http://www.gnu.org").  Aside from that, there are no prerequists
+other than a fairly standard Posix environment ("libc", common shell
+utilities, C compiler) with networking functions.
+
+
+Have fun,
+Tom Lord
+
+
+# tag: Tom Lord Sat Jan 12 13:43:31 2002 (=README.d/=README.systas)
+#

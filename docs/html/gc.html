@@ -1,0 +1,112 @@
+<html>
+<head>
+<title>Garbage Collection</title>
+</head>
+<body>
+
+<a name="Garbage_Collection"></a>
+
+
+
+<h2 align=center>Garbage Collection</h2>
+
+
+
+
+<small>
+<b>up: </b><a href="systas.html#Systas_Scheme">Systas Scheme</a></br>
+
+
+</small>
+<br>
+
+
+
+
+
+
+<p>The garbage collector in Systas Scheme is a simple mark-sweeep collector
+that conservatively scans the C stack for GC roots.
+</p><p><strong><u>Note:</u></strong> Conservative stack scanning is highly problematic for applications
+requiring rock-solid reliability and performance.  Some future release
+of Systas will use a different GC strategy.
+</p><p><b><u>Function</u> <code><a name="gc-stats"></a><a name="index-pt:0"></a>
+gc-stats
+</code></b><br>
+<pre>
+(gc-stats)
+
+</pre>
+<p>Return a list of information from the garbage collector.
+The format of the list is currently &quot;unspecified&quot; and
+is likely to change in some future release.  Currently,
+a typical list of gc stats looks like this:
+</p><pre>
+     ((gc-time-taken . 4)
+      (cells-allocated . 25093)
+      (cell-heap-size . 32768)
+      (bytes-malloced . 26866)
+      (gc-malloc-threshold . 100000)
+      (cell-heap-segments (135348224 . 135086080)))
+
+</pre>
+
+<br>
+<br><p><b><u>Function</u> <code><a name="object-address"></a><a name="index-pt:1"></a>
+object-address
+</code></b><br>
+<pre>
+(object-address obj)
+
+</pre>
+<p>Return the address in memory or binary representation of <code>obj</code>
+.
+</p><p>This function is mostly useful for debugging.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="gc"></a><a name="index-pt:2"></a>
+gc
+</code></b><br>
+<pre>
+(gc)
+
+</pre>
+<p>Invoke the garbage collector.
+</p>
+<br>
+<br><p><b><u>Function</u> <code><a name="unhash-names"></a><a name="index-pt:3"></a>
+unhash-names
+</code></b><br>
+<pre>
+(unhash-names names)
+
+</pre>
+<p><code>names</code>
+ is a list of symbols.
+</p><p>This function searches for instances of code compiled by <code>eval</code>
+
+containing references to top-level variables whose names are
+included in the <code>names</code>
+.   All such references are &quot;uncompiled&quot;,
+meaning that when next evaluated, those variables will be 
+re-resolved by the module system.
+</p><p>This is mostly useful for robustly re-loading modules.
+</p><p>See <a href="eval.html#Understanding_How_Evaluation_Works_in_Systas_Scheme">Understanding How Evaluation Works in Systas Scheme</a>.
+</p>
+<br>
+<br>
+
+
+
+
+
+
+
+<small><i>Systas Scheme: Language Reference Manual
+
+</i></small><br>
+
+
+
+
+</body>

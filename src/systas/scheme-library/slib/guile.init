@@ -1,0 +1,4 @@
+;"guile.init" Configuration file for SLIB for GUILE		-*-scheme-*-
+
+(use-modules (ice-9 slib))
+(define (slib:load-cadr argv) (slib:load (cadr argv)))

@@ -1,0 +1,13 @@
+Revision: SystasScheme--labnotes--1.0--base-0
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu May 16 01:37:24 PDT 2002
+Standard-date: 2002-05-16 08:37:24 GMT
+Summary: initial import
+Keywords: 
+New-files: ./HiddenFeatures ./IntroTopic ./ReleaseNews ./TodoList
+  ./WhyNotSystas ./WhySystas
+New-patches: lord@regexps.com--2002/SystasScheme--labnotes--1.0--base-0
+
+Initial import.
+

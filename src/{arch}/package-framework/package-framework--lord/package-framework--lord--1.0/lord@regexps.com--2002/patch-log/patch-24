@@ -1,0 +1,29 @@
+Revision: package-framework--lord--1.0--patch-24
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Wed Mar 13 05:41:44 PST 2002
+Standard-date: 2002-03-13 13:41:44 GMT
+Summary: make the config-info bug address a configuration parameter
+Keywords: 
+New-files: {arch}/package-framework/package-framework--lord/package-framework--lord--1.0/lord@regexps.com--2002/patch-log/patch-24
+  build-tools/standards/PLUGIN/.arch-ids/REQ.id
+  arch-utils/PLUGIN/.arch-ids/REQ.id
+  arch-utils/package-names.h build-tools/standards/intro.doc
+  build-tools/standards/index.doc
+  build-tools/standards/standards.doc
+  build-tools/standards/Makefile.in arch-utils/Makefile.in
+  arch-utils/package-names.c
+  build-tools/standards/document-license.doc
+  build-tools/standards/PLUGIN/REQ arch-utils/PLUGIN/REQ
+New-directories: arch-utils arch-utils/PLUGIN build-tools/standards
+  build-tools/standards/PLUGIN arch-utils/PLUGIN/.arch-ids
+  build-tools/standards/PLUGIN/.arch-ids
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  PLUGIN/options build-tools/=TODO
+  build-tools/config-info/config-info.c
+New-patches: lord@regexps.com--2002/package-framework--lord--1.0--patch-24
+
+Make the config-info bug address a configuration parameter and make 
+the default "bug-arch@regexps.com", not "lord@regexps.com".
+

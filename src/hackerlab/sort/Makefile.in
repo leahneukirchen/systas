@@ -1,0 +1,6 @@
+
+include $(makefiles)/library-objects.mk
+include $(makefiles)/install-includes.mk
+
+# tag: Tom Lord Fri Feb 22 06:59:28 2002 (sort/Makefile.in)
+#

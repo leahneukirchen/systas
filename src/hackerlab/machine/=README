@@ -1,0 +1,9 @@
+# tag: Tom Lord Tue Dec  4 15:06:34 2001 (machine/=README)
+#
+
+			  Machine Parameters
+
+These files create CPP macros capturing information about the host
+machine's representations (e.g., integer sizes and alignment
+requirements).
+

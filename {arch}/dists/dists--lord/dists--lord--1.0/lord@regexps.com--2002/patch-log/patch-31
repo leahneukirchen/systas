@@ -1,0 +1,29 @@
+Revision: dists--lord--1.0--patch-31
+Archive: lord@regexps.com--2002
+Creator: Tom Lord <lord@regexps.com>
+Date: Thu May  2 11:47:13 PDT 2002
+Standard-date: 2002-05-02 18:47:13 GMT
+Summary: fixed config files
+Keywords: 
+New-files: {arch}/dists/dists--lord/dists--lord--1.0/lord@regexps.com--2002/patch-log/patch-31
+Modified-files: ChangeLog.d/ChangeLog
+  ChangeLog.d/lord@regexps.com--2002/ChangeLog.lord--1.0
+  configs/local/arch-1.1 configs/local/devo.arch
+  configs/regexps.com/arch-1.1 configs/regexps.com/devo
+  configs/regexps.com/devo.arch
+  configs/regexps.com/devo.ftp-utils
+  configs/regexps.com/devo.hackerlab
+  configs/regexps.com/devo.systas configs/regexps.com/lord
+  configs/regexps.com/lord.arch
+  configs/regexps.com/lord.ftp-utils
+  configs/regexps.com/lord.hackerlab
+  configs/regexps.com/lord.systas
+  configs/regexps.com/release-template.arch
+  configs/regexps.com/release-template.ftp-utils
+  configs/regexps.com/release-template.hackerlab
+  configs/regexps.com/release-template.systas
+New-patches: lord@regexps.com--2002/dists--lord--1.0--patch-31
+
+Fixed the config files to install the
+labnotes subdirs under the correct names.
+
